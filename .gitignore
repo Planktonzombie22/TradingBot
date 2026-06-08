@@ -1,3 +1,6 @@
 trading_env/
 .env
 .vs/
+.vscode/
+__pycache__/
+.gitignore
