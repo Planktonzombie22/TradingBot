@@ -22,30 +22,33 @@ class SuperTrend:
         self.multiplier = multiplier
 
     def calculate(self):
+        atr = ATR(self.df).calculate().to_numpy()
+        high = self.df['High'].to_numpy()
+        low = self.df['Low'].to_numpy()
+        close = self.df['Close'].to_numpy()
+
+        st = np.full(len(self.df), np.nan)
         direction = 1
-        self.df['SuperTrend'] = np.nan
-        st_loc = self.df.columns.get_loc('SuperTrend')
-        self.df['ATR'] = ATR(self.df).calculate()
-        for index, row in enumerate(self.df.itertuples()):
-            if index < self.period:
-                continue
-            
-            previous = self.df.iloc[index - 1, st_loc]
-            if pd.isna(previous):
-                previous = (row.High + row.Low) / 2
-            
+
+        for i in range(self.period, len(self.df)):
+            hl2 = (high[i] + low[i]) / 2.0
+            prev = st[i-1]
+            if np.isnan(prev):
+                prev = (high[i-1] + low[i-1]) / 2.0 + (-atr[i] * self.multiplier if direction == 1 else atr[i] * self.multiplier)
+
             if direction == 1:
-                current = (row.High + row.Low) / 2 - row.ATR * self.multiplier
-                self.df.iloc[index, st_loc] = current if current > previous else previous
-                if row.Close < self.df.iloc[index, st_loc]:
+                current = hl2 - atr[i] * self.multiplier
+                val = current if current > prev else prev
+                st[i] = val
+                if close[i] < val:
                     direction = -1
-            
-            elif direction == -1:
-                current = (row.High + row.Low) / 2 + row.ATR * self.multiplier
-                self.df.iloc[index, st_loc] = current if current < previous else previous
-                if row.Close > self.df.iloc[index, st_loc]:
+            else:
+                current = hl2 + atr[i] * self.multiplier
+                val = current if current < prev else prev
+                st[i] = val
+                if close[i] > val:
                     direction = 1
-        return self.df['SuperTrend']
+        return pd.Series(st, index=self.df.index, name='SuperTrend')
     
 
 class ADX:
@@ -54,14 +57,14 @@ class ADX:
         self.period = period
     
     def calculate(self):
-        self.df["+DM"] = (self.df["High"] - self.df["High"].shift(1)).clip(lower=0).rolling(self.period).mean()
-        self.df["-DM"] = (self.df["Low"].shift(1) - self.df["Low"]).clip(lower=0).rolling(self.period).mean()
+        dmp = (self.df["High"] - self.df["High"].shift(1)).clip(lower=0).rolling(self.period).mean()
+        dmm = (self.df["Low"].shift(1) - self.df["Low"]).clip(lower=0).rolling(self.period).mean()
         atr = ATR(self.df).calculate().replace(0, np.nan)
-        self.df["+DI"] = 100 * self.df["+DM"] / atr
-        self.df["-DI"] = 100 * self.df["-DM"] / atr
-        self.df["DX"] = 100 * abs(self.df["+DI"] - self.df["-DI"]) / (self.df["+DI"] + self.df["-DI"])
-        self.df["ADX"] = self.df["DX"].ewm(com=self.period-1, adjust=False).mean()
-        return self.df["ADX"].dropna()
+        dip = 100 * dmp / atr
+        dim = 100 * dmm / atr
+        dx = 100 * abs(dip - dim) / (dip + dim)
+        adx = dx.ewm(com=self.period-1, adjust=False).mean()
+        return adx
 
 
 class RSI:
@@ -70,14 +73,14 @@ class RSI:
         self.period = period
     
     def calculate(self):
-        self.df["Delta"] = self.df['Close'].diff()
-        self.df["Gain"] = self.df["Delta"].clip(lower=0)
-        self.df["Loss"] = -self.df["Delta"].clip(upper=0)
-        self.df["Avg_Gain"] = self.df["Gain"].ewm(com=self.period-1, adjust=False).mean()
-        self.df["Avg_Loss"] = self.df["Loss"].ewm(com=self.period-1, adjust=False).mean()
-        self.df["RS"] = self.df["Avg_Gain"] / self.df["Avg_Loss"]
-        self.df["RSI"] = 100 - (100 / (1 + self.df["RS"]))
-        return self.df["RSI"].dropna()
+        delta = self.df['Close'].diff()
+        gain = delta.clip(lower=0)
+        loss = -delta.clip(upper=0)
+        avg_gain = gain.ewm(com=self.period-1, adjust=False).mean()
+        avg_loss = loss.ewm(com=self.period-1, adjust=False).mean()
+        rs = avg_gain / avg_loss
+        rsi = 100 - (100 / (1 + rs))
+        return rsi
 
 class DEMA:
     def __init__(self, df=df, period=cfg.DEMA_PERIOD):
@@ -85,6 +88,6 @@ class DEMA:
         self.period = period
     
     def calculate(self):
-        self.df['DEMA1'] = self.df['Close'].ewm(span=self.period, adjust=False).mean()
-        self.df['DEMA2'] = self.df['DEMA1'].ewm(span=self.period, adjust=False).mean()
-        return 2 * self.df['DEMA1'] - self.df['DEMA2']
+        dema1 = self.df['Close'].ewm(span=self.period, adjust=False).mean()
+        dema2 = dema1.ewm(span=self.period, adjust=False).mean()
+        return pd.Series(2 * dema1 - dema2, index=self.df.index, name='DEMA')
