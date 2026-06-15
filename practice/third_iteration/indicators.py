@@ -13,7 +13,9 @@ class ATR:
         tr = np.maximum(self.df['High'] - self.df['Low'],
                         np.maximum(abs(self.df['High'] - self.df['Close'].shift(1)),
                                    abs(self.df['Low'] - self.df['Close'].shift(1))))
-        return tr.ewm(com=self.period - 1, adjust=False).mean()
+        atr = tr.ewm(alpha=1/self.period, adjust=True).mean()
+        atr[:cfg.ATR_WARMUP_PERIOD] = np.nan
+        return atr
     
 class SuperTrend:
     def __init__(self, df=df, period=cfg.SUPER_TREND_PERIOD, multiplier=cfg.SUPER_TREND_MULTIPLIER):
@@ -46,7 +48,9 @@ class SuperTrend:
                 if direction[i] == 1:
                     st[i] = hl2 - atr[i] * self.multiplier
 
-        return pd.Series(st, index=self.df.index, name='SuperTrend')
+        supertrend = pd.Series(st, index=self.df.index, name='SuperTrend')
+        supertrend[:cfg.SUPERTREND_WARMUP_PERIOD] = np.nan
+        return supertrend
     
 
 class ADX:
@@ -61,8 +65,8 @@ class ADX:
         dmp = up.where((up > down) & (up > 0), 0)
         dmm = down.where((down > up) & (down > 0), 0)
 
-        dmp = dmp.ewm(com=self.period-1, adjust=False).mean()
-        dmm = dmm.ewm(com=self.period-1, adjust=False).mean()
+        dmp = dmp.ewm(alpha=1/self.period, adjust=True).mean()
+        dmm = dmm.ewm(alpha=1/self.period, adjust=True).mean()
 
         atr = ATR(self.df).calculate().replace(0, np.nan)
         dip = 100 * dmp / atr
@@ -70,8 +74,8 @@ class ADX:
 
         denom = (dip + dim).replace(0, np.nan)
         dx = 100 * (dip - dim).abs() / denom
-        adx = dx.ewm(com=self.period-1, adjust=False).mean()
-        adx[:self.period] = np.nan
+        adx = dx.ewm(alpha=1/self.period, adjust=True).mean()
+        adx[:cfg.ADX_WARMUP_PERIOD] = np.nan
         return adx
 
 
@@ -84,11 +88,11 @@ class RSI:
         delta = self.df['Close'].diff()
         gain = delta.clip(lower=0)
         loss = -delta.clip(upper=0)
-        avg_gain = gain.ewm(com=self.period-1, adjust=False).mean()
-        avg_loss = loss.ewm(com=self.period-1, adjust=False).mean()
+        avg_gain = gain.ewm(alpha=1/self.period, adjust=True).mean()
+        avg_loss = loss.ewm(alpha=1/self.period, adjust=True).mean()
         rs = avg_gain / avg_loss
         rsi = 100 - (100 / (1 + rs))
-        rsi.iloc[:self.period] = np.nan
+        rsi.iloc[:cfg.RSI_WARMUP_PERIOD] = np.nan
         return rsi
 
 class DEMA:
@@ -99,4 +103,6 @@ class DEMA:
     def calculate(self):
         dema1 = self.df['Close'].ewm(span=self.period, adjust=False).mean()
         dema2 = dema1.ewm(span=self.period, adjust=False).mean()
-        return pd.Series(2 * dema1 - dema2, index=self.df.index, name='DEMA')
+        dema = pd.Series(2 * dema1 - dema2, index=self.df.index, name='DEMA')
+        dema[:cfg.DEMA_WARMUP_PERIOD] = np.nan
+        return dema
