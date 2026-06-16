@@ -24,6 +24,7 @@ class SuperTrend:
         self.multiplier = multiplier
 
     def calculate(self):
+        flip = np.zeros(len(self.df), dtype=bool)
         atr = ATR(self.df).calculate().to_numpy()
         high = self.df['High'].to_numpy()
         low = self.df['Low'].to_numpy()
@@ -41,16 +42,26 @@ class SuperTrend:
                 direction[i] = -1 if close[i] < st[i] else 1
                 if direction[i] == -1:
                     st[i] = hl2 + atr[i] * self.multiplier
+                    flip[i] = True
+                else:
+                    flip[i] = False
             else:
                 current = hl2 + atr[i] * self.multiplier
                 st[i] = current if i == self.period else min(current, st[i-1]) if not np.isnan(st[i-1]) else current
                 direction[i] = 1 if close[i] > st[i] else -1
                 if direction[i] == 1:
                     st[i] = hl2 - atr[i] * self.multiplier
+                    flip[i] = True
+                else:
+                    flip[i] = False
 
         supertrend = pd.Series(st, index=self.df.index, name='SuperTrend')
         supertrend[:cfg.SUPERTREND_WARMUP_PERIOD] = np.nan
+        self.flip = flip
         return supertrend
+
+    def get_flip_signals(self):
+        return pd.Series(self.flip, index=self.df.index, name='Flip')
     
 
 class ADX:
