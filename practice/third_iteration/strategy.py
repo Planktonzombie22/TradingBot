@@ -4,9 +4,6 @@ from data import df
 import pandas as pd
 
 
-"""TODO: implement strategy separation and eliminate look-ahead bias"""
-
-
 st = ind.SuperTrend(df)
 
 class tuffSystem():
@@ -29,7 +26,7 @@ class tuffSystem():
             (self.indicator_df["ADX"] > self.adx_deviation) &
             (self.indicator_df["ATR"] > 0) &
             (self.indicator_df["SuperTrend"] < df["Close"])
-        ).fillna(False)
+        ).shift(1).fillna(False)
 
     def generate_sell_signals(self):
         return (
@@ -38,10 +35,14 @@ class tuffSystem():
             (self.indicator_df["ADX"] > self.adx_deviation) &
             (self.indicator_df["ATR"] > 0) &
             (self.indicator_df["SuperTrend"] > df["Close"])
-        ).fillna(False)
+        ).shift(1).fillna(False)
     
     def generate_stop_signals(self):
-        return self.indicator_df["SuperTrend_Flip"]
+        return self.indicator_df["SuperTrend_Flip"].shift(1).fillna(False)
     
     def generate_stoplosses(self):
-        return self.indicator_df["SuperTrend"]
+        return self.indicator_df["SuperTrend"].shift(1).fillna(False)
+
+STRATEGIES = {
+    "tuffSystem" : tuffSystem
+}

@@ -1,0 +1,35 @@
+from dataclasses import dataclass, field
+from typing import Any, Dict, Optional
+
+from src.config import settings as defaults
+
+
+@dataclass(frozen=True)
+class MarketDataConfig:
+    symbol: str = defaults.MARKET
+    period: str = defaults.PERIOD
+    interval: str = defaults.INTERVAL
+    start: Optional[str] = None
+    end: Optional[str] = None
+
+
+@dataclass(frozen=True)
+class AccountConfig:
+    initial_cash: float = defaults.ACCOUNT_SIZE
+    margin_ratio: float = defaults.MARGIN_RATIO
+    risk_fraction: float = defaults.PERCENTAGE_RISKED
+    base_currency: str = "USD"
+
+
+@dataclass(frozen=True)
+class StrategyConfig:
+    name: str = defaults.DEFAULT_STRATEGY
+    params: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class RuntimeConfig:
+    paper_trading: bool = defaults.PAPER_TRADING
+    data: MarketDataConfig = field(default_factory=MarketDataConfig)
+    account: AccountConfig = field(default_factory=AccountConfig)
+    strategy: StrategyConfig = field(default_factory=StrategyConfig)

@@ -15,7 +15,7 @@ def fill_in_trade_entry(ts, price, type, shares, equity):
             }
     
 def fill_in_trade_exit(trade, ts, price):
-    pnl = trade["Shares"] * (price - current_trade["Entry Price"])
+    pnl = trade["Shares"] * (price - trade["Entry Price"])
     trade["PnL"] = pnl
     trade["Exit Date"] = ts
     trade["Exit Price"] = price
@@ -23,7 +23,7 @@ def fill_in_trade_exit(trade, ts, price):
     return trade
 
 
-strategy = sty.tuffSystem()
+strategy = sty.STRATEGIES[cfg.SYSTEM]()
 buy_signals = strategy.generate_buy_signals()
 sell_signals = strategy.generate_sell_signals()
 stop_signals = strategy.generate_stop_signals()

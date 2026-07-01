@@ -1,13 +1,21 @@
 from dataclasses import dataclass, field
-from typing import Literal, Dict, Any
-from datetime import datetime, timezone
+from datetime import datetime
+from typing import Any, Dict, Literal, Optional
 
-Action = Literal["BUY", "SELL", "HOLD"]
+Action = Literal["BUY", "SELL", "CLOSE", "HOLD"]
+
 
 @dataclass
 class Signal:
+    """Strategy output for a single bar: what to do and optional risk parameters."""
+
     action: Action
     symbol: str
+    timestamp: datetime
     strength: float = 1.0
-    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    stop_loss: Optional[float] = None
     meta: Dict[str, Any] = field(default_factory=dict)
+
+    @classmethod
+    def hold(cls, symbol: str, timestamp: datetime) -> "Signal":
+        return cls(action="HOLD", symbol=symbol, timestamp=timestamp)

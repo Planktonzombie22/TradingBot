@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 
-class Strategy(ABC):
+import pandas as pd
 
+
+class Indicator(ABC):
     @abstractmethod
-    def generate_signal(self, data_window):
+    def calculate(self) -> pd.Series:
         raise NotImplementedError
-    
