@@ -7,6 +7,13 @@ load_dotenv()
 
 # Live trading (future)
 PAPER_TRADING = os.getenv("PAPER_TRADING", "true").lower() == "true"
+DATA_PROVIDER = os.getenv("DATA_PROVIDER", "yfinance")
+
+# Broker/data credentials
+ALPACA_API_KEY = os.getenv("ALPACA_API_KEY", "")
+ALPACA_SECRET_KEY = os.getenv("ALPACA_SECRET_KEY", "")
+ALPACA_BASE_URL = os.getenv("ALPACA_BASE_URL", "https://paper-api.alpaca.markets")
+ALPACA_DATA_STREAM_URL = os.getenv("ALPACA_DATA_STREAM_URL", "wss://stream.data.alpaca.markets/v2/iex")
 
 # Indicator periods
 ATR_PERIOD = 10

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 from src.models import Order
 
@@ -46,6 +47,22 @@ class FixedBpsSlippageModel(SlippageModel):
 
 
 @dataclass(frozen=True)
+class SpreadVolumeSlippageModel(SlippageModel):
+    """Combines a fixed spread estimate with volume participation impact."""
+
+    spread_bps: float = 1.0
+    impact_bps_per_volume_share: float = 10.0
+
+    def apply(self, order: Order, snapshot: MarketSnapshot, reference_price: float) -> float:
+        direction = 1 if order.side == "BUY" else -1
+        volume_share = 0.0
+        if snapshot.volume:
+            volume_share = min(abs(order.quantity) / snapshot.volume, 1.0)
+        slippage_bps = self.spread_bps / 2 + self.impact_bps_per_volume_share * volume_share
+        return reference_price * (1 + direction * slippage_bps / 10_000)
+
+
+@dataclass(frozen=True)
 class UnlimitedLiquidityModel(LiquidityModel):
     """Assumes every valid order can fully fill on the bar."""
 
@@ -72,3 +89,34 @@ class NoBorrowCostModel(BorrowCostModel):
 
     def accrue(self, account: AccountSnapshot, snapshot: MarketSnapshot) -> float:
         return 0.0
+
+
+@dataclass(frozen=True)
+class AnnualizedBorrowCostModel(BorrowCostModel):
+    """Accrues short borrow cost from annualized borrow rate."""
+
+    annual_rate: float = 0.03
+    periods_per_year: int = 252
+    hard_to_borrow_symbols: Optional[set[str]] = None
+
+    def accrue(self, account: AccountSnapshot, snapshot: MarketSnapshot) -> float:
+        quantity = account.positions.get(snapshot.symbol, 0.0)
+        if quantity >= 0:
+            return 0.0
+        if self.hard_to_borrow_symbols and snapshot.symbol in self.hard_to_borrow_symbols:
+            rate = self.annual_rate * 2
+        else:
+            rate = self.annual_rate
+        notional = abs(quantity) * snapshot.close
+        return notional * rate / self.periods_per_year
+
+
+def commission_model_for_broker(name: str) -> CommissionModel:
+    broker = name.lower()
+    if broker in {"alpaca", "robinhood"}:
+        return ZeroCommissionModel()
+    if broker in {"interactive_brokers", "ibkr"}:
+        return BpsCommissionModel(basis_points=0.5, minimum=1.0)
+    if broker in {"generic"}:
+        return BpsCommissionModel(basis_points=1.0, minimum=0.0)
+    raise ValueError(f"Unknown broker commission preset: {name}")

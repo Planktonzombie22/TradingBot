@@ -13,7 +13,7 @@ def plot_backtest(
 ) -> None:
     indicator_df = strategy.indicators
     if indicator_df.empty:
-        raise ValueError("Strategy indicators are empty — call generate_signals(df) before plotting.")
+        raise ValueError("Strategy indicators are empty; call generate_signals(df) before plotting.")
 
     trades = result.trades_df
     equity = result.equity

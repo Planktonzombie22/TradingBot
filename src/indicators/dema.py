@@ -2,10 +2,15 @@ from typing import Optional
 
 import pandas as pd
 
+from src.indicators._smoothing import ema
+from src.indicators.base import Indicator
 
-class DEMA:
+
+class DEMA(Indicator):
+    required_columns = ("Close",)
+
     def __init__(self, df: pd.DataFrame, period: Optional[int] = None):
-        self.df = df
+        super().__init__(df)
         self.period = period
 
     def calculate(self) -> pd.Series:
@@ -15,6 +20,6 @@ class DEMA:
 
             period = cfg.DEMA_PERIOD
 
-        ema1 = self.df["Close"].ewm(span=period, adjust=False).mean()
-        ema2 = ema1.ewm(span=period, adjust=False).mean()
+        ema1 = ema(self.df["Close"], period)
+        ema2 = ema(ema1, period)
         return (2 * ema1 - ema2).rename("DEMA")

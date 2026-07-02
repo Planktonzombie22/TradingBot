@@ -4,10 +4,13 @@ import numpy as np
 import pandas as pd
 
 from src.indicators.atr import ATR
+from src.indicators.base import Indicator
 
 
-class SuperTrend:
+class SuperTrend(Indicator):
     """Standard SuperTrend with final upper/lower bands and direction tracking."""
+
+    required_columns = ("High", "Low", "Close")
 
     def __init__(
         self,
@@ -15,7 +18,7 @@ class SuperTrend:
         period: Optional[int] = None,
         multiplier: Optional[float] = None,
     ):
-        self.df = df
+        super().__init__(df)
         self.period = period
         self.multiplier = multiplier
         self._result: Optional[pd.DataFrame] = None
@@ -46,8 +49,6 @@ class SuperTrend:
         direction = np.ones(n, dtype=int)
         st = np.full(n, np.nan)
 
-        high = self.df["High"].to_numpy()
-        low = self.df["Low"].to_numpy()
         close = self.df["Close"].to_numpy()
         basic_ub_arr = basic_ub.to_numpy()
         basic_lb_arr = basic_lb.to_numpy()
@@ -85,6 +86,8 @@ class SuperTrend:
         self._result = pd.DataFrame(
             {
                 "SuperTrend": st,
+                "UpperBand": final_ub,
+                "LowerBand": final_lb,
                 "Direction": direction,
                 "Flip": np.concatenate([[False], direction[1:] != direction[:-1]]),
             },

@@ -3,11 +3,14 @@ from typing import Optional
 import pandas as pd
 
 from src.indicators._smoothing import wilder_rma
+from src.indicators.base import Indicator
 
 
-class RSI:
+class RSI(Indicator):
+    required_columns = ("Close",)
+
     def __init__(self, df: pd.DataFrame, period: Optional[int] = None):
-        self.df = df
+        super().__init__(df)
         self.period = period
 
     def calculate(self) -> pd.Series:
@@ -24,4 +27,7 @@ class RSI:
         avg_loss = wilder_rma(loss, period)
         rs = avg_gain / avg_loss.replace(0, pd.NA)
         rsi = 100 - (100 / (1 + rs))
+        rsi = rsi.mask((avg_loss == 0) & (avg_gain > 0), 100.0)
+        rsi = rsi.mask((avg_gain == 0) & (avg_loss > 0), 0.0)
+        rsi = rsi.mask((avg_gain == 0) & (avg_loss == 0), 50.0)
         return rsi.rename("RSI")

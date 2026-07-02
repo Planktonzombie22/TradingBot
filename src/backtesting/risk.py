@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Set
 
 from src.models import Order
 
@@ -14,6 +14,7 @@ class CompositeRiskModel(RiskModel):
 
     margin_model: SimpleMarginModel
     allow_shorting: bool = True
+    shortable_symbols: Optional[Set[str]] = None
 
     def evaluate(self, order: Order, account: AccountSnapshot, snapshot: MarketSnapshot) -> Optional[OrderRejection]:
         if order.quantity <= 0:
@@ -23,6 +24,12 @@ class CompositeRiskModel(RiskModel):
             held_quantity = account.positions.get(order.symbol, 0.0)
             if held_quantity < order.quantity:
                 return self._reject(order, snapshot, RejectionReason.RISK_LIMIT, "Shorting is disabled.")
+
+        if order.side == "SELL" and self.shortable_symbols is not None:
+            held_quantity = account.positions.get(order.symbol, 0.0)
+            opens_or_increases_short = held_quantity <= 0
+            if opens_or_increases_short and order.symbol not in self.shortable_symbols:
+                return self._reject(order, snapshot, RejectionReason.RISK_LIMIT, "Short locate unavailable.")
 
         if self._reduces_existing_exposure(order, account):
             return None

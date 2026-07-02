@@ -11,6 +11,16 @@ class MarketDataConfig:
     interval: str = defaults.INTERVAL
     start: Optional[str] = None
     end: Optional[str] = None
+    provider: str = defaults.DATA_PROVIDER
+
+
+@dataclass(frozen=True)
+class AlpacaConfig:
+    api_key: str = defaults.ALPACA_API_KEY
+    secret_key: str = defaults.ALPACA_SECRET_KEY
+    base_url: str = defaults.ALPACA_BASE_URL
+    data_stream_url: str = defaults.ALPACA_DATA_STREAM_URL
+    feed: str = "iex"
 
 
 @dataclass(frozen=True)
@@ -31,5 +41,6 @@ class StrategyConfig:
 class RuntimeConfig:
     paper_trading: bool = defaults.PAPER_TRADING
     data: MarketDataConfig = field(default_factory=MarketDataConfig)
+    alpaca: AlpacaConfig = field(default_factory=AlpacaConfig)
     account: AccountConfig = field(default_factory=AccountConfig)
     strategy: StrategyConfig = field(default_factory=StrategyConfig)
