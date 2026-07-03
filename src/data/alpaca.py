@@ -1,22 +1,25 @@
-import json
 from datetime import datetime, timezone
 from typing import Iterable, Optional
 from urllib.parse import urlencode
-from urllib.request import Request, urlopen
 
 import pandas as pd
 
 from src.config import AlpacaConfig
 from src.models import Bar
+from src.utils.alpaca_rest import AlpacaRestClient
 
+from .cache import HistoricalDataCache
 from .interface import DataFeed
+from .normalization import normalize_ohlcv_frame
 
 
 class AlpacaHistoricalDataFeed(DataFeed):
     """Historical bar data feed backed by Alpaca Market Data REST."""
 
-    def __init__(self, config: AlpacaConfig):
+    def __init__(self, config: AlpacaConfig, cache: Optional[HistoricalDataCache] = None):
         self.config = config
+        self.client = AlpacaRestClient(config)
+        self.cache = cache
 
     def get_historical(
         self,
@@ -28,6 +31,11 @@ class AlpacaHistoricalDataFeed(DataFeed):
     ) -> pd.DataFrame:
         self._validate_credentials()
         timeframe = _to_alpaca_timeframe(interval)
+        if self.cache is not None:
+            cached = self.cache.read("alpaca", symbol, timeframe, start, end)
+            if cached is not None:
+                return cached
+
         query = {
             "timeframe": timeframe,
             "feed": self.config.feed,
@@ -38,17 +46,23 @@ class AlpacaHistoricalDataFeed(DataFeed):
         if end:
             query["end"] = end
 
-        url = f"https://data.alpaca.markets/v2/stocks/{symbol}/bars?{urlencode(query)}"
-        request = Request(
-            url,
-            headers={
-                "APCA-API-KEY-ID": self.config.api_key,
-                "APCA-API-SECRET-KEY": self.config.secret_key,
-            },
-        )
-        with urlopen(request, timeout=30) as response:
-            payload = json.loads(response.read().decode("utf-8"))
-        return _bars_payload_to_frame(payload.get("bars", []))
+        bars: list[dict] = []
+        page_token = None
+        while True:
+            page_query = dict(query)
+            if page_token:
+                page_query["page_token"] = page_token
+            url = f"https://data.alpaca.markets/v2/stocks/{symbol}/bars?{urlencode(page_query)}"
+            payload = self.client.request("GET", url)
+            bars.extend(payload.get("bars", []))
+            page_token = payload.get("next_page_token")
+            if not page_token:
+                break
+
+        data = normalize_ohlcv_frame(_bars_payload_to_frame(bars))
+        if self.cache is not None and not data.empty:
+            self.cache.write("alpaca", symbol, timeframe, data, start, end)
+        return data
 
     def get_stream(self, symbol: str) -> Iterable[Bar]:
         raise NotImplementedError("Use AlpacaMarketDataStream for live streaming.")
@@ -84,7 +98,7 @@ def _bars_payload_to_frame(bars: list[dict]) -> pd.DataFrame:
         )
     if not rows:
         return pd.DataFrame(columns=["Open", "High", "Low", "Close", "Volume"])
-    return pd.DataFrame(rows).set_index("timestamp").sort_index()
+    return normalize_ohlcv_frame(pd.DataFrame(rows).set_index("timestamp").sort_index())
 
 
 def _parse_timestamp(value: str) -> datetime:

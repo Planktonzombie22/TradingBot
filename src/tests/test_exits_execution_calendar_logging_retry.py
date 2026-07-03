@@ -4,7 +4,7 @@ from datetime import datetime
 
 import pytest
 
-from src.data.calendar import MarketSessionCalendar
+from src.data.calendar import MarketSession, MarketSessionCalendar, MarketSessionPolicy
 from src.data import YFinancePollingStream
 from src.execution import PaperBroker
 from src.models import Order
@@ -47,6 +47,19 @@ def test_market_session_calendar_regular_hours():
     assert calendar.is_open_at(datetime.fromisoformat("2024-01-02T10:00:00-05:00"))
     assert not calendar.is_open_at(datetime.fromisoformat("2024-01-06T10:00:00-05:00"))
     assert not calendar.is_open_at(datetime.fromisoformat("2024-01-02T20:00:00-05:00"))
+
+
+def test_market_session_calendar_extended_hours_and_policy():
+    calendar = MarketSessionCalendar(holidays={"2024-01-01"}, early_closes={"2024-07-03": datetime.strptime("13:00", "%H:%M").time()})
+
+    assert calendar.session_at(datetime.fromisoformat("2024-01-02T08:00:00-05:00")) == MarketSession.PRE_MARKET
+    assert calendar.session_at(datetime.fromisoformat("2024-07-03T14:00:00-04:00")) == MarketSession.AFTER_HOURS
+    assert calendar.session_at(datetime.fromisoformat("2024-01-01T10:00:00-05:00")) == MarketSession.CLOSED
+    assert not calendar.is_tradable_at(datetime.fromisoformat("2024-01-02T08:00:00-05:00"))
+    assert calendar.is_tradable_at(
+        datetime.fromisoformat("2024-01-02T08:00:00-05:00"),
+        MarketSessionPolicy(allow_pre_market=True),
+    )
 
 
 def test_json_rotating_logging_writes_file(tmp_path):

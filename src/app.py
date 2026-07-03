@@ -6,6 +6,7 @@ from src.backtesting import BacktestConfig, BacktestEngine
 from src.config import RuntimeConfig
 from src.data import MarketDataManager, MarketDataStream, YFinanceDataFeed
 from src.engine import TradingEngine
+from src.execution import AlpacaPaperBroker, Broker, PaperBroker, validate_alpaca_paper_safety, validate_execution_mode
 from src.models import BacktestResult
 from src.strategies import get_strategy, validate_strategy_params
 from src.strategies.base import Strategy
@@ -34,11 +35,20 @@ class TradingApplication:
         stream.subscribe_bars([self.config.data.symbol])
         return stream
 
+    def create_broker(self) -> Broker:
+        mode = validate_execution_mode(self.config.execution.mode)
+        if mode == "paper" and self.config.data.provider.lower() == "alpaca":
+            validate_alpaca_paper_safety(self.config.alpaca, self.config.execution, self.config.paper_trading)
+            return AlpacaPaperBroker(self.config.alpaca)
+        return PaperBroker()
+
     def create_engine(self) -> TradingEngine:
         return TradingEngine(
             market_data_stream=self.create_market_data_stream(),
             strategy=self.create_strategy(),
+            broker=self.create_broker(),
             account=self.config.account,
+            runtime_risk=self.config.runtime_risk,
         )
 
     def run_backtest(self, data=None, strategy=None) -> BacktestResult:

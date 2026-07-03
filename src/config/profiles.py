@@ -38,9 +38,36 @@ class StrategyConfig:
 
 
 @dataclass(frozen=True)
+class ExecutionConfig:
+    mode: str = defaults.EXECUTION_MODE
+    allow_live_trading: bool = defaults.ALLOW_LIVE_TRADING
+    state_db_path: str = defaults.STATE_DB_PATH
+
+
+def _optional_float(value: str) -> Optional[float]:
+    return float(value) if value else None
+
+
+def _optional_int(value: str) -> Optional[int]:
+    return int(value) if value else None
+
+
+@dataclass(frozen=True)
+class RuntimeRiskConfig:
+    max_daily_loss: Optional[float] = _optional_float(defaults.MAX_DAILY_LOSS)
+    max_drawdown: Optional[float] = _optional_float(defaults.MAX_DRAWDOWN)
+    max_position_notional: Optional[float] = _optional_float(defaults.MAX_POSITION_NOTIONAL)
+    max_order_notional: Optional[float] = _optional_float(defaults.MAX_ORDER_NOTIONAL)
+    max_open_orders: Optional[int] = _optional_int(defaults.MAX_OPEN_ORDERS)
+    max_orders_per_minute: Optional[int] = _optional_int(defaults.MAX_ORDERS_PER_MINUTE)
+
+
+@dataclass(frozen=True)
 class RuntimeConfig:
     paper_trading: bool = defaults.PAPER_TRADING
     data: MarketDataConfig = field(default_factory=MarketDataConfig)
     alpaca: AlpacaConfig = field(default_factory=AlpacaConfig)
     account: AccountConfig = field(default_factory=AccountConfig)
     strategy: StrategyConfig = field(default_factory=StrategyConfig)
+    execution: ExecutionConfig = field(default_factory=ExecutionConfig)
+    runtime_risk: RuntimeRiskConfig = field(default_factory=RuntimeRiskConfig)

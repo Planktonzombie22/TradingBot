@@ -1,7 +1,10 @@
 from dataclasses import dataclass, field
-from typing import List
+from datetime import datetime, timezone
+from typing import Iterable, List, Optional
 
 import pandas as pd
+
+from .events import MarketDataEvent
 
 
 @dataclass(frozen=True)
@@ -27,6 +30,8 @@ class DataQualityReport:
 class DataQualityValidator:
     max_gap_multiplier: float = 3.0
     split_spike_threshold: float = 0.40
+    extreme_range_threshold: float = 0.50
+    stale_seconds: Optional[float] = None
 
     def validate_ohlcv(self, data: pd.DataFrame) -> DataQualityReport:
         report = DataQualityReport()
@@ -50,14 +55,60 @@ class DataQualityValidator:
         if null_counts.any():
             report.add("ERROR", "MISSING_BARS", f"OHLC data contains null values: {null_counts.to_dict()}")
 
+        non_positive = (data[list(required)] <= 0).any(axis=1)
+        if non_positive.any():
+            report.add("ERROR", "NON_POSITIVE_PRICE", f"Detected {int(non_positive.sum())} bars with non-positive OHLC prices.")
+
+        if "Volume" in data.columns and (data["Volume"] < 0).any():
+            report.add("ERROR", "NEGATIVE_VOLUME", "Volume cannot be negative.")
+
         invalid_ohlc = (data["High"] < data[["Open", "Close", "Low"]].max(axis=1)) | (
             data["Low"] > data[["Open", "Close", "High"]].min(axis=1)
         )
         if invalid_ohlc.any():
             report.add("ERROR", "INVALID_OHLC", "High/low bounds are inconsistent with open/close.")
 
+        extreme_range = ((data["High"] - data["Low"]) / data["Close"].abs()) > self.extreme_range_threshold
+        if extreme_range.any():
+            report.add("WARNING", "EXTREME_RANGE", f"Detected {int(extreme_range.sum())} bars with unusually wide high/low ranges.")
+
         self._check_time_gaps(data, report)
         self._check_split_spikes(data, report)
+        return report
+
+    def validate_events(self, events: Iterable[MarketDataEvent], now: Optional[datetime] = None) -> DataQualityReport:
+        report = DataQualityReport()
+        now = now or datetime.now(timezone.utc)
+        last_timestamp_by_symbol: dict[str, datetime] = {}
+
+        for event in events:
+            if event.bar is None:
+                continue
+            bar_report = self.validate_ohlcv(
+                pd.DataFrame(
+                    {
+                        "Open": [event.bar.open],
+                        "High": [event.bar.high],
+                        "Low": [event.bar.low],
+                        "Close": [event.bar.close],
+                        "Volume": [event.bar.volume],
+                    },
+                    index=pd.DatetimeIndex([pd.Timestamp(event.timestamp)]),
+                )
+            )
+            for issue in bar_report.issues:
+                report.add(issue.severity, issue.code, f"{event.symbol}: {issue.message}")
+
+            previous = last_timestamp_by_symbol.get(event.symbol)
+            if previous is not None and event.timestamp <= previous:
+                report.add("ERROR", "OUT_OF_ORDER_EVENT", f"{event.symbol} event timestamp is not increasing.")
+            last_timestamp_by_symbol[event.symbol] = event.timestamp
+
+            if self.stale_seconds is not None:
+                event_timestamp = event.timestamp.astimezone(timezone.utc) if event.timestamp.tzinfo else event.timestamp.replace(tzinfo=timezone.utc)
+                if (now - event_timestamp).total_seconds() > self.stale_seconds:
+                    report.add("ERROR", "STALE_EVENT", f"{event.symbol} event is stale.")
+
         return report
 
     def _check_time_gaps(self, data: pd.DataFrame, report: DataQualityReport) -> None:

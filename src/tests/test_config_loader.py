@@ -9,6 +9,8 @@ def test_load_runtime_config_applies_cli_overrides():
             "interval": "5m",
             "strategy": "buyHold",
             "initial_cash": 25_000,
+            "execution_mode": "paper",
+            "state_db_path": "runs/test.sqlite3",
         }
     )
 
@@ -17,3 +19,5 @@ def test_load_runtime_config_applies_cli_overrides():
     assert config.data.interval == "5m"
     assert config.strategy.name == "buyHold"
     assert config.account.initial_cash == 25_000
+    assert config.execution.mode == "paper"
+    assert config.execution.state_db_path == "runs/test.sqlite3"

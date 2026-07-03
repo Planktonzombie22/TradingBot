@@ -45,19 +45,19 @@ The remaining roadmap is the practical path to a bot that can run autonomous Alp
 33. Add idempotent broker submissions with stable client order IDs and duplicate-order protection. Implemented MVP.
 34. Persist broker-facing state in a durable database instead of only JSONL artifacts. Implemented MVP.
 35. Add startup recovery that rebuilds engine state from persisted orders, fills, account snapshots, and broker account state. Implemented MVP.
-36. Add an explicit dry-run mode that exercises the full live pipeline without submitting orders.
-37. Add an explicit paper-trading mode that submits real Alpaca paper orders behind environment and config safeguards.
-38. Add a hard live-trading guard so production code cannot accidentally send live orders without a deliberate future unlock.
-39. Add max daily loss, max drawdown, max position size, max notional, max open orders, and max order frequency halts.
-40. Add a global kill switch that can flatten positions, cancel open orders, and stop the engine.
-41. Add manual operator controls for pause, resume, cancel-all, flatten, and disable-new-orders.
-42. Add market calendar handling for holidays, half days, early closes, pre-market, regular session, and after-hours policy.
-43. Add websocket heartbeat monitoring, reconnect backoff, subscription replay, and stale-stream alarms.
-44. Add rate-limit-aware REST clients with retries, jitter, request logging, and broker error classification.
-45. Add historical Alpaca pagination and cache hydration for multi-symbol backtests.
-46. Add corporate action handling for splits, dividends, symbol changes, and adjusted/unadjusted price policies.
-47. Add data quality gates for duplicate bars, missing bars, out-of-order events, bad OHLC relationships, and extreme gaps.
-48. Add live-vs-historical data normalization checks so strategies receive the same schema in both modes.
+36. Add an explicit dry-run mode that exercises the full live pipeline without submitting orders. Implemented MVP.
+37. Add an explicit paper-trading mode that submits real Alpaca paper orders behind environment and config safeguards. Implemented MVP.
+38. Add a hard live-trading guard so production code cannot accidentally send live orders without a deliberate future unlock. Implemented MVP.
+39. Add max daily loss, max drawdown, max position size, max notional, max open orders, and max order frequency halts. Implemented MVP.
+40. Add a global kill switch that can flatten positions, cancel open orders, and stop the engine. Implemented MVP.
+41. Add manual operator controls for pause, resume, cancel-all, flatten, and disable-new-orders. Implemented MVP.
+42. Add market calendar handling for holidays, half days, early closes, pre-market, regular session, and after-hours policy. Implemented MVP.
+43. Add websocket heartbeat monitoring, reconnect backoff, subscription replay, and stale-stream alarms. Implemented MVP.
+44. Add rate-limit-aware REST clients with retries, jitter, request logging, and broker error classification. Implemented MVP.
+45. Add historical Alpaca pagination and cache hydration for multi-symbol backtests. Implemented MVP.
+46. Add corporate action handling for splits, dividends, symbol changes, and adjusted/unadjusted price policies. Implemented MVP.
+47. Add data quality gates for duplicate bars, missing bars, out-of-order events, bad OHLC relationships, and extreme gaps. Implemented MVP.
+48. Add live-vs-historical data normalization checks so strategies receive the same schema in both modes. Implemented MVP.
 49. Add multi-symbol universe loading from config files, watchlists, broker assets, and generated research screens.
 50. Add strategy scheduling by symbol, timeframe, session window, and warmup requirements.
 51. Add strategy parameter schemas that are serializable, optimizable, and validated before runs.

@@ -8,6 +8,18 @@ load_dotenv()
 # Live trading (future)
 PAPER_TRADING = os.getenv("PAPER_TRADING", "true").lower() == "true"
 DATA_PROVIDER = os.getenv("DATA_PROVIDER", "yfinance")
+EXECUTION_MODE = os.getenv("EXECUTION_MODE", "dry-run")
+ALLOW_LIVE_TRADING = os.getenv("ALLOW_LIVE_TRADING", "false").lower() == "true"
+STATE_DB_PATH = os.getenv("STATE_DB_PATH", "runs/tradingbot.sqlite3")
+
+# Runtime safety defaults. Empty values keep the MVP permissive until a profile
+# explicitly opts into hard paper-trading limits.
+MAX_DAILY_LOSS = os.getenv("MAX_DAILY_LOSS", "")
+MAX_DRAWDOWN = os.getenv("MAX_DRAWDOWN", "")
+MAX_POSITION_NOTIONAL = os.getenv("MAX_POSITION_NOTIONAL", "")
+MAX_ORDER_NOTIONAL = os.getenv("MAX_ORDER_NOTIONAL", "")
+MAX_OPEN_ORDERS = os.getenv("MAX_OPEN_ORDERS", "")
+MAX_ORDERS_PER_MINUTE = os.getenv("MAX_ORDERS_PER_MINUTE", "")
 
 # Broker/data credentials
 ALPACA_API_KEY = os.getenv("ALPACA_API_KEY", "")

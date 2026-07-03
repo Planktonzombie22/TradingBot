@@ -87,6 +87,9 @@ Copy `.env.example` to `.env` and fill in credentials:
 ```dotenv
 PAPER_TRADING=true
 DATA_PROVIDER=alpaca
+EXECUTION_MODE=dry-run
+ALLOW_LIVE_TRADING=false
+STATE_DB_PATH=runs/tradingbot.sqlite3
 
 ALPACA_API_KEY=your_alpaca_key
 ALPACA_SECRET_KEY=your_alpaca_secret
@@ -101,6 +104,18 @@ trading_env\Scripts\python.exe main.py paper --provider alpaca --symbol SPY
 ```
 
 The Alpaca pieces are intentionally conservative. They provide the architecture for historical data, websocket bars, and paper-order submission, but the final autonomous safety layer still needs the roadmap items around reconciliation, persistence, idempotency, halts, and soak testing.
+
+Dry-run mode is the default so live data can be tested without accidentally routing broker orders. To enable real Alpaca paper order submission through the broker adapter, use paper credentials, keep `PAPER_TRADING=true`, keep `ALPACA_BASE_URL=https://paper-api.alpaca.markets`, and set:
+
+```dotenv
+EXECUTION_MODE=paper
+```
+
+or pass:
+
+```powershell
+trading_env\Scripts\python.exe main.py paper --provider alpaca --execution-mode paper --symbol SPY
+```
 
 ## CLI Modes
 
@@ -128,6 +143,7 @@ Common options:
 - `--output`: write a JSON backtest report.
 - `--html-output`: write an HTML backtest report in `report` mode.
 - `--store-dir`: write JSONL run artifacts under this directory, default `runs`.
+- `--execution-mode`: `dry-run` or `paper`. Dry-run is the default; Alpaca paper order submission requires `paper`.
 
 ## Programmatic Usage
 
@@ -166,6 +182,9 @@ Important defaults:
 
 - `PAPER_TRADING=true`
 - `DATA_PROVIDER=yfinance`
+- `EXECUTION_MODE=dry-run`
+- `ALLOW_LIVE_TRADING=false`
+- `STATE_DB_PATH=runs/tradingbot.sqlite3`
 - `ALPACA_BASE_URL=https://paper-api.alpaca.markets`
 - `ALPACA_DATA_STREAM_URL=wss://stream.data.alpaca.markets/v2/iex`
 - `MARKET=SPY`
@@ -234,12 +253,20 @@ Key components:
 - `YFinanceDataFeed`: yfinance historical adapter.
 - `AlpacaHistoricalDataFeed`: Alpaca historical adapter scaffold.
 - `MarketDataManager`: chooses the correct data provider based on config.
+- `normalize_ohlcv_frame()` and `normalize_bar()`: canonical historical/live data normalization helpers.
 - `MarketDataStream`: stream interface.
 - `ReplayMarketDataStream`: deterministic stream from local/sample bars.
 - `YFinancePollingStream`: polling-style yfinance stream scaffold.
-- `AlpacaMarketDataStream`: websocket stream scaffold for Alpaca bars.
+- `AlpacaMarketDataStream`: websocket stream scaffold for Alpaca bars with health tracking, bounded reconnects, stale-stream detection, and subscription replay.
 - `DataQualityValidator`: checks for missing, stale, malformed, or suspicious bars.
+- `MarketSessionCalendar`: session classification for regular hours, pre-market, after-hours, holidays, and early closes.
+- `HistoricalDataCache`: optional CSV cache for hydrated historical data.
+- `CorporateActionPolicy`: split, dividend, symbol-change, raw, split-adjusted, and total-return adjustment scaffolding.
 - `sample_ohlcv()`: deterministic local OHLCV data for tests and offline demos.
+
+Alpaca REST calls flow through `AlpacaRestClient`, which centralizes authentication headers, retries, HTTP/network error classification, and timeout handling for both market data and paper-broker requests.
+Alpaca historical requests follow `next_page_token` pagination and can optionally hydrate/read from `HistoricalDataCache`.
+Historical and live bars are normalized through the same schema boundary before strategies see them. Data quality gates cover duplicate timestamps, missing/null bars, invalid OHLC relationships, non-positive prices, negative volume, out-of-order events, stale events, extreme high/low ranges, and possible split-like price jumps.
 
 Design choice: provider-specific code stays at the edges. Strategies and engines should receive normalized frames/events instead of knowing whether the data came from yfinance, Alpaca, or a replay stream.
 
@@ -335,6 +362,8 @@ Design choice: runtime execution and backtesting are intentionally different pac
 - `mark_order()`: helper for order state transitions.
 
 The current implementation is a base for paper trading, not a final unattended broker control system. Before autonomous paper trading is considered complete, the broker layer needs durable state, reconciliation loops, idempotent client order IDs, restart recovery, and stronger operational controls.
+
+The runtime now includes MVP operator controls for `pause`, `resume`, `disable_orders`, `enable_orders`, `cancel_all_orders`, `flatten_positions`, and `kill_switch`. Configurable runtime risk limits can halt the engine on max daily loss, max drawdown, max position notional, max order notional, max open orders, or max order frequency.
 
 ## Risk
 

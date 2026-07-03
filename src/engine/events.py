@@ -7,6 +7,8 @@ from typing import Any, Dict
 class EngineEventType(str, Enum):
     STARTED = "STARTED"
     STOPPED = "STOPPED"
+    CONTROL = "CONTROL"
+    HALT = "HALT"
     MARKET_DATA = "MARKET_DATA"
     SIGNAL = "SIGNAL"
     ORDER = "ORDER"

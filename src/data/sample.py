@@ -6,7 +6,8 @@ import pandas as pd
 
 from src.models import Bar
 
-from .events import MarketDataEvent, MarketDataEventType
+from .events import MarketDataEvent
+from .normalization import normalize_bar, normalize_ohlcv_frame
 
 
 def sample_ohlcv(
@@ -27,7 +28,7 @@ def sample_ohlcv(
     low = np.minimum(open_, close) - 0.8
     volume = 1_000_000 + (np.cos(x / 4) * 50_000).astype(int)
 
-    return pd.DataFrame(
+    return normalize_ohlcv_frame(pd.DataFrame(
         {
             "Open": open_,
             "High": high,
@@ -36,7 +37,7 @@ def sample_ohlcv(
             "Volume": volume,
         },
         index=index,
-    )
+    ))
 
 
 def bars_from_ohlcv(symbol: str, data: pd.DataFrame) -> Iterable[Bar]:
@@ -54,12 +55,10 @@ def bars_from_ohlcv(symbol: str, data: pd.DataFrame) -> Iterable[Bar]:
 
 def events_from_ohlcv(symbol: str, data: pd.DataFrame) -> Iterable[MarketDataEvent]:
     for bar in bars_from_ohlcv(symbol, data):
-        yield MarketDataEvent(
-            event_type=MarketDataEventType.BAR,
-            symbol=symbol,
-            timestamp=bar.timestamp if isinstance(bar.timestamp, datetime) else pd.Timestamp(bar.timestamp).to_pydatetime(),
-            bar=bar,
-            payload={
+        yield normalize_bar(
+            symbol,
+            {
+                "timestamp": bar.timestamp if isinstance(bar.timestamp, datetime) else pd.Timestamp(bar.timestamp).to_pydatetime(),
                 "open": bar.open,
                 "high": bar.high,
                 "low": bar.low,

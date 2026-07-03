@@ -1,9 +1,8 @@
-import json
 from typing import Iterable, Optional
-from urllib.request import Request, urlopen
 
 from src.config import AlpacaConfig
 from src.models import Order
+from src.utils.alpaca_rest import AlpacaRestClient
 
 from .broker import Broker
 from .orders import ensure_client_order_id, mark_order
@@ -15,6 +14,7 @@ class AlpacaPaperBroker(Broker):
 
     def __init__(self, config: AlpacaConfig):
         self.config = config
+        self.client = AlpacaRestClient(config)
         self.orders: dict[str, Order] = {}
         self.reports: dict[str, ExecutionReport] = {}
 
@@ -120,20 +120,7 @@ class AlpacaPaperBroker(Broker):
         return list(self.reports.values())
 
     def _request(self, method: str, path: str, payload: Optional[dict]) -> dict:
-        data = json.dumps(payload).encode("utf-8") if payload is not None else None
-        request = Request(
-            f"{self.config.base_url}{path}",
-            data=data,
-            method=method,
-            headers={
-                "APCA-API-KEY-ID": self.config.api_key,
-                "APCA-API-SECRET-KEY": self.config.secret_key,
-                "Content-Type": "application/json",
-            },
-        )
-        with urlopen(request, timeout=30) as response:
-            body = response.read().decode("utf-8")
-        return json.loads(body) if body else {}
+        return self.client.request(method, f"{self.config.base_url}{path}", payload)
 
     def _validate_credentials(self) -> None:
         if not self.config.api_key or not self.config.secret_key:

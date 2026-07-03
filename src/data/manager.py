@@ -9,6 +9,7 @@ from src.utils.retry import RetryPolicy
 from .alpaca import AlpacaHistoricalDataFeed
 from .alpaca_stream import AlpacaMarketDataStream
 from .interface import DataFeed
+from .normalization import normalize_ohlcv_frame
 from .quality import DataQualityValidator
 from .sample import events_from_ohlcv, sample_ohlcv
 from .stream import MarketDataStream, ReplayMarketDataStream, YFinancePollingStream
@@ -70,10 +71,7 @@ class MarketDataManager:
         if missing:
             raise ValueError(f"Historical data is missing required OHLC columns: {sorted(missing)}")
 
-        normalized = data.copy()
-        if "Volume" not in normalized.columns:
-            normalized["Volume"] = 0.0
-        normalized = normalized.sort_index()
+        normalized = normalize_ohlcv_frame(data)
         report = DataQualityValidator().validate_ohlcv(normalized)
         if not report.passed:
             messages = "; ".join(issue.message for issue in report.issues if issue.severity == "ERROR")

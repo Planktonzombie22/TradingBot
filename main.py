@@ -22,6 +22,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--output", help="Optional path for a JSON backtest report.")
     parser.add_argument("--html-output", default="reports/backtest.html", help="Path for an HTML report in report mode.")
     parser.add_argument("--store-dir", default="runs", help="Directory for JSONL run artifacts.")
+    parser.add_argument("--execution-mode", choices=["dry-run", "paper"], help="Broker execution mode. Defaults to EXECUTION_MODE or dry-run.")
     return parser
 
 
@@ -33,6 +34,7 @@ def build_config(args: argparse.Namespace):
             "period": args.period,
             "interval": args.interval,
             "strategy": args.strategy,
+            "execution_mode": getattr(args, "execution_mode", None),
         }
     )
 
