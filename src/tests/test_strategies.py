@@ -1,8 +1,9 @@
 import pandas as pd
 
 from src.backtesting import run_backtest
+from src.data import sample_ohlcv
 from src.models import Signal
-from src.strategies import get_strategy
+from src.strategies import get_strategy, list_strategies, strategy_schema
 from src.strategies.base import Strategy
 
 
@@ -21,6 +22,20 @@ class OneTradeStrategy(Strategy):
 
 def test_strategy_registry_exposes_tuff_system():
     assert get_strategy("tuffSystem").__name__ == "TuffSystem"
+
+
+def test_research_systems_are_registered_and_emit_signals():
+    data = sample_ohlcv(periods=160)
+
+    for name in ["momentumRegime", "meanReversion", "volatilityBreakout"]:
+        strategy_cls = get_strategy(name)
+        strategy = strategy_cls("SPY")
+        signals = strategy.generate_signals(data)
+
+        assert name in list_strategies()
+        assert len(signals) == len(data)
+        assert {"BUY", "SELL", "CLOSE", "HOLD"}.issuperset({signal.action for signal in signals})
+        assert strategy_schema(name)["parameters"]
 
 
 def test_backtest_engine_keeps_compatibility_result_shape():

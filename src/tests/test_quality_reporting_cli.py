@@ -1,6 +1,7 @@
 import argparse
+import json
 
-from main import build_config
+from main import build_config, load_json_options, run_optimize_app
 from src.data import DataQualityValidator, sample_ohlcv
 from src.reporting import render_backtest_html
 from src.app import TradingApplication
@@ -38,10 +39,42 @@ def test_cli_config_accepts_new_modes_indirectly():
         provider="sample",
         period="2y",
         interval="1d",
+        start="2024-01-01T00:00:00Z",
+        end="2024-12-31T00:00:00Z",
         strategy="buyHold",
+        strategy_params='{"stop_percent":0.03}',
+        strategy_params_file=None,
     )
 
     config = build_config(args)
 
     assert config.data.provider == "sample"
+    assert config.data.start == "2024-01-01T00:00:00Z"
+    assert config.data.end == "2024-12-31T00:00:00Z"
     assert config.strategy.name == "buyHold"
+    assert config.strategy.params == {"stop_percent": 0.03}
+
+
+def test_optimize_app_writes_ranked_artifacts(tmp_path):
+    app = TradingApplication(
+        RuntimeConfig(
+            data=MarketDataConfig(provider="sample", symbol="SPY"),
+            strategy=StrategyConfig(name="buyHold"),
+        )
+    )
+
+    run_optimize_app(app, json.dumps({"stop_percent": [0.03, 0.05]}), "total_return", store_dir=str(tmp_path))
+
+    path = tmp_path / "optimization-results.jsonl"
+    assert path.exists()
+    payload = json.loads(path.read_text(encoding="utf-8").splitlines()[0])
+    assert payload["rank"] == 1
+
+
+def test_load_json_options_from_file(tmp_path):
+    path = tmp_path / "grid.json"
+    path.write_text(json.dumps({"adx_minimum": [20, 25]}), encoding="utf-8")
+
+    grid = load_json_options(path=str(path))
+
+    assert grid == {"adx_minimum": [20, 25]}

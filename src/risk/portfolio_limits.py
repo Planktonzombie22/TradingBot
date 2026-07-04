@@ -19,7 +19,10 @@ class PortfolioRiskLimits:
     max_gross_exposure: float = 1.0
     max_sector_weight: float = 0.40
     max_pairwise_correlation: Optional[float] = None
+    min_cash_reserve: float = 0.0
+    max_net_beta: Optional[float] = None
     sector_map: Dict[str, str] = field(default_factory=dict)
+    beta_map: Dict[str, float] = field(default_factory=dict)
 
     def evaluate_order(
         self,
@@ -42,12 +45,21 @@ class PortfolioRiskLimits:
         if gross_exposure > self.max_gross_exposure:
             return PortfolioLimitDecision(False, "Portfolio exceeds max gross exposure.")
 
+        cash_reserve = max((equity - sum(max(value, 0.0) for value in projected.values())) / equity, 0.0)
+        if cash_reserve < self.min_cash_reserve:
+            return PortfolioLimitDecision(False, "Portfolio cash reserve would fall below minimum.")
+
         sector_exposure: Dict[str, float] = {}
         for projected_symbol, exposure in projected.items():
             sector = self.sector_map.get(projected_symbol, "UNKNOWN")
             sector_exposure[sector] = sector_exposure.get(sector, 0.0) + abs(exposure)
         if any(value / equity > self.max_sector_weight for value in sector_exposure.values()):
             return PortfolioLimitDecision(False, "Portfolio exceeds max sector exposure.")
+
+        if self.max_net_beta is not None:
+            net_beta = sum((exposure / equity) * self.beta_map.get(symbol, 1.0) for symbol, exposure in projected.items())
+            if abs(net_beta) > self.max_net_beta:
+                return PortfolioLimitDecision(False, "Portfolio exceeds max net beta exposure.")
 
         return PortfolioLimitDecision(True)
 

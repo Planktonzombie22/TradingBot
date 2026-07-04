@@ -12,6 +12,7 @@ from src.backtesting import (
 from src.backtesting.types import AccountSnapshot, MarketSnapshot
 from src.data import sample_ohlcv
 from src.models import Order
+from src.portfolio import EqualWeightAllocation, FixedNotionalAllocation, RiskParityAllocation
 from src.risk import PortfolioRiskLimits
 from src.strategies.buy_hold import BuyAndHoldStrategy
 
@@ -53,6 +54,44 @@ def test_portfolio_limits_reject_high_correlation():
     decision = limits.evaluate_correlation(returns)
 
     assert not decision.accepted
+
+
+def test_portfolio_allocation_policies_create_targets():
+    equal = EqualWeightAllocation(gross_exposure=0.8).allocate(["SPY", "QQQ"], equity=10_000)
+    fixed = FixedNotionalAllocation(notional_per_symbol=1_000).allocate(["SPY", "QQQ"], equity=10_000)
+
+    assert [target.notional for target in equal] == [4_000, 4_000]
+    assert [target.weight for target in fixed] == [0.1, 0.1]
+
+
+def test_risk_parity_allocates_more_to_lower_volatility_symbol():
+    returns = pd.DataFrame(
+        {
+            "LOW": [0.001, 0.002, 0.001, 0.002],
+            "HIGH": [0.01, -0.02, 0.03, -0.01],
+        }
+    )
+
+    targets = RiskParityAllocation(gross_exposure=1.0).allocate(["LOW", "HIGH"], equity=10_000, returns=returns)
+    by_symbol = {target.symbol: target.weight for target in targets}
+
+    assert by_symbol["LOW"] > by_symbol["HIGH"]
+
+
+def test_portfolio_limits_reject_cash_reserve_and_beta_breaches():
+    reserve_limits = PortfolioRiskLimits(max_symbol_weight=1.0, max_gross_exposure=1.0, min_cash_reserve=0.20)
+    beta_limits = PortfolioRiskLimits(
+        max_symbol_weight=1.0,
+        max_gross_exposure=2.0,
+        max_net_beta=0.5,
+        beta_map={"SPY": 1.2},
+    )
+
+    reserve_decision = reserve_limits.evaluate_order("SPY", order_notional=9_000, equity=10_000, exposures={})
+    beta_decision = beta_limits.evaluate_order("SPY", order_notional=6_000, equity=10_000, exposures={})
+
+    assert not reserve_decision.accepted
+    assert not beta_decision.accepted
 
 
 def test_spread_volume_slippage_moves_price_against_order():

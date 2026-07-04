@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Tuple
 
 from src.config import settings as defaults
 
@@ -12,6 +12,13 @@ class MarketDataConfig:
     start: Optional[str] = None
     end: Optional[str] = None
     provider: str = defaults.DATA_PROVIDER
+
+
+@dataclass(frozen=True)
+class UniverseRuntimeConfig:
+    symbols: Tuple[str, ...] = (defaults.MARKET,)
+    watchlist_path: Optional[str] = None
+    screen: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -35,6 +42,14 @@ class AccountConfig:
 class StrategyConfig:
     name: str = defaults.DEFAULT_STRATEGY
     params: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class StrategyScheduleConfig:
+    timeframe: str = defaults.INTERVAL
+    warmup_bars: int = 0
+    allow_pre_market: bool = False
+    allow_after_hours: bool = False
 
 
 @dataclass(frozen=True)
@@ -67,7 +82,9 @@ class RuntimeConfig:
     paper_trading: bool = defaults.PAPER_TRADING
     data: MarketDataConfig = field(default_factory=MarketDataConfig)
     alpaca: AlpacaConfig = field(default_factory=AlpacaConfig)
+    universe: UniverseRuntimeConfig = field(default_factory=UniverseRuntimeConfig)
     account: AccountConfig = field(default_factory=AccountConfig)
     strategy: StrategyConfig = field(default_factory=StrategyConfig)
+    schedule: StrategyScheduleConfig = field(default_factory=StrategyScheduleConfig)
     execution: ExecutionConfig = field(default_factory=ExecutionConfig)
     runtime_risk: RuntimeRiskConfig = field(default_factory=RuntimeRiskConfig)

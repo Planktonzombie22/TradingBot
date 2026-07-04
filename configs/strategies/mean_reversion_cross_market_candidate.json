@@ -1,0 +1,8 @@
+{
+  "band_period": 20,
+  "band_deviation": 1.5,
+  "oversold": 30,
+  "overbought": 75,
+  "min_zscore": 1.0,
+  "atr_stop_multiple": 1.5
+}

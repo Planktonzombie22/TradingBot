@@ -1,0 +1,7 @@
+{
+  "fast_ema": 20,
+  "slow_ema": 50,
+  "roc_period": 20,
+  "min_roc": 0.0,
+  "atr_stop_multiple": 3.0
+}

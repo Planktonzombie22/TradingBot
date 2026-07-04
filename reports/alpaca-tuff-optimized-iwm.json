@@ -1,0 +1,285 @@
+{
+  "total_pnl": -6320.587553356228,
+  "total_pnl_pct": -0.6320587553356228,
+  "metrics": {
+    "starting_equity": 10000.0,
+    "ending_equity": 3679.4124466437715,
+    "total_return": -0.6320587553356228,
+    "max_drawdown": -0.6995809011022828,
+    "volatility": 0.02861929855970697,
+    "sharpe": -0.03154493251590186,
+    "fills": 28,
+    "events": 1560
+  },
+  "trades": [
+    {
+      "Entry Date": "2023-10-04 04:00:00+00:00",
+      "Entry Price": 171.2,
+      "Type": "Short",
+      "Shares": -42.43432813320713,
+      "Entry Equity": 10000.0,
+      "Exit Date": "2023-11-15 05:00:00+00:00",
+      "Exit Price": 178.81,
+      "Exit Equity": 9677.074762906293,
+      "PnL": -322.92523709370687
+    },
+    {
+      "Entry Date": "2023-12-14 05:00:00+00:00",
+      "Entry Price": 198.75,
+      "Type": "Long",
+      "Shares": 16.67512067664171,
+      "Entry Equity": 7614.402558420152,
+      "Exit Date": "2024-01-18 05:00:00+00:00",
+      "Exit Price": 190.61,
+      "Exit Equity": 7478.667076112289,
+      "PnL": -135.7354823078633
+    },
+    {
+      "Entry Date": "2025-03-12 04:00:00+00:00",
+      "Entry Price": 201.155,
+      "Type": "Short",
+      "Shares": -15.298571630011564,
+      "Entry Equity": 5728.604055459371,
+      "Exit Date": "2025-05-13 04:00:00+00:00",
+      "Exit Price": 208.65,
+      "Exit Equity": 5613.941261092435,
+      "PnL": -114.66279436693674
+    }
+  ],
+  "fills": [
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 42.43432813320713,
+      "price": 171.2,
+      "commission": 0.0,
+      "timestamp": "2023-10-04T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 50.36577772948037,
+      "price": 171.39,
+      "commission": 0.0,
+      "timestamp": "2023-10-05T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 58.963965076477876,
+      "price": 172.96,
+      "commission": 0.0,
+      "timestamp": "2023-10-06T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 66.35426540522695,
+      "price": 174.01,
+      "commission": 0.0,
+      "timestamp": "2023-10-09T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 57.36302273508455,
+      "price": 165.43,
+      "commission": 0.0,
+      "timestamp": "2023-11-01T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 28.826951943628526,
+      "price": 169.86,
+      "commission": 0.0,
+      "timestamp": "2023-11-02T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 304.3083110231054,
+      "price": 178.81,
+      "commission": 0.0,
+      "timestamp": "2023-11-15T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 16.67512067664171,
+      "price": 198.75,
+      "commission": 0.0,
+      "timestamp": "2023-12-14T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 27.749800211813785,
+      "price": 197.01,
+      "commission": 0.0,
+      "timestamp": "2023-12-15T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 27.619718065233652,
+      "price": 197.08,
+      "commission": 0.0,
+      "timestamp": "2023-12-18T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 22.58041501533653,
+      "price": 200.96,
+      "commission": 0.0,
+      "timestamp": "2023-12-19T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 33.64840100608485,
+      "price": 196.25,
+      "commission": 0.0,
+      "timestamp": "2023-12-20T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 27.101984147091546,
+      "price": 199.74,
+      "commission": 0.0,
+      "timestamp": "2023-12-21T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 25.022412114352683,
+      "price": 201.49,
+      "commission": 0.0,
+      "timestamp": "2023-12-22T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 24.60133528675784,
+      "price": 204.0,
+      "commission": 0.0,
+      "timestamp": "2023-12-26T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 8.579370461974616,
+      "price": 204.735,
+      "commission": 0.0,
+      "timestamp": "2023-12-27T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 213.57855698528718,
+      "price": 190.61,
+      "commission": 0.0,
+      "timestamp": "2024-01-18T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 15.298571630011564,
+      "price": 201.155,
+      "commission": 0.0,
+      "timestamp": "2025-03-12T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 13.239724901067468,
+      "price": 198.065,
+      "commission": 0.0,
+      "timestamp": "2025-03-13T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 18.194920096848122,
+      "price": 202.915,
+      "commission": 0.0,
+      "timestamp": "2025-03-14T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 21.224686766696383,
+      "price": 205.4,
+      "commission": 0.0,
+      "timestamp": "2025-03-17T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 18.630632992684816,
+      "price": 203.185,
+      "commission": 0.0,
+      "timestamp": "2025-03-18T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 22.49022359467348,
+      "price": 206.42,
+      "commission": 0.0,
+      "timestamp": "2025-03-19T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 13.465411880327064,
+      "price": 208.91,
+      "commission": 0.0,
+      "timestamp": "2025-03-24T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 17.249224169563327,
+      "price": 179.565,
+      "commission": 0.0,
+      "timestamp": "2025-04-07T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 15.635714467483602,
+      "price": 174.85,
+      "commission": 0.0,
+      "timestamp": "2025-04-08T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 23.39549406762132,
+      "price": 189.74,
+      "commission": 0.0,
+      "timestamp": "2025-04-09T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 178.82460456697714,
+      "price": 208.65,
+      "commission": 0.0,
+      "timestamp": "2025-05-13T04:00:00+00:00"
+    }
+  ],
+  "rejections": [
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 45.36174024003105,
+      "reason": "INSUFFICIENT_MARGIN",
+      "message": "Order exceeds available buying power.",
+      "timestamp": "2023-10-10T04:00:00+00:00"
+    }
+  ]
+}

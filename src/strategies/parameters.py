@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Any, Dict, Mapping, Optional, Type
+from typing import Any, Dict, Iterable, Mapping, Optional, Type
 
 from .base import Strategy
 
@@ -11,6 +11,8 @@ class ParameterSpec:
     type_: Type
     minimum: Optional[float] = None
     maximum: Optional[float] = None
+    description: str = ""
+    optimize_values: Optional[Iterable[Any]] = None
 
     def validate(self, value: Any) -> Any:
         if not isinstance(value, self.type_):
@@ -23,6 +25,17 @@ class ParameterSpec:
         if self.maximum is not None and value > self.maximum:
             raise ValueError(f"Strategy parameter '{self.name}' must be <= {self.maximum}.")
         return value
+
+    def to_schema(self) -> Dict[str, Any]:
+        return {
+            "name": self.name,
+            "type": self.type_.__name__,
+            "default": self.default,
+            "minimum": self.minimum,
+            "maximum": self.maximum,
+            "description": self.description,
+            "optimize_values": list(self.optimize_values) if self.optimize_values is not None else None,
+        }
 
 
 @dataclass(frozen=True)
@@ -41,3 +54,9 @@ class StrategySpec:
             value = params.get(name, spec.default)
             validated[name] = spec.validate(value)
         return validated
+
+    def to_schema(self) -> Dict[str, Any]:
+        return {
+            "strategy": self.strategy_cls.__name__,
+            "parameters": {name: spec.to_schema() for name, spec in self.parameters.items()},
+        }

@@ -1,0 +1,6 @@
+{
+  "channel_period": 55,
+  "min_adx": 18,
+  "atr_stop_multiple": 3.0,
+  "min_channel_width": 0.02
+}

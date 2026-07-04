@@ -80,6 +80,24 @@ Use yfinance historical data when network access is available:
 trading_env\Scripts\python.exe main.py backtest --provider yfinance --strategy tuffSystem --symbol SPY --period 2y --interval 1d
 ```
 
+Run a reproducible Alpaca historical window:
+
+```powershell
+trading_env\Scripts\python.exe main.py backtest --provider alpaca --strategy tuffSystem --symbol SPY --interval 1d --start 2024-01-01T00:00:00Z --end 2024-12-31T00:00:00Z
+```
+
+Optimize the original Tuff System strategy from a reusable parameter-grid file:
+
+```powershell
+trading_env\Scripts\python.exe main.py optimize --provider alpaca --strategy tuffSystem --symbol SPY --interval 1d --start 2023-01-01T00:00:00Z --end 2025-12-31T00:00:00Z --param-grid-file configs\optimization\tuff_system_daily.json
+```
+
+Replay a strategy with parameter settings from a JSON file:
+
+```powershell
+trading_env\Scripts\python.exe main.py backtest --provider alpaca --strategy tuffSystem --strategy-params-file configs\strategies\tuff_system_default.json --symbol SPY --interval 1d --start 2023-01-01T00:00:00Z --end 2025-12-31T00:00:00Z
+```
+
 ## Alpaca Setup
 
 Copy `.env.example` to `.env` and fill in credentials:
@@ -131,19 +149,27 @@ Available modes:
 - `stream`: create a market data stream and feed events through the runtime engine without treating the run as broker paper trading.
 - `paper`: use the same runtime path as streaming, labeled as the paper-trading workflow. This is the path that will keep gaining broker synchronization and safety controls.
 - `report`: run a backtest and write an HTML report.
+- `optimize`: run a parameter grid search and write ranked JSONL optimization artifacts.
 
 Common options:
 
 - `--provider`: `sample`, `yfinance`, or `alpaca`.
 - `--symbol`: symbol to load and trade, default `SPY`.
 - `--strategy`: registered strategy name, currently `buyHold` or `tuffSystem`.
+- `--strategy-params`: JSON object of strategy constructor parameters.
+- `--strategy-params-file`: JSON file containing strategy constructor parameters.
 - `--period`: historical lookback period, default `2y`.
 - `--interval`: historical bar interval, default `1d` from the CLI.
+- `--start`: optional historical start date/timestamp for providers that support date ranges.
+- `--end`: optional historical end date/timestamp for providers that support date ranges.
 - `--plot`: show the matplotlib backtest plot.
 - `--output`: write a JSON backtest report.
 - `--html-output`: write an HTML backtest report in `report` mode.
 - `--store-dir`: write JSONL run artifacts under this directory, default `runs`.
 - `--execution-mode`: `dry-run` or `paper`. Dry-run is the default; Alpaca paper order submission requires `paper`.
+- `--param-grid`: JSON object of parameter lists for `optimize` mode.
+- `--param-grid-file`: JSON file containing parameter lists for `optimize` mode. Useful on shells where inline JSON quoting is awkward.
+- `--metric`: metric to optimize, default `total_return`.
 
 ## Programmatic Usage
 
@@ -293,7 +319,8 @@ Important files:
 - `buy_hold.py`: simple buy-and-hold strategy for deterministic MVP tests.
 - `tuff_system.py`: indicator-based strategy.
 - `parameters.py`: parameter specs and validation.
-- `registry.py`: maps strategy names to classes and schemas.
+- `registry.py`: maps strategy names to classes and schemas, and exposes `register_strategy()` for plugin-style extensions.
+- `scheduling.py`: symbol/timeframe/session/warmup scheduling policy.
 
 Registered strategies:
 
@@ -301,6 +328,10 @@ Registered strategies:
 - `tuffSystem`
 
 Design choice: strategies emit `Signal` objects. They do not execute trades themselves. This keeps strategy intent separate from execution details such as slippage, margin, commissions, liquidity, broker limitations, or account state.
+
+Strategy parameter specs are serializable through `strategy_schema()`, including type, default, min/max bounds, descriptions, and optional optimization candidate values. External modules can register new strategies with `register_strategy()` without editing the built-in registry.
+
+`UniverseLoader` can build multi-symbol universes from direct config symbols, JSON/text watchlists, broker asset payloads, or simple generated research screens such as `top_volume`. `StrategySchedule` gates runtime execution by symbol, timeframe, session policy, and required warmup bars.
 
 ## Backtesting
 
@@ -329,8 +360,12 @@ Research helpers:
 - `run_multi_symbol_backtest()`: multi-symbol backtest helper.
 - `grid_search()`: parameter optimization helper.
 - `run_walk_forward()`: walk-forward research helper.
+- `rank_optimization_results()` and `overfitting_report()`: optimizer ranking and overfit diagnostics.
+- `BatchBacktestRunner`: resumable batch runner for symbols, strategies, and parameter sets.
 
 Design choice: backtesting assumptions are modular. This matters because unrealistic fills are one of the easiest ways to fool yourself in trading research. The architecture separates signal generation from order sizing, risk, execution, slippage, commissions, liquidity, margin, ledger updates, and metrics.
+
+Execution assumptions can be grouped with `BacktestExecutionProfile`, which builds a bar execution model from paper-like settings such as price column, spread, market impact, commission, and max volume share. `TransactionCostCalibration` can estimate spread/impact settings from observed paper fills and quoted bid/ask data. `ExecutionParityScenario` replays a single order through backtest execution and the paper broker boundary to catch obvious status or quantity drift.
 
 ## Runtime Engine
 
@@ -360,6 +395,10 @@ Design choice: runtime execution and backtesting are intentionally different pac
 - `AlpacaPaperBroker`: Alpaca paper REST adapter scaffold.
 - `ExecutionReport`: normalized order/fill/reconciliation result.
 - `mark_order()`: helper for order state transitions.
+- Intent models for signal, target position, generated order, broker order, and fill.
+- Replacement policies for stale market/limit order handling.
+- Bracket/OCO/order-capability plans.
+- End-of-day policies for hold, cancel-open-orders, flatten, and reduce behavior.
 
 The current implementation is a base for paper trading, not a final unattended broker control system. Before autonomous paper trading is considered complete, the broker layer needs durable state, reconciliation loops, idempotent client order IDs, restart recovery, and stronger operational controls.
 
@@ -388,6 +427,8 @@ Examples of future responsibility:
 - Allocation models.
 - Concentration and correlation-aware decisions.
 
+Current allocation policies include equal weight, fixed notional, volatility target, and risk parity. Portfolio risk controls cover symbol concentration, gross exposure, sector exposure, pairwise correlation, cash reserve, and net beta exposure.
+
 ## Storage
 
 `src/storage` currently provides `JsonlStore` and `SQLiteStateStore`.
@@ -406,6 +447,8 @@ The CLI uses this to write run artifacts such as:
 - Position snapshots.
 
 It can also rebuild a local `PaperBroker` from persisted orders and reports, which is the first startup-recovery step for paper trading. JSONL is still useful for MVP inspection because it is simple, append-friendly, and easy to diff; SQLite is the durable path for broker state that must survive restarts.
+
+`RunManifest` and `ImmutableArtifactStore` provide the research artifact boundary. A manifest records run type, strategy, symbols, config, data source, dependency versions, and code version when available. Immutable artifact writes create a run-specific directory and refuse accidental overwrite by default.
 
 ## Reporting
 
@@ -426,7 +469,18 @@ This package is deliberately separate from `src/backtesting`. The backtesting en
 - `timers.py`: timing helpers.
 - `helpers.py`: legacy/general helpers.
 
-Logging is currently enough for the MVP. Production paper trading still needs stronger observability: structured logs, health checks, metrics, alerts, and explicit operational events.
+Logging is currently enough for the MVP and supports structured JSON logs plus rotating file output.
+
+`src/monitoring` provides MVP operational visibility:
+
+- `DashboardSnapshot`: account, open orders, recent fills, risk halt state, and health payloads.
+- `NotificationRouter`: startup, shutdown, order, fill, error, and halt notifications routed to a sink.
+- `MetricsRegistry`: counters, gauges, and latency/timing samples.
+- `HealthCheck`: explicit health check wrappers.
+
+`validate_runtime_environment()` checks `.env`/runtime safety before Alpaca data or paper execution, including required credentials, paper endpoint safety, execution mode, and live-trading unlock warnings.
+
+`src/deployment` contains local Windows task, Docker, and small-server profile scaffolds. `docs/PAPER_TRADING_SOAK_CHECKLIST.md` defines the final paper-trading soak gates.
 
 ## Testing
 
@@ -506,6 +560,8 @@ Items 1-30 are implemented at the MVP/scaffold level. Production paper-trading r
 - Deployment profiles.
 - Secrets validation.
 - Paper-trading soak checklist.
+
+Items 1-75 are now implemented at the MVP/scaffold level. This means the architecture is present and test-covered, not that unattended trading has passed a real multi-session paper soak.
 
 ## Development Notes
 

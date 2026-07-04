@@ -4,12 +4,13 @@ import pandas as pd
 
 from src.backtesting import BacktestConfig, BacktestEngine
 from src.config import RuntimeConfig
-from src.data import MarketDataManager, MarketDataStream, YFinanceDataFeed
+from src.data import MarketDataManager, MarketDataStream, MarketSessionPolicy, UniverseConfig, UniverseLoader, YFinanceDataFeed
 from src.engine import TradingEngine
 from src.execution import AlpacaPaperBroker, Broker, PaperBroker, validate_alpaca_paper_safety, validate_execution_mode
 from src.models import BacktestResult
 from src.strategies import get_strategy, validate_strategy_params
 from src.strategies.base import Strategy
+from src.strategies.scheduling import StrategySchedule
 
 
 @dataclass
@@ -29,6 +30,27 @@ class TradingApplication:
         strategy_cls = get_strategy(self.config.strategy.name)
         params = validate_strategy_params(self.config.strategy.name, self.config.strategy.params)
         return strategy_cls(self.config.data.symbol, **params)
+
+    def load_universe(self) -> list[str]:
+        return UniverseLoader().load(
+            UniverseConfig(
+                symbols=self.config.universe.symbols,
+                watchlist_path=self.config.universe.watchlist_path,
+                screen=self.config.universe.screen,
+            )
+        )
+
+    def create_strategy_schedule(self) -> StrategySchedule:
+        return StrategySchedule(
+            symbols=self.load_universe(),
+            timeframe=self.config.schedule.timeframe,
+            warmup_bars=self.config.schedule.warmup_bars,
+            session_policy=MarketSessionPolicy(
+                allow_pre_market=self.config.schedule.allow_pre_market,
+                allow_regular=True,
+                allow_after_hours=self.config.schedule.allow_after_hours,
+            ),
+        )
 
     def create_market_data_stream(self) -> MarketDataStream:
         stream = self.data_manager.stream(self.config.data, self.config.alpaca)

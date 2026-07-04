@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.indicators import ADX, ATR, DEMA, RSI, SMA, SuperTrend
+from src.indicators import ADX, ATR, BollingerBands, DEMA, DonchianChannel, EMA, KeltnerChannel, MACD, OBV, ROC, RSI, SMA, StochasticOscillator, SuperTrend
 
 
 def sample_ohlcv():
@@ -47,3 +47,25 @@ def test_volatility_and_trend_indicators_return_expected_columns():
     assert atr.name == "ATR"
     assert {"+DI", "-DI", "DX", "ADX"}.issubset(adx.columns)
     assert {"SuperTrend", "UpperBand", "LowerBand", "Direction", "Flip"}.issubset(supertrend.columns)
+
+
+def test_research_indicators_return_expected_shapes():
+    data = pd.DataFrame(
+        {
+            "Open": range(100, 160),
+            "High": range(101, 161),
+            "Low": range(99, 159),
+            "Close": range(100, 160),
+            "Volume": [100 + i for i in range(60)],
+        },
+        index=pd.date_range("2024-01-01", periods=60),
+    )
+
+    assert EMA(data, period=10).calculate().name == "EMA_10"
+    assert ROC(data, period=10).calculate().name == "ROC"
+    assert OBV(data).calculate().iloc[-1] > 0
+    assert {"MACD", "MACDSignal", "MACDHistogram"}.issubset(MACD(data).calculate_all().columns)
+    assert {"MiddleBand", "UpperBand", "LowerBand", "PercentB"}.issubset(BollingerBands(data).calculate_all().columns)
+    assert {"DonchianUpper", "DonchianLower", "DonchianMiddle"}.issubset(DonchianChannel(data).calculate_all().columns)
+    assert {"StochK", "StochD"}.issubset(StochasticOscillator(data).calculate_all().columns)
+    assert {"KeltnerUpper", "KeltnerLower", "KeltnerMiddle"}.issubset(KeltnerChannel(data).calculate_all().columns)

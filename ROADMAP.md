@@ -58,30 +58,32 @@ The remaining roadmap is the practical path to a bot that can run autonomous Alp
 46. Add corporate action handling for splits, dividends, symbol changes, and adjusted/unadjusted price policies. Implemented MVP.
 47. Add data quality gates for duplicate bars, missing bars, out-of-order events, bad OHLC relationships, and extreme gaps. Implemented MVP.
 48. Add live-vs-historical data normalization checks so strategies receive the same schema in both modes. Implemented MVP.
-49. Add multi-symbol universe loading from config files, watchlists, broker assets, and generated research screens.
-50. Add strategy scheduling by symbol, timeframe, session window, and warmup requirements.
-51. Add strategy parameter schemas that are serializable, optimizable, and validated before runs.
-52. Add a strategy plugin boundary for cleanly registering new strategies without editing core engine code.
-53. Add portfolio allocation policies for equal weight, volatility targeting, risk parity, and fixed notional sizing.
-54. Add portfolio-level exposure controls for sector, correlation, beta, symbol concentration, and cash reserve.
-55. Add order intent models that distinguish signal, target position, generated order, broker order, and fill.
-56. Add order replacement logic for stops, take-profits, trails, partial fills, and stale limit orders.
-57. Add bracket, OCO, stop, stop-limit, trailing-stop, market, and limit order abstractions with broker capability checks.
-58. Add end-of-day policies for holding overnight, flattening, reducing risk, and canceling stale orders.
-59. Add transaction cost calibration from observed paper fills and quoted spreads.
-60. Align backtest fills with paper execution assumptions, including bar timing, next-bar fills, spread, slippage, liquidity, and partial fills.
-61. Add paper/live parity tests that replay the same scenario through backtesting, paper broker, and broker adapter boundaries.
-62. Add an optimization CLI with grid search, random search, walk-forward runs, train/test splits, and artifact output.
-63. Add overfitting controls: holdout windows, rolling validation, parameter stability, turnover penalties, and minimum trade counts.
-64. Add optimization result ranking by CAGR, Sharpe, Sortino, drawdown, win rate, exposure, turnover, and tail risk.
-65. Add batch backtesting over symbols, strategies, parameter sets, and timeframes with resumable progress.
-66. Add run manifests that record code version, config, data source, data range, strategy parameters, and dependency versions.
-67. Add immutable research artifacts for equity curves, orders, fills, trades, metrics, logs, config, and HTML reports.
-68. Add a dashboard for current paper account state, open orders, recent fills, PnL, risk halts, and engine health.
-69. Add notifications for startup, shutdown, order submission, fills, rejects, halts, exceptions, and stale data.
-70. Add structured observability with JSON logs, metrics counters, latency timing, and health checks.
-71. Add integration tests with mocked Alpaca REST and websocket flows for auth, bars, orders, fills, rejects, and reconnects.
-72. Add scenario tests for market closed, insufficient buying power, rate limits, partial fills, cancel rejects, and stale data.
-73. Add deployment profiles for local Windows task scheduling, Docker, and a small always-on server.
-74. Add secrets handling and `.env` validation that fail fast when required credentials or unsafe combinations are present.
-75. Add a final paper-trading soak checklist: at least several market sessions, no unreconciled orders, clean restarts, no unhandled exceptions, and metrics matching broker statements.
+49. Add multi-symbol universe loading from config files, watchlists, broker assets, and generated research screens. Implemented MVP.
+50. Add strategy scheduling by symbol, timeframe, session window, and warmup requirements. Implemented MVP.
+51. Add strategy parameter schemas that are serializable, optimizable, and validated before runs. Implemented MVP.
+52. Add a strategy plugin boundary for cleanly registering new strategies without editing core engine code. Implemented MVP.
+53. Add portfolio allocation policies for equal weight, volatility targeting, risk parity, and fixed notional sizing. Implemented MVP.
+54. Add portfolio-level exposure controls for sector, correlation, beta, symbol concentration, and cash reserve. Implemented MVP.
+55. Add order intent models that distinguish signal, target position, generated order, broker order, and fill. Implemented MVP.
+56. Add order replacement logic for stops, take-profits, trails, partial fills, and stale limit orders. Implemented MVP.
+57. Add bracket, OCO, stop, stop-limit, trailing-stop, market, and limit order abstractions with broker capability checks. Implemented MVP.
+58. Add end-of-day policies for holding overnight, flattening, reducing risk, and canceling stale orders. Implemented MVP.
+59. Add transaction cost calibration from observed paper fills and quoted spreads. Implemented MVP.
+60. Align backtest fills with paper execution assumptions, including bar timing, next-bar fills, spread, slippage, liquidity, and partial fills. Implemented MVP.
+61. Add paper/live parity tests that replay the same scenario through backtesting, paper broker, and broker adapter boundaries. Implemented MVP.
+62. Add an optimization CLI with grid search, random search, walk-forward runs, train/test splits, and artifact output. Implemented MVP.
+63. Add overfitting controls: holdout windows, rolling validation, parameter stability, turnover penalties, and minimum trade counts. Implemented MVP.
+64. Add optimization result ranking by CAGR, Sharpe, Sortino, drawdown, win rate, exposure, turnover, and tail risk. Implemented MVP.
+65. Add batch backtesting over symbols, strategies, parameter sets, and timeframes with resumable progress. Implemented MVP.
+66. Add run manifests that record code version, config, data source, data range, strategy parameters, and dependency versions. Implemented MVP.
+67. Add immutable research artifacts for equity curves, orders, fills, trades, metrics, logs, config, and HTML reports. Implemented MVP.
+68. Add a dashboard for current paper account state, open orders, recent fills, PnL, risk halts, and engine health. Implemented MVP.
+69. Add notifications for startup, shutdown, order submission, fills, rejects, halts, exceptions, and stale data. Implemented MVP.
+70. Add structured observability with JSON logs, metrics counters, latency timing, and health checks. Implemented MVP.
+71. Add integration tests with mocked Alpaca REST and websocket flows for auth, bars, orders, fills, rejects, and reconnects. Implemented MVP.
+72. Add scenario tests for market closed, insufficient buying power, rate limits, partial fills, cancel rejects, and stale data. Implemented MVP.
+73. Add deployment profiles for local Windows task scheduling, Docker, and a small always-on server. Implemented MVP.
+74. Add secrets handling and `.env` validation that fail fast when required credentials or unsafe combinations are present. Implemented MVP.
+75. Add a final paper-trading soak checklist: at least several market sessions, no unreconciled orders, clean restarts, no unhandled exceptions, and metrics matching broker statements. Implemented MVP.
+
+Implemented so far: items 1-75.

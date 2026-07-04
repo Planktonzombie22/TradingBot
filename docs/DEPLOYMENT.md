@@ -58,3 +58,17 @@ trading_env\Scripts\python.exe main.py backtest --output reports\backtest.json
 - Store generated run artifacts under `runs/` or `reports/`.
 - Review logs and broker reports before trusting order state.
 - Add a process supervisor only after the paper runtime is stable.
+
+## 8. Deployment Profiles
+
+The code exposes deployment profile scaffolds in `src.deployment`:
+
+- `local_windows_task_profile()`: Windows Task Scheduler shape.
+- `docker_profile()`: container command/env shape.
+- `small_server_profile()`: small always-on server shape.
+
+Treat these as templates, not a green light for unattended trading. Run the paper soak checklist first.
+
+## 9. Soak Checklist
+
+Before unattended paper trading, complete `docs/PAPER_TRADING_SOAK_CHECKLIST.md`.

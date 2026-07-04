@@ -1,0 +1,250 @@
+{
+  "total_pnl": 3209.454193183563,
+  "total_pnl_pct": 0.3209454193183563,
+  "metrics": {
+    "starting_equity": 10000.0,
+    "ending_equity": 13209.454193183563,
+    "total_return": 0.3209454193183563,
+    "max_drawdown": -0.2129809581022386,
+    "volatility": 0.011746840697036085,
+    "sharpe": 0.03747854290610978,
+    "fills": 25,
+    "events": 1554
+  },
+  "trades": [
+    {
+      "Entry Date": "2023-12-01 05:00:00+00:00",
+      "Entry Price": 362.97,
+      "Type": "Long",
+      "Shares": 32.489395480114794,
+      "Entry Equity": 10000.0,
+      "Exit Date": "2024-04-11 04:00:00+00:00",
+      "Exit Price": 384.56,
+      "Exit Equity": 10701.446048415677,
+      "PnL": 701.4460484156776
+    },
+    {
+      "Entry Date": "2025-09-24 04:00:00+00:00",
+      "Entry Price": 461.04,
+      "Type": "Long",
+      "Shares": 56.44703160077424,
+      "Entry Equity": 13402.713773082913,
+      "Exit Date": "2025-11-19 05:00:00+00:00",
+      "Exit Price": 461.8,
+      "Exit Equity": 13445.6135170995,
+      "PnL": 42.89974401658791
+    }
+  ],
+  "fills": [
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 32.489395480114794,
+      "price": 362.97,
+      "commission": 0.0,
+      "timestamp": "2023-12-01T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 41.067701810587195,
+      "price": 362.62,
+      "commission": 0.0,
+      "timestamp": "2023-12-04T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 46.66925459503707,
+      "price": 361.91,
+      "commission": 0.0,
+      "timestamp": "2023-12-05T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 16.11982898263042,
+      "price": 361.185,
+      "commission": 0.0,
+      "timestamp": "2023-12-06T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 0.9872512543530583,
+      "price": 361.84,
+      "commission": 0.0,
+      "timestamp": "2023-12-07T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 1.876098444774404,
+      "price": 363.08,
+      "commission": 0.0,
+      "timestamp": "2023-12-08T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 2.5190768561553094,
+      "price": 364.73,
+      "commission": 0.0,
+      "timestamp": "2023-12-11T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 2.7071061230233657,
+      "price": 366.48,
+      "commission": 0.0,
+      "timestamp": "2023-12-12T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 7.990953852106086,
+      "price": 371.62,
+      "commission": 0.0,
+      "timestamp": "2023-12-13T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 2.906475286232672,
+      "price": 373.4,
+      "commission": 0.0,
+      "timestamp": "2023-12-14T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 3.4583745848004894,
+      "price": 375.49,
+      "commission": 0.0,
+      "timestamp": "2023-12-19T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 1.9561732115542958,
+      "price": 376.65,
+      "commission": 0.0,
+      "timestamp": "2023-12-27T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 0.8354072051319799,
+      "price": 377.14,
+      "commission": 0.0,
+      "timestamp": "2023-12-28T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 0.05140910391179615,
+      "price": 377.17,
+      "commission": 0.0,
+      "timestamp": "2024-01-11T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 4.966957929206165,
+      "price": 380.09,
+      "commission": 0.0,
+      "timestamp": "2024-01-22T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 1.6440214874046042,
+      "price": 381.03,
+      "commission": 0.0,
+      "timestamp": "2024-01-26T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 4.003023229782908,
+      "price": 383.31,
+      "commission": 0.0,
+      "timestamp": "2024-01-29T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 2.2574108421392656,
+      "price": 384.57,
+      "commission": 0.0,
+      "timestamp": "2024-01-30T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 3.449661640786546,
+      "price": 386.48,
+      "commission": 0.0,
+      "timestamp": "2024-02-02T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 0.5153331568675975,
+      "price": 386.76,
+      "commission": 0.0,
+      "timestamp": "2024-02-07T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 2.6664210284235303,
+      "price": 388.21,
+      "commission": 0.0,
+      "timestamp": "2024-02-12T05:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "SELL",
+      "quantity": 181.13733610502365,
+      "price": 384.56,
+      "commission": 0.0,
+      "timestamp": "2024-04-11T04:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 56.44703160077424,
+      "price": 461.04,
+      "commission": 0.0,
+      "timestamp": "2025-09-24T04:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 56.63293139470929,
+      "price": 465.97,
+      "commission": 0.0,
+      "timestamp": "2025-10-07T04:00:00+00:00"
+    },
+    {
+      "symbol": "DIA",
+      "side": "SELL",
+      "quantity": 113.07996299548353,
+      "price": 461.8,
+      "commission": 0.0,
+      "timestamp": "2025-11-19T05:00:00+00:00"
+    }
+  ],
+  "rejections": [
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 1.1241681926501919,
+      "reason": "INSUFFICIENT_MARGIN",
+      "message": "Order exceeds available buying power.",
+      "timestamp": "2024-02-08T05:00:00+00:00"
+    }
+  ]
+}

@@ -17,6 +17,7 @@ from .normalization import OHLCV_COLUMNS, normalize_bar, normalize_ohlcv_frame
 from .quality import DataQualityIssue, DataQualityReport, DataQualityValidator
 from .sample import bars_from_ohlcv, events_from_ohlcv, sample_ohlcv
 from .stream import MarketDataHandler, MarketDataStream, ReplayMarketDataStream, YFinancePollingStream
+from .universe import UniverseConfig, UniverseLoader
 from .yfinance import YFinanceDataFeed
 
 __all__ = [
@@ -44,6 +45,8 @@ __all__ = [
     "SplitAction",
     "StreamHealth",
     "SymbolChangeAction",
+    "UniverseConfig",
+    "UniverseLoader",
     "bars_from_ohlcv",
     "events_from_ohlcv",
     "normalize_bar",
