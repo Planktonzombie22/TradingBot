@@ -1,0 +1,6 @@
+{
+  "roc_period": 20,
+  "min_roc": 0.03,
+  "obv_ema_period": 20,
+  "atr_stop_multiple": 3.0
+}

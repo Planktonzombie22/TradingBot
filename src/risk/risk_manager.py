@@ -36,15 +36,24 @@ class RiskManager:
         if signal.action == "SELL" and not self.allow_shorting:
             return RiskDecision(False, "Shorting is disabled.")
 
-        quantity = self.sizer.size_from_stop(
-            PositionSizingRequest(
-                equity=equity,
-                entry_price=price,
-                stop_price=signal.stop_loss,
-                risk_fraction=risk_fraction,
-                buying_power=buying_power,
+        if signal.stop_loss is None:
+            target_fraction = signal.meta.get("target_notional_fraction")
+            if target_fraction is None:
+                return RiskDecision(False, "Signal requires a stop loss or target notional fraction.")
+            target_notional = max(equity, 0.0) * float(target_fraction)
+            if buying_power is not None:
+                target_notional = min(target_notional, max(buying_power, 0.0))
+            quantity = target_notional / price if price > 0 else 0.0
+        else:
+            quantity = self.sizer.size_from_stop(
+                PositionSizingRequest(
+                    equity=equity,
+                    entry_price=price,
+                    stop_price=signal.stop_loss,
+                    risk_fraction=risk_fraction,
+                    buying_power=buying_power,
+                )
             )
-        )
         if quantity <= 0:
             return RiskDecision(False, "Risk model produced zero quantity.")
 
@@ -52,7 +61,7 @@ class RiskManager:
         if self.max_order_notional is not None and notional > self.max_order_notional:
             quantity = self.max_order_notional / price
 
-        return RiskDecision(True, order=Order(symbol=signal.symbol, side=signal.action, quantity=quantity))
+        return RiskDecision(True, order=Order(symbol=signal.symbol, side=signal.action, quantity=quantity, stop_price=signal.stop_loss))
 
     def validate_batch(self, orders: List[Order]) -> List[RiskDecision]:
         return [self._validate_order(order) for order in orders]

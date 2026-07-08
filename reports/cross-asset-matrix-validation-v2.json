@@ -1,0 +1,952 @@
+{
+  "matrix_name": "cross_asset_research_matrix",
+  "completed": 156,
+  "failed": 6,
+  "asset_class_summary": [
+    {
+      "asset_class": "bonds",
+      "jobs": 2,
+      "completed": 36,
+      "failed": 0
+    },
+    {
+      "asset_class": "commodities_real_assets",
+      "jobs": 1,
+      "completed": 18,
+      "failed": 0
+    },
+    {
+      "asset_class": "crypto",
+      "jobs": 3,
+      "completed": 48,
+      "failed": 6
+    },
+    {
+      "asset_class": "fx",
+      "jobs": 1,
+      "completed": 18,
+      "failed": 0
+    },
+    {
+      "asset_class": "stocks",
+      "jobs": 2,
+      "completed": 36,
+      "failed": 0
+    }
+  ],
+  "jobs": [
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "us_large_cap_stocks",
+        "asset_class": "stocks",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "post_covid_cycle",
+          "start": "2020-01-01",
+          "end": "2026-07-01",
+          "period": null
+        },
+        "symbols": [
+          "AAPL",
+          "MSFT",
+          "NVDA"
+        ],
+        "key": "cross-asset-research-matrix-us-large-cap-stocks-1d-post-covid-cycle"
+      },
+      "completed": 18,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "buyHold",
+          "markets": 3,
+          "average_return": 12.322950988388394,
+          "median_return": 3.0003392067287815,
+          "best_return": 32.51167899831163,
+          "worst_return": 1.4568347601247726,
+          "average_max_drawdown": -0.45614701809883273,
+          "win_rate": 1.0,
+          "total_trades": 3,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 3,
+          "average_return": 0.23616565172058776,
+          "median_return": 0.371611123712056,
+          "best_return": 0.7071544155211108,
+          "worst_return": -0.3702685840714035,
+          "average_max_drawdown": -0.24594195855740822,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 76,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 3,
+          "average_return": 0.10567294712012669,
+          "median_return": 0.1667273889574246,
+          "best_return": 0.23775977679899188,
+          "worst_return": -0.08746832439603641,
+          "average_max_drawdown": -0.25369480881979994,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 97,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 3,
+          "average_return": 0.04430423833189883,
+          "median_return": 0.05356699942977175,
+          "best_return": 0.0825880835916918,
+          "worst_return": -0.003242368025767064,
+          "average_max_drawdown": -0.0902769248659941,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 19,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 3,
+          "average_return": 0.01950479177940447,
+          "median_return": 0.0017671373464334466,
+          "best_return": 0.27847427888340465,
+          "worst_return": -0.2217270408916247,
+          "average_max_drawdown": -0.2132079413010306,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 51,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 3,
+          "average_return": -0.02907552011668092,
+          "median_return": -0.06289443051802991,
+          "best_return": 0.06300939104812514,
+          "worst_return": -0.08734152088013798,
+          "average_max_drawdown": -0.15516051720342072,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 25,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "us_large_cap_stocks",
+        "asset_class": "stocks",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "rate_hike_cycle",
+          "start": "2022-01-01",
+          "end": "2024-12-31",
+          "period": null
+        },
+        "symbols": [
+          "AAPL",
+          "MSFT",
+          "NVDA"
+        ],
+        "key": "cross-asset-research-matrix-us-large-cap-stocks-1d-rate-hike-cycle"
+      },
+      "completed": 18,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "buyHold",
+          "markets": 3,
+          "average_return": 1.4275090423800834,
+          "median_return": 0.4083356979602637,
+          "best_return": 3.5721808950798737,
+          "worst_return": 0.30201053410011264,
+          "average_max_drawdown": -0.4306445512420995,
+          "win_rate": 1.0,
+          "total_trades": 3,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 3,
+          "average_return": 0.06173765284149867,
+          "median_return": 0.04914893465284076,
+          "best_return": 0.0897856270164495,
+          "worst_return": 0.04627839685520575,
+          "average_max_drawdown": -0.03453514766658413,
+          "win_rate": 1.0,
+          "total_trades": 7,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 3,
+          "average_return": 0.04146961257933085,
+          "median_return": 0.1341697458204413,
+          "best_return": 0.2551472012925515,
+          "worst_return": -0.26490810937500026,
+          "average_max_drawdown": -0.17768854987829943,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 21,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 3,
+          "average_return": 0.0305696872216918,
+          "median_return": 0.06077287342830241,
+          "best_return": 0.10460474297336077,
+          "worst_return": -0.07366855473658779,
+          "average_max_drawdown": -0.17068766870534932,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 45,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 3,
+          "average_return": 0.017901386741869946,
+          "median_return": 0.05542709015787168,
+          "best_return": 0.19078350938787952,
+          "worst_return": -0.19250643932014136,
+          "average_max_drawdown": -0.15331306315068682,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 28,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 3,
+          "average_return": -0.08553597838293753,
+          "median_return": -0.10961198156124846,
+          "best_return": 0.00695879329268937,
+          "worst_return": -0.1539547468802535,
+          "average_max_drawdown": -0.14442789214725882,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 15,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "rates_bonds_credit",
+        "asset_class": "bonds",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "post_covid_cycle",
+          "start": "2020-01-01",
+          "end": "2026-07-01",
+          "period": null
+        },
+        "symbols": [
+          "TLT",
+          "IEF",
+          "SHY"
+        ],
+        "key": "cross-asset-research-matrix-rates-bonds-credit-1d-post-covid-cycle"
+      },
+      "completed": 18,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 3,
+          "average_return": 0.08465215368146105,
+          "median_return": 0.09608574942772648,
+          "best_return": 0.18081714084822234,
+          "worst_return": -0.02294642923156571,
+          "average_max_drawdown": -0.09150727275706472,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 11,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 3,
+          "average_return": 0.023517983150864407,
+          "median_return": -0.034552779232469764,
+          "best_return": 0.15447787193575058,
+          "worst_return": -0.0493711432506876,
+          "average_max_drawdown": -0.14218572532592996,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 40,
+          "total_rejections": 3
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 3,
+          "average_return": 0.000382706776513253,
+          "median_return": 0.0,
+          "best_return": 0.15723680764901982,
+          "worst_return": -0.15608868731948006,
+          "average_max_drawdown": -0.13147807637695097,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 18,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 3,
+          "average_return": -0.02856735334706682,
+          "median_return": -0.032955682243133194,
+          "best_return": 0.028667348389709513,
+          "worst_return": -0.08141372618777677,
+          "average_max_drawdown": -0.06610718376745446,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 13,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "buyHold",
+          "markets": 3,
+          "average_return": -0.04167428063609672,
+          "median_return": -0.004641033321565373,
+          "best_return": 0.11985838879424372,
+          "worst_return": -0.2402401973809685,
+          "average_max_drawdown": -0.2599434338140942,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 3,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 3,
+          "average_return": -0.04639482165083355,
+          "median_return": -0.04148945755843706,
+          "best_return": -0.028243486139574087,
+          "worst_return": -0.06945152125448949,
+          "average_max_drawdown": -0.1589556979196152,
+          "win_rate": 0.0,
+          "total_trades": 58,
+          "total_rejections": 3
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "rates_bonds_credit",
+        "asset_class": "bonds",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "rate_hike_cycle",
+          "start": "2022-01-01",
+          "end": "2024-12-31",
+          "period": null
+        },
+        "symbols": [
+          "TLT",
+          "IEF",
+          "SHY"
+        ],
+        "key": "cross-asset-research-matrix-rates-bonds-credit-1d-rate-hike-cycle"
+      },
+      "completed": 18,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "tuffContrarian",
+          "markets": 3,
+          "average_return": 0.09429059989510885,
+          "median_return": 0.09384275580200192,
+          "best_return": 0.16655506949833,
+          "worst_return": 0.022473974384994655,
+          "average_max_drawdown": -0.13591366807670943,
+          "win_rate": 1.0,
+          "total_trades": 25,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 3,
+          "average_return": -0.008949111912996218,
+          "median_return": 0.0,
+          "best_return": 0.038387723005202136,
+          "worst_return": -0.06523505874419079,
+          "average_max_drawdown": -0.034790746518711724,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 4,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 3,
+          "average_return": -0.030467453889569698,
+          "median_return": -0.036691269141897825,
+          "best_return": -0.004711092526811262,
+          "worst_return": -0.05,
+          "average_max_drawdown": -0.05206488928954726,
+          "win_rate": 0.0,
+          "total_trades": 5,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 3,
+          "average_return": -0.04866163009009348,
+          "median_return": -0.008913954289554386,
+          "best_return": 0.0014638292005860422,
+          "worst_return": -0.1385347651813121,
+          "average_max_drawdown": -0.10978868047867137,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 20,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 3,
+          "average_return": -0.053260450694102714,
+          "median_return": -0.05,
+          "best_return": 0.0,
+          "worst_return": -0.10978135208230815,
+          "average_max_drawdown": -0.05611658066107539,
+          "win_rate": 0.0,
+          "total_trades": 9,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "buyHold",
+          "markets": 3,
+          "average_return": -0.13483473286121464,
+          "median_return": -0.1163797971106902,
+          "best_return": 0.04098961679753975,
+          "worst_return": -0.32911401827049347,
+          "average_max_drawdown": -0.2117803340637073,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 3,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "crypto_yfinance_daily",
+        "asset_class": "crypto",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "crypto_cycle",
+          "start": "2020-01-01",
+          "end": "2026-07-01",
+          "period": null
+        },
+        "symbols": [
+          "BTC-USD",
+          "ETH-USD",
+          "SOL-USD"
+        ],
+        "key": "cross-asset-research-matrix-crypto-yfinance-daily-1d-crypto-cycle"
+      },
+      "completed": 12,
+      "failed": 6,
+      "strategy_summary": [
+        {
+          "strategy": "buyHold",
+          "markets": 2,
+          "average_return": 9.0663354856096,
+          "median_return": 9.0663354856096,
+          "best_return": 10.999692962399559,
+          "worst_return": 7.132978008819638,
+          "average_max_drawdown": -0.7799289768681077,
+          "win_rate": 1.0,
+          "total_trades": 2,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 2,
+          "average_return": 0.2368917494205547,
+          "median_return": 0.2368917494205547,
+          "best_return": 0.4957199901423115,
+          "worst_return": -0.021936491301202114,
+          "average_max_drawdown": -0.0768564284882296,
+          "win_rate": 0.5,
+          "total_trades": 16,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 2,
+          "average_return": 0.0,
+          "median_return": 0.0,
+          "best_return": 0.0,
+          "worst_return": 0.0,
+          "average_max_drawdown": 0.0,
+          "win_rate": 0.0,
+          "total_trades": 0,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 2,
+          "average_return": -0.1552783814841773,
+          "median_return": -0.1552783814841773,
+          "best_return": 0.16007811758487206,
+          "worst_return": -0.47063488055322666,
+          "average_max_drawdown": -0.38547293221925316,
+          "win_rate": 0.5,
+          "total_trades": 85,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 2,
+          "average_return": -0.17713005191702624,
+          "median_return": -0.17713005191702624,
+          "best_return": -0.14469830491490301,
+          "worst_return": -0.20956179891914944,
+          "average_max_drawdown": -0.2840050613468899,
+          "win_rate": 0.0,
+          "total_trades": 24,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 2,
+          "average_return": -0.34650813962638244,
+          "median_return": -0.34650813962638244,
+          "best_return": -0.22509084872596358,
+          "worst_return": -0.4679254305268013,
+          "average_max_drawdown": -0.37598010406182414,
+          "win_rate": 0.0,
+          "total_trades": 58,
+          "total_rejections": 1
+        }
+      ],
+      "errors": [
+        {
+          "symbol": "SOL-USD",
+          "strategy": "buyHold",
+          "error": "Historical data starts on 2020-04-10, which is outside the requested start coverage for 2020-01-01."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "meanReversion",
+          "error": "Historical data starts on 2020-04-10, which is outside the requested start coverage for 2020-01-01."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "tuffContrarian",
+          "error": "Historical data starts on 2020-04-10, which is outside the requested start coverage for 2020-01-01."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "gapFade",
+          "error": "Historical data starts on 2020-04-10, which is outside the requested start coverage for 2020-01-01."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "choppinessRange",
+          "error": "Historical data starts on 2020-04-10, which is outside the requested start coverage for 2020-01-01."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "vwapValueReversion",
+          "error": "Historical data starts on 2020-04-10, which is outside the requested start coverage for 2020-01-01."
+        }
+      ]
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "crypto_yfinance_daily",
+        "asset_class": "crypto",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "recent_regime",
+          "start": null,
+          "end": null,
+          "period": "2y"
+        },
+        "symbols": [
+          "BTC-USD",
+          "ETH-USD",
+          "SOL-USD"
+        ],
+        "key": "cross-asset-research-matrix-crypto-yfinance-daily-1d-recent-regime"
+      },
+      "completed": 18,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "choppinessRange",
+          "markets": 3,
+          "average_return": 0.1140154377255899,
+          "median_return": -0.010589501504497093,
+          "best_return": 0.38025782669737634,
+          "worst_return": -0.02762201201610951,
+          "average_max_drawdown": -0.058234060612140426,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 8,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 3,
+          "average_return": 0.0,
+          "median_return": 0.0,
+          "best_return": 0.0,
+          "worst_return": 0.0,
+          "average_max_drawdown": 0.0,
+          "win_rate": 0.0,
+          "total_trades": 0,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 3,
+          "average_return": -0.06402929265454489,
+          "median_return": -0.12566425272442686,
+          "best_return": 0.18649890164191674,
+          "worst_return": -0.2529225268811246,
+          "average_max_drawdown": -0.2689724843662743,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 25,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 3,
+          "average_return": -0.08205680599583878,
+          "median_return": -0.05415312627042331,
+          "best_return": -0.04518034053898064,
+          "worst_return": -0.1468369511781124,
+          "average_max_drawdown": -0.16501426971167613,
+          "win_rate": 0.0,
+          "total_trades": 36,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 3,
+          "average_return": -0.10324215500112342,
+          "median_return": -0.12527666013852667,
+          "best_return": 0.13400814511118442,
+          "worst_return": -0.318457949976028,
+          "average_max_drawdown": -0.21686573640884746,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 35,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "buyHold",
+          "markets": 3,
+          "average_return": -0.26695297375610366,
+          "median_return": -0.43244047623861626,
+          "best_return": 0.08448576292985126,
+          "worst_return": -0.45290420795954595,
+          "average_max_drawdown": -0.6564093126472814,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 3,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "crypto_yfinance_intraday_recent",
+        "asset_class": "crypto",
+        "provider": "yfinance",
+        "interval": "1h",
+        "window": {
+          "name": "recent_intraday",
+          "start": null,
+          "end": null,
+          "period": "730d"
+        },
+        "symbols": [
+          "BTC-USD",
+          "ETH-USD",
+          "SOL-USD"
+        ],
+        "key": "cross-asset-research-matrix-crypto-yfinance-intraday-recent-1h-recent-intraday"
+      },
+      "completed": 18,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "choppinessRange",
+          "markets": 3,
+          "average_return": 0.4778653966833444,
+          "median_return": 0.737316572601103,
+          "best_return": 0.7464499693917809,
+          "worst_return": -0.050170351942850536,
+          "average_max_drawdown": -0.2093258864927059,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 144,
+          "total_rejections": 6
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 3,
+          "average_return": 0.22284893864482416,
+          "median_return": 0.1914283904767457,
+          "best_return": 1.0145652211939173,
+          "worst_return": -0.5374467957361905,
+          "average_max_drawdown": -0.5410455053554436,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 623,
+          "total_rejections": 20
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 3,
+          "average_return": 0.007643760337773044,
+          "median_return": 0.0,
+          "best_return": 0.022931281013319132,
+          "worst_return": 0.0,
+          "average_max_drawdown": -0.011927997916275598,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 1,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 3,
+          "average_return": 0.0016637986333529569,
+          "median_return": -0.04303237369425697,
+          "best_return": 0.3356763864659979,
+          "worst_return": -0.28765261687168203,
+          "average_max_drawdown": -0.35358724512076495,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 65,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 3,
+          "average_return": -0.0003757133883009467,
+          "median_return": -0.08345974087076466,
+          "best_return": 0.4774808651545318,
+          "worst_return": -0.39514826444866996,
+          "average_max_drawdown": -0.641639889486601,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 936,
+          "total_rejections": 34
+        },
+        {
+          "strategy": "buyHold",
+          "markets": 3,
+          "average_return": -0.26570205300254174,
+          "median_return": -0.43396316595985246,
+          "best_return": 0.08708286627935286,
+          "worst_return": -0.45022585932712555,
+          "average_max_drawdown": -0.6733750343191854,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 3,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "commodities_real_assets",
+        "asset_class": "commodities_real_assets",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "inflation_cycle",
+          "start": "2021-01-01",
+          "end": "2026-07-01",
+          "period": null
+        },
+        "symbols": [
+          "GLD",
+          "SLV",
+          "USO"
+        ],
+        "key": "cross-asset-research-matrix-commodities-real-assets-1d-inflation-cycle"
+      },
+      "completed": 18,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "buyHold",
+          "markets": 3,
+          "average_return": 1.4722957011458255,
+          "median_return": 1.109270233375952,
+          "best_return": 2.2872142967968676,
+          "worst_return": 1.0204025732646569,
+          "average_max_drawdown": -0.3780301112747753,
+          "win_rate": 1.0,
+          "total_trades": 3,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 3,
+          "average_return": 0.38226627209513836,
+          "median_return": 0.16863364864251834,
+          "best_return": 0.9877096399106984,
+          "worst_return": -0.009544472267801756,
+          "average_max_drawdown": -0.15928660076769374,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 50,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 3,
+          "average_return": 0.022118613391227702,
+          "median_return": -0.04932952561370694,
+          "best_return": 0.20516376880135503,
+          "worst_return": -0.089478403013965,
+          "average_max_drawdown": -0.0935292933465273,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 10,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 3,
+          "average_return": -0.019717461424568993,
+          "median_return": -0.1385346998004112,
+          "best_return": 0.2648760655267044,
+          "worst_return": -0.18549375000000018,
+          "average_max_drawdown": -0.17831316819614582,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 26,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 3,
+          "average_return": -0.026522174546064283,
+          "median_return": 0.002345574588787713,
+          "best_return": 0.034701558524363824,
+          "worst_return": -0.11661365675134439,
+          "average_max_drawdown": -0.2888143314676949,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 61,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 3,
+          "average_return": -0.1349919890649507,
+          "median_return": -0.20764563783741177,
+          "best_return": 0.04580822945117343,
+          "worst_return": -0.24313855880861374,
+          "average_max_drawdown": -0.2772142688027024,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 88,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "fx_yfinance",
+        "asset_class": "fx",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "macro_cycle",
+          "start": "2020-01-01",
+          "end": "2026-07-01",
+          "period": null
+        },
+        "symbols": [
+          "EURUSD=X",
+          "JPY=X",
+          "GBPUSD=X"
+        ],
+        "key": "cross-asset-research-matrix-fx-yfinance-1d-macro-cycle"
+      },
+      "completed": 18,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "meanReversion",
+          "markets": 3,
+          "average_return": 0.4414432542432516,
+          "median_return": 0.213233838356669,
+          "best_return": 0.9082583823633835,
+          "worst_return": 0.20283754200970217,
+          "average_max_drawdown": -0.16473397570510737,
+          "win_rate": 1.0,
+          "total_trades": 59,
+          "total_rejections": 2
+        },
+        {
+          "strategy": "buyHold",
+          "markets": 3,
+          "average_return": 0.16905851272367192,
+          "median_return": 0.017932559493221378,
+          "best_return": 0.489892479036206,
+          "worst_return": -0.0006495003584115693,
+          "average_max_drawdown": -0.20529176681583336,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 3,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 3,
+          "average_return": 0.07406448988179666,
+          "median_return": 0.01732714941117156,
+          "best_return": 0.22909093536391884,
+          "worst_return": -0.024224615129700398,
+          "average_max_drawdown": -0.2050910197412488,
+          "win_rate": 0.6666666666666666,
+          "total_trades": 86,
+          "total_rejections": 2
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 3,
+          "average_return": 0.0,
+          "median_return": 0.0,
+          "best_return": 0.0,
+          "worst_return": 0.0,
+          "average_max_drawdown": 0.0,
+          "win_rate": 0.0,
+          "total_trades": 0,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 3,
+          "average_return": 0.0,
+          "median_return": 0.0,
+          "best_return": 0.0,
+          "worst_return": 0.0,
+          "average_max_drawdown": 0.0,
+          "win_rate": 0.0,
+          "total_trades": 0,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 3,
+          "average_return": -0.029614634223857985,
+          "median_return": -0.008651553930476803,
+          "best_return": 0.034899467507572626,
+          "worst_return": -0.11509181624866978,
+          "average_max_drawdown": -0.15744653331318106,
+          "win_rate": 0.3333333333333333,
+          "total_trades": 24,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "core_equity": ["SPY", "QQQ", "IWM", "DIA", "VTI", "VOO", "IVV", "RSP"],
+  "dividend_quality_low_vol": ["SCHD", "VIG", "VYM", "MTUM", "QUAL", "USMV", "SPLV"],
+  "international": ["EFA", "EEM", "IEMG", "VWO", "ACWI", "FXI", "EWJ", "EWZ", "EWW", "EWC", "EWG", "EWU", "EWH", "EWT", "EWA", "EPI", "INDA", "MCHI", "ASHR", "EWY", "KWEB"],
+  "rates_credit": ["TLT", "IEF", "SHY", "AGG", "BND", "TIP", "LQD", "HYG", "JNK", "VCIT", "VCSH", "MUB", "EMB"],
+  "commodities_real_assets": ["GLD", "SLV", "USO", "UNG", "VNQ", "IYR"],
+  "us_sectors": ["XLK", "XLF", "XLE", "XLV", "XLY", "XLP", "XLI", "XLU", "XLB", "XLRE", "XLC"],
+  "themes_industries": ["SMH", "SOXX", "ARKK", "XBI", "IBB", "IHI", "KRE", "XRT", "ITB", "IYT", "XOP", "OIH", "TAN", "PBW"]
+}

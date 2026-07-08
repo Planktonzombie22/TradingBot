@@ -10,6 +10,7 @@ import pandas as pd
 class UniverseConfig:
     symbols: Sequence[str] = field(default_factory=tuple)
     watchlist_path: Optional[str] = None
+    groups: Sequence[str] = field(default_factory=tuple)
     screen: Optional[str] = None
 
 
@@ -25,14 +26,14 @@ class UniverseLoader:
         symbols: list[str] = []
         symbols.extend(config.symbols)
         if config.watchlist_path:
-            symbols.extend(self.from_file(config.watchlist_path))
+            symbols.extend(self.from_file(config.watchlist_path, groups=config.groups))
         if broker_assets is not None:
             symbols.extend(self.from_broker_assets(broker_assets))
         if config.screen and screen_data is not None:
             symbols.extend(self.from_screen(config.screen, screen_data))
         return _dedupe_symbols(symbols)
 
-    def from_file(self, path: Union[str, Path]) -> list[str]:
+    def from_file(self, path: Union[str, Path], groups: Sequence[str] = tuple()) -> list[str]:
         path = Path(path)
         text = path.read_text(encoding="utf-8").strip()
         if not text:
@@ -40,7 +41,9 @@ class UniverseLoader:
         if path.suffix.lower() == ".json":
             payload = json.loads(text)
             if isinstance(payload, dict):
-                return _dedupe_symbols(payload.get("symbols", []))
+                if "symbols" in payload:
+                    return _dedupe_symbols(payload.get("symbols", []))
+                return _dedupe_symbols(_symbols_from_group_payload(payload, groups))
             return _dedupe_symbols(payload)
         parts = []
         for line in text.splitlines():
@@ -72,6 +75,18 @@ class UniverseLoader:
         else:
             raise ValueError(f"Unsupported universe screen: {screen}")
         return _dedupe_symbols(ranked["symbol"].head(limit).tolist())
+
+
+def _symbols_from_group_payload(payload: Mapping[str, object], groups: Sequence[str]) -> list[object]:
+    selected_groups = groups or tuple(payload.keys())
+    symbols: list[object] = []
+    for group in selected_groups:
+        value = payload.get(group)
+        if isinstance(value, dict):
+            symbols.extend(value.get("symbols", []))
+        elif isinstance(value, list):
+            symbols.extend(value)
+    return symbols
 
 
 def _dedupe_symbols(symbols: Iterable[object]) -> list[str]:

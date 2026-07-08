@@ -74,10 +74,12 @@ class BacktestEngine:
             risk_fraction=self.config.risk_fraction,
             margin_ratio=self.config.margin_ratio,
             allow_fractional_shares=self.config.allow_fractional_shares,
+            price_column=self.config.execution_price_column,
         )
         risk_model = self.risk_model or CompositeRiskModel(
             margin_model=margin_model,
             allow_shorting=self.config.allow_shorting,
+            price_column=self.config.execution_price_column,
         )
         execution_model = self.execution_model or BarExecutionModel(
             slippage_model=NoSlippageModel(),
@@ -89,6 +91,7 @@ class BacktestEngine:
         account_history: List[AccountSnapshot] = []
         fills: List[Fill] = []
         rejections: List[OrderRejection] = []
+        active_stops: dict[str, float] = {}
 
         for row_number, (timestamp, row) in enumerate(working_bars.iterrows()):
             snapshot = MarketSnapshot.from_row(symbol, timestamp, row)
@@ -104,6 +107,18 @@ class BacktestEngine:
             if borrow_cost:
                 ledger.accrue_cost(borrow_cost, snapshot.timestamp)
                 self._emit(snapshot, BacktestEventType.CASH_ADJUSTMENT, "Borrow cost accrued.", {"amount": borrow_cost})
+                account = ledger.snapshot(snapshot.timestamp, prices=prices)
+
+            self._check_active_stops(
+                snapshot=snapshot,
+                account=account,
+                ledger=ledger,
+                execution_model=execution_model,
+                active_stops=active_stops,
+                fills=fills,
+                rejections=rejections,
+            )
+            account = ledger.snapshot(snapshot.timestamp, prices=prices)
 
             signal = signal_provider.signal_for(snapshot, account)
             self._emit(snapshot, BacktestEventType.SIGNAL, "Strategy signal received.", {"action": signal.action})
@@ -126,6 +141,7 @@ class BacktestEngine:
                 ledger.apply_fill(outcome)
                 fills.append(outcome)
                 account = ledger.snapshot(snapshot.timestamp, prices=prices)
+                self._update_active_stop(order, outcome, account, active_stops)
                 self._emit(
                     snapshot,
                     BacktestEventType.ORDER_FILLED,
@@ -151,8 +167,8 @@ class BacktestEngine:
             index=[snapshot.timestamp for snapshot in account_history],
             dtype=float,
         )
-        metrics = self.metrics_calculator.calculate(account_history, fills, self.event_sink.events)
         total_pnl = equity.iloc[-1] - self.config.initial_cash
+        metrics = self.metrics_calculator.calculate(self._metrics_history(account_history), fills, self.event_sink.events)
 
         return BacktestResult(
             trades=list(ledger.closed_trades),
@@ -167,6 +183,18 @@ class BacktestEngine:
             metrics=metrics,
             config=self.config,
         )
+
+    def _metrics_history(self, account_history: List[AccountSnapshot]) -> List[AccountSnapshot]:
+        if not account_history:
+            return account_history
+        initial_timestamp = pd.Timestamp(account_history[0].timestamp) - pd.Timedelta(nanoseconds=1)
+        initial_snapshot = AccountSnapshot(
+            timestamp=initial_timestamp,
+            cash=self.config.initial_cash,
+            equity=self.config.initial_cash,
+            buying_power=self.config.initial_cash * self.config.margin_ratio,
+        )
+        return [initial_snapshot, *account_history]
 
     def _force_flat(
         self,
@@ -195,6 +223,63 @@ class BacktestEngine:
                 ledger.apply_fill(outcome)
                 fills.append(outcome)
                 self._emit(snapshot, BacktestEventType.POSITION_CLOSED, "Position force-closed at simulation end.")
+
+    def _check_active_stops(
+        self,
+        snapshot: MarketSnapshot,
+        account: AccountSnapshot,
+        ledger: CashMarginLedger,
+        execution_model: ExecutionModel,
+        active_stops: dict[str, float],
+        fills: List[Fill],
+        rejections: List[OrderRejection],
+    ) -> None:
+        for held_symbol, quantity in list(account.positions.items()):
+            stop_price = active_stops.get(held_symbol)
+            if stop_price is None:
+                continue
+
+            stop_touched = quantity > 0 and snapshot.low <= stop_price
+            stop_touched = stop_touched or (quantity < 0 and snapshot.high >= stop_price)
+            if not stop_touched:
+                continue
+
+            order = Order(
+                symbol=held_symbol,
+                side="SELL" if quantity > 0 else "BUY",
+                quantity=abs(quantity),
+                order_type="STOP",
+                stop_price=stop_price,
+            )
+            outcome = execution_model.execute(order, snapshot, account)
+            if isinstance(outcome, OrderRejection):
+                rejections.append(outcome)
+                self._emit_rejection(outcome)
+                continue
+
+            ledger.apply_fill(outcome)
+            fills.append(outcome)
+            active_stops.pop(held_symbol, None)
+            self._emit(
+                snapshot,
+                BacktestEventType.POSITION_CLOSED,
+                "Position stop-loss closed.",
+                {"symbol": held_symbol, "quantity": outcome.quantity, "price": outcome.price, "stop_price": stop_price},
+            )
+
+    @staticmethod
+    def _update_active_stop(
+        order: Order,
+        fill: Fill,
+        account: AccountSnapshot,
+        active_stops: dict[str, float],
+    ) -> None:
+        quantity = account.positions.get(order.symbol, 0.0)
+        if quantity == 0:
+            active_stops.pop(order.symbol, None)
+            return
+        if order.stop_price is not None:
+            active_stops[order.symbol] = float(order.stop_price)
 
     def _emit(self, snapshot: MarketSnapshot, event_type: BacktestEventType, message: str, payload: Optional[dict] = None) -> None:
         self.event_sink.emit(

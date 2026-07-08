@@ -1,0 +1,262 @@
+{
+  "total_pnl": 4307.452591797213,
+  "total_pnl_pct": 0.43074525917972134,
+  "metrics": {
+    "starting_equity": 10000.0,
+    "ending_equity": 14307.452591797213,
+    "total_return": 0.4307452591797214,
+    "max_drawdown": -0.18954258661322654,
+    "volatility": 0.012989002084073907,
+    "sharpe": 0.043290574729673494,
+    "fills": 18,
+    "events": 1538
+  },
+  "trades": [
+    {
+      "Entry Date": "2023-06-05 04:00:00+00:00",
+      "Entry Price": 427.1,
+      "Type": "Long",
+      "Shares": 56.74888840653135,
+      "Entry Equity": 10000.0,
+      "Exit Date": "2023-08-18 04:00:00+00:00",
+      "Exit Price": 436.39,
+      "Exit Equity": 10527.197173296674,
+      "PnL": 527.1971732966741
+    },
+    {
+      "Entry Date": "2023-09-27 04:00:00+00:00",
+      "Entry Price": 425.925,
+      "Type": "Short",
+      "Shares": -58.08119827138032,
+      "Entry Equity": 10527.197173296678,
+      "Exit Date": "2023-11-06 05:00:00+00:00",
+      "Exit Price": 435.69,
+      "Exit Equity": 9960.03427217665,
+      "PnL": -567.1629011200281
+    },
+    {
+      "Entry Date": "2023-11-21 05:00:00+00:00",
+      "Entry Price": 453.28,
+      "Type": "Long",
+      "Shares": 57.63509484159448,
+      "Entry Equity": 9960.03427217665,
+      "Exit Date": "2024-04-17 04:00:00+00:00",
+      "Exit Price": 500.52,
+      "Exit Equity": 12682.716152493575,
+      "PnL": 2722.681880316924
+    },
+    {
+      "Entry Date": "2024-05-16 04:00:00+00:00",
+      "Entry Price": 528.83,
+      "Type": "Long",
+      "Shares": 68.27240189447524,
+      "Entry Equity": 12682.716152493573,
+      "Exit Date": "2024-07-26 04:00:00+00:00",
+      "Exit Price": 544.345,
+      "Exit Equity": 13741.962467886355,
+      "PnL": 1059.2463153927824
+    },
+    {
+      "Entry Date": "2024-08-06 04:00:00+00:00",
+      "Entry Price": 522.07,
+      "Type": "Short",
+      "Shares": -53.26269060684013,
+      "Entry Equity": 13741.962467886358,
+      "Exit Date": "2024-08-14 04:00:00+00:00",
+      "Exit Price": 543.78,
+      "Exit Equity": 12585.629454811864,
+      "PnL": -1156.333013074495
+    },
+    {
+      "Entry Date": "2024-09-20 04:00:00+00:00",
+      "Entry Price": 568.03,
+      "Type": "Long",
+      "Shares": 51.88101956773964,
+      "Entry Equity": 12585.62945481186,
+      "Exit Date": "2024-12-19 05:00:00+00:00",
+      "Exit Price": 586.12,
+      "Exit Equity": 13524.157098792271,
+      "PnL": 938.5276439804118
+    },
+    {
+      "Entry Date": "2025-01-24 05:00:00+00:00",
+      "Entry Price": 607.92,
+      "Type": "Long",
+      "Shares": 55.95892975177457,
+      "Entry Equity": 13524.157098792271,
+      "Exit Date": "2025-02-26 05:00:00+00:00",
+      "Exit Price": 594.49,
+      "Exit Equity": 12772.628672225941,
+      "PnL": -751.5284265663297
+    },
+    {
+      "Entry Date": "2025-03-11 04:00:00+00:00",
+      "Entry Price": 556.08,
+      "Type": "Short",
+      "Shares": -25.97049789049413,
+      "Entry Equity": 12772.628672225943,
+      "Exit Date": "2025-04-28 04:00:00+00:00",
+      "Exit Price": 551.07,
+      "Exit Equity": 12902.740866657317,
+      "PnL": 130.11219443137534
+    },
+    {
+      "Entry Date": "2025-07-03 04:00:00+00:00",
+      "Entry Price": 625.41,
+      "Type": "Long",
+      "Shares": 37.69014556318483,
+      "Entry Equity": 12902.740866657317,
+      "Exit Date": "2025-11-19 05:00:00+00:00",
+      "Exit Price": 662.68,
+      "Exit Equity": 14307.452591797215,
+      "PnL": 1404.711725139898
+    }
+  ],
+  "fills": [
+    {
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 56.74888840653135,
+      "price": 427.1,
+      "commission": 0.0,
+      "timestamp": "2023-06-05T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 56.74888840653135,
+      "price": 436.39,
+      "commission": 0.0,
+      "timestamp": "2023-08-18T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 58.08119827138032,
+      "price": 425.925,
+      "commission": 0.0,
+      "timestamp": "2023-09-27T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 58.08119827138032,
+      "price": 435.69,
+      "commission": 0.0,
+      "timestamp": "2023-11-06T05:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 57.63509484159448,
+      "price": 453.28,
+      "commission": 0.0,
+      "timestamp": "2023-11-21T05:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 57.63509484159448,
+      "price": 500.52,
+      "commission": 0.0,
+      "timestamp": "2024-04-17T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 68.27240189447524,
+      "price": 528.83,
+      "commission": 0.0,
+      "timestamp": "2024-05-16T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 68.27240189447524,
+      "price": 544.345,
+      "commission": 0.0,
+      "timestamp": "2024-07-26T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 53.26269060684013,
+      "price": 522.07,
+      "commission": 0.0,
+      "timestamp": "2024-08-06T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 53.26269060684013,
+      "price": 543.78,
+      "commission": 0.0,
+      "timestamp": "2024-08-14T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 51.88101956773964,
+      "price": 568.03,
+      "commission": 0.0,
+      "timestamp": "2024-09-20T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 51.88101956773964,
+      "price": 586.12,
+      "commission": 0.0,
+      "timestamp": "2024-12-19T05:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 55.95892975177457,
+      "price": 607.92,
+      "commission": 0.0,
+      "timestamp": "2025-01-24T05:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 55.95892975177457,
+      "price": 594.49,
+      "commission": 0.0,
+      "timestamp": "2025-02-26T05:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 25.97049789049413,
+      "price": 556.08,
+      "commission": 0.0,
+      "timestamp": "2025-03-11T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 25.97049789049413,
+      "price": 551.07,
+      "commission": 0.0,
+      "timestamp": "2025-04-28T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 37.69014556318483,
+      "price": 625.41,
+      "commission": 0.0,
+      "timestamp": "2025-07-03T04:00:00+00:00"
+    },
+    {
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 37.69014556318483,
+      "price": 662.68,
+      "commission": 0.0,
+      "timestamp": "2025-11-19T05:00:00+00:00"
+    }
+  ],
+  "rejections": []
+}

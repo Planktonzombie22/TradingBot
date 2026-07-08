@@ -1,0 +1,19 @@
+{
+  "completed": 80,
+  "failed": 0,
+  "strategy_summary": [
+    {
+      "strategy": "vwapValueReversion",
+      "markets": 80,
+      "average_return": 0.16096460547306707,
+      "median_return": 0.07042126217654368,
+      "best_return": 5.854527612254468,
+      "worst_return": -3.737732498828539,
+      "average_max_drawdown": -0.6153525322185199,
+      "win_rate": 0.5375,
+      "total_trades": 436,
+      "total_rejections": 3
+    }
+  ],
+  "errors": []
+}

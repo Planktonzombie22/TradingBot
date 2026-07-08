@@ -1,0 +1,7 @@
+{
+  "adx_minimum": [12, 18, 25],
+  "vote_threshold": [3, 4, 5],
+  "rsi_deviation": [0, 3, 6],
+  "roc_period": [10, 20],
+  "atr_stop_multiple": [2.0, 2.5]
+}

@@ -1,0 +1,10 @@
+{
+  "us_large_cap_stocks": ["AAPL", "MSFT", "NVDA", "AMZN", "META", "GOOGL", "TSLA", "BRK-B", "JPM", "UNH", "V", "LLY", "XOM", "AVGO", "COST", "HD", "MA", "PG", "JNJ", "AMD"],
+  "us_growth_momentum": ["PLTR", "SMCI", "CRWD", "NET", "SNOW", "DDOG", "SHOP", "MELI", "UBER", "ABNB", "COIN", "MSTR"],
+  "defensive_value_income": ["KO", "PEP", "WMT", "MCD", "T", "VZ", "MO", "PM", "DUK", "SO", "NEE", "CVX"],
+  "rates_bonds_credit": ["TLT", "IEF", "SHY", "BIL", "AGG", "BND", "TIP", "LQD", "HYG", "JNK", "VCIT", "VCSH", "MUB", "EMB"],
+  "broad_etf_beta": ["SPY", "QQQ", "IWM", "DIA", "VTI", "RSP", "EFA", "EEM", "ACWI"],
+  "commodities_real_assets": ["GLD", "SLV", "USO", "UNG", "DBA", "DBC", "VNQ", "IYR"],
+  "crypto_yfinance": ["BTC-USD", "ETH-USD", "SOL-USD", "BNB-USD", "XRP-USD", "ADA-USD", "DOGE-USD", "AVAX-USD", "LINK-USD", "LTC-USD"],
+  "fx_yfinance": ["EURUSD=X", "JPY=X", "GBPUSD=X", "AUDUSD=X", "CAD=X", "CHF=X", "MXN=X"]
+}

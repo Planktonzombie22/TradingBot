@@ -1,0 +1,7 @@
+{
+  "band_period": [15, 20, 30],
+  "band_deviation": [1.5, 2.0],
+  "keltner_multiple": [1.0, 1.5],
+  "momentum_period": [10, 20],
+  "atr_stop_multiple": [2.0, 2.5]
+}

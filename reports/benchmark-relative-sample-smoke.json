@@ -1,0 +1,146 @@
+{
+  "selection": {
+    "policy": {
+      "benchmark_strategy": "buyHold",
+      "min_excess_return": 0.0,
+      "min_drawdown_improvement": -0.05,
+      "max_strategy_drawdown": -0.6,
+      "min_trades": 1,
+      "drawdown_weight": 0.5,
+      "rejection_penalty": 0.01,
+      "trade_penalty": 0.0001
+    },
+    "summary": {
+      "benchmark_strategy": "buyHold",
+      "symbols": 2,
+      "comparisons": 4,
+      "action_counts": {
+        "use_benchmark": 2
+      },
+      "selected_strategy_counts": {
+        "buyHold": 2
+      },
+      "missing_benchmarks": []
+    },
+    "selections": [
+      {
+        "symbol": "QQQ",
+        "selected_strategy": "buyHold",
+        "action": "use_benchmark",
+        "score": 0.21528394107759796,
+        "comparison": null
+      },
+      {
+        "symbol": "SPY",
+        "selected_strategy": "buyHold",
+        "action": "use_benchmark",
+        "score": 0.21528394107759796,
+        "comparison": null
+      }
+    ],
+    "comparisons": [
+      {
+        "symbol": "QQQ",
+        "strategy": "choppinessRange",
+        "benchmark_strategy": "buyHold",
+        "strategy_return": -0.09962292321902715,
+        "benchmark_return": 0.21528394107759796,
+        "excess_return": -0.3149068642966251,
+        "strategy_drawdown": -0.12313667328948308,
+        "benchmark_drawdown": -0.028323909169168382,
+        "drawdown_improvement": -0.0948127641203147,
+        "trades": 8,
+        "rejections": 0,
+        "score": -0.3631132463567825,
+        "decision": "use_benchmark",
+        "reason": "benchmark_return_higher",
+        "trade_efficiency": -0.03936335803707814,
+        "tail_risk": -0.12313667328948308
+      },
+      {
+        "symbol": "QQQ",
+        "strategy": "meanReversion",
+        "benchmark_strategy": "buyHold",
+        "strategy_return": -0.22358835111321096,
+        "benchmark_return": 0.21528394107759796,
+        "excess_return": -0.4388722921908089,
+        "strategy_drawdown": -0.22358835111321096,
+        "benchmark_drawdown": -0.028323909169168382,
+        "drawdown_improvement": -0.19526444194404258,
+        "trades": 4,
+        "rejections": 0,
+        "score": -0.5369045131628302,
+        "decision": "use_benchmark",
+        "reason": "benchmark_return_higher",
+        "trade_efficiency": -0.10971807304770223,
+        "tail_risk": -0.22358835111321096
+      },
+      {
+        "symbol": "SPY",
+        "strategy": "choppinessRange",
+        "benchmark_strategy": "buyHold",
+        "strategy_return": -0.09962292321902715,
+        "benchmark_return": 0.21528394107759796,
+        "excess_return": -0.3149068642966251,
+        "strategy_drawdown": -0.12313667328948308,
+        "benchmark_drawdown": -0.028323909169168382,
+        "drawdown_improvement": -0.0948127641203147,
+        "trades": 8,
+        "rejections": 0,
+        "score": -0.3631132463567825,
+        "decision": "use_benchmark",
+        "reason": "benchmark_return_higher",
+        "trade_efficiency": -0.03936335803707814,
+        "tail_risk": -0.12313667328948308
+      },
+      {
+        "symbol": "SPY",
+        "strategy": "meanReversion",
+        "benchmark_strategy": "buyHold",
+        "strategy_return": -0.22358835111321096,
+        "benchmark_return": 0.21528394107759796,
+        "excess_return": -0.4388722921908089,
+        "strategy_drawdown": -0.22358835111321096,
+        "benchmark_drawdown": -0.028323909169168382,
+        "drawdown_improvement": -0.19526444194404258,
+        "trades": 4,
+        "rejections": 0,
+        "score": -0.5369045131628302,
+        "decision": "use_benchmark",
+        "reason": "benchmark_return_higher",
+        "trade_efficiency": -0.10971807304770223,
+        "tail_risk": -0.22358835111321096
+      }
+    ]
+  },
+  "strategy_summary": [
+    {
+      "strategy": "choppinessRange",
+      "markets": 2,
+      "average_excess_return": -0.3149068642966251,
+      "median_excess_return": -0.3149068642966251,
+      "average_drawdown_improvement": -0.0948127641203147,
+      "average_trade_efficiency": -0.03936335803707814,
+      "upside_capture": -0.4627512982174485,
+      "downside_capture": null,
+      "tail_risk": -0.12313667328948308,
+      "select_rate": 0.0,
+      "benchmark_preferred_rate": 1.0,
+      "reject_rate": 0.0
+    },
+    {
+      "strategy": "meanReversion",
+      "markets": 2,
+      "average_excess_return": -0.4388722921908089,
+      "median_excess_return": -0.4388722921908089,
+      "average_drawdown_improvement": -0.19526444194404258,
+      "average_trade_efficiency": -0.10971807304770223,
+      "upside_capture": -1.0385742196749348,
+      "downside_capture": null,
+      "tail_risk": -0.22358835111321096,
+      "select_rate": 0.0,
+      "benchmark_preferred_rate": 1.0,
+      "reject_rate": 0.0
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "gap_threshold": 0.015,
+  "oversold": 35,
+  "overbought": 65,
+  "atr_stop_multiple": 2.0
+}

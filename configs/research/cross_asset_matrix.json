@@ -1,0 +1,68 @@
+{
+  "name": "cross_asset_research_matrix",
+  "groups": [
+    {
+      "name": "us_large_cap_stocks",
+      "asset_class": "stocks",
+      "provider": "yfinance",
+      "symbols": ["AAPL", "MSFT", "NVDA", "AMZN", "META", "GOOGL", "TSLA", "JPM", "UNH", "XOM"],
+      "intervals": ["1d"],
+      "windows": [
+        {"name": "post_covid_cycle", "start": "2020-01-01", "end": "2026-07-01"},
+        {"name": "rate_hike_cycle", "start": "2022-01-01", "end": "2024-12-31"}
+      ]
+    },
+    {
+      "name": "rates_bonds_credit",
+      "asset_class": "bonds",
+      "provider": "yfinance",
+      "symbols": ["TLT", "IEF", "SHY", "AGG", "BND", "TIP", "LQD", "HYG", "JNK", "EMB"],
+      "intervals": ["1d"],
+      "windows": [
+        {"name": "post_covid_cycle", "start": "2020-01-01", "end": "2026-07-01"},
+        {"name": "rate_hike_cycle", "start": "2022-01-01", "end": "2024-12-31"}
+      ]
+    },
+    {
+      "name": "crypto_yfinance_daily",
+      "asset_class": "crypto",
+      "provider": "yfinance",
+      "symbols": ["BTC-USD", "ETH-USD", "SOL-USD", "BNB-USD", "XRP-USD", "ADA-USD"],
+      "intervals": ["1d"],
+      "windows": [
+        {"name": "crypto_cycle", "start": "2020-01-01", "end": "2026-07-01"},
+        {"name": "recent_regime", "period": "2y"}
+      ]
+    },
+    {
+      "name": "crypto_yfinance_intraday_recent",
+      "asset_class": "crypto",
+      "provider": "yfinance",
+      "symbols": ["BTC-USD", "ETH-USD", "SOL-USD", "BNB-USD", "XRP-USD", "ADA-USD"],
+      "intervals": ["1h"],
+      "windows": [
+        {"name": "recent_intraday", "period": "730d"}
+      ]
+    },
+    {
+      "name": "commodities_real_assets",
+      "asset_class": "commodities_real_assets",
+      "provider": "yfinance",
+      "symbols": ["GLD", "SLV", "USO", "UNG", "DBA", "DBC", "VNQ", "IYR"],
+      "intervals": ["1d"],
+      "windows": [
+        {"name": "inflation_cycle", "start": "2021-01-01", "end": "2026-07-01"}
+      ]
+    },
+    {
+      "name": "fx_yfinance",
+      "asset_class": "fx",
+      "provider": "yfinance",
+      "symbols": ["EURUSD=X", "JPY=X", "GBPUSD=X", "AUDUSD=X", "CAD=X", "CHF=X"],
+      "intervals": ["1d"],
+      "windows": [
+        {"name": "macro_cycle", "start": "2020-01-01", "end": "2026-07-01"}
+      ]
+    }
+  ]
+}

@@ -49,6 +49,8 @@ def load_runtime_config(overrides: Optional[Mapping[str, Any]] = None) -> Runtim
     }
 
     data_updates = {key: overrides[key] for key in data_keys if key in overrides and overrides[key] is not None}
+    if "period" in overrides:
+        data_updates["period"] = overrides["period"]
     account_updates = {key: overrides[key] for key in account_keys if key in overrides and overrides[key] is not None}
     alpaca_updates = {key: overrides[key] for key in alpaca_keys if key in overrides and overrides[key] is not None}
     universe_updates = {}

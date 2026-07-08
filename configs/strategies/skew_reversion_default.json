@@ -1,0 +1,6 @@
+{
+  "lookback": 20,
+  "zscore_entry": 1.5,
+  "skew_threshold": 0.2,
+  "atr_stop_multiple": 2.0
+}

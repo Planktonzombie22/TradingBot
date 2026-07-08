@@ -2,19 +2,42 @@ import pandas as pd
 
 from src.backtesting import (
     AnnualizedBorrowCostModel,
+    BarExecutionModel,
     BacktestConfig,
+    BacktestEngine,
+    BpsCommissionModel,
+    CashMarginLedger,
     CompositeRiskModel,
+    Fill,
+    FixedBpsSlippageModel,
     SimpleMarginModel,
     SpreadVolumeSlippageModel,
+    UnlimitedLiquidityModel,
+    VolumeShareLiquidityModel,
     commission_model_for_broker,
     run_multi_symbol_backtest,
+    validate_backtest_result,
 )
 from src.backtesting.types import AccountSnapshot, MarketSnapshot
 from src.data import sample_ohlcv
-from src.models import Order
+from src.models import Order, Signal
 from src.portfolio import EqualWeightAllocation, FixedNotionalAllocation, RiskParityAllocation
 from src.risk import PortfolioRiskLimits
 from src.strategies.buy_hold import BuyAndHoldStrategy
+from src.strategies.base import Strategy
+
+
+class CostRoundTripStrategy(Strategy):
+    def generate_signals(self, df):
+        signals = []
+        for index, timestamp in enumerate(df.index):
+            if index == 0:
+                signals.append(Signal("BUY", self.symbol, timestamp, stop_loss=90.0))
+            elif index == 1:
+                signals.append(Signal("CLOSE", self.symbol, timestamp))
+            else:
+                signals.append(Signal.hold(self.symbol, timestamp))
+        return pd.Series(signals, index=df.index, dtype=object)
 
 
 def test_multi_symbol_backtest_aggregates_results():
@@ -113,6 +136,80 @@ def test_spread_volume_slippage_moves_price_against_order():
     assert sell_price < 100
 
 
+def test_execution_model_caps_fill_quantity_by_volume_share():
+    model = BarExecutionModel(
+        slippage_model=FixedBpsSlippageModel(0),
+        commission_model=BpsCommissionModel(0),
+        liquidity_model=VolumeShareLiquidityModel(max_volume_share=0.10),
+    )
+    snapshot = MarketSnapshot(
+        timestamp=pd.Timestamp("2024-01-01"),
+        symbol="SPY",
+        open=100,
+        high=101,
+        low=99,
+        close=100,
+        volume=100,
+    )
+    account = AccountSnapshot(
+        timestamp=pd.Timestamp("2024-01-01"),
+        cash=10_000,
+        equity=10_000,
+        buying_power=10_000,
+    )
+
+    fill = model.execute(Order("SPY", "BUY", 50), snapshot, account)
+
+    assert isinstance(fill, Fill)
+    assert fill.quantity == 10
+    assert fill.liquidity_fraction == 0.2
+
+
+def test_backtest_result_includes_commission_and_slippage_costs():
+    index = pd.date_range("2024-01-01", periods=2)
+    data = pd.DataFrame(
+        {
+            "Open": [100, 100],
+            "High": [101, 101],
+            "Low": [99, 99],
+            "Close": [100, 100],
+            "Volume": [1000, 1000],
+        },
+        index=index,
+    )
+    execution_model = BarExecutionModel(
+        slippage_model=FixedBpsSlippageModel(100),
+        commission_model=BpsCommissionModel(100),
+        liquidity_model=UnlimitedLiquidityModel(),
+    )
+
+    result = BacktestEngine(
+        config=BacktestConfig(force_flat_at_end=False),
+        execution_model=execution_model,
+    ).run(CostRoundTripStrategy("SPY"), data)
+
+    assert len(result.fills) == 2
+    assert result.fills[0].price == 101
+    assert result.fills[1].price == 99
+    assert round(sum(fill.commission for fill in result.fills), 2) == 100.0
+    assert round(result.total_pnl, 2) == -200.0
+    assert result.metrics["starting_equity"] == 10_000
+    assert round(result.metrics["total_return"], 4) == round(result.total_pnl_pct, 4)
+
+
+def test_backtest_validation_report_accepts_clean_result_and_flags_metric_mismatch():
+    data = sample_ohlcv("SPY", periods=40)
+    result = BacktestEngine(config=BacktestConfig()).run(BuyAndHoldStrategy("SPY"), data)
+
+    clean_report = validate_backtest_result(result)
+    result.metrics["total_return"] = 999
+    dirty_report = validate_backtest_result(result)
+
+    assert clean_report.passed
+    assert not dirty_report.passed
+    assert any(issue.code == "TOTAL_RETURN_MISMATCH" for issue in dirty_report.issues)
+
+
 def test_commission_presets_and_borrow_costs():
     ibkr = commission_model_for_broker("ibkr")
     fee = ibkr.calculate(Order("SPY", "BUY", 10), fill_price=100, fill_quantity=10)
@@ -158,3 +255,63 @@ def test_short_locate_rejection():
 
     assert rejection is not None
     assert rejection.message == "Short locate unavailable."
+
+
+def test_risk_model_uses_configured_execution_price_for_margin_checks():
+    risk = CompositeRiskModel(SimpleMarginModel(leverage=1), price_column="Open")
+    account = AccountSnapshot(
+        timestamp=pd.Timestamp("2024-01-01"),
+        cash=10_000,
+        equity=10_000,
+        buying_power=10_000,
+    )
+    snapshot = MarketSnapshot(
+        timestamp=pd.Timestamp("2024-01-01"),
+        symbol="SPY",
+        open=100,
+        high=205,
+        low=95,
+        close=200,
+    )
+
+    rejection = risk.evaluate(Order("SPY", "BUY", 100), account, snapshot)
+
+    assert rejection is None
+
+
+def test_ledger_keeps_open_trade_after_partial_close():
+    ledger = CashMarginLedger(initial_cash=10_000)
+    timestamp = pd.Timestamp("2024-01-01")
+
+    ledger.apply_fill(Fill(Order("SPY", "BUY", 100), timestamp, quantity=100, price=10))
+    ledger.apply_fill(Fill(Order("SPY", "SELL", 40), timestamp, quantity=40, price=12))
+
+    snapshot = ledger.snapshot(timestamp, prices={"SPY": 12})
+
+    assert snapshot.positions["SPY"] == 60
+    assert ledger.realized_pnl == 80
+    assert len(ledger.closed_trades) == 1
+    assert ledger.closed_trades[0].shares == 40
+    assert ledger.closed_trades[0].pnl == 80
+    assert ledger.open_trades["SPY"].shares == 60
+    assert snapshot.equity == 10_200
+
+
+def test_ledger_opens_new_trade_after_position_reversal():
+    ledger = CashMarginLedger(initial_cash=10_000)
+    timestamp = pd.Timestamp("2024-01-01")
+
+    ledger.apply_fill(Fill(Order("SPY", "BUY", 100), timestamp, quantity=100, price=10))
+    ledger.apply_fill(Fill(Order("SPY", "SELL", 150), timestamp, quantity=150, price=12))
+
+    snapshot = ledger.snapshot(timestamp, prices={"SPY": 12})
+
+    assert snapshot.positions["SPY"] == -50
+    assert ledger.realized_pnl == 200
+    assert len(ledger.closed_trades) == 1
+    assert ledger.closed_trades[0].shares == 100
+    assert ledger.closed_trades[0].pnl == 200
+    assert ledger.open_trades["SPY"].side == "SHORT"
+    assert ledger.open_trades["SPY"].shares == -50
+    assert ledger.open_trades["SPY"].entry_price == 12
+    assert snapshot.equity == 10_200

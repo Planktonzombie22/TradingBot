@@ -1,0 +1,1179 @@
+{
+  "matrix_name": "cross_asset_research_matrix",
+  "completed": 258,
+  "failed": 42,
+  "asset_class_summary": [
+    {
+      "asset_class": "bonds",
+      "jobs": 2,
+      "completed": 60,
+      "failed": 0
+    },
+    {
+      "asset_class": "commodities_real_assets",
+      "jobs": 1,
+      "completed": 30,
+      "failed": 0
+    },
+    {
+      "asset_class": "crypto",
+      "jobs": 4,
+      "completed": 108,
+      "failed": 12
+    },
+    {
+      "asset_class": "fx",
+      "jobs": 1,
+      "completed": 0,
+      "failed": 30
+    },
+    {
+      "asset_class": "stocks",
+      "jobs": 2,
+      "completed": 60,
+      "failed": 0
+    }
+  ],
+  "jobs": [
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "us_large_cap_stocks",
+        "asset_class": "stocks",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "post_covid_cycle",
+          "start": "2020-01-01",
+          "end": "2026-07-01",
+          "period": null
+        },
+        "symbols": [
+          "AAPL",
+          "MSFT",
+          "NVDA",
+          "AMZN",
+          "META"
+        ],
+        "key": "cross-asset-research-matrix-us-large-cap-stocks-1d-post-covid-cycle"
+      },
+      "completed": 30,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "meanReversion",
+          "markets": 5,
+          "average_return": 0.425632832854713,
+          "median_return": 0.30822307618278316,
+          "best_return": 1.0928403131598163,
+          "worst_return": -0.07814469473008812,
+          "average_max_drawdown": -0.2058203688108451,
+          "win_rate": 0.8,
+          "total_trades": 29,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 5,
+          "average_return": 0.36328788635703224,
+          "median_return": 0.14914513489258752,
+          "best_return": 1.0403845923386035,
+          "worst_return": -0.16075772611901049,
+          "average_max_drawdown": -0.36865124673713323,
+          "win_rate": 0.6,
+          "total_trades": 41,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 5,
+          "average_return": 0.29962562574544493,
+          "median_return": 0.3041937235659496,
+          "best_return": 0.9930246037171714,
+          "worst_return": -0.12180398684782322,
+          "average_max_drawdown": -0.33412730550113284,
+          "win_rate": 0.6,
+          "total_trades": 42,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 5,
+          "average_return": 0.2739943949832218,
+          "median_return": 0.31028201696180185,
+          "best_return": 0.4236399838856414,
+          "worst_return": 0.14316945067566667,
+          "average_max_drawdown": -0.20603663215288898,
+          "win_rate": 1.0,
+          "total_trades": 58,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "buyHold",
+          "markets": 5,
+          "average_return": 0.2343770612302783,
+          "median_return": 0.23147175692148667,
+          "best_return": 0.5416946804028634,
+          "worst_return": -0.14228171062145667,
+          "average_max_drawdown": -0.3395348162248939,
+          "win_rate": 0.8,
+          "total_trades": 5,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 5,
+          "average_return": -0.020010719376926465,
+          "median_return": 0.0,
+          "best_return": 0.026843484846988758,
+          "worst_return": -0.08958001460354499,
+          "average_max_drawdown": -0.07590683014092355,
+          "win_rate": 0.4,
+          "total_trades": 6,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "us_large_cap_stocks",
+        "asset_class": "stocks",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "rate_hike_cycle",
+          "start": "2022-01-01",
+          "end": "2024-12-31",
+          "period": null
+        },
+        "symbols": [
+          "AAPL",
+          "MSFT",
+          "NVDA",
+          "AMZN",
+          "META"
+        ],
+        "key": "cross-asset-research-matrix-us-large-cap-stocks-1d-rate-hike-cycle"
+      },
+      "completed": 30,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "meanReversion",
+          "markets": 5,
+          "average_return": 0.4256330949158567,
+          "median_return": 0.30822307618278316,
+          "best_return": 1.0928413781436683,
+          "worst_return": -0.07814461876320457,
+          "average_max_drawdown": -0.205820155382585,
+          "win_rate": 0.8,
+          "total_trades": 29,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 5,
+          "average_return": 0.36328623238916635,
+          "median_return": 0.14914696181904255,
+          "best_return": 1.0403766157250223,
+          "worst_return": -0.16075772611901049,
+          "average_max_drawdown": -0.368650738466754,
+          "win_rate": 0.6,
+          "total_trades": 41,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 5,
+          "average_return": 0.2997688433194966,
+          "median_return": 0.3041937235659496,
+          "best_return": 0.9931987361396049,
+          "worst_return": -0.12150096006079439,
+          "average_max_drawdown": -0.3341273434712636,
+          "win_rate": 0.6,
+          "total_trades": 42,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 5,
+          "average_return": 0.27393680281021143,
+          "median_return": 0.3102839390806821,
+          "best_return": 0.4236399838856414,
+          "worst_return": 0.14317026918226655,
+          "average_max_drawdown": -0.20603664791174295,
+          "win_rate": 1.0,
+          "total_trades": 58,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "buyHold",
+          "markets": 5,
+          "average_return": 0.234254392135691,
+          "median_return": 0.23137137921495415,
+          "best_return": 0.541304636467399,
+          "worst_return": -0.14220556829745382,
+          "average_max_drawdown": -0.3395347879843166,
+          "win_rate": 0.8,
+          "total_trades": 5,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 5,
+          "average_return": -0.02003829325829487,
+          "median_return": 0.0,
+          "best_return": 0.026843433765861482,
+          "worst_return": -0.08958056346378653,
+          "average_max_drawdown": -0.0759071975042864,
+          "win_rate": 0.4,
+          "total_trades": 6,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "rates_bonds_credit",
+        "asset_class": "bonds",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "post_covid_cycle",
+          "start": "2020-01-01",
+          "end": "2026-07-01",
+          "period": null
+        },
+        "symbols": [
+          "TLT",
+          "IEF",
+          "SHY",
+          "AGG",
+          "BND"
+        ],
+        "key": "cross-asset-research-matrix-rates-bonds-credit-1d-post-covid-cycle"
+      },
+      "completed": 30,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "buyHold",
+          "markets": 5,
+          "average_return": 0.062394342556397066,
+          "median_return": 0.07931026337783187,
+          "best_return": 0.08510342353932719,
+          "worst_return": -0.007604073645336212,
+          "average_max_drawdown": -0.06442390608663054,
+          "win_rate": 0.8,
+          "total_trades": 5,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 5,
+          "average_return": 0.05178141005179306,
+          "median_return": 0.08103442005647521,
+          "best_return": 0.13076570397620088,
+          "worst_return": -0.07220584151795338,
+          "average_max_drawdown": -0.06108372700477862,
+          "win_rate": 0.8,
+          "total_trades": 27,
+          "total_rejections": 2
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 5,
+          "average_return": 0.029032726978874168,
+          "median_return": 0.0,
+          "best_return": 0.19352032157746163,
+          "worst_return": -0.03628802899754009,
+          "average_max_drawdown": -0.1214689372381071,
+          "win_rate": 0.4,
+          "total_trades": 6,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 5,
+          "average_return": 0.02158800199920137,
+          "median_return": 0.00802833343324819,
+          "best_return": 0.14297865280127225,
+          "worst_return": -0.05913850812305245,
+          "average_max_drawdown": -0.10174893023821778,
+          "win_rate": 0.6,
+          "total_trades": 16,
+          "total_rejections": 2
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 5,
+          "average_return": 0.005613701217874259,
+          "median_return": 0.0,
+          "best_return": 0.028068506089371295,
+          "worst_return": 0.0,
+          "average_max_drawdown": -0.009583058833168434,
+          "win_rate": 0.2,
+          "total_trades": 3,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 5,
+          "average_return": 0.0016800004869431035,
+          "median_return": -0.020850728544071898,
+          "best_return": 0.07152807800895207,
+          "worst_return": -0.06850077247016524,
+          "average_max_drawdown": -0.06565768239973724,
+          "win_rate": 0.4,
+          "total_trades": 8,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "rates_bonds_credit",
+        "asset_class": "bonds",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "rate_hike_cycle",
+          "start": "2022-01-01",
+          "end": "2024-12-31",
+          "period": null
+        },
+        "symbols": [
+          "TLT",
+          "IEF",
+          "SHY",
+          "AGG",
+          "BND"
+        ],
+        "key": "cross-asset-research-matrix-rates-bonds-credit-1d-rate-hike-cycle"
+      },
+      "completed": 30,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 5,
+          "average_return": 0.13038968816411273,
+          "median_return": 0.0,
+          "best_return": 0.7002906285223195,
+          "worst_return": -0.036273797054759055,
+          "average_max_drawdown": -0.1214693242570071,
+          "win_rate": 0.4,
+          "total_trades": 7,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "buyHold",
+          "markets": 5,
+          "average_return": 0.06240261156566888,
+          "median_return": 0.07935357627327157,
+          "best_return": 0.08510351490192407,
+          "worst_return": -0.007603984997304178,
+          "average_max_drawdown": -0.06442394994245056,
+          "win_rate": 0.8,
+          "total_trades": 5,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 5,
+          "average_return": 0.05861965875152003,
+          "median_return": 0.08103454268732385,
+          "best_return": 0.18216344495688244,
+          "worst_return": -0.08174387149405957,
+          "average_max_drawdown": -0.06277986344715777,
+          "win_rate": 0.8,
+          "total_trades": 27,
+          "total_rejections": 2
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 5,
+          "average_return": 0.005850504708929732,
+          "median_return": 0.0,
+          "best_return": 0.07152847556159868,
+          "worst_return": -0.06850036515660612,
+          "average_max_drawdown": -0.06007960377201758,
+          "win_rate": 0.4,
+          "total_trades": 7,
+          "total_rejections": 1
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 5,
+          "average_return": 0.005613906873675951,
+          "median_return": 0.0,
+          "best_return": 0.028069534368379754,
+          "worst_return": 0.0,
+          "average_max_drawdown": -0.009583063042300676,
+          "win_rate": 0.2,
+          "total_trades": 3,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 5,
+          "average_return": 0.0032964514527181023,
+          "median_return": -0.005747786424707738,
+          "best_return": 0.11909399442118229,
+          "worst_return": -0.05913586372916688,
+          "average_max_drawdown": -0.13833559169656728,
+          "win_rate": 0.4,
+          "total_trades": 18,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "crypto_yfinance",
+        "asset_class": "crypto",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "crypto_cycle",
+          "start": "2020-01-01",
+          "end": "2026-07-01",
+          "period": null
+        },
+        "symbols": [
+          "BTC-USD",
+          "ETH-USD",
+          "SOL-USD",
+          "BNB-USD",
+          "XRP-USD"
+        ],
+        "key": "cross-asset-research-matrix-crypto-yfinance-1d-crypto-cycle"
+      },
+      "completed": 24,
+      "failed": 6,
+      "strategy_summary": [
+        {
+          "strategy": "buyHold",
+          "markets": 4,
+          "average_return": 0.41191216672123643,
+          "median_return": 0.17083610075768718,
+          "best_return": 1.6899431969595593,
+          "worst_return": -0.3839667315899879,
+          "average_max_drawdown": -0.6245460650125082,
+          "win_rate": 0.75,
+          "total_trades": 4,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 4,
+          "average_return": 0.2310011546205235,
+          "median_return": 0.21117674167671485,
+          "best_return": 0.5032942940760895,
+          "worst_return": -0.0016431589474252177,
+          "average_max_drawdown": -0.05161741907684536,
+          "win_rate": 0.75,
+          "total_trades": 8,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 4,
+          "average_return": 0.21989410875296453,
+          "median_return": 0.14358603704057066,
+          "best_return": 0.7326836354502492,
+          "worst_return": -0.14027927451953237,
+          "average_max_drawdown": -0.8867493616889858,
+          "win_rate": 0.5,
+          "total_trades": 54,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 4,
+          "average_return": 0.0,
+          "median_return": 0.0,
+          "best_return": 0.0,
+          "worst_return": 0.0,
+          "average_max_drawdown": 0.0,
+          "win_rate": 0.0,
+          "total_trades": 0,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 4,
+          "average_return": -0.6854190649379728,
+          "median_return": -0.5517677888524686,
+          "best_return": -0.1282053952158807,
+          "worst_return": -1.5099352868310731,
+          "average_max_drawdown": -0.9477014739630164,
+          "win_rate": 0.0,
+          "total_trades": 25,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 4,
+          "average_return": -3.4537981841722725,
+          "median_return": -0.394301898285063,
+          "best_return": 0.09597913551120091,
+          "worst_return": -13.122568075630165,
+          "average_max_drawdown": -4.71271530648655,
+          "win_rate": 0.25,
+          "total_trades": 40,
+          "total_rejections": 0
+        }
+      ],
+      "errors": [
+        {
+          "symbol": "SOL-USD",
+          "strategy": "buyHold",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "meanReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "tuffContrarian",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "gapFade",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "choppinessRange",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "vwapValueReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        }
+      ]
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "crypto_yfinance",
+        "asset_class": "crypto",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "recent_regime",
+          "start": null,
+          "end": null,
+          "period": "2y"
+        },
+        "symbols": [
+          "BTC-USD",
+          "ETH-USD",
+          "SOL-USD",
+          "BNB-USD",
+          "XRP-USD"
+        ],
+        "key": "cross-asset-research-matrix-crypto-yfinance-1d-recent-regime"
+      },
+      "completed": 24,
+      "failed": 6,
+      "strategy_summary": [
+        {
+          "strategy": "buyHold",
+          "markets": 4,
+          "average_return": 0.4119640998700221,
+          "median_return": 0.17088704496407753,
+          "best_return": 1.6899431969595593,
+          "worst_return": -0.383860887407626,
+          "average_max_drawdown": -0.6245460650125082,
+          "win_rate": 0.75,
+          "total_trades": 4,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 4,
+          "average_return": 0.2310011546205235,
+          "median_return": 0.21117674167671485,
+          "best_return": 0.5032942940760895,
+          "worst_return": -0.0016431589474252177,
+          "average_max_drawdown": -0.05161741907684536,
+          "win_rate": 0.75,
+          "total_trades": 8,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 4,
+          "average_return": 0.21997177736090412,
+          "median_return": 0.14361780425164505,
+          "best_return": 0.7329307754598587,
+          "worst_return": -0.14027927451953237,
+          "average_max_drawdown": -0.8867493616889858,
+          "win_rate": 0.5,
+          "total_trades": 54,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 4,
+          "average_return": 0.0,
+          "median_return": 0.0,
+          "best_return": 0.0,
+          "worst_return": 0.0,
+          "average_max_drawdown": 0.0,
+          "win_rate": 0.0,
+          "total_trades": 0,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 4,
+          "average_return": -0.6854190649379728,
+          "median_return": -0.5517677888524686,
+          "best_return": -0.1282053952158807,
+          "worst_return": -1.5099352868310731,
+          "average_max_drawdown": -0.9477014739630164,
+          "win_rate": 0.0,
+          "total_trades": 25,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 4,
+          "average_return": -3.4537981841722725,
+          "median_return": -0.394301898285063,
+          "best_return": 0.09597913551120091,
+          "worst_return": -13.122568075630165,
+          "average_max_drawdown": -4.71271530648655,
+          "win_rate": 0.25,
+          "total_trades": 40,
+          "total_rejections": 0
+        }
+      ],
+      "errors": [
+        {
+          "symbol": "SOL-USD",
+          "strategy": "buyHold",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "meanReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "tuffContrarian",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "gapFade",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "choppinessRange",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "SOL-USD",
+          "strategy": "vwapValueReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        }
+      ]
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "crypto_yfinance",
+        "asset_class": "crypto",
+        "provider": "yfinance",
+        "interval": "1h",
+        "window": {
+          "name": "crypto_cycle",
+          "start": "2020-01-01",
+          "end": "2026-07-01",
+          "period": null
+        },
+        "symbols": [
+          "BTC-USD",
+          "ETH-USD",
+          "SOL-USD",
+          "BNB-USD",
+          "XRP-USD"
+        ],
+        "key": "cross-asset-research-matrix-crypto-yfinance-1h-crypto-cycle"
+      },
+      "completed": 30,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "buyHold",
+          "markets": 5,
+          "average_return": 0.21961312808225414,
+          "median_return": 0.12049499837454587,
+          "best_return": 1.613489924463744,
+          "worst_return": -0.40486902397254965,
+          "average_max_drawdown": -0.6694395592799245,
+          "win_rate": 0.6,
+          "total_trades": 5,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 5,
+          "average_return": 0.004586256202663826,
+          "median_return": 0.0,
+          "best_return": 0.022931281013319132,
+          "worst_return": 0.0,
+          "average_max_drawdown": -0.007156798749765358,
+          "win_rate": 0.2,
+          "total_trades": 1,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 5,
+          "average_return": -0.02883406000008153,
+          "median_return": 0.004433551351003916,
+          "best_return": 0.3260209529746855,
+          "worst_return": -0.46305109616934553,
+          "average_max_drawdown": -0.548855852569025,
+          "win_rate": 0.6,
+          "total_trades": 215,
+          "total_rejections": 9
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 5,
+          "average_return": -0.8522377403860008,
+          "median_return": -0.9961537097238828,
+          "best_return": -0.6153014438394278,
+          "worst_return": -0.9998264126711026,
+          "average_max_drawdown": -0.96350335551784,
+          "win_rate": 0.0,
+          "total_trades": 1517,
+          "total_rejections": 93
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 5,
+          "average_return": -0.8599572585852595,
+          "median_return": -0.9838058802769729,
+          "best_return": -0.3668948584430236,
+          "worst_return": -1.0211661682024094,
+          "average_max_drawdown": -0.9733416228842774,
+          "win_rate": 0.0,
+          "total_trades": 828,
+          "total_rejections": 70
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 5,
+          "average_return": -2.2586264962119698,
+          "median_return": -1.5747084938075713,
+          "best_return": 3.752232835254242,
+          "worst_return": -9.742839153858714,
+          "average_max_drawdown": -4.629752711534584,
+          "win_rate": 0.2,
+          "total_trades": 78,
+          "total_rejections": 2
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "crypto_yfinance",
+        "asset_class": "crypto",
+        "provider": "yfinance",
+        "interval": "1h",
+        "window": {
+          "name": "recent_regime",
+          "start": null,
+          "end": null,
+          "period": "2y"
+        },
+        "symbols": [
+          "BTC-USD",
+          "ETH-USD",
+          "SOL-USD",
+          "BNB-USD",
+          "XRP-USD"
+        ],
+        "key": "cross-asset-research-matrix-crypto-yfinance-1h-recent-regime"
+      },
+      "completed": 30,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "buyHold",
+          "markets": 5,
+          "average_return": 0.21902746167409184,
+          "median_return": 0.11954669737173518,
+          "best_return": 1.613489924463744,
+          "worst_return": -0.4059506979798478,
+          "average_max_drawdown": -0.6694395592799245,
+          "win_rate": 0.6,
+          "total_trades": 5,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 5,
+          "average_return": 0.004586256202663826,
+          "median_return": 0.0,
+          "best_return": 0.022931281013319132,
+          "worst_return": 0.0,
+          "average_max_drawdown": -0.007156798749765358,
+          "win_rate": 0.2,
+          "total_trades": 1,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 5,
+          "average_return": -0.02883406000008153,
+          "median_return": 0.004433551351003916,
+          "best_return": 0.3260209529746855,
+          "worst_return": -0.46305109616934553,
+          "average_max_drawdown": -0.548855852569025,
+          "win_rate": 0.6,
+          "total_trades": 215,
+          "total_rejections": 9
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 5,
+          "average_return": -0.8522377403860008,
+          "median_return": -0.9961537097238828,
+          "best_return": -0.6153014438394278,
+          "worst_return": -0.9998264126711026,
+          "average_max_drawdown": -0.96350335551784,
+          "win_rate": 0.0,
+          "total_trades": 1517,
+          "total_rejections": 93
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 5,
+          "average_return": -0.8599572585852595,
+          "median_return": -0.9838058802769729,
+          "best_return": -0.3668948584430236,
+          "worst_return": -1.0211661682024094,
+          "average_max_drawdown": -0.9733416228842774,
+          "win_rate": 0.0,
+          "total_trades": 828,
+          "total_rejections": 70
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 5,
+          "average_return": -2.2615940032087942,
+          "median_return": -1.5747084938075713,
+          "best_return": 3.7397125819222956,
+          "worst_return": -9.742839153858714,
+          "average_max_drawdown": -4.629752711534584,
+          "win_rate": 0.2,
+          "total_trades": 78,
+          "total_rejections": 2
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "commodities_real_assets",
+        "asset_class": "commodities_real_assets",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "inflation_cycle",
+          "start": "2021-01-01",
+          "end": "2026-07-01",
+          "period": null
+        },
+        "symbols": [
+          "GLD",
+          "SLV",
+          "USO",
+          "UNG",
+          "DBA"
+        ],
+        "key": "cross-asset-research-matrix-commodities-real-assets-1d-inflation-cycle"
+      },
+      "completed": 30,
+      "failed": 0,
+      "strategy_summary": [
+        {
+          "strategy": "buyHold",
+          "markets": 5,
+          "average_return": 0.4039069291954614,
+          "median_return": 0.3323862207932787,
+          "best_return": 0.9616068948248055,
+          "worst_return": -0.255359352126811,
+          "average_max_drawdown": -0.35605500785278565,
+          "win_rate": 0.8,
+          "total_trades": 5,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "choppinessRange",
+          "markets": 5,
+          "average_return": -0.01244162777146659,
+          "median_return": 0.0,
+          "best_return": 0.15053662112019156,
+          "worst_return": -0.2127447599775245,
+          "average_max_drawdown": -0.0537404746927169,
+          "win_rate": 0.2,
+          "total_trades": 3,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "gapFade",
+          "markets": 5,
+          "average_return": -0.03178664004416646,
+          "median_return": -0.05694703220217016,
+          "best_return": 0.30293341547954716,
+          "worst_return": -0.38006511705240265,
+          "average_max_drawdown": -0.45706856333827306,
+          "win_rate": 0.4,
+          "total_trades": 60,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "meanReversion",
+          "markets": 5,
+          "average_return": -0.14387762033324009,
+          "median_return": 0.17302782247768647,
+          "best_return": 0.24766749189118928,
+          "worst_return": -0.9628154229142758,
+          "average_max_drawdown": -0.8246145046556166,
+          "win_rate": 0.6,
+          "total_trades": 29,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "tuffContrarian",
+          "markets": 5,
+          "average_return": -0.5190122947053687,
+          "median_return": 0.18568328312651064,
+          "best_return": 0.32128249994441177,
+          "worst_return": -2.5903555521721295,
+          "average_max_drawdown": -1.0653541291880733,
+          "win_rate": 0.6,
+          "total_trades": 31,
+          "total_rejections": 0
+        },
+        {
+          "strategy": "vwapValueReversion",
+          "markets": 5,
+          "average_return": -0.8928980967920526,
+          "median_return": -0.5825618488108714,
+          "best_return": 0.5513426135475938,
+          "worst_return": -2.24735506243438,
+          "average_max_drawdown": -2.092898906655162,
+          "win_rate": 0.2,
+          "total_trades": 38,
+          "total_rejections": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "job": {
+        "matrix_name": "cross_asset_research_matrix",
+        "group_name": "fx_yfinance",
+        "asset_class": "fx",
+        "provider": "yfinance",
+        "interval": "1d",
+        "window": {
+          "name": "macro_cycle",
+          "start": "2020-01-01",
+          "end": "2026-07-01",
+          "period": null
+        },
+        "symbols": [
+          "EURUSD=X",
+          "JPY=X",
+          "GBPUSD=X",
+          "AUDUSD=X",
+          "CAD=X"
+        ],
+        "key": "cross-asset-research-matrix-fx-yfinance-1d-macro-cycle"
+      },
+      "completed": 0,
+      "failed": 30,
+      "strategy_summary": [],
+      "errors": [
+        {
+          "symbol": "EURUSD=X",
+          "strategy": "buyHold",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "EURUSD=X",
+          "strategy": "meanReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "EURUSD=X",
+          "strategy": "tuffContrarian",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "EURUSD=X",
+          "strategy": "gapFade",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "EURUSD=X",
+          "strategy": "choppinessRange",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "EURUSD=X",
+          "strategy": "vwapValueReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "JPY=X",
+          "strategy": "buyHold",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "JPY=X",
+          "strategy": "meanReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "JPY=X",
+          "strategy": "tuffContrarian",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "JPY=X",
+          "strategy": "gapFade",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "JPY=X",
+          "strategy": "choppinessRange",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "JPY=X",
+          "strategy": "vwapValueReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "GBPUSD=X",
+          "strategy": "buyHold",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "GBPUSD=X",
+          "strategy": "meanReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "GBPUSD=X",
+          "strategy": "tuffContrarian",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "GBPUSD=X",
+          "strategy": "gapFade",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "GBPUSD=X",
+          "strategy": "choppinessRange",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "GBPUSD=X",
+          "strategy": "vwapValueReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "AUDUSD=X",
+          "strategy": "buyHold",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "AUDUSD=X",
+          "strategy": "meanReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "AUDUSD=X",
+          "strategy": "tuffContrarian",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "AUDUSD=X",
+          "strategy": "gapFade",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "AUDUSD=X",
+          "strategy": "choppinessRange",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "AUDUSD=X",
+          "strategy": "vwapValueReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "CAD=X",
+          "strategy": "buyHold",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "CAD=X",
+          "strategy": "meanReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "CAD=X",
+          "strategy": "tuffContrarian",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "CAD=X",
+          "strategy": "gapFade",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "CAD=X",
+          "strategy": "choppinessRange",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        },
+        {
+          "symbol": "CAD=X",
+          "strategy": "vwapValueReversion",
+          "error": "Historical data quality check failed: High/low bounds are inconsistent with open/close."
+        }
+      ]
+    }
+  ]
+}

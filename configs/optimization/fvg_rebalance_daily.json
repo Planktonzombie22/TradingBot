@@ -1,0 +1,5 @@
+{
+  "min_gap_atr": [0.05, 0.15, 0.3],
+  "rsi_floor": [45, 48, 52],
+  "atr_stop_multiple": [1.5, 1.8, 2.2]
+}

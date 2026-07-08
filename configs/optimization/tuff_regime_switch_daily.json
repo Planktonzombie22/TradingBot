@@ -1,0 +1,8 @@
+{
+  "trend_adx": [18, 22, 28],
+  "range_adx": [12, 18],
+  "rsi_deviation": [3, 5],
+  "band_period": [15, 20],
+  "band_deviation": [1.5, 1.8],
+  "atr_stop_multiple": [1.5, 2.0]
+}

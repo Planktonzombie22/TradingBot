@@ -1,0 +1,79 @@
+{
+  "completed": 300,
+  "failed": 0,
+  "strategy_summary": [
+    {
+      "strategy": "meanReversion",
+      "markets": 50,
+      "average_return": 0.3504432959801019,
+      "median_return": 0.31951362387588306,
+      "best_return": 1.1713973876095174,
+      "worst_return": -0.785007228817563,
+      "average_max_drawdown": -0.23537360189920595,
+      "win_rate": 0.82,
+      "total_trades": 362,
+      "total_rejections": 7
+    },
+    {
+      "strategy": "trendPullback",
+      "markets": 50,
+      "average_return": 0.0516039908030669,
+      "median_return": 0.025636656708504506,
+      "best_return": 1.5761202515314947,
+      "worst_return": -0.8429823173306581,
+      "average_max_drawdown": -0.258120334458242,
+      "win_rate": 0.54,
+      "total_trades": 396,
+      "total_rejections": 3
+    },
+    {
+      "strategy": "volatilityBreakout",
+      "markets": 50,
+      "average_return": -0.04112318164341183,
+      "median_return": -0.04278415026457187,
+      "best_return": 0.9062005191145225,
+      "worst_return": -1.3848073375455232,
+      "average_max_drawdown": -0.3482838767820587,
+      "win_rate": 0.4,
+      "total_trades": 443,
+      "total_rejections": 6
+    },
+    {
+      "strategy": "squeezeExpansion",
+      "markets": 50,
+      "average_return": -0.047644585595363574,
+      "median_return": -0.0638549381592611,
+      "best_return": 0.37619245883977054,
+      "worst_return": -0.2840900676365385,
+      "average_max_drawdown": -0.18842863881431993,
+      "win_rate": 0.24,
+      "total_trades": 321,
+      "total_rejections": 0
+    },
+    {
+      "strategy": "volumeMomentum",
+      "markets": 50,
+      "average_return": -0.13059322939762238,
+      "median_return": -0.1185609579216719,
+      "best_return": 0.14490302082807538,
+      "worst_return": -0.7801214342460867,
+      "average_max_drawdown": -0.23169181687430931,
+      "win_rate": 0.24,
+      "total_trades": 1609,
+      "total_rejections": 1
+    },
+    {
+      "strategy": "momentumRegime",
+      "markets": 50,
+      "average_return": -0.20110667150812447,
+      "median_return": -0.19999852317782552,
+      "best_return": 1.0511680421516918,
+      "worst_return": -0.8859019852922032,
+      "average_max_drawdown": -0.36820826312831767,
+      "win_rate": 0.12,
+      "total_trades": 1635,
+      "total_rejections": 30
+    }
+  ],
+  "errors": []
+}

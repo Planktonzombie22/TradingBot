@@ -1,0 +1,43 @@
+{
+  "completed": 150,
+  "failed": 0,
+  "strategy_summary": [
+    {
+      "strategy": "tuffContrarian",
+      "markets": 50,
+      "average_return": 0.25227177812298607,
+      "median_return": 0.1714357689502165,
+      "best_return": 1.5554869611923132,
+      "worst_return": -0.5757533316082306,
+      "average_max_drawdown": -0.2487969709165013,
+      "win_rate": 0.7,
+      "total_trades": 477,
+      "total_rejections": 15
+    },
+    {
+      "strategy": "tuffRegimeSwitch",
+      "markets": 50,
+      "average_return": 0.06058793335457897,
+      "median_return": 0.03195841685483283,
+      "best_return": 1.7215697429521641,
+      "worst_return": -0.584954720766537,
+      "average_max_drawdown": -0.25733226192592523,
+      "win_rate": 0.54,
+      "total_trades": 7349,
+      "total_rejections": 72
+    },
+    {
+      "strategy": "tuffConsensus",
+      "markets": 50,
+      "average_return": -0.12071996000091983,
+      "median_return": -0.11471995165309562,
+      "best_return": 0.4358259253369075,
+      "worst_return": -1.0293488852007295,
+      "average_max_drawdown": -0.34228421109792023,
+      "win_rate": 0.36,
+      "total_trades": 2022,
+      "total_rejections": 25
+    }
+  ],
+  "errors": []
+}

@@ -16,6 +16,8 @@ from .normalization import normalize_ohlcv_frame
 class AlpacaHistoricalDataFeed(DataFeed):
     """Historical bar data feed backed by Alpaca Market Data REST."""
 
+    cache_provider_key = "alpaca-adjusted-all"
+
     def __init__(self, config: AlpacaConfig, cache: Optional[HistoricalDataCache] = None):
         self.config = config
         self.client = AlpacaRestClient(config)
@@ -32,13 +34,14 @@ class AlpacaHistoricalDataFeed(DataFeed):
         self._validate_credentials()
         timeframe = _to_alpaca_timeframe(interval)
         if self.cache is not None:
-            cached = self.cache.read("alpaca", symbol, timeframe, start, end)
+            cached = self.cache.read(self.cache_provider_key, symbol, timeframe, start, end)
             if cached is not None:
                 return cached
 
         query = {
             "timeframe": timeframe,
             "feed": self.config.feed,
+            "adjustment": "all",
             "limit": 10_000,
         }
         if start:
@@ -61,7 +64,7 @@ class AlpacaHistoricalDataFeed(DataFeed):
 
         data = normalize_ohlcv_frame(_bars_payload_to_frame(bars))
         if self.cache is not None and not data.empty:
-            self.cache.write("alpaca", symbol, timeframe, data, start, end)
+            self.cache.write(self.cache_provider_key, symbol, timeframe, data, start, end)
         return data
 
     def get_stream(self, symbol: str) -> Iterable[Bar]:

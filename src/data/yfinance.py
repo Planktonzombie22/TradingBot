@@ -20,6 +20,8 @@ class YFinanceDataFeed(DataFeed):
         kwargs = {
             "tickers": symbol,
             "interval": interval,
+            "auto_adjust": True,
+            "progress": False,
         }
         if period is not None:
             kwargs["period"] = period

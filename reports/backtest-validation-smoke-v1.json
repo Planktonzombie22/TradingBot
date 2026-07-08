@@ -1,0 +1,145 @@
+{
+  "name": "backtest_validation_smoke_v1",
+  "rows": [
+    {
+      "symbol": "SPY",
+      "strategy": "buyHold",
+      "bars": 752,
+      "first_date": "2022-01-03",
+      "last_date": "2024-12-30",
+      "total_pnl_pct": 0.2866221298014525,
+      "fills": 2,
+      "trades": 1,
+      "validation": {
+        "passed": true,
+        "issues": []
+      }
+    },
+    {
+      "symbol": "SPY",
+      "strategy": "meanReversion",
+      "bars": 752,
+      "first_date": "2022-01-03",
+      "last_date": "2024-12-30",
+      "total_pnl_pct": -0.06308128238699064,
+      "fills": 16,
+      "trades": 8,
+      "validation": {
+        "passed": true,
+        "issues": []
+      }
+    },
+    {
+      "symbol": "TLT",
+      "strategy": "buyHold",
+      "bars": 752,
+      "first_date": "2022-01-03",
+      "last_date": "2024-12-30",
+      "total_pnl_pct": -0.32911374817350514,
+      "fills": 2,
+      "trades": 1,
+      "validation": {
+        "passed": true,
+        "issues": []
+      }
+    },
+    {
+      "symbol": "TLT",
+      "strategy": "meanReversion",
+      "bars": 752,
+      "first_date": "2022-01-03",
+      "last_date": "2024-12-30",
+      "total_pnl_pct": -0.10560182785656216,
+      "fills": 18,
+      "trades": 9,
+      "validation": {
+        "passed": true,
+        "issues": []
+      }
+    },
+    {
+      "symbol": "GLD",
+      "strategy": "buyHold",
+      "bars": 752,
+      "first_date": "2022-01-03",
+      "last_date": "2024-12-30",
+      "total_pnl_pct": 0.42951346916945987,
+      "fills": 2,
+      "trades": 1,
+      "validation": {
+        "passed": true,
+        "issues": []
+      }
+    },
+    {
+      "symbol": "GLD",
+      "strategy": "meanReversion",
+      "bars": 752,
+      "first_date": "2022-01-03",
+      "last_date": "2024-12-30",
+      "total_pnl_pct": 0.0794612176302031,
+      "fills": 24,
+      "trades": 12,
+      "validation": {
+        "passed": true,
+        "issues": []
+      }
+    },
+    {
+      "symbol": "BTC-USD",
+      "strategy": "buyHold",
+      "bars": 1095,
+      "first_date": "2022-01-01",
+      "last_date": "2024-12-30",
+      "total_pnl_pct": 0.9427427852826189,
+      "fills": 2,
+      "trades": 1,
+      "validation": {
+        "passed": true,
+        "issues": []
+      }
+    },
+    {
+      "symbol": "BTC-USD",
+      "strategy": "meanReversion",
+      "bars": 1095,
+      "first_date": "2022-01-01",
+      "last_date": "2024-12-30",
+      "total_pnl_pct": 0.17998304250597702,
+      "fills": 34,
+      "trades": 17,
+      "validation": {
+        "passed": true,
+        "issues": []
+      }
+    },
+    {
+      "symbol": "EURUSD=X",
+      "strategy": "buyHold",
+      "bars": 781,
+      "first_date": "2022-01-03",
+      "last_date": "2024-12-30",
+      "total_pnl_pct": -0.08300742425987719,
+      "fills": 2,
+      "trades": 1,
+      "validation": {
+        "passed": true,
+        "issues": []
+      }
+    },
+    {
+      "symbol": "EURUSD=X",
+      "strategy": "meanReversion",
+      "bars": 781,
+      "first_date": "2022-01-03",
+      "last_date": "2024-12-30",
+      "total_pnl_pct": 0.2837134380456591,
+      "fills": 26,
+      "trades": 13,
+      "validation": {
+        "passed": true,
+        "issues": []
+      }
+    }
+  ]
+}

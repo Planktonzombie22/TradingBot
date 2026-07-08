@@ -87,3 +87,20 @@ The remaining roadmap is the practical path to a bot that can run autonomous Alp
 75. Add a final paper-trading soak checklist: at least several market sessions, no unreconciled orders, clean restarts, no unhandled exceptions, and metrics matching broker statements. Implemented MVP.
 
 Implemented so far: items 1-75.
+
+The next phase shifts the project from "can run strategies" to "can decide when a strategy deserves capital." The recent bulk research showed that many raw indicator systems fail to beat simple buy-and-hold, so the bot needs benchmark-relative validation, selection, and ensemble logic before it should be trusted for autonomous paper trading decisions:
+
+76. Add benchmark-relative strategy selection so raw strategies are only considered active when they beat buy-and-hold after drawdown, trade-count, and rejection gates. Implemented MVP.
+77. Add excess-return research reports that compare every strategy to buy-and-hold per symbol, including excess return, drawdown improvement, upside/downside capture, trade efficiency, and tail risk. Implemented MVP.
+78. Add market regime classification for trend, range, volatility expansion/contraction, liquidity quality, and macro-sensitive markets. Implemented MVP.
+79. Add a strategy activation layer that maps strategies to eligible regimes instead of letting every strategy trade every market. Implemented MVP.
+80. Convert useful but weak standalone systems into reusable filters, including choppiness/range filters, VWAP stretch filters, structure confirmation, FVG context, and liquidity sweep context. Implemented MVP.
+81. Add per-symbol strategy scorecards that separate broad-market beta, symbol-specific edge, parameter sensitivity, and benchmark-relative robustness. Implemented MVP.
+82. Add ensemble allocation that can choose strategy, benchmark, or cash per symbol based on validated edge and risk constraints. Implemented MVP.
+83. Add "do not trade" gates for weak evidence, poor benchmark-relative performance, unstable parameters, high tail risk, low sample size, or excessive turnover.
+84. Add cross-market validation that requires a strategy to prove itself across market clusters rather than only on isolated best-fit symbols.
+85. Add final autonomous paper-trading candidate selection that promotes only benchmark-relative, regime-aware, risk-gated systems into paper sessions.
+
+Research expansion intermission:
+
+86. Add cross-asset research matrices so testing can span stocks, ETFs, bonds/rates, credit, crypto, FX, commodities, real assets, multiple providers, multiple intervals, and multiple historical windows. Implemented MVP.

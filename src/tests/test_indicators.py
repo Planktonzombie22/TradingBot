@@ -1,6 +1,38 @@
 import pandas as pd
 
-from src.indicators import ADX, ATR, BollingerBands, DEMA, DonchianChannel, EMA, KeltnerChannel, MACD, OBV, ROC, RSI, SMA, StochasticOscillator, SuperTrend
+from src.indicators import (
+    ADX,
+    ATR,
+    Aroon,
+    AnchoredVWAP,
+    BollingerBands,
+    ChaikinMoneyFlow,
+    ChoppinessIndex,
+    DEMA,
+    DonchianChannel,
+    EMA,
+    EfficiencyRatio,
+    ElderRayIndex,
+    FairValueGap,
+    IchimokuCloud,
+    KeltnerChannel,
+    LiquiditySweep,
+    MACD,
+    MarketStructureBreak,
+    MoneyFlowIndex,
+    OBV,
+    PivotPoints,
+    ROC,
+    RSI,
+    RelativeVolume,
+    SMA,
+    StochasticOscillator,
+    SwingPoints,
+    SuperTrend,
+    UlcerIndex,
+    VWAP,
+    VortexIndicator,
+)
 
 
 def sample_ohlcv():
@@ -69,3 +101,69 @@ def test_research_indicators_return_expected_shapes():
     assert {"DonchianUpper", "DonchianLower", "DonchianMiddle"}.issubset(DonchianChannel(data).calculate_all().columns)
     assert {"StochK", "StochD"}.issubset(StochasticOscillator(data).calculate_all().columns)
     assert {"KeltnerUpper", "KeltnerLower", "KeltnerMiddle"}.issubset(KeltnerChannel(data).calculate_all().columns)
+
+
+def test_price_action_indicators_detect_structure_and_gaps():
+    data = pd.DataFrame(
+        {
+            "Open": [10, 10.5, 13, 12, 11, 14, 13, 12],
+            "High": [11, 11.2, 14, 13, 12, 15, 14, 13],
+            "Low": [9, 10, 12.5, 11, 10, 13.5, 12, 11],
+            "Close": [10.5, 11, 13.5, 11.5, 11, 14.5, 12.5, 12],
+            "Volume": [100, 110, 200, 150, 140, 250, 120, 130],
+        },
+        index=pd.date_range("2024-01-01", periods=8),
+    )
+
+    fvg = FairValueGap(data).calculate_all()
+    swings = SwingPoints(data, left_bars=1, right_bars=1).calculate_all()
+    sweeps = LiquiditySweep(data, lookback=3).calculate_all()
+    structure = MarketStructureBreak(data, lookback=3).calculate_all()
+    pivots = PivotPoints(data).calculate_all()
+
+    assert fvg["BullishFVG"].any()
+    assert {"FVGTop", "FVGBottom", "FVGMidpoint"}.issubset(fvg.columns)
+    assert {"SwingHigh", "SwingLow"}.issubset(swings.columns)
+    assert {"BullishLiquiditySweep", "BearishLiquiditySweep"}.issubset(sweeps.columns)
+    assert {"BullishStructureBreak", "BearishStructureBreak"}.issubset(structure.columns)
+    assert {"Pivot", "R1", "S1", "R2", "S2"}.issubset(pivots.columns)
+
+
+def test_volume_flow_indicators_return_expected_outputs():
+    data = pd.DataFrame(
+        {
+            "Open": range(100, 160),
+            "High": range(101, 161),
+            "Low": range(99, 159),
+            "Close": range(100, 160),
+            "Volume": [100 + i for i in range(60)],
+        },
+        index=pd.date_range("2024-01-01", periods=60),
+    )
+
+    assert VWAP(data).calculate().name == "VWAP"
+    assert AnchoredVWAP(data, anchor_index=10).calculate().iloc[:10].isna().all()
+    assert MoneyFlowIndex(data, period=14).calculate().name == "MFI"
+    assert ChaikinMoneyFlow(data, period=20).calculate().name == "CMF"
+    assert RelativeVolume(data, period=20).calculate().name == "RelativeVolume"
+
+
+def test_regime_and_risk_shape_indicators_return_expected_outputs():
+    data = pd.DataFrame(
+        {
+            "Open": range(100, 180),
+            "High": range(102, 182),
+            "Low": range(98, 178),
+            "Close": range(100, 180),
+            "Volume": [100 + i for i in range(80)],
+        },
+        index=pd.date_range("2024-01-01", periods=80),
+    )
+
+    assert {"AroonUp", "AroonDown", "AroonOscillator"}.issubset(Aroon(data).calculate_all().columns)
+    assert {"VIPlus", "VIMinus", "VIDiff"}.issubset(VortexIndicator(data).calculate_all().columns)
+    assert ChoppinessIndex(data).calculate().name == "ChoppinessIndex"
+    assert EfficiencyRatio(data).calculate().dropna().between(0, 1).all()
+    assert UlcerIndex(data).calculate().name == "UlcerIndex"
+    assert {"BullPower", "BearPower", "ElderRay"}.issubset(ElderRayIndex(data).calculate_all().columns)
+    assert {"TenkanSen", "KijunSen", "SenkouSpanA", "SenkouSpanB", "CloudBias"}.issubset(IchimokuCloud(data).calculate_all().columns)

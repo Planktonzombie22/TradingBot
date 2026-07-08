@@ -1,0 +1,21 @@
+{
+  "name": "sample_cross_asset_matrix",
+  "groups": [
+    {
+      "name": "sample_stocks",
+      "asset_class": "stocks",
+      "provider": "sample",
+      "symbols": ["SPY", "AAPL"],
+      "intervals": ["1d"],
+      "windows": [{"name": "sample", "period": "1y"}]
+    },
+    {
+      "name": "sample_crypto",
+      "asset_class": "crypto",
+      "provider": "sample",
+      "symbols": ["BTC-USD", "ETH-USD"],
+      "intervals": ["1d"],
+      "windows": [{"name": "sample", "period": "1y"}]
+    }
+  ]
+}

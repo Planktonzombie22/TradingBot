@@ -1,0 +1,5 @@
+{
+  "distance_threshold": 0.04,
+  "cmf_period": 20,
+  "atr_stop_multiple": 2.0
+}

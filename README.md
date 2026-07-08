@@ -21,6 +21,8 @@ Current status: this is a working MVP and research scaffold. It can run sample/y
 - JSONL storage for run artifacts.
 - JSON, HTML, text summary, and matplotlib plot reporting.
 - Walk-forward, grid-search, and multi-symbol research utilities at the architecture/MVP level.
+- Benchmark-relative strategy selection, excess-return research reports, market-regime classification, reusable context filters, per-symbol scorecards, ensemble allocation, and regime-based strategy activation at the architecture/MVP level.
+- Cross-asset research matrices for testing stocks, ETFs, bonds/rates, credit, crypto, FX, commodities, and real assets across multiple windows and intervals.
 - Test coverage for the major boundaries.
 
 ## What Is Not Finished Yet
@@ -150,14 +152,21 @@ Available modes:
 - `paper`: use the same runtime path as streaming, labeled as the paper-trading workflow. This is the path that will keep gaining broker synchronization and safety controls.
 - `report`: run a backtest and write an HTML report.
 - `optimize`: run a parameter grid search and write ranked JSONL optimization artifacts.
+- `bulk`: run many symbols across one or more strategies and write JSONL plus a summary report.
+- `matrix`: run a cross-asset research matrix, where each group can define its own provider, symbols, intervals, and historical windows.
 
 Common options:
 
 - `--provider`: `sample`, `yfinance`, or `alpaca`.
 - `--symbol`: symbol to load and trade, default `SPY`.
-- `--strategy`: registered strategy name, currently `buyHold` or `tuffSystem`.
+- `--symbols`: comma-separated symbol list for `bulk` mode.
+- `--symbols-file`: JSON or text watchlist file for `bulk` mode.
+- `--max-symbols`: maximum symbols to run in `bulk` mode.
+- `--strategy`: registered strategy name, default `buyHold`.
+- `--strategies`: comma-separated strategy list for `bulk` mode.
 - `--strategy-params`: JSON object of strategy constructor parameters.
 - `--strategy-params-file`: JSON file containing strategy constructor parameters.
+- `--strategy-param-dir`: directory for bulk-mode per-strategy parameter JSON files.
 - `--period`: historical lookback period, default `2y`.
 - `--interval`: historical bar interval, default `1d` from the CLI.
 - `--start`: optional historical start date/timestamp for providers that support date ranges.
@@ -167,9 +176,35 @@ Common options:
 - `--html-output`: write an HTML backtest report in `report` mode.
 - `--store-dir`: write JSONL run artifacts under this directory, default `runs`.
 - `--execution-mode`: `dry-run` or `paper`. Dry-run is the default; Alpaca paper order submission requires `paper`.
+- `--flatten-on-stop`: for `stream`/`paper` modes, submit flattening orders before stopping the run. This is useful for replay sessions and should be used deliberately with broker-backed paper execution.
 - `--param-grid`: JSON object of parameter lists for `optimize` mode.
 - `--param-grid-file`: JSON file containing parameter lists for `optimize` mode. Useful on shells where inline JSON quoting is awkward.
 - `--metric`: metric to optimize, default `total_return`.
+- `--bulk-output`: JSON summary path for `bulk` mode.
+- `--benchmark-strategy`: benchmark strategy for benchmark-relative bulk reports, default `buyHold`.
+- `--benchmark-output`: optional JSON path for excess-return and strategy-selection research output from `bulk` mode.
+- `--research-matrix-file`: JSON matrix file for `matrix` mode, default `configs\research\cross_asset_matrix.json`.
+- `--matrix-output`: JSON summary path for `matrix` mode.
+
+Run a 50-market Alpaca bulk sweep:
+
+```powershell
+trading_env\Scripts\python.exe main.py bulk --provider alpaca --symbols-file configs\universes\liquid_etf_80.json --max-symbols 50 --strategies meanReversion,volatilityBreakout,momentumRegime,trendPullback,volumeMomentum,squeezeExpansion --interval 1d --start 2023-01-01T00:00:00Z --end 2025-12-31T00:00:00Z --store-dir runs\bulk-alpaca-research-50 --bulk-output reports\bulk-alpaca-research-50.json
+```
+
+Run a benchmark-relative research sweep:
+
+```powershell
+trading_env\Scripts\python.exe main.py bulk --provider alpaca --symbols-file configs\universes\liquid_etf_80.json --max-symbols 50 --strategies buyHold,meanReversion,tuffContrarian,gapFade,choppinessRange,vwapValueReversion --benchmark-strategy buyHold --benchmark-output reports\benchmark-relative-research-50.json
+```
+
+Run the cross-asset research matrix:
+
+```powershell
+trading_env\Scripts\python.exe main.py matrix --research-matrix-file configs\research\cross_asset_matrix.json --strategies buyHold,meanReversion,tuffContrarian,gapFade,choppinessRange --max-symbols 10 --store-dir runs\cross-asset-matrix --matrix-output reports\cross-asset-matrix.json
+```
+
+Cross-asset universe config lives in `configs\universes\cross_asset_core.json`. The matrix config currently covers large-cap stocks, rates/bonds/credit, crypto via yfinance symbols, commodities/real assets, and FX pairs.
 
 ## Programmatic Usage
 
@@ -300,12 +335,11 @@ Design choice: provider-specific code stays at the edges. Strategies and engines
 
 `src/indicators` contains pure indicator calculations:
 
-- SMA
-- DEMA
-- ATR
-- ADX
-- RSI
-- SuperTrend
+- Moving averages and momentum: SMA, EMA, DEMA, MACD, ROC, RSI, Stochastic Oscillator.
+- Volatility and channels: ATR, SuperTrend, Bollinger Bands, Donchian Channel, Keltner Channel.
+- Price action and structure: Fair Value Gap, Swing Points, Liquidity Sweep, Market Structure Break, Pivot Points.
+- Volume and money flow: OBV, VWAP, Anchored VWAP, Money Flow Index, Chaikin Money Flow, Relative Volume.
+- Regime and risk shape: ADX, Aroon, Vortex Indicator, Choppiness Index, Efficiency Ratio, Ulcer Index, Elder-Ray Index, Ichimoku Cloud, Rolling Z-score.
 
 The indicators are designed as calculation modules, not trading systems. They should not manage positions, emit broker orders, or depend on account state. This makes them reusable across strategies, backtests, optimizers, and reports.
 
@@ -318,6 +352,7 @@ Important files:
 - `base.py`: the base `Strategy` contract.
 - `buy_hold.py`: simple buy-and-hold strategy for deterministic MVP tests.
 - `tuff_system.py`: indicator-based strategy.
+- `research_systems.py`: additional research systems for momentum/regime, mean-reversion, volatility breakout, trend pullback, volume momentum, squeeze expansion, gap/structure, VWAP value, liquidity sweep, choppiness/range, and cloud/trend experiments.
 - `parameters.py`: parameter specs and validation.
 - `registry.py`: maps strategy names to classes and schemas, and exposes `register_strategy()` for plugin-style extensions.
 - `scheduling.py`: symbol/timeframe/session/warmup scheduling policy.
@@ -325,13 +360,49 @@ Important files:
 Registered strategies:
 
 - `buyHold`
+- `aroonVortexTrend`
+- `choppinessRange`
+- `fvgRebalance`
+- `meanReversion`
+- `momentumRegime`
+- `squeezeExpansion`
+- `gapFade`
+- `ichimokuCloudTrend`
+- `liquiditySweepReversal`
+- `skewReversion`
+- `structureBreakoutRetest`
+- `tuffConsensus`
+- `tuffContrarian`
+- `tuffRegimeSwitch`
 - `tuffSystem`
+- `trendPullback`
+- `volatilityBreakout`
+- `volumeMomentum`
+- `vwapValueReversion`
 
 Design choice: strategies emit `Signal` objects. They do not execute trades themselves. This keeps strategy intent separate from execution details such as slippage, margin, commissions, liquidity, broker limitations, or account state.
 
 Strategy parameter specs are serializable through `strategy_schema()`, including type, default, min/max bounds, descriptions, and optional optimization candidate values. External modules can register new strategies with `register_strategy()` without editing the built-in registry.
 
 `UniverseLoader` can build multi-symbol universes from direct config symbols, JSON/text watchlists, broker asset payloads, or simple generated research screens such as `top_volume`. `StrategySchedule` gates runtime execution by symbol, timeframe, session policy, and required warmup bars.
+
+Tuff descendants are experimental systems built from the original Tuff ingredients:
+
+- `tuffConsensus`: turns SuperTrend, DEMA, RSI, ADX, MACD, and ROC into a voting model.
+- `tuffRegimeSwitch`: uses ADX to switch between Tuff-style trend following and band mean reversion.
+- `tuffContrarian`: fades statistically stretched Tuff trend thrusts.
+
+Additional experimental systems:
+
+- `gapFade`: fades large prior-bar gaps when the bar rejects the gap direction.
+- `skewReversion`: fades stretched return z-scores when rolling skew suggests one-sided exhaustion.
+- `fvgRebalance`: trades continuation after fair value gaps appear and rebalance.
+- `liquiditySweepReversal`: fades wick sweeps of recent highs/lows with money-flow confirmation.
+- `structureBreakoutRetest`: trades market-structure breaks when relative volume and pivots agree.
+- `vwapValueReversion`: fades large distance from anchored VWAP when money flow starts to normalize.
+- `ichimokuCloudTrend`: follows cloud direction using Tenkan/Kijun alignment and cloud bias.
+- `choppinessRange`: trades Bollinger extremes only when choppiness suggests a range.
+- `aroonVortexTrend`: requires Aroon, Vortex, Elder-Ray, and efficiency agreement for trend entries.
 
 ## Backtesting
 
@@ -352,6 +423,14 @@ Important components:
 - Liquidity models: `UnlimitedLiquidityModel`, `VolumeShareLiquidityModel`.
 - Borrow cost models: `NoBorrowCostModel`, `AnnualizedBorrowCostModel`.
 - `BasicMetricsCalculator`: calculates performance metrics.
+- `StrategySelectionPolicy`: gates strategies against a benchmark before allowing them to deserve capital.
+- `BenchmarkRelativeReport`: summarizes excess return, drawdown improvement, capture behavior, trade efficiency, and tail risk versus `buyHold`.
+- `MarketRegimeProfile`: classifies trend/range, volatility, liquidity, and macro-sensitivity context.
+- `StrategyActivationReport`: activates only the strategies whose design modes match the current market regime.
+- `ResearchFilterSnapshot`: evaluates reusable contexts such as choppiness/range, VWAP stretch, structure confirmation, fair value gaps, and liquidity sweeps.
+- `SymbolResearchScorecard`: combines benchmark return, selected strategy, best edge, regime, active strategies, filters, and parameter sensitivity for one market.
+- `EnsembleAllocationPlan`: chooses strategy, benchmark, or cash per symbol and assigns conservative weights.
+- `ResearchMatrixConfig`: expands asset groups, providers, intervals, and windows into repeatable cross-asset bulk research jobs.
 - `InMemoryEventSink`: captures simulation events.
 
 Research helpers:
@@ -362,8 +441,11 @@ Research helpers:
 - `run_walk_forward()`: walk-forward research helper.
 - `rank_optimization_results()` and `overfitting_report()`: optimizer ranking and overfit diagnostics.
 - `BatchBacktestRunner`: resumable batch runner for symbols, strategies, and parameter sets.
+- `run_bulk_backtests()`: mass backtesting helper for many symbols and strategies.
 
 Design choice: backtesting assumptions are modular. This matters because unrealistic fills are one of the easiest ways to fool yourself in trading research. The architecture separates signal generation from order sizing, risk, execution, slippage, commissions, liquidity, margin, ledger updates, and metrics.
+
+Sizing is stop-risk based. For entry signals with a stop, the default order factory sizes roughly as `equity * risk_fraction / abs(entry_price - stop_price)`, then caps size by available buying power. This is correct for the current research abstraction, but live/paper broker execution still needs symbol-specific margin rules, borrow availability, min order size, gap-through-stop handling, partial fills, and broker-side rejects before sizing can be considered production-complete.
 
 Execution assumptions can be grouped with `BacktestExecutionProfile`, which builds a bar execution model from paper-like settings such as price column, spread, market impact, commission, and max volume share. `TransactionCostCalibration` can estimate spread/impact settings from observed paper fills and quoted bid/ask data. `ExecutionParityScenario` replays a single order through backtest execution and the paper broker boundary to catch obvious status or quantity drift.
 

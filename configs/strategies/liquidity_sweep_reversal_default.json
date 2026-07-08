@@ -1,0 +1,5 @@
+{
+  "sweep_lookback": 20,
+  "mfi_extreme": 45,
+  "atr_stop_multiple": 2.0
+}

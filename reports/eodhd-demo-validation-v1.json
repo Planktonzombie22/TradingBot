@@ -1,0 +1,31 @@
+{
+  "source": "eodhd_demo",
+  "rows": [
+    {
+      "symbol": "AAPL",
+      "eod_symbol": "AAPL.US",
+      "first_date": "2020-01-02",
+      "last_date": "2026-06-30",
+      "engine_return": 3.000337518990717,
+      "eodhd_adjusted_return": 3.0003373245463054,
+      "difference_bps": 0.0019444441168303683,
+      "engine_first_close": 72.33389282226562,
+      "engine_last_close": 289.3599853515625,
+      "eod_first_adjusted_close": 72.3339,
+      "eod_last_adjusted_close": 289.36
+    },
+    {
+      "symbol": "MSFT",
+      "eod_symbol": "MSFT.US",
+      "first_date": "2020-01-02",
+      "last_date": "2026-06-30",
+      "engine_return": 1.4568342663035285,
+      "eodhd_adjusted_return": 1.4568331866776965,
+      "difference_bps": 0.010796258320677765,
+      "engine_first_close": 151.82952880859375,
+      "engine_last_close": 373.0199890136719,
+      "eod_first_adjusted_close": 151.8296,
+      "eod_last_adjusted_close": 373.02
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "completed": 560,
+  "failed": 0,
+  "strategy_summary": [
+    {
+      "strategy": "vwapValueReversion",
+      "markets": 80,
+      "average_return": 0.16096460547306707,
+      "median_return": 0.07042126217654368,
+      "best_return": 5.854527612254468,
+      "worst_return": -3.737732498828539,
+      "average_max_drawdown": -0.6153525322185199,
+      "win_rate": 0.5375,
+      "total_trades": 436,
+      "total_rejections": 3
+    },
+    {
+      "strategy": "choppinessRange",
+      "markets": 80,
+      "average_return": 0.037773515355600536,
+      "median_return": 0.01254015653672286,
+      "best_return": 0.42875502763143414,
+      "worst_return": -0.3707189429634547,
+      "average_max_drawdown": -0.09598137419711586,
+      "win_rate": 0.5625,
+      "total_trades": 155,
+      "total_rejections": 2
+    },
+    {
+      "strategy": "structureBreakoutRetest",
+      "markets": 80,
+      "average_return": 0.013938307981505157,
+      "median_return": -0.026028728667952875,
+      "best_return": 0.5747208141984113,
+      "worst_return": -0.24236573256237043,
+      "average_max_drawdown": -0.130121330175074,
+      "win_rate": 0.45,
+      "total_trades": 2523,
+      "total_rejections": 15
+    },
+    {
+      "strategy": "liquiditySweepReversal",
+      "markets": 80,
+      "average_return": -0.013107018279750337,
+      "median_return": -0.00024034507072292403,
+      "best_return": 2.3836299732669444,
+      "worst_return": -5.2692863846066365,
+      "average_max_drawdown": -0.5603085898028113,
+      "win_rate": 0.5,
+      "total_trades": 1613,
+      "total_rejections": 34
+    },
+    {
+      "strategy": "ichimokuCloudTrend",
+      "markets": 80,
+      "average_return": -0.017128922403849008,
+      "median_return": -0.021457250860994554,
+      "best_return": 0.6414949800183986,
+      "worst_return": -1.1513968778798052,
+      "average_max_drawdown": -0.2593770277648745,
+      "win_rate": 0.4625,
+      "total_trades": 2687,
+      "total_rejections": 8
+    },
+    {
+      "strategy": "aroonVortexTrend",
+      "markets": 80,
+      "average_return": -0.09191278886249911,
+      "median_return": -0.04982934469439333,
+      "best_return": 0.709671935108085,
+      "worst_return": -1.1811824753129896,
+      "average_max_drawdown": -0.3462824400400938,
+      "win_rate": 0.45,
+      "total_trades": 2394,
+      "total_rejections": 23
+    },
+    {
+      "strategy": "fvgRebalance",
+      "markets": 80,
+      "average_return": -0.11770565428422501,
+      "median_return": -0.21864933957431076,
+      "best_return": 1.668774158044187,
+      "worst_return": -3.7845342403400646,
+      "average_max_drawdown": -0.5369878110366175,
+      "win_rate": 0.35,
+      "total_trades": 9078,
+      "total_rejections": 253
+    }
+  ],
+  "errors": []
+}

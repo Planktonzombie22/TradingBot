@@ -1,0 +1,31 @@
+{
+  "completed": 160,
+  "failed": 0,
+  "strategy_summary": [
+    {
+      "strategy": "gapFade",
+      "markets": 80,
+      "average_return": 0.15139851543927416,
+      "median_return": 0.01901592665993767,
+      "best_return": 1.5790711519853073,
+      "worst_return": -0.3803919285128282,
+      "average_max_drawdown": -0.17901226188259012,
+      "win_rate": 0.575,
+      "total_trades": 606,
+      "total_rejections": 3
+    },
+    {
+      "strategy": "skewReversion",
+      "markets": 80,
+      "average_return": 0.0029087518537794254,
+      "median_return": -0.015673583045229315,
+      "best_return": 0.6343008446634297,
+      "worst_return": -0.9998120641038799,
+      "average_max_drawdown": -0.2568008681250081,
+      "win_rate": 0.45,
+      "total_trades": 3153,
+      "total_rejections": 60
+    }
+  ],
+  "errors": []
+}

@@ -15,6 +15,7 @@ class CompositeRiskModel(RiskModel):
     margin_model: SimpleMarginModel
     allow_shorting: bool = True
     shortable_symbols: Optional[Set[str]] = None
+    price_column: str = "Close"
 
     def evaluate(self, order: Order, account: AccountSnapshot, snapshot: MarketSnapshot) -> Optional[OrderRejection]:
         if order.quantity <= 0:
@@ -34,7 +35,7 @@ class CompositeRiskModel(RiskModel):
         if self._reduces_existing_exposure(order, account):
             return None
 
-        margin_required = self.margin_model.required_initial_margin(order, snapshot.close)
+        margin_required = self.margin_model.required_initial_margin(order, snapshot.price(self.price_column))
         available_margin = max(account.equity - account.used_margin, 0.0)
         if margin_required > available_margin:
             return self._reject(

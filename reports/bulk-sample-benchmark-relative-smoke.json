@@ -1,0 +1,43 @@
+{
+  "completed": 6,
+  "failed": 0,
+  "strategy_summary": [
+    {
+      "strategy": "buyHold",
+      "markets": 2,
+      "average_return": 0.21528394107759796,
+      "median_return": 0.21528394107759796,
+      "best_return": 0.21528394107759796,
+      "worst_return": 0.21528394107759796,
+      "average_max_drawdown": -0.028323909169168382,
+      "win_rate": 1.0,
+      "total_trades": 2,
+      "total_rejections": 0
+    },
+    {
+      "strategy": "choppinessRange",
+      "markets": 2,
+      "average_return": -0.09962292321902715,
+      "median_return": -0.09962292321902715,
+      "best_return": -0.09962292321902715,
+      "worst_return": -0.09962292321902715,
+      "average_max_drawdown": -0.12313667328948308,
+      "win_rate": 0.0,
+      "total_trades": 16,
+      "total_rejections": 0
+    },
+    {
+      "strategy": "meanReversion",
+      "markets": 2,
+      "average_return": -0.22358835111321096,
+      "median_return": -0.22358835111321096,
+      "best_return": -0.22358835111321096,
+      "worst_return": -0.22358835111321096,
+      "average_max_drawdown": -0.22358835111321096,
+      "win_rate": 0.0,
+      "total_trades": 8,
+      "total_rejections": 0
+    }
+  ],
+  "errors": []
+}

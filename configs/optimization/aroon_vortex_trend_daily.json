@@ -1,0 +1,5 @@
+{
+  "aroon_threshold": [10.0, 20.0, 35.0],
+  "vortex_threshold": [0.0, 0.05, 0.1],
+  "atr_stop_multiple": [2.0, 2.8, 3.5]
+}

@@ -92,6 +92,7 @@ def test_alpaca_historical_feed_follows_pagination():
     data = feed.get_historical("SPY", interval="1d")
 
     assert len(calls) == 2
+    assert all("adjustment=all" in url for url in calls)
     assert len(data) == 2
     assert data.iloc[-1]["Close"] == 11.5
 
@@ -109,7 +110,7 @@ def test_alpaca_historical_feed_reads_from_cache_without_client_call(tmp_path):
         index=pd.to_datetime(["2024-01-02T05:00:00Z"]),
     )
     source.index.name = "timestamp"
-    cache.write("alpaca", "SPY", "1Day", source, "2024-01-02T00:00:00Z", "2024-01-06T00:00:00Z")
+    cache.write("alpaca-adjusted-all", "SPY", "1Day", source, "2024-01-02T00:00:00Z", "2024-01-06T00:00:00Z")
 
     class FailingClient:
         def request(self, method, url, payload=None):

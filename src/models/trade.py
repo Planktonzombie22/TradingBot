@@ -24,14 +24,15 @@ class Trade:
     def is_open(self) -> bool:
         return self.exit_time is None
 
-    def close(self, exit_time: datetime, exit_price: float) -> "Trade":
-        pnl = self.shares * (exit_price - self.entry_price)
+    def close(self, exit_time: datetime, exit_price: float, shares: Optional[float] = None) -> "Trade":
+        closed_shares = self.shares if shares is None else shares
+        pnl = closed_shares * (exit_price - self.entry_price)
         return Trade(
             symbol=self.symbol,
             side=self.side,
             entry_time=self.entry_time,
             entry_price=self.entry_price,
-            shares=self.shares,
+            shares=closed_shares,
             entry_equity=self.entry_equity,
             exit_time=exit_time,
             exit_price=exit_price,

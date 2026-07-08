@@ -11,10 +11,24 @@ from src.data import (
     SplitAction,
     SymbolChangeAction,
     events_from_ohlcv,
+    MarketDataManager,
     normalize_bar,
     normalize_ohlcv_frame,
     sample_ohlcv,
+    YFinanceDataFeed,
 )
+from src.config import MarketDataConfig
+
+
+class StaticHistoricalFeed:
+    def __init__(self, data):
+        self.data = data
+
+    def get_historical(self, symbol, start=None, end=None, interval="1d", period=None):
+        return self.data
+
+    def get_stream(self, symbol):
+        raise NotImplementedError
 
 
 def test_corporate_action_policy_split_adjusts_prices_and_volume():
@@ -91,6 +105,29 @@ def test_quality_validator_flags_out_of_order_live_events():
     assert any(issue.code == "OUT_OF_ORDER_EVENT" for issue in report.issues)
 
 
+def test_quality_validator_tolerates_minor_adjusted_ohlc_drift_but_rejects_material_breaks():
+    minor = pd.DataFrame(
+        {
+            "Open": [100.0],
+            "High": [100.0],
+            "Low": [99.0],
+            "Close": [100.01],
+            "Volume": [1000.0],
+        },
+        index=pd.to_datetime(["2024-01-01"]),
+    )
+    material = minor.copy()
+    material.loc[material.index[0], "Close"] = 106.0
+
+    minor_report = DataQualityValidator(ohlc_tolerance_bps=50.0).validate_ohlcv(minor)
+    material_report = DataQualityValidator(ohlc_tolerance_bps=50.0).validate_ohlcv(material)
+
+    assert minor_report.passed
+    assert any(issue.code == "ADJUSTED_OHLC_DRIFT" for issue in minor_report.issues)
+    assert not material_report.passed
+    assert any(issue.code == "INVALID_OHLC" for issue in material_report.issues)
+
+
 def test_historical_and_live_bar_normalization_share_schema():
     raw = pd.DataFrame(
         {"open": [1], "high": [2], "low": [1], "close": [2]},
@@ -103,3 +140,85 @@ def test_historical_and_live_bar_normalization_share_schema():
     assert list(historical.columns) == ["Open", "High", "Low", "Close", "Volume"]
     assert live_event.bar.open == historical.iloc[0]["Open"]
     assert live_event.timestamp.tzinfo is not None
+
+
+def test_yfinance_feed_requests_adjusted_ohlc_without_progress(monkeypatch):
+    calls = []
+
+    def fake_download(**kwargs):
+        calls.append(kwargs)
+        return pd.DataFrame(
+            {
+                "Open": [100.0],
+                "High": [101.0],
+                "Low": [99.0],
+                "Close": [100.0],
+                "Volume": [1000.0],
+            },
+            index=pd.to_datetime(["2024-01-02"]),
+        )
+
+    monkeypatch.setattr("src.data.yfinance.yf.download", fake_download)
+
+    data = YFinanceDataFeed().get_historical("SPY", start="2024-01-01", end="2024-01-03", interval="1d")
+
+    assert calls[0]["auto_adjust"] is True
+    assert calls[0]["progress"] is False
+    assert calls[0]["start"] == "2024-01-01"
+    assert calls[0]["end"] == "2024-01-03"
+    assert data.iloc[0]["Close"] == 100.0
+
+
+def test_market_data_manager_rejects_silently_truncated_requested_start():
+    data = pd.DataFrame(
+        {
+            "Open": [100.0],
+            "High": [101.0],
+            "Low": [99.0],
+            "Close": [100.0],
+            "Volume": [1000.0],
+        },
+        index=pd.to_datetime(["2024-03-01"]),
+    )
+    manager = MarketDataManager(StaticHistoricalFeed(data))
+
+    try:
+        manager.historical(
+            MarketDataConfig(
+                provider="yfinance",
+                symbol="SPY",
+                start="2024-01-01",
+                end="2024-03-02",
+                period=None,
+            )
+        )
+    except ValueError as exc:
+        assert "outside the requested start coverage" in str(exc)
+    else:
+        raise AssertionError("Expected truncated start coverage to fail.")
+
+
+def test_market_data_manager_accepts_holiday_sized_coverage_gap():
+    data = pd.DataFrame(
+        {
+            "Open": [100.0],
+            "High": [101.0],
+            "Low": [99.0],
+            "Close": [100.0],
+            "Volume": [1000.0],
+        },
+        index=pd.to_datetime(["2024-01-02"]),
+    )
+    manager = MarketDataManager(StaticHistoricalFeed(data))
+
+    loaded = manager.historical(
+        MarketDataConfig(
+            provider="yfinance",
+            symbol="SPY",
+            start="2024-01-01",
+            end="2024-01-03",
+            period=None,
+        )
+    )
+
+    assert loaded.index.min().date().isoformat() == "2024-01-02"

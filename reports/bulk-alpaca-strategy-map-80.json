@@ -1,0 +1,139 @@
+{
+  "completed": 880,
+  "failed": 0,
+  "strategy_summary": [
+    {
+      "strategy": "meanReversion",
+      "markets": 80,
+      "average_return": 0.3421089076880063,
+      "median_return": 0.30166154698273623,
+      "best_return": 1.604141132975463,
+      "worst_return": -0.785007228817563,
+      "average_max_drawdown": -0.2711406016541214,
+      "win_rate": 0.825,
+      "total_trades": 585,
+      "total_rejections": 10
+    },
+    {
+      "strategy": "buyHold",
+      "markets": 80,
+      "average_return": 0.31745944160560685,
+      "median_return": 0.23445382157187494,
+      "best_return": 2.126926563916588,
+      "worst_return": -0.6495418848167541,
+      "average_max_drawdown": -0.2711279229367622,
+      "win_rate": 0.825,
+      "total_trades": 80,
+      "total_rejections": 0
+    },
+    {
+      "strategy": "tuffContrarian",
+      "markets": 80,
+      "average_return": 0.31643319750926957,
+      "median_return": 0.20220308492128242,
+      "best_return": 4.509890620685685,
+      "worst_return": -0.7088066592064409,
+      "average_max_drawdown": -0.29042995586003073,
+      "win_rate": 0.7375,
+      "total_trades": 785,
+      "total_rejections": 16
+    },
+    {
+      "strategy": "tuffRegimeSwitch",
+      "markets": 80,
+      "average_return": 0.11451203600671303,
+      "median_return": 0.03800150937644667,
+      "best_return": 3.2735973479380873,
+      "worst_return": -0.584954720766537,
+      "average_max_drawdown": -0.27332979553095943,
+      "win_rate": 0.55,
+      "total_trades": 11614,
+      "total_rejections": 73
+    },
+    {
+      "strategy": "trendPullback",
+      "markets": 80,
+      "average_return": 0.04000996577979783,
+      "median_return": 0.009600587485288178,
+      "best_return": 1.5761202515314947,
+      "worst_return": -0.8429823173306581,
+      "average_max_drawdown": -0.2794078024329393,
+      "win_rate": 0.5125,
+      "total_trades": 628,
+      "total_rejections": 4
+    },
+    {
+      "strategy": "squeezeExpansion",
+      "markets": 80,
+      "average_return": -0.04627039736172745,
+      "median_return": -0.06950360205381595,
+      "best_return": 0.40539433727927426,
+      "worst_return": -0.2840900676365385,
+      "average_max_drawdown": -0.17649754263965672,
+      "win_rate": 0.2125,
+      "total_trades": 474,
+      "total_rejections": 0
+    },
+    {
+      "strategy": "volatilityBreakout",
+      "markets": 80,
+      "average_return": -0.08929068487643979,
+      "median_return": -0.09455097246163868,
+      "best_return": 0.9062005191145225,
+      "worst_return": -1.3848073375455232,
+      "average_max_drawdown": -0.40125177117797406,
+      "win_rate": 0.35,
+      "total_trades": 712,
+      "total_rejections": 6
+    },
+    {
+      "strategy": "tuffConsensus",
+      "markets": 80,
+      "average_return": -0.12116380853143136,
+      "median_return": -0.11471995165309562,
+      "best_return": 0.6089282797330028,
+      "worst_return": -1.0293488852007295,
+      "average_max_drawdown": -0.35040551908135853,
+      "win_rate": 0.3625,
+      "total_trades": 3228,
+      "total_rejections": 25
+    },
+    {
+      "strategy": "volumeMomentum",
+      "markets": 80,
+      "average_return": -0.13243568115291282,
+      "median_return": -0.1205426444606782,
+      "best_return": 0.46461022791361684,
+      "worst_return": -0.7801214342460867,
+      "average_max_drawdown": -0.270913440906852,
+      "win_rate": 0.2625,
+      "total_trades": 3063,
+      "total_rejections": 1
+    },
+    {
+      "strategy": "momentumRegime",
+      "markets": 80,
+      "average_return": -0.20844419842254208,
+      "median_return": -0.22234764211939873,
+      "best_return": 1.0511680421516918,
+      "worst_return": -0.8859019852922032,
+      "average_max_drawdown": -0.3964174006350221,
+      "win_rate": 0.1375,
+      "total_trades": 2604,
+      "total_rejections": 36
+    },
+    {
+      "strategy": "tuffSystem",
+      "markets": 80,
+      "average_return": -0.36456596843917294,
+      "median_return": -0.3099155375181468,
+      "best_return": 2.7651112869439474,
+      "worst_return": -5.49249200469622,
+      "average_max_drawdown": -0.6402797660200532,
+      "win_rate": 0.2375,
+      "total_trades": 423,
+      "total_rejections": 120
+    }
+  ],
+  "errors": []
+}

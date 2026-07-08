@@ -1,0 +1,883 @@
+{
+  "total_pnl": 1596.945195273238,
+  "total_pnl_pct": 0.1596945195273238,
+  "metrics": {
+    "starting_equity": 10000.0,
+    "ending_equity": 11596.945195273238,
+    "total_return": 0.15969451952732383,
+    "max_drawdown": -0.2968135884228995,
+    "volatility": 0.014531975564148923,
+    "sharpe": 0.02078231046521397,
+    "fills": 64,
+    "events": 1630
+  },
+  "trades": [
+    {
+      "Entry Date": "2023-04-27 04:00:00+00:00",
+      "Entry Price": 173.69,
+      "Type": "Short",
+      "Shares": -128.3783431448042,
+      "Entry Equity": 10000.0,
+      "Exit Date": "2023-05-10 04:00:00+00:00",
+      "Exit Price": 174.39,
+      "Exit Equity": 9910.135159798638,
+      "PnL": -89.86484020136149
+    },
+    {
+      "Entry Date": "2023-06-08 04:00:00+00:00",
+      "Entry Price": 186.47,
+      "Type": "Long",
+      "Shares": 79.73478871456165,
+      "Entry Equity": 9910.135159798636,
+      "Exit Date": "2023-06-23 04:00:00+00:00",
+      "Exit Price": 180.37,
+      "Exit Equity": 9423.75294863981,
+      "PnL": -486.3822111588256
+    },
+    {
+      "Entry Date": "2023-07-05 04:00:00+00:00",
+      "Entry Price": 185.78,
+      "Type": "Long",
+      "Shares": 133.59990709095527,
+      "Entry Equity": 9423.75294863981,
+      "Exit Date": "2023-07-06 04:00:00+00:00",
+      "Exit Price": 182.78,
+      "Exit Equity": 9022.953227366945,
+      "PnL": -400.7997212728658
+    },
+    {
+      "Entry Date": "2023-07-12 04:00:00+00:00",
+      "Entry Price": 191.85,
+      "Type": "Long",
+      "Shares": 55.23013648685456,
+      "Entry Equity": 9022.953227366945,
+      "Exit Date": "2023-07-31 04:00:00+00:00",
+      "Exit Price": 198.7,
+      "Exit Equity": 9401.279662301898,
+      "PnL": 378.32643493495345
+    },
+    {
+      "Entry Date": "2023-08-01 04:00:00+00:00",
+      "Entry Price": 197.81,
+      "Type": "Long",
+      "Shares": 99.2712826919135,
+      "Entry Equity": 9401.279662301898,
+      "Exit Date": "2023-08-03 04:00:00+00:00",
+      "Exit Price": 194.59,
+      "Exit Equity": 9081.626132033936,
+      "PnL": -319.65353026796134
+    },
+    {
+      "Entry Date": "2023-08-31 04:00:00+00:00",
+      "Entry Price": 188.56,
+      "Type": "Long",
+      "Shares": 85.44176289171021,
+      "Entry Equity": 9081.626132033936,
+      "Exit Date": "2023-09-11 04:00:00+00:00",
+      "Exit Price": 184.41,
+      "Exit Equity": 8727.042816033338,
+      "PnL": -354.58331600059785
+    },
+    {
+      "Entry Date": "2023-09-14 04:00:00+00:00",
+      "Entry Price": 185.55,
+      "Type": "Short",
+      "Shares": -164.00913822495036,
+      "Entry Equity": 8727.042816033336,
+      "Exit Date": "2023-10-11 04:00:00+00:00",
+      "Exit Price": 175.62,
+      "Exit Equity": 10355.653558607093,
+      "PnL": 1628.6107425737582
+    },
+    {
+      "Entry Date": "2023-10-23 04:00:00+00:00",
+      "Entry Price": 165.11,
+      "Type": "Short",
+      "Shares": -67.69112822383987,
+      "Entry Equity": 10355.653558607093,
+      "Exit Date": "2023-11-03 04:00:00+00:00",
+      "Exit Price": 174.49,
+      "Exit Equity": 9720.710775867476,
+      "PnL": -634.9427827396177
+    },
+    {
+      "Entry Date": "2023-12-05 05:00:00+00:00",
+      "Entry Price": 184.4,
+      "Type": "Long",
+      "Shares": 122.2587951617793,
+      "Entry Equity": 9720.710775867476,
+      "Exit Date": "2024-01-03 05:00:00+00:00",
+      "Exit Price": 194.07,
+      "Exit Equity": 10902.95332508188,
+      "PnL": 1182.2425492144043
+    },
+    {
+      "Entry Date": "2024-01-30 05:00:00+00:00",
+      "Entry Price": 197.71,
+      "Type": "Long",
+      "Shares": 101.91482141528823,
+      "Entry Equity": 10902.953325081879,
+      "Exit Date": "2024-02-01 05:00:00+00:00",
+      "Exit Price": 195.58,
+      "Exit Equity": 10685.874755467315,
+      "PnL": -217.07856961456346
+    },
+    {
+      "Entry Date": "2024-02-12 05:00:00+00:00",
+      "Entry Price": 202.95,
+      "Type": "Long",
+      "Shares": 50.60124035691404,
+      "Entry Equity": 10685.874755467314,
+      "Exit Date": "2024-03-14 04:00:00+00:00",
+      "Exit Price": 201.92,
+      "Exit Equity": 10633.755477899693,
+      "PnL": -52.119277567621516
+    },
+    {
+      "Entry Date": "2024-03-28 04:00:00+00:00",
+      "Entry Price": 210.32,
+      "Type": "Long",
+      "Shares": 75.32665946186496,
+      "Entry Equity": 10633.755477899691,
+      "Exit Date": "2024-04-03 04:00:00+00:00",
+      "Exit Price": 205.79,
+      "Exit Equity": 10292.525710537442,
+      "PnL": -341.22976736224837
+    },
+    {
+      "Entry Date": "2024-04-30 04:00:00+00:00",
+      "Entry Price": 195.83,
+      "Type": "Long",
+      "Shares": 205.79542022067892,
+      "Entry Equity": 10292.525710537444,
+      "Exit Date": "2024-05-02 04:00:00+00:00",
+      "Exit Price": 200.03,
+      "Exit Equity": 11156.866475464292,
+      "PnL": 864.3407649268491
+    },
+    {
+      "Entry Date": "2024-05-03 04:00:00+00:00",
+      "Entry Price": 201.875,
+      "Type": "Long",
+      "Shares": 62.76787516435593,
+      "Entry Equity": 11156.866475464292,
+      "Exit Date": "2024-05-28 04:00:00+00:00",
+      "Exit Price": 205.19,
+      "Exit Equity": 11364.941981634132,
+      "PnL": 208.07550616983977
+    },
+    {
+      "Entry Date": "2024-07-01 04:00:00+00:00",
+      "Entry Price": 201.23,
+      "Type": "Long",
+      "Shares": 145.65880702325185,
+      "Entry Equity": 11364.941981634132,
+      "Exit Date": "2024-08-02 04:00:00+00:00",
+      "Exit Price": 209.015,
+      "Exit Equity": 12498.895794310147,
+      "PnL": 1133.953812676015
+    },
+    {
+      "Entry Date": "2024-08-20 04:00:00+00:00",
+      "Entry Price": 212.73,
+      "Type": "Long",
+      "Shares": 88.89680128626753,
+      "Entry Equity": 12498.895794310149,
+      "Exit Date": "2024-09-05 04:00:00+00:00",
+      "Exit Price": 211.87,
+      "Exit Equity": 12422.44454520396,
+      "PnL": -76.45124910618877
+    },
+    {
+      "Entry Date": "2024-09-18 04:00:00+00:00",
+      "Entry Price": 219.44,
+      "Type": "Long",
+      "Shares": 74.22012137293885,
+      "Entry Equity": 12422.444545203958,
+      "Exit Date": "2024-10-03 04:00:00+00:00",
+      "Exit Price": 216.1,
+      "Exit Equity": 12174.549339818343,
+      "PnL": -247.895205385616
+    },
+    {
+      "Entry Date": "2024-10-15 04:00:00+00:00",
+      "Entry Price": 223.13,
+      "Type": "Long",
+      "Shares": 84.27416797906963,
+      "Entry Equity": 12174.549339818343,
+      "Exit Date": "2024-10-24 04:00:00+00:00",
+      "Exit Price": 219.775,
+      "Exit Equity": 11891.809506248565,
+      "PnL": -282.7398335697778
+    },
+    {
+      "Entry Date": "2024-11-07 05:00:00+00:00",
+      "Entry Price": 236.32,
+      "Type": "Long",
+      "Shares": 79.07179197201906,
+      "Entry Equity": 11891.809506248566,
+      "Exit Date": "2024-11-19 05:00:00+00:00",
+      "Exit Price": 230.6,
+      "Exit Equity": 11439.518856168617,
+      "PnL": -452.29065007994893
+    },
+    {
+      "Entry Date": "2024-11-25 05:00:00+00:00",
+      "Entry Price": 242.39,
+      "Type": "Long",
+      "Shares": 47.74113424658838,
+      "Entry Equity": 11439.518856168615,
+      "Exit Date": "2024-12-06 05:00:00+00:00",
+      "Exit Price": 238.955,
+      "Exit Equity": 11275.528060031585,
+      "PnL": -163.99079613702983
+    },
+    {
+      "Entry Date": "2025-01-13 05:00:00+00:00",
+      "Entry Price": 217.27,
+      "Type": "Short",
+      "Shares": -68.75194295770858,
+      "Entry Equity": 11275.528060031585,
+      "Exit Date": "2025-01-16 05:00:00+00:00",
+      "Exit Price": 224.49,
+      "Exit Equity": 10779.13903187693,
+      "PnL": -496.3890281546559
+    },
+    {
+      "Entry Date": "2025-02-06 05:00:00+00:00",
+      "Entry Price": 228.6,
+      "Type": "Long",
+      "Shares": 79.61081326932874,
+      "Entry Equity": 10779.13903187693,
+      "Exit Date": "2025-02-13 05:00:00+00:00",
+      "Exit Price": 226.105,
+      "Exit Equity": 10580.510052769954,
+      "PnL": -198.62897910697558
+    },
+    {
+      "Entry Date": "2025-02-24 05:00:00+00:00",
+      "Entry Price": 216.23,
+      "Type": "Short",
+      "Shares": -60.86520522292355,
+      "Entry Equity": 10580.510052769954,
+      "Exit Date": "2025-03-20 04:00:00+00:00",
+      "Exit Price": 205.09,
+      "Exit Equity": 11258.548438953321,
+      "PnL": 678.0383861833675
+    },
+    {
+      "Entry Date": "2025-04-04 04:00:00+00:00",
+      "Entry Price": 181.27,
+      "Type": "Short",
+      "Shares": -30.66230139800199,
+      "Entry Equity": 11258.548438953325,
+      "Exit Date": "2025-04-21 04:00:00+00:00",
+      "Exit Price": 182.71,
+      "Exit Equity": 11214.394724940203,
+      "PnL": -44.153714013122794
+    },
+    {
+      "Entry Date": "2025-05-29 04:00:00+00:00",
+      "Entry Price": 206.175,
+      "Type": "Short",
+      "Shares": -72.6838575901511,
+      "Entry Equity": 11214.394724940203,
+      "Exit Date": "2025-06-05 04:00:00+00:00",
+      "Exit Price": 208.51,
+      "Exit Equity": 11044.677917467201,
+      "PnL": -169.71680747300135
+    },
+    {
+      "Entry Date": "2025-06-09 04:00:00+00:00",
+      "Entry Price": 213.3,
+      "Type": "Long",
+      "Shares": 62.787285236249694,
+      "Entry Equity": 11044.677917467201,
+      "Exit Date": "2025-06-17 04:00:00+00:00",
+      "Exit Price": 208.5,
+      "Exit Equity": 10743.298948333202,
+      "PnL": -301.37896913399925
+    },
+    {
+      "Entry Date": "2025-06-30 04:00:00+00:00",
+      "Entry Price": 215.84,
+      "Type": "Long",
+      "Shares": 75.63206410176552,
+      "Entry Equity": 10743.298948333202,
+      "Exit Date": "2025-07-16 04:00:00+00:00",
+      "Exit Price": 221.02,
+      "Exit Equity": 11135.073040380348,
+      "PnL": 391.7740920471459
+    },
+    {
+      "Entry Date": "2025-08-14 04:00:00+00:00",
+      "Entry Price": 228.21,
+      "Type": "Long",
+      "Shares": 133.42966557850858,
+      "Entry Equity": 11135.073040380346,
+      "Exit Date": "2025-09-17 04:00:00+00:00",
+      "Exit Price": 238.945,
+      "Exit Equity": 12567.440500365634,
+      "PnL": 1432.3674599852875
+    },
+    {
+      "Entry Date": "2025-09-19 04:00:00+00:00",
+      "Entry Price": 242.88,
+      "Type": "Long",
+      "Shares": 118.7737846864691,
+      "Entry Equity": 12567.440500365632,
+      "Exit Date": "2025-09-25 04:00:00+00:00",
+      "Exit Price": 239.305,
+      "Exit Equity": 12142.824220111506,
+      "PnL": -424.6162802541257
+    },
+    {
+      "Entry Date": "2025-10-16 04:00:00+00:00",
+      "Entry Price": 245.08,
+      "Type": "Long",
+      "Shares": 169.79534667827403,
+      "Entry Equity": 12142.82422011151,
+      "Exit Date": "2025-10-17 04:00:00+00:00",
+      "Exit Price": 243.4,
+      "Exit Equity": 11857.568037692008,
+      "PnL": -285.2561824195015
+    },
+    {
+      "Entry Date": "2025-10-28 04:00:00+00:00",
+      "Entry Price": 248.95,
+      "Type": "Long",
+      "Shares": 79.88788881040772,
+      "Entry Equity": 11857.56803769201,
+      "Exit Date": "2025-10-30 04:00:00+00:00",
+      "Exit Price": 244.885,
+      "Exit Equity": 11532.823769677703,
+      "PnL": -324.7442680143072
+    },
+    {
+      "Entry Date": "2025-11-26 05:00:00+00:00",
+      "Entry Price": 247.315,
+      "Type": "Long",
+      "Shares": 46.46480115618532,
+      "Entry Equity": 11532.823769677703,
+      "Exit Date": "2025-12-18 05:00:00+00:00",
+      "Exit Price": 248.695,
+      "Exit Equity": 11596.945195273238,
+      "PnL": 64.12142559553553
+    }
+  ],
+  "fills": [
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 128.3783431448042,
+      "price": 173.69,
+      "commission": 0.0,
+      "timestamp": "2023-04-27T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 128.3783431448042,
+      "price": 174.39,
+      "commission": 0.0,
+      "timestamp": "2023-05-10T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 79.73478871456165,
+      "price": 186.47,
+      "commission": 0.0,
+      "timestamp": "2023-06-08T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 79.73478871456165,
+      "price": 180.37,
+      "commission": 0.0,
+      "timestamp": "2023-06-23T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 133.59990709095527,
+      "price": 185.78,
+      "commission": 0.0,
+      "timestamp": "2023-07-05T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 133.59990709095527,
+      "price": 182.78,
+      "commission": 0.0,
+      "timestamp": "2023-07-06T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 55.23013648685456,
+      "price": 191.85,
+      "commission": 0.0,
+      "timestamp": "2023-07-12T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 55.23013648685456,
+      "price": 198.7,
+      "commission": 0.0,
+      "timestamp": "2023-07-31T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 99.2712826919135,
+      "price": 197.81,
+      "commission": 0.0,
+      "timestamp": "2023-08-01T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 99.2712826919135,
+      "price": 194.59,
+      "commission": 0.0,
+      "timestamp": "2023-08-03T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 85.44176289171021,
+      "price": 188.56,
+      "commission": 0.0,
+      "timestamp": "2023-08-31T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 85.44176289171021,
+      "price": 184.41,
+      "commission": 0.0,
+      "timestamp": "2023-09-11T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 164.00913822495036,
+      "price": 185.55,
+      "commission": 0.0,
+      "timestamp": "2023-09-14T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 164.00913822495036,
+      "price": 175.62,
+      "commission": 0.0,
+      "timestamp": "2023-10-11T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 67.69112822383987,
+      "price": 165.11,
+      "commission": 0.0,
+      "timestamp": "2023-10-23T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 67.69112822383987,
+      "price": 174.49,
+      "commission": 0.0,
+      "timestamp": "2023-11-03T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 122.2587951617793,
+      "price": 184.4,
+      "commission": 0.0,
+      "timestamp": "2023-12-05T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 122.2587951617793,
+      "price": 194.07,
+      "commission": 0.0,
+      "timestamp": "2024-01-03T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 101.91482141528823,
+      "price": 197.71,
+      "commission": 0.0,
+      "timestamp": "2024-01-30T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 101.91482141528823,
+      "price": 195.58,
+      "commission": 0.0,
+      "timestamp": "2024-02-01T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 50.60124035691404,
+      "price": 202.95,
+      "commission": 0.0,
+      "timestamp": "2024-02-12T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 50.60124035691404,
+      "price": 201.92,
+      "commission": 0.0,
+      "timestamp": "2024-03-14T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 75.32665946186496,
+      "price": 210.32,
+      "commission": 0.0,
+      "timestamp": "2024-03-28T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 75.32665946186496,
+      "price": 205.79,
+      "commission": 0.0,
+      "timestamp": "2024-04-03T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 205.79542022067892,
+      "price": 195.83,
+      "commission": 0.0,
+      "timestamp": "2024-04-30T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 205.79542022067892,
+      "price": 200.03,
+      "commission": 0.0,
+      "timestamp": "2024-05-02T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 62.76787516435593,
+      "price": 201.875,
+      "commission": 0.0,
+      "timestamp": "2024-05-03T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 62.76787516435593,
+      "price": 205.19,
+      "commission": 0.0,
+      "timestamp": "2024-05-28T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 145.65880702325185,
+      "price": 201.23,
+      "commission": 0.0,
+      "timestamp": "2024-07-01T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 145.65880702325185,
+      "price": 209.015,
+      "commission": 0.0,
+      "timestamp": "2024-08-02T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 88.89680128626753,
+      "price": 212.73,
+      "commission": 0.0,
+      "timestamp": "2024-08-20T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 88.89680128626753,
+      "price": 211.87,
+      "commission": 0.0,
+      "timestamp": "2024-09-05T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 74.22012137293885,
+      "price": 219.44,
+      "commission": 0.0,
+      "timestamp": "2024-09-18T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 74.22012137293885,
+      "price": 216.1,
+      "commission": 0.0,
+      "timestamp": "2024-10-03T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 84.27416797906963,
+      "price": 223.13,
+      "commission": 0.0,
+      "timestamp": "2024-10-15T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 84.27416797906963,
+      "price": 219.775,
+      "commission": 0.0,
+      "timestamp": "2024-10-24T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 79.07179197201906,
+      "price": 236.32,
+      "commission": 0.0,
+      "timestamp": "2024-11-07T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 79.07179197201906,
+      "price": 230.6,
+      "commission": 0.0,
+      "timestamp": "2024-11-19T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 47.74113424658838,
+      "price": 242.39,
+      "commission": 0.0,
+      "timestamp": "2024-11-25T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 47.74113424658838,
+      "price": 238.955,
+      "commission": 0.0,
+      "timestamp": "2024-12-06T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 68.75194295770858,
+      "price": 217.27,
+      "commission": 0.0,
+      "timestamp": "2025-01-13T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 68.75194295770858,
+      "price": 224.49,
+      "commission": 0.0,
+      "timestamp": "2025-01-16T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 79.61081326932874,
+      "price": 228.6,
+      "commission": 0.0,
+      "timestamp": "2025-02-06T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 79.61081326932874,
+      "price": 226.105,
+      "commission": 0.0,
+      "timestamp": "2025-02-13T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 60.86520522292355,
+      "price": 216.23,
+      "commission": 0.0,
+      "timestamp": "2025-02-24T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 60.86520522292355,
+      "price": 205.09,
+      "commission": 0.0,
+      "timestamp": "2025-03-20T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 30.66230139800199,
+      "price": 181.27,
+      "commission": 0.0,
+      "timestamp": "2025-04-04T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 30.66230139800199,
+      "price": 182.71,
+      "commission": 0.0,
+      "timestamp": "2025-04-21T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 72.6838575901511,
+      "price": 206.175,
+      "commission": 0.0,
+      "timestamp": "2025-05-29T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 72.6838575901511,
+      "price": 208.51,
+      "commission": 0.0,
+      "timestamp": "2025-06-05T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 62.787285236249694,
+      "price": 213.3,
+      "commission": 0.0,
+      "timestamp": "2025-06-09T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 62.787285236249694,
+      "price": 208.5,
+      "commission": 0.0,
+      "timestamp": "2025-06-17T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 75.63206410176552,
+      "price": 215.84,
+      "commission": 0.0,
+      "timestamp": "2025-06-30T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 75.63206410176552,
+      "price": 221.02,
+      "commission": 0.0,
+      "timestamp": "2025-07-16T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 133.42966557850858,
+      "price": 228.21,
+      "commission": 0.0,
+      "timestamp": "2025-08-14T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 133.42966557850858,
+      "price": 238.945,
+      "commission": 0.0,
+      "timestamp": "2025-09-17T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 118.7737846864691,
+      "price": 242.88,
+      "commission": 0.0,
+      "timestamp": "2025-09-19T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 118.7737846864691,
+      "price": 239.305,
+      "commission": 0.0,
+      "timestamp": "2025-09-25T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 169.79534667827403,
+      "price": 245.08,
+      "commission": 0.0,
+      "timestamp": "2025-10-16T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 169.79534667827403,
+      "price": 243.4,
+      "commission": 0.0,
+      "timestamp": "2025-10-17T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 79.88788881040772,
+      "price": 248.95,
+      "commission": 0.0,
+      "timestamp": "2025-10-28T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 79.88788881040772,
+      "price": 244.885,
+      "commission": 0.0,
+      "timestamp": "2025-10-30T04:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 46.46480115618532,
+      "price": 247.315,
+      "commission": 0.0,
+      "timestamp": "2025-11-26T05:00:00+00:00"
+    },
+    {
+      "symbol": "IWM",
+      "side": "SELL",
+      "quantity": 46.46480115618532,
+      "price": 248.695,
+      "commission": 0.0,
+      "timestamp": "2025-12-18T05:00:00+00:00"
+    }
+  ],
+  "rejections": []
+}

@@ -114,15 +114,34 @@ class CashMarginLedger(PortfolioLedger):
 
         remaining_quantity = lot.quantity + signed_quantity
         trade = self.open_trades.get(fill.order.symbol)
-        if trade and abs(remaining_quantity) < abs(lot.quantity):
-            closed = trade.close(fill.timestamp, fill.price)
+        if trade:
+            closed_shares = direction * closing_quantity
+            closed = trade.close(fill.timestamp, fill.price, shares=closed_shares)
             self.closed_trades.append(closed)
-            self.open_trades.pop(fill.order.symbol, None)
 
         if remaining_quantity == 0:
             self.positions.pop(fill.order.symbol, None)
+            self.open_trades.pop(fill.order.symbol, None)
         elif (remaining_quantity > 0) == (lot.quantity > 0):
             lot.quantity = remaining_quantity
+            if trade:
+                self.open_trades[fill.order.symbol] = Trade(
+                    symbol=trade.symbol,
+                    side=trade.side,
+                    entry_time=trade.entry_time,
+                    entry_price=trade.entry_price,
+                    shares=remaining_quantity,
+                    entry_equity=trade.entry_equity,
+                )
         else:
             lot.quantity = remaining_quantity
             lot.average_price = fill.price
+            side = "LONG" if remaining_quantity > 0 else "SHORT"
+            self.open_trades[fill.order.symbol] = Trade(
+                symbol=fill.order.symbol,
+                side=side,
+                entry_time=fill.timestamp,
+                entry_price=fill.price,
+                shares=remaining_quantity,
+                entry_equity=self.cash + remaining_quantity * fill.price,
+            )

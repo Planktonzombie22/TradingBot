@@ -1,5 +1,18 @@
 from .adapters import PandasStrategySignalProvider, RiskPercentOrderFactory
+from .activation import (
+    DEFAULT_STRATEGY_MODES,
+    StrategyActivationDecision,
+    StrategyActivationReport,
+    activate_strategies_for_regime,
+)
+from .allocation import (
+    EnsembleAllocationDecision,
+    EnsembleAllocationPlan,
+    EnsembleAllocationPolicy,
+    build_ensemble_allocation,
+)
 from .batch import BatchBacktestJob, BatchBacktestRunner, BatchBacktestSummary
+from .bulk import BulkBacktestError, BulkBacktestRecord, BulkBacktestReport, run_bulk_backtests
 from .calibration import FillObservation, TransactionCostCalibration
 from .costs import (
     AnnualizedBorrowCostModel,
@@ -15,6 +28,17 @@ from .costs import (
 )
 from .engine import BacktestEngine, InMemoryEventSink, run_backtest
 from .execution import BarExecutionModel
+from .filters import (
+    ResearchFilterConfig,
+    ResearchFilterResult,
+    ResearchFilterSnapshot,
+    choppiness_range_filter,
+    evaluate_research_filters,
+    fair_value_gap_filter,
+    liquidity_sweep_filter,
+    structure_confirmation_filter,
+    vwap_stretch_filter,
+)
 from .interfaces import (
     BorrowCostModel,
     CommissionModel,
@@ -36,7 +60,31 @@ from .multi_symbol import MultiSymbolBacktestResult, run_multi_symbol_backtest
 from .optimization import OptimizationResult, OverfittingReport, grid_search, overfitting_report, rank_optimization_results
 from .parity import ExecutionParityResult, ExecutionParityScenario
 from .profiles import BacktestExecutionProfile
+from .regime import MarketRegimeConfig, MarketRegimeProfile, classify_market_regime, classify_regime_universe
+from .research_matrix import (
+    ResearchAssetGroup,
+    ResearchMatrixConfig,
+    ResearchMatrixJob,
+    ResearchMatrixJobResult,
+    ResearchMatrixReport,
+    ResearchWindow,
+    expand_research_matrix,
+    load_research_matrix,
+    research_matrix_from_dict,
+    run_research_matrix,
+)
 from .risk import CompositeRiskModel
+from .scorecards import ScorecardReport, StrategyScorecardEntry, SymbolResearchScorecard, build_symbol_scorecards
+from .selection import (
+    BenchmarkRelativeReport,
+    StrategyBenchmarkComparison,
+    StrategyBenchmarkSummary,
+    StrategySelectionPolicy,
+    StrategySelectionReport,
+    SymbolStrategySelection,
+    benchmark_relative_report,
+    select_strategies_against_benchmark,
+)
 from .types import (
     AccountSnapshot,
     BacktestConfig,
@@ -49,6 +97,7 @@ from .types import (
     SignalContext,
     SimulationBatch,
 )
+from .validation import BacktestValidationIssue, BacktestValidationReport, validate_backtest_result
 from .walk_forward import WalkForwardWindow, run_walk_forward
 
 __all__ = [
@@ -62,13 +111,23 @@ __all__ = [
     "BatchBacktestSummary",
     "BacktestEvent",
     "BacktestEventType",
+    "BacktestValidationIssue",
+    "BacktestValidationReport",
     "BarExecutionModel",
     "BasicMetricsCalculator",
+    "BenchmarkRelativeReport",
     "BorrowCostModel",
     "BpsCommissionModel",
+    "BulkBacktestError",
+    "BulkBacktestRecord",
+    "BulkBacktestReport",
     "CashMarginLedger",
     "CommissionModel",
     "CompositeRiskModel",
+    "DEFAULT_STRATEGY_MODES",
+    "EnsembleAllocationDecision",
+    "EnsembleAllocationPlan",
+    "EnsembleAllocationPolicy",
     "EventSink",
     "ExecutionModel",
     "ExecutionParityResult",
@@ -80,6 +139,8 @@ __all__ = [
     "LiquidityModel",
     "MarginModel",
     "MarketSnapshot",
+    "MarketRegimeConfig",
+    "MarketRegimeProfile",
     "MetricsCalculator",
     "NoBorrowCostModel",
     "NoSlippageModel",
@@ -91,24 +152,62 @@ __all__ = [
     "PandasStrategySignalProvider",
     "PortfolioLedger",
     "RejectionReason",
+    "ResearchFilterConfig",
+    "ResearchFilterResult",
+    "ResearchFilterSnapshot",
+    "ResearchAssetGroup",
+    "ResearchMatrixConfig",
+    "ResearchMatrixJob",
+    "ResearchMatrixJobResult",
+    "ResearchMatrixReport",
+    "ResearchWindow",
     "RiskModel",
     "RiskPercentOrderFactory",
+    "ScorecardReport",
     "SignalContext",
     "SignalProvider",
     "SimpleMarginModel",
     "SimulationBatch",
     "SlippageModel",
     "SpreadVolumeSlippageModel",
+    "StrategyActivationDecision",
+    "StrategyActivationReport",
+    "StrategyBenchmarkComparison",
+    "StrategyBenchmarkSummary",
+    "StrategyScorecardEntry",
+    "StrategySelectionPolicy",
+    "StrategySelectionReport",
+    "SymbolStrategySelection",
+    "SymbolResearchScorecard",
     "TransactionCostCalibration",
     "UnlimitedLiquidityModel",
     "VolumeShareLiquidityModel",
     "WalkForwardWindow",
     "ZeroCommissionModel",
+    "activate_strategies_for_regime",
     "commission_model_for_broker",
+    "benchmark_relative_report",
+    "build_symbol_scorecards",
+    "build_ensemble_allocation",
+    "choppiness_range_filter",
+    "classify_market_regime",
+    "classify_regime_universe",
+    "evaluate_research_filters",
+    "expand_research_matrix",
+    "fair_value_gap_filter",
     "grid_search",
     "overfitting_report",
     "rank_optimization_results",
+    "liquidity_sweep_filter",
+    "load_research_matrix",
     "run_multi_symbol_backtest",
     "run_walk_forward",
     "run_backtest",
+    "run_bulk_backtests",
+    "run_research_matrix",
+    "research_matrix_from_dict",
+    "select_strategies_against_benchmark",
+    "structure_confirmation_filter",
+    "validate_backtest_result",
+    "vwap_stretch_filter",
 ]

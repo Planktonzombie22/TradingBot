@@ -1,0 +1,7 @@
+{
+  "adx_minimum": 25,
+  "rsi_extreme": 68,
+  "zscore_extreme": 1.5,
+  "band_period": 20,
+  "atr_stop_multiple": 1.8
+}

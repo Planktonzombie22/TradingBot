@@ -35,6 +35,20 @@ def test_universe_loader_reads_json_watchlists_and_dedupes(tmp_path):
     assert symbols == ["IWM", "SPY", "QQQ"]
 
 
+def test_universe_loader_reads_grouped_cross_asset_files(tmp_path):
+    watchlist = tmp_path / "groups.json"
+    watchlist.write_text(
+        '{"stocks":["aapl","MSFT"],"crypto":{"symbols":["BTC-USD","ETH-USD"]},"bonds":["TLT"]}',
+        encoding="utf-8",
+    )
+
+    all_symbols = UniverseLoader().load(UniverseConfig(watchlist_path=str(watchlist)))
+    selected = UniverseLoader().load(UniverseConfig(watchlist_path=str(watchlist), groups=("crypto", "bonds")))
+
+    assert all_symbols == ["AAPL", "MSFT", "BTC-USD", "ETH-USD", "TLT"]
+    assert selected == ["BTC-USD", "ETH-USD", "TLT"]
+
+
 def test_universe_loader_filters_broker_assets_and_research_screen():
     loader = UniverseLoader()
     assets = [{"symbol": "SPY", "tradable": True}, {"symbol": "HALT", "tradable": False}]

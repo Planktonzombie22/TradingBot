@@ -31,6 +31,7 @@ class DataQualityValidator:
     max_gap_multiplier: float = 3.0
     split_spike_threshold: float = 0.40
     extreme_range_threshold: float = 0.50
+    ohlc_tolerance_bps: float = 50.0
     stale_seconds: Optional[float] = None
 
     def validate_ohlcv(self, data: pd.DataFrame) -> DataQualityReport:
@@ -62,11 +63,17 @@ class DataQualityValidator:
         if "Volume" in data.columns and (data["Volume"] < 0).any():
             report.add("ERROR", "NEGATIVE_VOLUME", "Volume cannot be negative.")
 
-        invalid_ohlc = (data["High"] < data[["Open", "Close", "Low"]].max(axis=1)) | (
-            data["Low"] > data[["Open", "Close", "High"]].min(axis=1)
-        )
-        if invalid_ohlc.any():
-            report.add("ERROR", "INVALID_OHLC", "High/low bounds are inconsistent with open/close.")
+        high_required = data[["Open", "Close", "Low"]].max(axis=1)
+        low_required = data[["Open", "Close", "High"]].min(axis=1)
+        upper_gap = (high_required - data["High"]) / data["Close"].abs()
+        lower_gap = (data["Low"] - low_required) / data["Close"].abs()
+        bound_gap = pd.concat([upper_gap, lower_gap], axis=1).max(axis=1).fillna(0.0)
+        invalid_ohlc = bound_gap > 0
+        material_invalid_ohlc = bound_gap > (self.ohlc_tolerance_bps / 10_000)
+        if material_invalid_ohlc.any():
+            report.add("ERROR", "INVALID_OHLC", "High/low bounds are materially inconsistent with open/close.")
+        elif invalid_ohlc.any():
+            report.add("WARNING", "ADJUSTED_OHLC_DRIFT", f"Detected {int(invalid_ohlc.sum())} bars with minor adjusted OHLC bound drift.")
 
         extreme_range = ((data["High"] - data["Low"]) / data["Close"].abs()) > self.extreme_range_threshold
         if extreme_range.any():

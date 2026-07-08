@@ -1,7 +1,7 @@
 import argparse
 import json
 
-from main import build_config, load_json_options, run_optimize_app
+from main import build_config, load_json_options, load_symbol_list, run_optimize_app, run_research_matrix_app, run_stream_app
 from src.data import DataQualityValidator, sample_ohlcv
 from src.reporting import render_backtest_html
 from src.app import TradingApplication
@@ -78,3 +78,66 @@ def test_load_json_options_from_file(tmp_path):
     grid = load_json_options(path=str(path))
 
     assert grid == {"adx_minimum": [20, 25]}
+
+
+def test_stream_app_can_flatten_on_stop(tmp_path):
+    app = TradingApplication(
+        RuntimeConfig(
+            data=MarketDataConfig(provider="sample", symbol="SPY"),
+            strategy=StrategyConfig(name="buyHold"),
+        )
+    )
+
+    engine = run_stream_app(app, store_dir=str(tmp_path), label="Paper", flatten_on_stop=True)
+
+    assert engine.account_state.quantity("SPY") == 0
+
+
+def test_load_symbol_list_dedupes_and_limits(tmp_path):
+    path = tmp_path / "symbols.json"
+    path.write_text(json.dumps({"symbols": ["SPY", "qqq", "SPY", "IWM"]}), encoding="utf-8")
+
+    symbols = load_symbol_list("DIA,spy", str(path), max_symbols=3)
+
+    assert symbols == ["DIA", "SPY", "QQQ"]
+
+
+def test_research_matrix_app_writes_summary(tmp_path):
+    matrix_path = tmp_path / "matrix.json"
+    matrix_path.write_text(
+        json.dumps(
+            {
+                "name": "cli_matrix",
+                "groups": [
+                    {
+                        "name": "sample_stocks",
+                        "asset_class": "stocks",
+                        "provider": "sample",
+                        "symbols": ["SPY", "QQQ"],
+                        "intervals": ["1d"],
+                        "windows": [{"name": "sample", "period": "1y"}],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    output = tmp_path / "matrix-summary.json"
+    args = argparse.Namespace(
+        research_matrix_file=str(matrix_path),
+        strategies="buyHold",
+        strategy="buyHold",
+        strategy_params="{}",
+        strategy_params_file=None,
+        strategy_param_dir="configs/strategies",
+        period="2y",
+        store_dir=str(tmp_path / "runs"),
+        matrix_output=str(output),
+        max_symbols=1,
+    )
+
+    run_research_matrix_app(args)
+
+    payload = json.loads(output.read_text(encoding="utf-8"))
+    assert payload["matrix_name"] == "cli_matrix"
+    assert payload["completed"] == 1

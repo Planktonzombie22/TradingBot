@@ -21,3 +21,19 @@ def test_load_runtime_config_applies_cli_overrides():
     assert config.account.initial_cash == 25_000
     assert config.execution.mode == "paper"
     assert config.execution.state_db_path == "runs/test.sqlite3"
+
+
+def test_load_runtime_config_allows_explicit_period_none_for_date_windows():
+    config = load_runtime_config(
+        {
+            "symbol": "AAPL",
+            "provider": "yfinance",
+            "period": None,
+            "start": "2020-01-01",
+            "end": "2024-01-01",
+        }
+    )
+
+    assert config.data.period is None
+    assert config.data.start == "2020-01-01"
+    assert config.data.end == "2024-01-01"

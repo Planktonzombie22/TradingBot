@@ -1,0 +1,6 @@
+{
+  "chop_threshold": [50.0, 55.0, 60.0],
+  "band_deviation": [1.5, 2.0, 2.5],
+  "mfi_extreme": [35, 40, 45],
+  "atr_stop_multiple": [1.5, 1.8, 2.2]
+}

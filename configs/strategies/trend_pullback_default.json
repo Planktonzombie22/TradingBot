@@ -1,0 +1,7 @@
+{
+  "fast_ema": 20,
+  "slow_ema": 100,
+  "pullback_rsi": 45,
+  "rebound_rsi": 55,
+  "atr_stop_multiple": 2.5
+}

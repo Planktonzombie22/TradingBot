@@ -12,6 +12,8 @@ class BuyAndHoldStrategy(Strategy):
 
     symbol: str
     stop_percent: float = 0.05
+    target_fraction: float = 1.0
+    use_stop_loss: bool = False
 
     def __post_init__(self) -> None:
         Strategy.__init__(self, self.symbol)
@@ -27,7 +29,8 @@ class BuyAndHoldStrategy(Strategy):
                         action="BUY",
                         symbol=self.symbol,
                         timestamp=ts,
-                        stop_loss=price * (1 - self.stop_percent),
+                        stop_loss=price * (1 - self.stop_percent) if self.use_stop_loss else None,
+                        meta={"target_notional_fraction": self.target_fraction},
                     )
                 )
             else:
