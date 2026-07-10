@@ -1,0 +1,28 @@
+{
+  "growth_symbols": ["SPY", "QQQ"],
+  "defensive_symbols": ["XLU", "XLP"],
+  "bond_symbols": ["TLT", "IEF"],
+  "commodity_symbols": ["GLD", "DBC"],
+  "hedge_symbols": ["VIXY"],
+  "cash_symbol": "CASH",
+  "trend_lookback": 80,
+  "drawdown_lookback": 120,
+  "volatility_short_lookback": 20,
+  "volatility_long_lookback": 80,
+  "liquidity_lookback": 20,
+  "macro_lookback": 60,
+  "min_history": 90,
+  "cash_min_weight": 0.05,
+  "cash_max_weight": 0.6,
+  "growth_min_weight": 0.1,
+  "growth_max_weight": 0.7,
+  "defensive_max_weight": 0.35,
+  "bond_max_weight": 0.45,
+  "commodity_max_weight": 0.25,
+  "hedge_max_weight": 0.15,
+  "max_symbol_weight": 0.35,
+  "notes": [
+    "Smooth portfolio overlay that rotates between growth, defensive, bonds, commodities, hedges, and cash.",
+    "Uses trend, drawdown, volatility expansion, bond/rates proxy stress, and liquidity stress."
+  ]
+}

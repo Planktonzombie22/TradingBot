@@ -1,0 +1,19 @@
+{
+  "fast_ema": [10, 20, 30],
+  "slow_ema": [50, 80, 120],
+  "momentum_lookback": [14, 30, 60],
+  "sharpe_lookback": [14, 30, 60],
+  "volatility_lookback": [14, 30, 60],
+  "drawdown_lookback": [60, 90, 180],
+  "target_volatility": [0.3, 0.45, 0.7],
+  "max_long_fraction": [0.5, 1.0, 1.5],
+  "max_short_fraction": [0.0, 0.2, 0.35],
+  "min_trend_score": [0.15, 0.25, 0.4],
+  "min_rolling_sharpe": [0.0, 0.15, 0.3],
+  "max_drawdown_gate": [-0.65, -0.45, -0.3],
+  "trailing_atr_multiple": [2.0, 3.0, 4.0],
+  "atr_period": [10, 14, 21],
+  "rebalance_interval": [6, 12, 24],
+  "rebalance_threshold": [0.05, 0.12, 0.25],
+  "commission_bps": [2.0, 5.0, 10.0]
+}

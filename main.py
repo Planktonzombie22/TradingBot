@@ -10,8 +10,11 @@ from src.backtesting import (
     benchmark_relative_report,
     grid_search,
     load_research_matrix,
+    load_replication_suite,
     run_bulk_backtests,
     run_research_matrix,
+    run_replication_suite,
+    write_replication_report,
 )
 from src.config import load_runtime_config
 from src.engine import EngineEvent
@@ -24,7 +27,7 @@ from src.utils.logger import configure_logging
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="TradingBot MVP runner")
-    parser.add_argument("mode", nargs="?", choices=["backtest", "stream", "paper", "report", "optimize", "bulk", "matrix"], default="backtest")
+    parser.add_argument("mode", nargs="?", choices=["backtest", "stream", "paper", "report", "optimize", "bulk", "matrix", "replicate"], default="backtest")
     parser.add_argument("--provider", default="sample", choices=["sample", "yfinance", "alpaca"])
     parser.add_argument("--symbol", default="SPY")
     parser.add_argument("--symbols", help="Comma-separated symbol list for bulk mode.")
@@ -53,6 +56,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--benchmark-output", help="Optional path for a benchmark-relative bulk research report.")
     parser.add_argument("--research-matrix-file", default="configs/research/cross_asset_matrix.json", help="JSON research matrix for matrix mode.")
     parser.add_argument("--matrix-output", default="reports/research-matrix-summary.json", help="Path for matrix-mode JSON summary output.")
+    parser.add_argument("--replication-file", default="configs/research/published_strategy_replications.json", help="JSON published-strategy replication suite for replicate mode.")
+    parser.add_argument("--replication-output", default="reports/published-strategy-replication.json", help="Path for replicate-mode JSON comparison output.")
     return parser
 
 
@@ -321,6 +326,23 @@ def run_research_matrix_app(args: argparse.Namespace) -> None:
         print(f"{row['asset_class']}: jobs={row['jobs']} completed={row['completed']} failed={row['failed']}")
 
 
+def run_replication_app(args: argparse.Namespace) -> None:
+    suite = load_replication_suite(args.replication_file)
+    report = run_replication_suite(suite)
+    output = write_replication_report(report, args.replication_output)
+    print(f"Published replication complete. Runs: {len(report.results)}")
+    print(f"Replication report written: {output}")
+    for row in report.to_dict()["rows"]:
+        ours = row["ours"]
+        published = row["published"]
+        print(
+            f"{row['profile']} {row['name']}: "
+            f"return={ours['return_pct']:.2f}% vs {_format_optional_pct(published['return_pct'])} "
+            f"trades={ours['trades']} vs {_format_optional_value(published['trades'])} "
+            f"win={ours['win_rate_pct']:.2f}% vs {_format_optional_pct(published['win_rate_pct'])}"
+        )
+
+
 def _camel_to_snake(value: str) -> str:
     output = []
     for char in value:
@@ -328,6 +350,14 @@ def _camel_to_snake(value: str) -> str:
             output.append("_")
         output.append(char.lower())
     return "".join(output)
+
+
+def _format_optional_pct(value: object) -> str:
+    return "n/a" if value is None else f"{float(value):.2f}%"
+
+
+def _format_optional_value(value: object) -> str:
+    return "n/a" if value is None else str(value)
 
 
 def main() -> None:
@@ -346,6 +376,8 @@ def main() -> None:
         run_bulk_backtest_app(args)
     elif args.mode == "matrix":
         run_research_matrix_app(args)
+    elif args.mode == "replicate":
+        run_replication_app(args)
     else:
         run_backtest_app(app, show_plot=args.plot, output=args.output, store_dir=args.store_dir)
 

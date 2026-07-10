@@ -1,0 +1,28 @@
+{
+  "benchmark_strategy": "buyHold",
+  "min_markets": 3,
+  "min_average_excess_return": 0.0,
+  "max_average_drawdown": -0.7,
+  "cash_reserve": 0.1,
+  "max_strategy_weight": 0.3,
+  "max_family_weight": 0.45,
+  "drawdown_weight": 0.2,
+  "correlation_penalty_weight": 0.05,
+  "drawdown_overlap_penalty_weight": 0.05,
+  "volatility_penalty_weight": 0.05,
+  "win_rate_bonus_weight": 0.05,
+  "family_map": {
+    "managedFuturesMomentum": "trend_following",
+    "momentumRegime": "trend_following",
+    "cryptoAdaptiveTrend": "crypto_trend",
+    "meanReversion": "mean_reversion",
+    "choppinessRange": "mean_reversion",
+    "fvgRebalance": "price_action",
+    "liquiditySweepReversal": "price_action",
+    "publishedSmaCross": "published_replication"
+  },
+  "notes": [
+    "Allocates across strategy families using benchmark-relative edge, drawdown, return correlation, drawdown-overlap, and volatility penalties.",
+    "Designed for research promotion and paper candidate sizing, not final broker order generation."
+  ]
+}

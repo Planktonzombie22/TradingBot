@@ -1,0 +1,193 @@
+{
+  "name": "published_strategy_replication_v1",
+  "data_source": "https://raw.githubusercontent.com/kernc/backtesting.py/master/backtesting/test/GOOG.csv",
+  "symbol": "GOOG",
+  "source_url": "https://kernc.github.io/backtesting.py/doc/examples/Quick%20Start%20User%20Guide.html",
+  "notes": [
+    "Reference stats are from the official backtesting.py quick-start guide.",
+    "The reference-like profile uses next-open fills, integer shares, 0.2% commission, and 2x margin to approximate reference reversal semantics.",
+    "Strict cash-margin results are retained because they reflect this bot's stricter pre-trade buying-power behavior."
+  ],
+  "rows": [
+    {
+      "name": "backtesting_py_sma_cross_10_20",
+      "strategy": "publishedSmaCross",
+      "params": {
+        "fast_period": 10,
+        "slow_period": 20,
+        "target_fraction": 1,
+        "signal_delay_bars": 1
+      },
+      "profile": "strict_cash_margin",
+      "published": {
+        "return_pct": 462.64,
+        "trades": 93,
+        "win_rate_pct": 52.69,
+        "max_drawdown_pct": -33.93,
+        "buy_hold_pct": 607.37
+      },
+      "ours": {
+        "return_pct": 374.0578027999999,
+        "max_drawdown_pct": -26.257263440010004,
+        "trades": 76,
+        "fills": 152,
+        "rejections": 18,
+        "win_rate_pct": 59.210526315789465,
+        "ending_equity": 47405.780279999984,
+        "valid": true,
+        "validation_issues": []
+      },
+      "buy_hold_ours": {
+        "return_pct": 696.0044,
+        "max_drawdown_pct": -65.31236936851899,
+        "trades": 1,
+        "fills": 2,
+        "rejections": 0,
+        "win_rate_pct": 100.0,
+        "ending_equity": 79600.44,
+        "valid": true,
+        "validation_issues": []
+      },
+      "diff_return_pct": -88.58219720000011,
+      "diff_trades": -17,
+      "diff_win_rate_pct": 6.520526315789468,
+      "diff_max_drawdown_pct": 7.672736559989996,
+      "notes": ""
+    },
+    {
+      "name": "backtesting_py_sma_cross_10_15_optimized",
+      "strategy": "publishedSmaCross",
+      "params": {
+        "fast_period": 10,
+        "slow_period": 15,
+        "target_fraction": 1,
+        "signal_delay_bars": 1
+      },
+      "profile": "strict_cash_margin",
+      "published": {
+        "return_pct": 678.29,
+        "trades": 152,
+        "win_rate_pct": 50.0,
+        "max_drawdown_pct": -44.55,
+        "buy_hold_pct": 687.99
+      },
+      "ours": {
+        "return_pct": 1057.206814399998,
+        "max_drawdown_pct": -36.18278388371308,
+        "trades": 108,
+        "fills": 216,
+        "rejections": 45,
+        "win_rate_pct": 60.18518518518518,
+        "ending_equity": 115720.6814399998,
+        "valid": true,
+        "validation_issues": []
+      },
+      "buy_hold_ours": {
+        "return_pct": 696.0044,
+        "max_drawdown_pct": -65.31236936851899,
+        "trades": 1,
+        "fills": 2,
+        "rejections": 0,
+        "win_rate_pct": 100.0,
+        "ending_equity": 79600.44,
+        "valid": true,
+        "validation_issues": []
+      },
+      "diff_return_pct": 378.916814399998,
+      "diff_trades": -44,
+      "diff_win_rate_pct": 10.185185185185183,
+      "diff_max_drawdown_pct": 8.367216116286919,
+      "notes": ""
+    },
+    {
+      "name": "backtesting_py_sma_cross_10_20",
+      "strategy": "publishedSmaCross",
+      "params": {
+        "fast_period": 10,
+        "slow_period": 20,
+        "target_fraction": 1,
+        "signal_delay_bars": 1
+      },
+      "profile": "reference_like_2x_margin",
+      "published": {
+        "return_pct": 462.64,
+        "trades": 93,
+        "win_rate_pct": 52.69,
+        "max_drawdown_pct": -33.93,
+        "buy_hold_pct": 607.37
+      },
+      "ours": {
+        "return_pct": 434.8654247999998,
+        "max_drawdown_pct": -34.766748185802996,
+        "trades": 94,
+        "fills": 188,
+        "rejections": 0,
+        "win_rate_pct": 55.319148936170215,
+        "ending_equity": 53486.54247999998,
+        "valid": true,
+        "validation_issues": []
+      },
+      "buy_hold_ours": {
+        "return_pct": 696.0044,
+        "max_drawdown_pct": -65.31236936851899,
+        "trades": 1,
+        "fills": 2,
+        "rejections": 0,
+        "win_rate_pct": 100.0,
+        "ending_equity": 79600.44,
+        "valid": true,
+        "validation_issues": []
+      },
+      "diff_return_pct": -27.774575200000186,
+      "diff_trades": 1,
+      "diff_win_rate_pct": 2.6291489361702176,
+      "diff_max_drawdown_pct": -0.8367481858029961,
+      "notes": ""
+    },
+    {
+      "name": "backtesting_py_sma_cross_10_15_optimized",
+      "strategy": "publishedSmaCross",
+      "params": {
+        "fast_period": 10,
+        "slow_period": 15,
+        "target_fraction": 1,
+        "signal_delay_bars": 1
+      },
+      "profile": "reference_like_2x_margin",
+      "published": {
+        "return_pct": 678.29,
+        "trades": 152,
+        "win_rate_pct": 50.0,
+        "max_drawdown_pct": -44.55,
+        "buy_hold_pct": 687.99
+      },
+      "ours": {
+        "return_pct": 625.9853864000005,
+        "max_drawdown_pct": -45.63081856965512,
+        "trades": 153,
+        "fills": 306,
+        "rejections": 0,
+        "win_rate_pct": 53.59477124183007,
+        "ending_equity": 72598.53864000006,
+        "valid": true,
+        "validation_issues": []
+      },
+      "buy_hold_ours": {
+        "return_pct": 696.0044,
+        "max_drawdown_pct": -65.31236936851899,
+        "trades": 1,
+        "fills": 2,
+        "rejections": 0,
+        "win_rate_pct": 100.0,
+        "ending_equity": 79600.44,
+        "valid": true,
+        "validation_issues": []
+      },
+      "diff_return_pct": -52.30461359999947,
+      "diff_trades": 1,
+      "diff_win_rate_pct": 3.594771241830067,
+      "diff_max_drawdown_pct": -1.080818569655122,
+      "notes": ""
+    }
+  ]
+}

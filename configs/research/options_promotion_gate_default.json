@@ -1,0 +1,18 @@
+{
+  "strategy_family": "volatility_risk_premium",
+  "required_capabilities": [
+    "option_chains",
+    "implied_volatility_surface",
+    "greeks",
+    "option_fills",
+    "assignment_exercise",
+    "option_margin",
+    "liquidity_slippage",
+    "tail_stress"
+  ],
+  "default_decision": "block",
+  "notes": [
+    "Do not promote option-income or short-volatility strategies until every required capability is implemented and tested.",
+    "Equity-bar backtests are not sufficient for options because assignment, exercise, IV surface moves, gap risk, margin, and liquidity dominate the risk profile."
+  ]
+}

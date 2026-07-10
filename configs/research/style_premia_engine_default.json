@@ -1,0 +1,24 @@
+{
+  "momentum_lookback": 63,
+  "long_momentum_lookback": 126,
+  "momentum_skip_bars": 0,
+  "volatility_lookback": 63,
+  "value_lookback": 126,
+  "quality_lookback": 63,
+  "carry_lookback": 21,
+  "min_history": 80,
+  "top_n": 5,
+  "bottom_n": 0,
+  "long_gross_exposure": 1.0,
+  "short_gross_exposure": 0.0,
+  "momentum_weight": 0.35,
+  "value_weight": 0.2,
+  "quality_weight": 0.2,
+  "low_volatility_weight": 0.15,
+  "carry_weight": 0.1,
+  "score_weighted_allocations": false,
+  "notes": [
+    "OHLCV-only MVP uses value, quality, and carry proxies.",
+    "Real value/quality/carry should use fundamentals, yields, borrow/funding, or factor data when available."
+  ]
+}

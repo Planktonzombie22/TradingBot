@@ -1,19 +1,41 @@
 import pytest
 import pandas as pd
+import json
+import math
 
 from src.backtesting import (
     BatchBacktestJob,
     BatchBacktestRunner,
     BulkBacktestRecord,
+    CryptoAdaptiveSelectionConfig,
+    DynamicAllocationConfig,
+    FactorSpreadDefinition,
+    FactorTrendConfig,
+    MarketClusterDefinition,
+    MarketClusterValidationPolicy,
+    REQUIRED_OPTIONS_CAPABILITIES,
+    OptionContract,
+    OptionPosition,
+    OptionTailStressScenario,
+    PairsResearchConfig,
     ResearchFilterConfig,
+    StylePremiaConfig,
     EnsembleAllocationPolicy,
     StrategySelectionPolicy,
+    StrategyFamilyEnsemblePolicy,
+    WalkForwardGovernanceConfig,
     activate_strategies_for_regime,
     benchmark_relative_report,
     build_ensemble_allocation,
+    build_dynamic_allocation,
+    build_factor_trend_report,
+    build_strategy_family_ensemble,
     build_symbol_scorecards,
+    build_style_premia_ranking,
     classify_market_regime,
     classify_regime_universe,
+    discover_stat_arb_pairs,
+    evaluate_options_promotion_gate,
     evaluate_research_filters,
     expand_research_matrix,
     load_research_matrix,
@@ -24,7 +46,11 @@ from src.backtesting import (
     rank_optimization_results,
     run_research_matrix,
     run_walk_forward,
+    run_walk_forward_governance,
+    select_crypto_adaptive_universe,
     select_strategies_against_benchmark,
+    stress_option_position,
+    validate_market_clusters,
 )
 from src.data import sample_ohlcv
 from src.storage import JsonlStore
@@ -49,6 +75,78 @@ def test_walk_forward_runs_multiple_test_windows():
 
     assert len(windows) == 3
     assert all(window.result.metrics["ending_equity"] > 0 for window in windows)
+
+
+def test_walk_forward_governance_optimizes_windows_and_freezes_holdout_params():
+    data = sample_ohlcv(periods=120)
+
+    report = run_walk_forward_governance(
+        data=data,
+        strategy_name="buyHold",
+        symbol="SPY",
+        param_grid={"target_fraction": [0.5, 1.0], "use_stop_loss": [False]},
+        governance_config=WalkForwardGovernanceConfig(
+            train_size=30,
+            test_size=20,
+            holdout_size=20,
+            min_windows=3,
+            min_parameter_stability_score=1.0,
+            max_false_discovery_rate=0.5,
+        ),
+    )
+
+    assert report.passed
+    assert report.reason == "governance_passed"
+    assert len(report.windows) == 3
+    assert report.parameter_stability.champion_params["target_fraction"] == 1.0
+    assert report.holdout_score is not None
+    assert report.to_dict()["parameter_stability"]["stability_score"] == 1.0
+
+
+def test_walk_forward_governance_supports_anchored_training_windows():
+    data = sample_ohlcv(periods=120)
+
+    report = run_walk_forward_governance(
+        data=data,
+        strategy_name="buyHold",
+        symbol="SPY",
+        param_grid={"target_fraction": [1.0], "use_stop_loss": [False]},
+        governance_config=WalkForwardGovernanceConfig(
+            split_mode="anchored",
+            train_size=30,
+            test_size=20,
+            holdout_size=20,
+            min_windows=3,
+            min_parameter_stability_score=1.0,
+        ),
+    )
+
+    assert report.windows[0].train_start == report.windows[1].train_start
+    assert report.windows[1].train_end > report.windows[0].train_end
+    assert report.parameter_stability.stability_score == 1.0
+
+
+def test_walk_forward_governance_rejects_bad_no_retune_holdout():
+    closes = [100 + offset for offset in range(100)] + [220 - offset * 4 for offset in range(20)]
+    data = _ohlcv_from_closes(closes, volume=1_000_000)
+
+    report = run_walk_forward_governance(
+        data=data,
+        strategy_name="buyHold",
+        symbol="SPY",
+        param_grid={"target_fraction": [1.0], "use_stop_loss": [False]},
+        governance_config=WalkForwardGovernanceConfig(
+            train_size=30,
+            test_size=20,
+            holdout_size=20,
+            min_windows=3,
+            min_holdout_score=0.0,
+        ),
+    )
+
+    assert not report.passed
+    assert report.reason == "holdout_score_below_threshold"
+    assert report.holdout_score is not None and report.holdout_score < 0
 
 
 def test_grid_search_returns_sorted_results():
@@ -382,6 +480,365 @@ def test_cross_asset_matrix_keeps_intraday_crypto_inside_provider_limits():
     assert any(job.group_name == "crypto_yfinance_intraday_recent" and job.interval == "1h" for job in jobs)
 
 
+def test_strategy_research_catalog_tracks_core_candidate_families():
+    payload = json.loads(open("configs/research/strategy_research_catalog.json", encoding="utf-8").read())
+    candidates = {candidate["id"]: candidate for candidate in payload["candidates"]}
+
+    assert "diversified_time_series_momentum" in candidates
+    assert "graph_cluster_stat_arb" in candidates
+    assert "volatility_risk_premium" in candidates
+    assert candidates["volatility_risk_premium"]["status"] == "promotion_gate_mvp"
+    assert all(candidate["sources"] for candidate in candidates.values())
+
+
+def test_style_premia_ranking_scores_cross_section_and_allocates_sides():
+    data = {
+        "MOMO": _ohlcv_from_closes([100 + offset for offset in range(160)], volume=1_000_000),
+        "DEF": _ohlcv_from_closes([100 + offset * 0.1 for offset in range(160)], volume=1_000_000),
+        "LOSER": _ohlcv_from_closes([260 - offset for offset in range(160)], volume=1_000_000),
+        "CARRY": _ohlcv_from_closes([100 + (offset % 2) * 0.1 for offset in range(160)], volume=1_000_000),
+        "SHORT": _ohlcv_from_closes([100, 101, 102], volume=1_000_000),
+    }
+    data["CARRY"]["Carry"] = 0.08
+
+    report = build_style_premia_ranking(
+        data,
+        config=StylePremiaConfig(
+            momentum_lookback=20,
+            long_momentum_lookback=60,
+            volatility_lookback=20,
+            value_lookback=60,
+            quality_lookback=30,
+            min_history=70,
+            top_n=2,
+            bottom_n=1,
+            long_gross_exposure=0.8,
+            short_gross_exposure=0.2,
+            momentum_weight=0.70,
+            value_weight=0.05,
+            quality_weight=0.10,
+            low_volatility_weight=0.10,
+            carry_weight=0.05,
+        ),
+    )
+
+    scores = report.scores
+    score_by_symbol = {score.symbol: score for score in scores}
+
+    assert report.long_symbols
+    assert "MOMO" in report.long_symbols
+    assert report.short_symbols == ("LOSER",)
+    assert report.skipped_symbols["SHORT"] == "insufficient_history"
+    assert score_by_symbol["CARRY"].raw_metrics["carry_proxy"] == 0.08
+    assert round(sum(score.target_weight for score in scores if score.target_weight > 0), 2) == 0.8
+    assert round(abs(sum(score.target_weight for score in scores if score.target_weight < 0)), 2) == 0.2
+    assert [score.composite_score for score in scores] == sorted((score.composite_score for score in scores), reverse=True)
+    assert report.to_dict()["scores"][0]["component_scores"]["momentum"] is not None
+
+
+def test_stat_arb_pair_discovery_finds_mean_reverting_dislocation():
+    pair_data = _stat_arb_pair_data()
+    outsider = _ohlcv_from_closes([80 + ((offset * 7) % 19) for offset in range(180)], volume=1_000_000)
+
+    report = discover_stat_arb_pairs(
+        {"AAA": pair_data["AAA"], "BBB": pair_data["BBB"], "NOISE": outsider},
+        PairsResearchConfig(
+            min_history=120,
+            correlation_lookback=90,
+            hedge_lookback=120,
+            zscore_lookback=60,
+            min_abs_correlation=0.70,
+            min_abs_zscore=1.25,
+            max_half_life=40,
+            gross_exposure_per_pair=0.30,
+        ),
+    )
+
+    candidate = next(candidate for candidate in report.candidates if candidate.pair == "AAA/BBB")
+    payload = report.to_dict()
+
+    assert candidate.action == "short_spread"
+    assert candidate.correlation > 0.70
+    assert candidate.spread_zscore > 1.25
+    assert candidate.half_life is not None and candidate.half_life < 40
+    assert candidate.cointegration_proxy > 0
+    assert candidate.legs[0].symbol == "AAA"
+    assert candidate.legs[0].side == "SELL"
+    assert candidate.legs[0].weight < 0
+    assert round(sum(abs(leg.weight) for leg in candidate.legs), 2) == 0.30
+    assert payload["active_count"] >= 1
+    assert any(reason == "correlation_below_threshold" for reason in report.skipped_pairs.values())
+
+
+def test_options_promotion_gate_blocks_until_full_options_stack_exists():
+    partial = {
+        "option_chains": True,
+        "greeks": "mock greeks available",
+        "tail_stress": True,
+        "not_a_real_capability": True,
+    }
+
+    blocked = evaluate_options_promotion_gate(partial)
+    complete = evaluate_options_promotion_gate({capability: True for capability in REQUIRED_OPTIONS_CAPABILITIES})
+
+    assert not blocked.passed
+    assert blocked.decision == "block"
+    assert "option_margin" in blocked.missing_capabilities
+    assert blocked.warnings
+    assert complete.passed
+    assert complete.decision == "promote"
+    assert complete.to_dict()["missing_capabilities"] == []
+
+
+def test_option_tail_stress_models_short_put_crash_loss_direction():
+    contract = OptionContract(
+        symbol="SPY260116P00400000",
+        underlying="SPY",
+        expiration="2026-01-16",
+        strike=400,
+        option_type="put",
+    )
+    position = OptionPosition(
+        contract=contract,
+        quantity=-1,
+        average_price=2.0,
+        underlying_price=420,
+    )
+    results = stress_option_position(
+        position,
+        [
+            OptionTailStressScenario("flat", 0.0),
+            OptionTailStressScenario("crash", -0.20),
+        ],
+    )
+    flat, crash = results
+
+    assert flat.estimated_pnl == 200.0
+    assert crash.stressed_underlying_price == 336.0
+    assert crash.stressed_intrinsic_value == 64.0
+    assert crash.estimated_pnl == -6200.0
+    assert crash.to_dict()["scenario"]["name"] == "crash"
+
+
+def test_crypto_adaptive_selection_picks_liquid_high_sharpe_assets():
+    data = {
+        "BTC-USD": _ohlcv_from_closes([100 * (1.01**offset) for offset in range(140)], volume=2_000_000),
+        "ETH-USD": _ohlcv_from_closes([80 * (1.006**offset) for offset in range(140)], volume=1_500_000),
+        "DOGE-USD": _ohlcv_from_closes([20 * (0.98**offset) for offset in range(140)], volume=2_000_000),
+        "ILLQ-USD": _ohlcv_from_closes([50 * (1.012**offset) for offset in range(140)], volume=1),
+        "NEW-USD": _ohlcv_from_closes([10 + offset for offset in range(20)], volume=1_000_000),
+    }
+
+    report = select_crypto_adaptive_universe(
+        data,
+        config=CryptoAdaptiveSelectionConfig(
+            momentum_lookback=10,
+            sharpe_lookback=10,
+            volatility_lookback=10,
+            drawdown_lookback=30,
+            liquidity_lookback=10,
+            top_n=2,
+            min_rolling_sharpe=0.0,
+            min_average_dollar_volume=10_000,
+            max_symbol_weight=0.40,
+            cash_reserve=0.20,
+        ),
+    )
+    assets = {asset.symbol: asset for asset in report.assets}
+
+    assert "BTC-USD" in report.selected_symbols
+    assert "ETH-USD" in report.selected_symbols
+    assert "DOGE-USD" not in report.selected_symbols
+    assert assets["ILLQ-USD"].reason == "liquidity_below_threshold"
+    assert report.skipped_symbols["NEW-USD"] == "insufficient_history"
+    assert report.invested_weight <= 0.80
+    assert all(asset.target_weight <= 0.40 for asset in report.assets)
+    assert report.to_dict()["selected_symbols"]
+
+
+def test_dynamic_allocation_overlay_stays_growth_heavy_in_risk_on_tape():
+    data = {
+        "SPY": _ohlcv_from_closes([100 + offset for offset in range(160)], volume=2_000_000),
+        "QQQ": _ohlcv_from_closes([120 + offset * 1.2 for offset in range(160)], volume=1_500_000),
+        "XLU": _ohlcv_from_closes([50 + offset * 0.1 for offset in range(160)], volume=800_000),
+        "TLT": _ohlcv_from_closes([90 + offset * 0.05 for offset in range(160)], volume=900_000),
+        "GLD": _ohlcv_from_closes([180 + offset * 0.02 for offset in range(160)], volume=700_000),
+        "VIXY": _ohlcv_from_closes([30 - offset * 0.05 for offset in range(160)], volume=700_000),
+    }
+
+    report = build_dynamic_allocation(data, config=DynamicAllocationConfig(min_history=80, max_symbol_weight=0.40))
+    sleeve_weights = _sleeve_weights(report)
+
+    assert report.stress.regime == "risk_on"
+    assert sleeve_weights["growth"] > sleeve_weights["defensive"]
+    assert sleeve_weights["growth"] > sleeve_weights["cash"]
+    assert report.cash_weight < 0.25
+    assert round(sum(report.weights_by_symbol.values()), 6) == 1.0
+    assert report.to_dict()["stress"]["aggregate_stress"] < 0.25
+
+
+def test_dynamic_allocation_overlay_raises_cash_and_hedges_in_stress_tape():
+    calm_up = [100 + offset * 0.7 for offset in range(100)]
+    selloff = [170 - offset * 2.2 + (8 if offset % 2 == 0 else -8) for offset in range(60)]
+    spy = calm_up + selloff
+    data = {
+        "SPY": _ohlcv_from_closes(spy, volume=2_000_000),
+        "QQQ": _ohlcv_from_closes([value * 1.2 for value in spy], volume=1_500_000),
+        "XLU": _ohlcv_from_closes([50 + offset * 0.05 for offset in range(160)], volume=800_000),
+        "TLT": _ohlcv_from_closes([120 - offset * 0.3 for offset in range(160)], volume=900_000),
+        "GLD": _ohlcv_from_closes([180 + offset * 0.4 for offset in range(160)], volume=700_000),
+        "VIXY": _ohlcv_from_closes([20 + max(0, offset - 100) * 1.5 for offset in range(160)], volume=700_000),
+    }
+
+    report = build_dynamic_allocation(data, config=DynamicAllocationConfig(min_history=80, max_symbol_weight=0.40))
+    sleeve_weights = _sleeve_weights(report)
+
+    assert report.stress.regime in {"risk_off", "crisis"}
+    assert report.stress.drawdown_stress > 0.5
+    assert report.stress.rates_stress > 0.5
+    assert sleeve_weights["cash"] > sleeve_weights["growth"]
+    assert sleeve_weights["hedge"] > 0
+    assert sleeve_weights["commodities"] > 0
+    assert report.weights_by_symbol["CASH"] >= 0.30
+
+
+def test_factor_trend_report_builds_relative_style_and_sector_spreads():
+    data = {
+        "VLUE": _ohlcv_from_closes([100 + offset * 1.0 for offset in range(180)], volume=1_000_000),
+        "IWF": _ohlcv_from_closes([100 + offset * 0.2 for offset in range(180)], volume=1_000_000),
+        "XLK": _ohlcv_from_closes([150 - offset * 0.4 for offset in range(180)], volume=1_000_000),
+        "SPY": _ohlcv_from_closes([100 + offset * 0.3 for offset in range(180)], volume=1_000_000),
+        "SHORT": _ohlcv_from_closes([100 + offset for offset in range(20)], volume=1_000_000),
+    }
+    config = FactorTrendConfig(
+        spreads=(
+            FactorSpreadDefinition("value_vs_growth", ("VLUE",), ("IWF",), "style"),
+            FactorSpreadDefinition("tech_vs_market", ("XLK",), ("SPY",), "sector"),
+            FactorSpreadDefinition("missing_quality", ("QUAL",), ("SPY",), "style"),
+            FactorSpreadDefinition("short_history", ("SHORT",), ("SPY",), "quality"),
+        ),
+        momentum_lookback=20,
+        trend_lookback=60,
+        volatility_lookback=20,
+        min_history=60,
+        min_abs_trend_score=0.10,
+        gross_exposure_per_spread=0.30,
+        max_active_spreads=2,
+    )
+
+    report = build_factor_trend_report(data, config=config)
+    signals = {signal.name: signal for signal in report.signals}
+    value = signals["value_vs_growth"]
+    tech = signals["tech_vs_market"]
+
+    assert value.action == "long_spread"
+    assert value.legs[0].symbol == "VLUE"
+    assert value.legs[0].side == "BUY"
+    assert value.legs[1].symbol == "IWF"
+    assert value.legs[1].side == "SELL"
+    assert round(sum(abs(leg.weight) for leg in value.legs), 2) == 0.30
+    assert tech.action == "short_spread"
+    assert tech.legs[0].side == "SELL"
+    assert report.skipped_spreads["missing_quality"] == "missing_symbols:QUAL"
+    assert report.skipped_spreads["short_history"] == "SHORT:insufficient_history"
+    assert report.to_dict()["active_count"] == 2
+
+
+def test_strategy_family_ensemble_allocates_by_edge_and_diversification():
+    records = [
+        _bulk_record("SPY", "buyHold", 0.10, -0.20, trades=1),
+        _bulk_record("QQQ", "buyHold", 0.12, -0.22, trades=1),
+        _bulk_record("TLT", "buyHold", 0.02, -0.12, trades=1),
+        _bulk_record("SPY", "managedFuturesMomentum", 0.22, -0.14, trades=8),
+        _bulk_record("QQQ", "managedFuturesMomentum", 0.24, -0.16, trades=7),
+        _bulk_record("TLT", "managedFuturesMomentum", 0.10, -0.08, trades=5),
+        _bulk_record("SPY", "momentumRegime", 0.21, -0.15, trades=8),
+        _bulk_record("QQQ", "momentumRegime", 0.22, -0.16, trades=7),
+        _bulk_record("TLT", "momentumRegime", 0.08, -0.09, trades=5),
+        _bulk_record("SPY", "meanReversion", 0.14, -0.09, trades=12),
+        _bulk_record("QQQ", "meanReversion", 0.15, -0.10, trades=11),
+        _bulk_record("TLT", "meanReversion", 0.07, -0.06, trades=7),
+        _bulk_record("SPY", "weakSystem", 0.05, -0.12, trades=2),
+        _bulk_record("QQQ", "weakSystem", 0.06, -0.13, trades=2),
+        _bulk_record("TLT", "weakSystem", 0.01, -0.08, trades=2),
+    ]
+    returns = {
+        "managedFuturesMomentum": pd.Series([0.01, -0.01, 0.02, 0.00, 0.015, -0.005]),
+        "momentumRegime": pd.Series([0.011, -0.009, 0.019, 0.001, 0.014, -0.004]),
+        "meanReversion": pd.Series([-0.002, 0.006, -0.001, 0.005, -0.002, 0.004]),
+        "weakSystem": pd.Series([0.002, -0.004, 0.001, -0.003, 0.000, -0.002]),
+    }
+
+    report = build_strategy_family_ensemble(
+        records,
+        returns_by_strategy=returns,
+        policy=StrategyFamilyEnsemblePolicy(
+            min_markets=3,
+            cash_reserve=0.20,
+            max_strategy_weight=0.35,
+            max_family_weight=0.40,
+            family_map={
+                "managedFuturesMomentum": "trend",
+                "momentumRegime": "trend",
+                "meanReversion": "mean_reversion",
+                "weakSystem": "experimental",
+            },
+        ),
+    )
+    candidates = {candidate.strategy: candidate for candidate in report.candidates}
+
+    assert candidates["managedFuturesMomentum"].action == "allocate"
+    assert candidates["meanReversion"].action == "allocate"
+    assert candidates["weakSystem"].action == "reject"
+    assert candidates["momentumRegime"].correlation_penalty > 0.90
+    assert report.weights_by_family["trend"] <= 0.40
+    assert all(weight <= 0.35 for weight in report.weights_by_strategy.values())
+    assert report.invested_weight <= 0.80
+    assert report.cash_weight >= 0.20
+    assert report.to_dict()["weights_by_strategy"]
+
+
+def test_market_cluster_validation_promotes_only_cluster_robust_systems():
+    records = [
+        _bulk_record("SPY", "buyHold", 0.10, -0.20, trades=1),
+        _bulk_record("QQQ", "buyHold", 0.12, -0.22, trades=1),
+        _bulk_record("GLD", "buyHold", 0.04, -0.12, trades=1),
+        _bulk_record("DBC", "buyHold", 0.03, -0.13, trades=1),
+        _bulk_record("BTC-USD", "buyHold", 0.30, -0.55, trades=1),
+        _bulk_record("SPY", "trendSystem", 0.18, -0.16, trades=5),
+        _bulk_record("QQQ", "trendSystem", 0.20, -0.18, trades=5),
+        _bulk_record("GLD", "trendSystem", 0.10, -0.10, trades=4),
+        _bulk_record("DBC", "trendSystem", 0.09, -0.11, trades=4),
+        _bulk_record("BTC-USD", "trendSystem", 0.10, -0.40, trades=4),
+        _bulk_record("SPY", "nicheSystem", 0.08, -0.12, trades=3),
+        _bulk_record("QQQ", "nicheSystem", 0.07, -0.13, trades=3),
+        _bulk_record("GLD", "nicheSystem", 0.12, -0.08, trades=3),
+        _bulk_record("DBC", "nicheSystem", 0.11, -0.09, trades=3),
+        _bulk_record("MISSING", "trendSystem", 0.20, -0.10, trades=3),
+    ]
+    policy = MarketClusterValidationPolicy(
+        min_pass_rate=0.50,
+        clusters=(
+            MarketClusterDefinition("equity_bull", ("SPY", "QQQ"), min_markets=2),
+            MarketClusterDefinition("inflation_commodities", ("GLD", "DBC"), min_markets=2),
+            MarketClusterDefinition("crypto_cycle", ("BTC-USD", "ETH-USD"), min_markets=1, min_win_rate=1.0),
+        ),
+    )
+
+    report = validate_market_clusters(records, policy)
+    summaries = {summary.strategy: summary for summary in report.summaries}
+    results = {(result.strategy, result.cluster): result for result in report.results}
+
+    assert summaries["trendSystem"].promoted
+    assert summaries["trendSystem"].clusters_passed == 2
+    assert not summaries["nicheSystem"].promoted
+    assert results[("trendSystem", "equity_bull")].passed
+    assert results[("trendSystem", "crypto_cycle")].reason == "insufficient_cluster_edge"
+    assert results[("nicheSystem", "inflation_commodities")].passed
+    assert "MISSING" in report.missing_benchmarks
+    assert report.to_dict()["summaries"]
+
+
 def _bulk_record(strategy_symbol: str, strategy: str, total_return: float, max_drawdown: float, trades: int) -> BulkBacktestRecord:
     return BulkBacktestRecord(
         symbol=strategy_symbol,
@@ -409,3 +866,29 @@ def _ohlcv_from_closes(closes: list[float], volume: int) -> pd.DataFrame:
         },
         index=index,
     )
+
+
+def _stat_arb_pair_data() -> dict[str, pd.DataFrame]:
+    base = []
+    spread = []
+    current_spread = 0.0
+    for offset in range(180):
+        base.append(100 + offset * 0.35)
+        shock = 0.025 if offset % 12 == 0 else -0.003
+        current_spread = 0.82 * current_spread + shock
+        spread.append(current_spread)
+    spread[-1] += 0.09
+
+    aaa = [base_price * math.exp(spread_value) for base_price, spread_value in zip(base, spread)]
+    bbb = base
+    return {
+        "AAA": _ohlcv_from_closes(aaa, volume=1_000_000),
+        "BBB": _ohlcv_from_closes(bbb, volume=1_000_000),
+    }
+
+
+def _sleeve_weights(report) -> dict[str, float]:
+    weights = {sleeve: 0.0 for sleeve in ("growth", "defensive", "bonds", "commodities", "hedge", "cash")}
+    for target in report.targets:
+        weights[target.sleeve] = weights.get(target.sleeve, 0.0) + target.weight
+    return weights

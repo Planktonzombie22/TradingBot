@@ -1,0 +1,16 @@
+{
+  "short_lookback": 21,
+  "medium_lookback": 63,
+  "long_lookback": 126,
+  "macro_lookback": 252,
+  "volatility_lookback": 63,
+  "target_volatility": 0.15,
+  "max_target_fraction": 1.0,
+  "min_signal_strength": 0.25,
+  "exit_threshold": 0.1,
+  "rebalance_interval": 21,
+  "rebalance_threshold": 0.1,
+  "atr_period": 20,
+  "atr_stop_multiple": 4.0,
+  "commission_bps": 0.0
+}

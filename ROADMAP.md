@@ -104,3 +104,46 @@ The next phase shifts the project from "can run strategies" to "can decide when 
 Research expansion intermission:
 
 86. Add cross-asset research matrices so testing can span stocks, ETFs, bonds/rates, credit, crypto, FX, commodities, real assets, multiple providers, multiple intervals, and multiple historical windows. Implemented MVP.
+
+Validation hardening phase:
+
+87. Add explicit adjusted-data handling for yfinance and Alpaca so backtests do not accidentally mix raw split/dividend prices with adjusted benchmark data. Implemented MVP.
+88. Add requested-window coverage validation so providers cannot silently truncate historical windows without the run failing loudly. Implemented MVP.
+89. Add adjusted-OHLC drift handling so tiny provider adjustment artifacts become warnings while material high/low violations remain hard errors. Implemented MVP.
+90. Add deterministic backtester invariant tests for long stops, short stops, shorting-disabled rejection, profitable shorts, partial closes, reversals, slippage, commissions, liquidity caps, and metric consistency. Implemented MVP.
+91. Add a reusable backtest result validator that checks equity, fills, final flatness, and headline metric agreement. Implemented MVP.
+92. Add independent benchmark validation against direct close-to-close math and external adjusted-close data where available. Implemented MVP.
+93. Add published-strategy replication infrastructure so known public strategy examples can be rerun through this engine and compared against published stats. Implemented MVP.
+94. Add a `replicate` CLI mode and default published SMA crossover suite based on the official backtesting.py GOOG example. Implemented MVP.
+
+Current strategic research read:
+
+The bot should now move from isolated indicator systems toward validated, portfolio-aware strategy families. Recent online research and practitioner evidence point to these candidate lanes:
+
+- Diversified time-series momentum / managed futures across equities, bonds, FX, commodities, crypto, and rates. This is still one of the best-documented systematic anomalies, but recent quant/trend-following drawdowns show it must be regime-aware and reversal-aware.
+- Cross-sectional momentum plus value, quality/defensive, carry, and low-volatility style premia. The goal is not one factor, but diversified style exposure with benchmark-relative validation.
+- Statistical arbitrage and pairs/cluster relative value, preferably sector/beta-neutral with cointegration/correlation stability, borrow/cost filters, and crash controls.
+- Volatility risk premium and option-income systems, but only after adding options data, Greeks, implied-vs-realized volatility, assignment/exercise logic, and tail-risk sizing. This should not be bolted onto the current equity-bar backtester casually.
+- Crypto adaptive trend systems using shorter bars, volatility-regime trailing stops, monthly/weekly asset selection, and asymmetric long/short exposure.
+- Dynamic allocation overlays that rotate between growth, defensive, cash, bonds, gold/commodities, or volatility hedges using smooth macro/market stress scores rather than brittle if/else regimes.
+- Factor-trend systems that trade trends in factors, sectors, yield-curve shape, and relative baskets rather than only single-symbol price trends.
+- Market-making/HFT-style systems are top-tier in industry but out of scope until the project has order book data, latency modeling, quote management, queue position, and intraday transaction-cost calibration.
+
+Next phase: research-grade strategy families and capital selection.
+
+95. Add a strategy research catalog that records each candidate system's source, rules, required data, expected edge, published benchmark stats, replication status, and implementation readiness. Implemented MVP.
+96. Add a managed-futures/time-series-momentum engine that supports multi-lookback trend signals, volatility targeting, asset-class risk budgets, correlation scaling, and crisis-alpha reporting. Implemented strategy MVP; portfolio-level budgets/correlation/crisis-alpha reporting remain the next allocator/reporting layer.
+97. Add a cross-sectional momentum and style-premia engine for ranking symbols by momentum, value proxy, quality proxy, low-volatility/defensive score, and carry proxy where data is available. Implemented research ranking MVP with OHLCV proxies and optional carry/yield columns.
+98. Add a pairs/stat-arb research module with pair discovery, rolling correlation, cointegration tests, spread z-scores, half-life estimation, beta neutrality, borrow/cost checks, and portfolio-level spread allocation. Implemented dependency-light research MVP with correlation, hedge ratio, spread z-score, half-life, trade legs, and a cointegration proxy; formal cointegration, beta/sector neutrality, borrow checks, and portfolio spread allocation remain next.
+99. Add a volatility-risk-premium roadmap gate: options chains, implied volatility surfaces, Greeks, option fills, assignment/exercise modeling, margin, and tail stress tests must exist before any option-income strategy is promoted. Implemented promotion-gate MVP with required capability checks, option contract/quote/Greeks/position models, and intrinsic-value tail-stress scaffolding.
+100. Add a crypto adaptive-trend suite using 4h/6h/1d bars, rolling Sharpe asset selection, volatility-based trailing stops, drawdown gates, and asymmetric long/short allocation. Implemented strategy and selection MVP with rolling Sharpe, volatility targeting, trailing ATR stops, drawdown gates, asymmetric long/short exposure, and crypto universe ranking.
+101. Add dynamic allocation systems that rotate between growth, defensive, cash, bonds, gold/commodities, and volatility hedges using smooth scores for rates, trend, drawdown, VIX/volatility, liquidity, and crowding. Implemented portfolio overlay MVP with smooth market stress scoring and sleeve-level allocation across growth, defensive, bonds, commodities, hedges, and cash.
+102. Add factor-trend research for sectors, industries, value-vs-growth, high-beta-vs-low-volatility, quality, and yield-curve-shape baskets. Implemented factor-spread trend MVP for style, sector, size, defensive/cyclical, and rates ETF proxy baskets with long/short legs and trend scores.
+103. Add a strategy ensemble allocator that combines independent strategy families by marginal contribution to risk, correlation, drawdown overlap, and benchmark-relative edge rather than raw return alone. Implemented strategy-family ensemble MVP with benchmark-relative edge, drawdown, volatility, return-correlation, drawdown-overlap, family caps, strategy caps, and cash reserve handling.
+104. Add market-cluster validation so each system must prove where it works: equity bull trends, equity bear markets, bond selloffs, rate-cut cycles, inflationary commodities, FX carry regimes, crypto bull/bear cycles, and choppy mean-reverting tapes. Implemented market-cluster validation MVP with named symbol clusters, benchmark-relative pass/fail gates, per-strategy summaries, and promotion pass-rate checks.
+105. Add cost capacity analysis: turnover, spread sensitivity, volume participation, borrow availability, short fees, slippage stress, and degradation curves by capital size. Implemented MVP with strategy capacity profiles, capital degradation reports, borrow availability gates, slippage stress assumptions, ranking helpers, and default research config.
+106. Add walk-forward model governance: anchored/rolling train-test splits, parameter stability reports, false-discovery controls, and no-retune holdouts. Implemented MVP with rolling/anchored train-test optimization, parameter-mode champion selection, train-to-test false-discovery proxy, frozen-parameter holdout testing, promotion pass/fail reasons, and default governance config.
+107. Add a promotion pipeline from research candidate to paper candidate: source rules captured, data validated, replication or benchmark comparison complete, out-of-sample pass, cost stress pass, risk gates pass, and paper-session manifest created.
+108. Add paper-trading scorecards that compare expected backtest behavior to live paper fills, slippage, missed trades, rejected orders, and broker account statements.
+109. Add live data drift monitors comparing Alpaca/yfinance/secondary sources on recent bars, gaps, adjusted prices, and corporate-action behavior.
+110. Add a final "trade/no-trade committee" layer that can choose strategy, benchmark, hedge, reduce exposure, or sit in cash based on validated edge and current regime quality.

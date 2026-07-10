@@ -1,0 +1,21 @@
+{
+  "name": "walk_forward_governance_default",
+  "description": "Default model-governance assumptions for promoting optimized strategies into paper candidates.",
+  "split_mode": "rolling",
+  "train_size": 252,
+  "test_size": 63,
+  "holdout_size": 126,
+  "metric": "total_return",
+  "min_windows": 3,
+  "min_train_score": 0.0,
+  "min_oos_score": 0.0,
+  "min_holdout_score": 0.0,
+  "min_parameter_stability_score": 0.5,
+  "max_false_discovery_rate": 0.5,
+  "promotion_notes": [
+    "Optimize only inside each training window.",
+    "Score the selected parameters on the next out-of-sample window.",
+    "Choose the final champion from prior walk-forward parameter modes before touching the holdout.",
+    "Reject candidates with weak out-of-sample behavior, unstable parameters, high train-to-test failure, or poor no-retune holdout results."
+  ]
+}

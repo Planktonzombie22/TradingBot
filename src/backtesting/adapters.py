@@ -106,7 +106,14 @@ class RiskPercentOrderFactory(OrderFactory):
                 entry_quantity = int(entry_quantity)
             if entry_quantity > 0:
                 entry_side = "BUY" if target_quantity > 0 else "SELL"
-                orders.append(Order(symbol=context.signal.symbol, side=entry_side, quantity=entry_quantity))
+                orders.append(
+                    Order(
+                        symbol=context.signal.symbol,
+                        side=entry_side,
+                        quantity=entry_quantity,
+                        stop_price=context.signal.stop_loss,
+                    )
+                )
             return orders
 
         delta_quantity = target_quantity - current_quantity
@@ -115,7 +122,17 @@ class RiskPercentOrderFactory(OrderFactory):
         if abs(delta_quantity) <= 0:
             return orders
         side = "BUY" if delta_quantity > 0 else "SELL"
-        orders.append(Order(symbol=context.signal.symbol, side=side, quantity=abs(delta_quantity)))
+        same_direction_increase = (current_quantity > 0) == (delta_quantity > 0) and abs(target_quantity) > abs(current_quantity)
+        adding_exposure = current_quantity == 0 or same_direction_increase
+        stop_price = context.signal.stop_loss if adding_exposure else None
+        orders.append(
+            Order(
+                symbol=context.signal.symbol,
+                side=side,
+                quantity=abs(delta_quantity),
+                stop_price=stop_price,
+            )
+        )
         return orders
 
     @staticmethod

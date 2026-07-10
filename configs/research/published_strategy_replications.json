@@ -1,0 +1,61 @@
+{
+  "name": "published_strategy_replication_v1",
+  "symbol": "GOOG",
+  "data_source": "https://raw.githubusercontent.com/kernc/backtesting.py/master/backtesting/test/GOOG.csv",
+  "source_url": "https://kernc.github.io/backtesting.py/doc/examples/Quick%20Start%20User%20Guide.html",
+  "notes": [
+    "Reference stats are from the official backtesting.py quick-start guide.",
+    "The reference-like profile uses next-open fills, integer shares, 0.2% commission, and 2x margin to approximate reference reversal semantics.",
+    "Strict cash-margin results are retained because they reflect this bot's stricter pre-trade buying-power behavior."
+  ],
+  "profiles": [
+    {
+      "name": "strict_cash_margin",
+      "margin_ratio": 1,
+      "commission_bps": 20,
+      "execution_price_column": "Open",
+      "allow_fractional_shares": false,
+      "force_flat_at_end": true
+    },
+    {
+      "name": "reference_like_2x_margin",
+      "margin_ratio": 2,
+      "commission_bps": 20,
+      "execution_price_column": "Open",
+      "allow_fractional_shares": false,
+      "force_flat_at_end": true
+    }
+  ],
+  "references": [
+    {
+      "name": "backtesting_py_sma_cross_10_20",
+      "strategy": "publishedSmaCross",
+      "params": {
+        "fast_period": 10,
+        "slow_period": 20,
+        "target_fraction": 1,
+        "signal_delay_bars": 1
+      },
+      "published_return_pct": 462.64,
+      "published_buy_hold_pct": 607.37,
+      "published_max_drawdown_pct": -33.93,
+      "published_trades": 93,
+      "published_win_rate_pct": 52.69
+    },
+    {
+      "name": "backtesting_py_sma_cross_10_15_optimized",
+      "strategy": "publishedSmaCross",
+      "params": {
+        "fast_period": 10,
+        "slow_period": 15,
+        "target_fraction": 1,
+        "signal_delay_bars": 1
+      },
+      "published_return_pct": 678.29,
+      "published_buy_hold_pct": 687.99,
+      "published_max_drawdown_pct": -44.55,
+      "published_trades": 152,
+      "published_win_rate_pct": 50.0
+    }
+  ]
+}

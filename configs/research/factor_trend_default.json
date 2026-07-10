@@ -1,0 +1,23 @@
+{
+  "momentum_lookback": 63,
+  "trend_lookback": 126,
+  "volatility_lookback": 63,
+  "min_history": 90,
+  "min_abs_trend_score": 0.15,
+  "gross_exposure_per_spread": 0.25,
+  "max_active_spreads": 5,
+  "allow_short_legs": true,
+  "spreads": [
+    {"name": "value_vs_growth", "category": "style", "long_symbols": ["VLUE"], "short_symbols": ["IWF"]},
+    {"name": "quality_vs_market", "category": "style", "long_symbols": ["QUAL"], "short_symbols": ["SPY"]},
+    {"name": "low_vol_vs_high_beta", "category": "style", "long_symbols": ["USMV"], "short_symbols": ["SPHB"]},
+    {"name": "small_vs_large", "category": "size", "long_symbols": ["IWM"], "short_symbols": ["SPY"]},
+    {"name": "tech_vs_market", "category": "sector", "long_symbols": ["XLK"], "short_symbols": ["SPY"]},
+    {"name": "defensive_vs_cyclical", "category": "sector", "long_symbols": ["XLU", "XLP"], "short_symbols": ["XLY", "XLI"]},
+    {"name": "long_duration_vs_intermediate", "category": "rates", "long_symbols": ["TLT"], "short_symbols": ["IEF"]}
+  ],
+  "notes": [
+    "Factor-trend MVP constructs normalized long/short baskets and trends their relative spread.",
+    "Future versions should add beta-neutral baskets, sector/industry metadata, and yield-curve data beyond ETF proxies."
+  ]
+}

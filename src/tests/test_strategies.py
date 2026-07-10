@@ -66,9 +66,11 @@ def test_research_systems_are_registered_and_emit_signals():
     for name in [
         "aroonVortexTrend",
         "choppinessRange",
+        "cryptoAdaptiveTrend",
         "fvgRebalance",
         "ichimokuCloudTrend",
         "liquiditySweepReversal",
+        "managedFuturesMomentum",
         "momentumRegime",
         "meanReversion",
         "publishedSmaCross",
@@ -250,3 +252,142 @@ def test_published_sma_cross_uses_target_position_fraction_for_reversals():
     assert any(fill.order.side == "BUY" for fill in result.fills)
     assert any(fill.order.side == "SELL" for fill in result.fills)
     assert result.account_history[-1].positions["SPY"] < 0
+
+
+def test_managed_futures_momentum_emits_volatility_targeted_entries_with_stops():
+    index = pd.date_range("2024-01-01", periods=90)
+    closes = [100 + offset for offset in range(90)]
+    data = pd.DataFrame(
+        {
+            "Open": closes,
+            "High": [close + 1 for close in closes],
+            "Low": [close - 1 for close in closes],
+            "Close": closes,
+            "Volume": [1000] * len(closes),
+        },
+        index=index,
+    )
+    strategy = get_strategy("managedFuturesMomentum")(
+        "SPY",
+        short_lookback=5,
+        medium_lookback=10,
+        long_lookback=20,
+        macro_lookback=30,
+        volatility_lookback=10,
+        atr_period=5,
+    )
+
+    signals = strategy.generate_signals(data)
+    buy_signals = [signal for signal in signals if signal.action == "BUY"]
+    result = run_backtest(strategy, data, BacktestConfig(force_flat_at_end=False))
+
+    assert buy_signals
+    assert 0 < buy_signals[0].meta["target_position_fraction"] <= 1.0
+    assert buy_signals[0].stop_loss is not None
+    assert buy_signals[0].meta["rebalance_reason"] == "trend_entry"
+    assert any(fill.order.side == "BUY" and fill.order.stop_price is not None for fill in result.fills)
+
+
+def test_managed_futures_momentum_can_reverse_after_trend_flip():
+    index = pd.date_range("2024-01-01", periods=140)
+    closes = list(range(100, 170)) + list(range(170, 100, -1))
+    data = pd.DataFrame(
+        {
+            "Open": closes,
+            "High": [close + 1 for close in closes],
+            "Low": [close - 1 for close in closes],
+            "Close": closes,
+            "Volume": [1000] * len(closes),
+        },
+        index=index,
+    )
+    strategy = get_strategy("managedFuturesMomentum")(
+        "SPY",
+        short_lookback=5,
+        medium_lookback=10,
+        long_lookback=20,
+        macro_lookback=30,
+        volatility_lookback=10,
+        atr_period=5,
+        min_signal_strength=0.2,
+        exit_threshold=0.0,
+    )
+
+    signals = strategy.generate_signals(data)
+
+    assert any(signal.action == "BUY" for signal in signals)
+    assert any(signal.action == "SELL" for signal in signals)
+
+
+def test_crypto_adaptive_trend_emits_volatility_targeted_long_with_trailing_stop():
+    index = pd.date_range("2024-01-01", periods=140)
+    closes = [100 * (1.01**offset) for offset in range(140)]
+    data = pd.DataFrame(
+        {
+            "Open": closes,
+            "High": [close * 1.01 for close in closes],
+            "Low": [close * 0.99 for close in closes],
+            "Close": closes,
+            "Volume": [1_000_000] * len(closes),
+        },
+        index=index,
+    )
+    strategy = get_strategy("cryptoAdaptiveTrend")(
+        "BTC-USD",
+        fast_ema=5,
+        slow_ema=15,
+        momentum_lookback=10,
+        sharpe_lookback=10,
+        volatility_lookback=10,
+        drawdown_lookback=30,
+        atr_period=5,
+        min_trend_score=0.05,
+        min_rolling_sharpe=0.0,
+        max_long_fraction=0.75,
+    )
+
+    signals = strategy.generate_signals(data)
+    buy_signals = [signal for signal in signals if signal.action == "BUY"]
+    result = run_backtest(strategy, data, BacktestConfig(force_flat_at_end=False))
+
+    assert buy_signals
+    assert 0 < buy_signals[0].meta["target_position_fraction"] <= 0.75
+    assert buy_signals[0].meta["rolling_sharpe"] > 0
+    assert buy_signals[0].meta["trailing_stop"] is not None
+    assert any(fill.order.side == "BUY" for fill in result.fills)
+
+
+def test_crypto_adaptive_trend_caps_short_exposure_in_bearish_crypto_tape():
+    index = pd.date_range("2024-01-01", periods=140)
+    closes = [300 * (0.99**offset) for offset in range(140)]
+    data = pd.DataFrame(
+        {
+            "Open": closes,
+            "High": [close * 1.01 for close in closes],
+            "Low": [close * 0.99 for close in closes],
+            "Close": closes,
+            "Volume": [1_000_000] * len(closes),
+        },
+        index=index,
+    )
+    strategy = get_strategy("cryptoAdaptiveTrend")(
+        "ETH-USD",
+        fast_ema=5,
+        slow_ema=15,
+        momentum_lookback=10,
+        sharpe_lookback=10,
+        volatility_lookback=10,
+        drawdown_lookback=30,
+        atr_period=5,
+        min_trend_score=0.05,
+        min_rolling_sharpe=0.0,
+        max_short_fraction=0.25,
+        allow_short=True,
+    )
+
+    signals = strategy.generate_signals(data)
+    sell_signals = [signal for signal in signals if signal.action == "SELL"]
+
+    assert sell_signals
+    assert -0.25 <= sell_signals[0].meta["target_position_fraction"] < 0
+    assert sell_signals[0].meta["rolling_sharpe"] < 0

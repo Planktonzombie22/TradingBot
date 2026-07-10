@@ -1,0 +1,19 @@
+{
+  "name": "capacity_analysis_default",
+  "description": "Default transaction-cost and capital-capacity assumptions for strategy promotion research.",
+  "capital_levels": [10000, 25000, 50000, 100000, 250000, 500000, 1000000],
+  "spread_bps": 2.0,
+  "impact_bps_per_volume_share": 25.0,
+  "commission_bps": 0.0,
+  "annual_borrow_rate": 0.03,
+  "max_short_notional_fraction": 0.5,
+  "slippage_stress_multiplier": 1.5,
+  "periods_per_year": 252,
+  "max_volume_participation": 0.1,
+  "min_net_return": 0.0,
+  "promotion_notes": [
+    "Use strategy turnover and fill notional from backtest artifacts.",
+    "Estimate average bar volume notional from the same symbol universe and timeframe used by the backtest.",
+    "Reject systems whose capacity breaks from volume participation, borrow availability, or negative net return under stressed slippage."
+  ]
+}

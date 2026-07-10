@@ -125,6 +125,409 @@ class MomentumRegimeSystem(Strategy):
         return pd.Series(signals, index=df.index, dtype=object)
 
 
+class ManagedFuturesMomentumSystem(Strategy):
+    """Time-series momentum prototype with multi-lookback votes and volatility targeting.
+
+    This is intentionally a single-symbol strategy boundary. Portfolio-level managed
+    futures concerns such as asset-class risk budgets and correlation scaling belong
+    above it in the allocation engine, while this class emits the clean target
+    position intent that allocator/backtester layers can compose later.
+    """
+
+    def __init__(
+        self,
+        symbol: str,
+        short_lookback: int = 21,
+        medium_lookback: int = 63,
+        long_lookback: int = 126,
+        macro_lookback: int = 252,
+        volatility_lookback: int = 63,
+        target_volatility: float = 0.15,
+        max_target_fraction: float = 1.0,
+        min_signal_strength: float = 0.25,
+        exit_threshold: float = 0.10,
+        rebalance_interval: int = 21,
+        rebalance_threshold: float = 0.10,
+        atr_period: int = 20,
+        atr_stop_multiple: float = 4.0,
+        commission_bps: float = 0.0,
+    ):
+        super().__init__(symbol)
+        self.short_lookback = short_lookback
+        self.medium_lookback = medium_lookback
+        self.long_lookback = long_lookback
+        self.macro_lookback = macro_lookback
+        self.volatility_lookback = volatility_lookback
+        self.target_volatility = target_volatility
+        self.max_target_fraction = max_target_fraction
+        self.min_signal_strength = min_signal_strength
+        self.exit_threshold = exit_threshold
+        self.rebalance_interval = rebalance_interval
+        self.rebalance_threshold = rebalance_threshold
+        self.atr_period = atr_period
+        self.atr_stop_multiple = atr_stop_multiple
+        self.commission_bps = commission_bps
+        self._indicators: Optional[pd.DataFrame] = None
+
+    @property
+    def lookbacks(self) -> tuple[int, ...]:
+        values = {
+            int(self.short_lookback),
+            int(self.medium_lookback),
+            int(self.long_lookback),
+            int(self.macro_lookback),
+        }
+        return tuple(sorted(value for value in values if value > 0))
+
+    def _compute_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
+        if self._indicators is not None and len(self._indicators) == len(df):
+            return self._indicators
+
+        close = df["Close"]
+        daily_returns = close.pct_change()
+        realized_volatility = daily_returns.rolling(self.volatility_lookback).std() * (252**0.5)
+        data = {
+            "ATR": ATR(df, self.atr_period).calculate(),
+            "RealizedVolatility": realized_volatility,
+        }
+        vote_columns = []
+        strength_columns = []
+
+        for lookback in self.lookbacks:
+            momentum = close.pct_change(lookback)
+            vote_column = f"Vote{lookback}"
+            strength_column = f"Strength{lookback}"
+            lookback_volatility = realized_volatility * ((lookback / 252) ** 0.5)
+            data[vote_column] = momentum.apply(lambda value: 1.0 if value > 0 else -1.0 if value < 0 else 0.0)
+            data[strength_column] = (momentum / lookback_volatility).clip(lower=-2.0, upper=2.0) / 2.0
+            vote_columns.append(vote_column)
+            strength_columns.append(strength_column)
+
+        indicators = pd.DataFrame(data, index=df.index)
+        indicators["TrendVote"] = indicators[vote_columns].mean(axis=1)
+        indicators["TrendStrength"] = indicators[strength_columns].mean(axis=1)
+        indicators["CompositeTrendScore"] = (0.70 * indicators["TrendVote"] + 0.30 * indicators["TrendStrength"]).clip(-1.0, 1.0)
+        self._indicators = indicators
+        return indicators
+
+    @property
+    def indicators(self) -> pd.DataFrame:
+        return self._indicators if self._indicators is not None else pd.DataFrame()
+
+    def generate_signals(self, df: pd.DataFrame) -> pd.Series:
+        ind = self._compute_indicators(df)
+        signals = []
+        position = 0
+        current_target = 0.0
+        last_rebalance_index = -self.rebalance_interval
+        readiness_columns = ["ATR", "RealizedVolatility", "CompositeTrendScore"]
+        readiness_columns.extend(f"Vote{lookback}" for lookback in self.lookbacks)
+        readiness_columns.extend(f"Strength{lookback}" for lookback in self.lookbacks)
+
+        for i, ts in enumerate(df.index):
+            if i < 1:
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+
+            prev = ind.iloc[i - 1]
+            if not _is_ready(*(prev[column] for column in readiness_columns)):
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+
+            price = float(df["Close"].iloc[i - 1])
+            atr = float(prev["ATR"])
+            score = float(prev["CompositeTrendScore"])
+            realized_volatility = float(prev["RealizedVolatility"])
+            target_fraction = self._target_fraction(score, realized_volatility)
+            abs_score = abs(score)
+
+            if position != 0 and abs_score <= self.exit_threshold:
+                position = 0
+                current_target = 0.0
+                signals.append(Signal("CLOSE", self.symbol, _timestamp(ts), meta=self._signal_meta(prev, 0.0, "trend_exit")))
+                continue
+
+            if abs_score < self.min_signal_strength or target_fraction == 0.0:
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+
+            desired_position = 1 if target_fraction > 0 else -1
+            is_entry = position == 0
+            is_reversal = position != 0 and desired_position != position
+            is_rebalance = (
+                position == desired_position
+                and i - last_rebalance_index >= self.rebalance_interval
+                and abs(target_fraction - current_target) >= self.rebalance_threshold
+            )
+
+            if not (is_entry or is_reversal or is_rebalance):
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+
+            position = desired_position
+            current_target = target_fraction
+            last_rebalance_index = i
+            action = "BUY" if desired_position > 0 else "SELL"
+            stop_loss = price - atr * self.atr_stop_multiple if desired_position > 0 else price + atr * self.atr_stop_multiple
+            reason = "trend_entry" if is_entry else "trend_reversal" if is_reversal else "volatility_rebalance"
+            signals.append(
+                Signal(
+                    action,
+                    self.symbol,
+                    _timestamp(ts),
+                    stop_loss=stop_loss,
+                    meta=self._signal_meta(prev, target_fraction, reason),
+                )
+            )
+
+        return pd.Series(signals, index=df.index, dtype=object)
+
+    def _target_fraction(self, score: float, realized_volatility: float) -> float:
+        if realized_volatility <= 0 or pd.isna(realized_volatility):
+            return 0.0
+        volatility_scalar = self.target_volatility / realized_volatility
+        target_size = min(self.max_target_fraction, max(0.0, volatility_scalar * abs(score)))
+        return target_size if score > 0 else -target_size
+
+    def _signal_meta(self, row: pd.Series, target_fraction: float, reason: str) -> dict:
+        return {
+            "target_position_fraction": target_fraction,
+            "target_volatility": self.target_volatility,
+            "realized_volatility": float(row["RealizedVolatility"]),
+            "trend_vote": float(row["TrendVote"]),
+            "trend_strength": float(row["TrendStrength"]),
+            "composite_trend_score": float(row["CompositeTrendScore"]),
+            "rebalance_reason": reason,
+            "commission_bps": self.commission_bps,
+        }
+
+
+class CryptoAdaptiveTrendSystem(Strategy):
+    """Crypto trend follower with rolling Sharpe, volatility sizing, and drawdown gates."""
+
+    def __init__(
+        self,
+        symbol: str,
+        fast_ema: int = 20,
+        slow_ema: int = 80,
+        momentum_lookback: int = 30,
+        sharpe_lookback: int = 30,
+        volatility_lookback: int = 30,
+        drawdown_lookback: int = 90,
+        annualization_bars: int = 365,
+        target_volatility: float = 0.45,
+        max_long_fraction: float = 1.0,
+        max_short_fraction: float = 0.35,
+        min_trend_score: float = 0.25,
+        min_rolling_sharpe: float = 0.15,
+        max_drawdown_gate: float = -0.45,
+        trailing_atr_multiple: float = 3.0,
+        atr_period: int = 14,
+        rebalance_interval: int = 12,
+        rebalance_threshold: float = 0.12,
+        allow_short: bool = True,
+        commission_bps: float = 5.0,
+    ):
+        super().__init__(symbol)
+        self.fast_ema = fast_ema
+        self.slow_ema = slow_ema
+        self.momentum_lookback = momentum_lookback
+        self.sharpe_lookback = sharpe_lookback
+        self.volatility_lookback = volatility_lookback
+        self.drawdown_lookback = drawdown_lookback
+        self.annualization_bars = annualization_bars
+        self.target_volatility = target_volatility
+        self.max_long_fraction = max_long_fraction
+        self.max_short_fraction = max_short_fraction
+        self.min_trend_score = min_trend_score
+        self.min_rolling_sharpe = min_rolling_sharpe
+        self.max_drawdown_gate = max_drawdown_gate
+        self.trailing_atr_multiple = trailing_atr_multiple
+        self.atr_period = atr_period
+        self.rebalance_interval = rebalance_interval
+        self.rebalance_threshold = rebalance_threshold
+        self.allow_short = allow_short
+        self.commission_bps = commission_bps
+        self._indicators: Optional[pd.DataFrame] = None
+
+    def _compute_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
+        if self._indicators is not None and len(self._indicators) == len(df):
+            return self._indicators
+
+        close = df["Close"].astype(float)
+        returns = close.pct_change()
+        rolling_return = returns.rolling(self.sharpe_lookback)
+        rolling_vol = returns.rolling(self.volatility_lookback).std() * (self.annualization_bars**0.5)
+        rolling_high = close.rolling(self.drawdown_lookback).max()
+        fast = EMA(df, self.fast_ema).calculate()
+        slow = EMA(df, self.slow_ema).calculate()
+        momentum = close.pct_change(self.momentum_lookback)
+        sharpe_vol = rolling_return.std()
+        rolling_sharpe = (rolling_return.mean() / sharpe_vol.replace(0, pd.NA)) * (self.annualization_bars**0.5)
+        ema_spread = ((fast / slow) - 1.0).clip(-1.0, 1.0)
+
+        self._indicators = pd.DataFrame(
+            {
+                "FastEMA": fast,
+                "SlowEMA": slow,
+                "Momentum": momentum,
+                "RollingSharpe": rolling_sharpe,
+                "RealizedVolatility": rolling_vol,
+                "Drawdown": close / rolling_high - 1.0,
+                "ATR": ATR(df, self.atr_period).calculate(),
+                "TrendScore": (0.60 * momentum.clip(-1.0, 1.0) + 0.40 * ema_spread).clip(-1.0, 1.0),
+            },
+            index=df.index,
+        )
+        return self._indicators
+
+    @property
+    def indicators(self) -> pd.DataFrame:
+        return self._indicators if self._indicators is not None else pd.DataFrame()
+
+    def generate_signals(self, df: pd.DataFrame) -> pd.Series:
+        ind = self._compute_indicators(df)
+        signals = []
+        position = 0
+        current_target = 0.0
+        trailing_stop: float | None = None
+        extreme_price: float | None = None
+        last_rebalance_index = -self.rebalance_interval
+
+        for i, ts in enumerate(df.index):
+            if i < 1:
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+
+            prev = ind.iloc[i - 1]
+            price = float(df["Close"].iloc[i - 1])
+            if not _is_ready(
+                prev["FastEMA"],
+                prev["SlowEMA"],
+                prev["Momentum"],
+                prev["RollingSharpe"],
+                prev["RealizedVolatility"],
+                prev["Drawdown"],
+                prev["ATR"],
+                prev["TrendScore"],
+            ):
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+
+            atr = float(prev["ATR"])
+            score = float(prev["TrendScore"])
+            sharpe = float(prev["RollingSharpe"])
+            drawdown = float(prev["Drawdown"])
+            target_fraction = self._target_fraction(score, sharpe, float(prev["RealizedVolatility"]), drawdown)
+            desired_position = 1 if target_fraction > 0 else -1 if target_fraction < 0 else 0
+
+            if position != 0:
+                extreme_price = self._updated_extreme(price, extreme_price, position)
+                trailing_stop = self._trailing_stop(extreme_price, atr, position)
+                if self._stop_hit(price, trailing_stop, position):
+                    position = 0
+                    current_target = 0.0
+                    extreme_price = None
+                    signals.append(Signal("CLOSE", self.symbol, _timestamp(ts), meta=self._signal_meta(prev, 0.0, "trailing_stop", trailing_stop)))
+                    trailing_stop = None
+                    continue
+
+            if position > 0 and drawdown <= self.max_drawdown_gate:
+                position = 0
+                current_target = 0.0
+                extreme_price = None
+                signals.append(Signal("CLOSE", self.symbol, _timestamp(ts), meta=self._signal_meta(prev, 0.0, "drawdown_gate", trailing_stop)))
+                trailing_stop = None
+                continue
+
+            if desired_position == 0:
+                if position != 0 and abs(score) < self.min_trend_score * 0.5:
+                    position = 0
+                    current_target = 0.0
+                    extreme_price = None
+                    signals.append(Signal("CLOSE", self.symbol, _timestamp(ts), meta=self._signal_meta(prev, 0.0, "trend_decay", trailing_stop)))
+                    trailing_stop = None
+                    continue
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+
+            is_entry = position == 0
+            is_reversal = position != 0 and desired_position != position
+            is_rebalance = (
+                position == desired_position
+                and i - last_rebalance_index >= self.rebalance_interval
+                and abs(target_fraction - current_target) >= self.rebalance_threshold
+            )
+            if not (is_entry or is_reversal or is_rebalance):
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+
+            position = desired_position
+            current_target = target_fraction
+            last_rebalance_index = i
+            extreme_price = price if is_entry or is_reversal or extreme_price is None else extreme_price
+            trailing_stop = self._trailing_stop(extreme_price, atr, position)
+            action = "BUY" if position > 0 else "SELL"
+            reason = "trend_entry" if is_entry else "trend_reversal" if is_reversal else "volatility_rebalance"
+            signals.append(
+                Signal(
+                    action,
+                    self.symbol,
+                    _timestamp(ts),
+                    stop_loss=trailing_stop,
+                    meta=self._signal_meta(prev, target_fraction, reason, trailing_stop),
+                )
+            )
+
+        return pd.Series(signals, index=df.index, dtype=object)
+
+    def _target_fraction(self, score: float, sharpe: float, realized_volatility: float, drawdown: float) -> float:
+        if realized_volatility <= 0 or pd.isna(realized_volatility) or abs(score) < self.min_trend_score:
+            return 0.0
+        if drawdown <= self.max_drawdown_gate and score > 0:
+            return 0.0
+        if score > 0 and sharpe < self.min_rolling_sharpe:
+            return 0.0
+        if score < 0 and (not self.allow_short or sharpe > -self.min_rolling_sharpe):
+            return 0.0
+
+        cap = self.max_long_fraction if score > 0 else self.max_short_fraction
+        volatility_scalar = self.target_volatility / realized_volatility
+        target = min(cap, max(0.0, volatility_scalar * abs(score)))
+        return target if score > 0 else -target
+
+    def _signal_meta(self, row: pd.Series, target_fraction: float, reason: str, trailing_stop: float | None) -> dict:
+        return {
+            "target_position_fraction": target_fraction,
+            "crypto_trend_score": float(row["TrendScore"]),
+            "rolling_sharpe": float(row["RollingSharpe"]),
+            "realized_volatility": float(row["RealizedVolatility"]),
+            "drawdown": float(row["Drawdown"]),
+            "trailing_stop": trailing_stop,
+            "rebalance_reason": reason,
+            "commission_bps": self.commission_bps,
+        }
+
+    @staticmethod
+    def _updated_extreme(price: float, current: float | None, position: int) -> float:
+        if current is None:
+            return price
+        return max(current, price) if position > 0 else min(current, price)
+
+    def _trailing_stop(self, extreme_price: float | None, atr: float, position: int) -> float | None:
+        if extreme_price is None or atr <= 0 or pd.isna(atr):
+            return None
+        if position > 0:
+            return extreme_price - atr * self.trailing_atr_multiple
+        return extreme_price + atr * self.trailing_atr_multiple
+
+    @staticmethod
+    def _stop_hit(price: float, trailing_stop: float | None, position: int) -> bool:
+        if trailing_stop is None:
+            return False
+        return price <= trailing_stop if position > 0 else price >= trailing_stop
+
+
 class MeanReversionSystem(Strategy):
     """Fades stretched Bollinger/z-score moves with RSI and stochastic exhaustion filters."""
 

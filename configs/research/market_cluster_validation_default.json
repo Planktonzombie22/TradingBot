@@ -1,0 +1,64 @@
+{
+  "benchmark_strategy": "buyHold",
+  "min_pass_rate": 0.5,
+  "clusters": [
+    {
+      "name": "equity_bull",
+      "symbols": ["SPY", "QQQ", "IWM"],
+      "description": "Growth/risk-on equity proxies.",
+      "min_markets": 2,
+      "min_average_excess_return": 0.0,
+      "min_win_rate": 0.5,
+      "max_average_drawdown": -0.6
+    },
+    {
+      "name": "equity_defensive",
+      "symbols": ["XLU", "XLP", "USMV"],
+      "description": "Defensive equity and low-volatility proxies.",
+      "min_markets": 2,
+      "min_average_excess_return": 0.0,
+      "min_win_rate": 0.5,
+      "max_average_drawdown": -0.6
+    },
+    {
+      "name": "bond_selloff",
+      "symbols": ["TLT", "IEF", "LQD"],
+      "description": "Duration and credit-sensitive bond proxies.",
+      "min_markets": 2,
+      "min_average_excess_return": 0.0,
+      "min_win_rate": 0.5,
+      "max_average_drawdown": -0.6
+    },
+    {
+      "name": "inflation_commodities",
+      "symbols": ["GLD", "DBC", "USO"],
+      "description": "Gold, broad commodity, and energy proxies.",
+      "min_markets": 2,
+      "min_average_excess_return": 0.0,
+      "min_win_rate": 0.5,
+      "max_average_drawdown": -0.6
+    },
+    {
+      "name": "crypto_cycle",
+      "symbols": ["BTC-USD", "ETH-USD", "SOL-USD"],
+      "description": "Major crypto cycle proxies.",
+      "min_markets": 2,
+      "min_average_excess_return": 0.0,
+      "min_win_rate": 0.5,
+      "max_average_drawdown": -0.75
+    },
+    {
+      "name": "choppy_value",
+      "symbols": ["DIA", "XLF", "XLV"],
+      "description": "Older-economy and mixed-regime equity proxies.",
+      "min_markets": 2,
+      "min_average_excess_return": 0.0,
+      "min_win_rate": 0.5,
+      "max_average_drawdown": -0.6
+    }
+  ],
+  "notes": [
+    "Validates each strategy across market clusters before promotion.",
+    "Current MVP uses symbol clusters from bulk research records; future versions should add explicit date-window regimes."
+  ]
+}

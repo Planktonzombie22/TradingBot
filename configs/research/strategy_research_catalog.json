@@ -1,0 +1,171 @@
+{
+  "name": "strategy_research_catalog_v1",
+  "purpose": "Track credible public/practitioner strategy families before implementation, replication, optimization, and paper promotion.",
+  "last_updated": "2026-07-09",
+  "selection_principles": [
+    "Prefer systems with explicit rules, long samples, cross-market evidence, or public replication targets.",
+    "Separate robust strategy families from single-indicator ideas.",
+    "Require data-readiness and cost-readiness before promoting a strategy into paper trading.",
+    "Treat recent high-performing claims as research leads, not proof, until reproduced in this codebase."
+  ],
+  "candidates": [
+    {
+      "id": "diversified_time_series_momentum",
+      "label": "Diversified time-series momentum / managed futures",
+      "priority": "highest",
+      "status": "strategy_mvp",
+      "core_idea": "Trade assets in the direction of their own medium-term trends across asset classes, with volatility targeting and portfolio risk budgets.",
+      "why_it_matters": "Among the best-documented systematic anomalies, with evidence across commodities, currencies, equity indices, and bonds over long samples.",
+      "implementation_notes": [
+        "Use multiple lookbacks such as 1, 3, 6, and 12 months.",
+        "Normalize signals by realized volatility.",
+        "Allocate by asset-class risk budgets and correlation scaling.",
+        "Evaluate crisis alpha, whipsaw sensitivity, turnover, and choppy-regime drawdowns.",
+        "Initial single-symbol strategy MVP exists as managedFuturesMomentum; portfolio-level risk budgets, correlation scaling, and crisis-alpha reporting still need allocator/reporting promotion."
+      ],
+      "data_requirements": ["daily adjusted OHLCV", "futures/ETF proxies", "FX pairs", "commodity proxies", "bond/rates proxies"],
+      "validation_requirements": ["cross-asset matrix", "walk-forward", "cost stress", "regime attribution"],
+      "sources": [
+        "https://arxiv.org/abs/1404.3274",
+        "https://arxiv.org/abs/2106.08420"
+      ]
+    },
+    {
+      "id": "adaptive_crypto_trend",
+      "label": "Adaptive crypto trend following",
+      "priority": "high",
+      "status": "strategy_and_selection_mvp",
+      "core_idea": "Use shorter-interval crypto trend signals, volatility-regime trailing stops, rolling Sharpe asset selection, and asymmetric long/short exposure.",
+      "why_it_matters": "Recent crypto research reports strong out-of-sample risk-adjusted results when trend following is paired with adaptive portfolio construction.",
+      "implementation_notes": [
+        "Use 4h/6h/1d bars depending on provider support.",
+        "Select liquid assets by rolling Sharpe and volume/liquidity filters.",
+        "Use volatility-calibrated trailing exits.",
+        "Limit short exposure because crypto spot availability and borrow mechanics differ by venue.",
+        "Initial MVP exists through cryptoAdaptiveTrend and select_crypto_adaptive_universe."
+      ],
+      "data_requirements": ["crypto OHLCV", "liquidity/volume filters", "market-cap or liquidity universe"],
+      "validation_requirements": ["crypto-only walk-forward", "bull/bear/sideways regime attribution", "fee/slippage stress"],
+      "sources": [
+        "https://arxiv.org/abs/2602.11708",
+        "https://arxiv.org/abs/2009.12155"
+      ]
+    },
+    {
+      "id": "style_premia_rotation",
+      "label": "Style premia rotation: momentum, value, quality, defensive, carry",
+      "priority": "high",
+      "status": "ranking_engine_mvp",
+      "core_idea": "Rank and allocate across securities or ETFs using diversified factor signals rather than isolated price indicators.",
+      "why_it_matters": "Large quant managers emphasize diversified style premia instead of relying on a single signal family.",
+      "implementation_notes": [
+        "Start with ETF proxies while fundamental data support is limited.",
+        "Use price momentum, low-volatility/defensive, dividend/carry proxies, and quality proxies where available.",
+        "Report factor crowding, regime sensitivity, and benchmark-relative value.",
+        "Initial cross-sectional ranking MVP exists through build_style_premia_ranking using OHLCV proxies plus optional carry/yield columns."
+      ],
+      "data_requirements": ["fundamental data or ETF factor proxies", "adjusted OHLCV", "sector/industry classifications"],
+      "validation_requirements": ["factor attribution", "cross-sectional holdouts", "turnover/cost stress"],
+      "sources": [
+        "https://en.wikipedia.org/wiki/AQR_Capital_Management",
+        "https://en.wikipedia.org/wiki/Factor_investing"
+      ]
+    },
+    {
+      "id": "graph_cluster_stat_arb",
+      "label": "Graph-cluster statistical arbitrage",
+      "priority": "high",
+      "status": "research_module_mvp",
+      "core_idea": "Discover related equity clusters, build beta/sector-neutral spreads, trade spread mean reversion with stability and cost gates.",
+      "why_it_matters": "Current statistical-arbitrage research emphasizes scalable multi-pair portfolios, clustering, and ML-assisted signal/risk filters.",
+      "implementation_notes": [
+        "Start with ETF/large-cap pairs before broad universe stat-arb.",
+        "Add rolling correlation, cointegration, z-score, half-life, and spread stationarity reports.",
+        "Require beta neutrality, borrow availability, transaction cost estimates, and stop-loss/take-profit optimization.",
+        "Initial dependency-light pair discovery MVP exists through discover_stat_arb_pairs with a cointegration proxy; formal Engle-Granger/ADF testing remains future work."
+      ],
+      "data_requirements": ["multi-symbol adjusted OHLCV", "sector/industry metadata", "borrow/shortability estimates"],
+      "validation_requirements": ["pair stability", "cluster out-of-sample", "cost sensitivity", "crash/stress tests"],
+      "sources": [
+        "https://arxiv.org/abs/2406.10695",
+        "https://en.wikipedia.org/wiki/Pairs_trade",
+        "https://en.wikipedia.org/wiki/Statistical_arbitrage"
+      ]
+    },
+    {
+      "id": "volatility_risk_premium",
+      "label": "Volatility risk premium / systematic option income",
+      "priority": "medium",
+      "status": "promotion_gate_mvp",
+      "core_idea": "Harvest implied-vs-realized volatility premia using dynamically sized short option exposure with strict crash controls.",
+      "why_it_matters": "Volatility selling is a major institutional strategy family, but it requires options-specific modeling before it is safe to test.",
+      "implementation_notes": [
+        "Do not implement as an equity-bar hack.",
+        "Add options chains, IV surfaces, Greeks, assignment/exercise, option margin, and tail-risk stress first.",
+        "Study VIX/Kelly/hybrid sizing and drawdown controls.",
+        "Promotion gate exists through evaluate_options_promotion_gate; actual option-income strategies remain blocked until every required options capability passes."
+      ],
+      "data_requirements": ["options chains", "implied volatility", "Greeks", "underlying OHLCV", "rate/dividend assumptions"],
+      "validation_requirements": ["tail stress", "gap risk", "assignment modeling", "liquidity/slippage stress"],
+      "sources": [
+        "https://arxiv.org/abs/2508.16598",
+        "https://en.wikipedia.org/wiki/Volatility_risk_premium"
+      ]
+    },
+    {
+      "id": "dynamic_growth_defensive_allocation",
+      "label": "Dynamic growth/defensive allocation overlay",
+      "priority": "medium",
+      "status": "allocation_overlay_mvp",
+      "core_idea": "Rotate between growth/risk assets and defensive/cash/income assets using smooth macro-market timing scores.",
+      "why_it_matters": "Recent research suggests interpretable smooth allocation can reduce drawdowns and improve risk-adjusted performance, even when raw CAGR does not always beat high-growth static exposure.",
+      "implementation_notes": [
+        "Use continuous scores rather than hard binary regimes.",
+        "Inputs can include rate trend, SPY drawdown, volatility relief, growth crowding, and liquidity proxies.",
+        "Compare to static growth, static defensive, SPY, and volatility-matched benchmarks.",
+        "Initial MVP exists through build_dynamic_allocation with smooth trend, drawdown, volatility, rates, and liquidity stress scores."
+      ],
+      "data_requirements": ["ETF baskets", "rates proxies", "volatility proxies", "drawdown/liquidity features"],
+      "validation_requirements": ["post-2022 validation", "walk-forward", "turnover and tax/cost sensitivity"],
+      "sources": [
+        "https://arxiv.org/abs/2605.20636"
+      ]
+    },
+    {
+      "id": "factor_trend_following",
+      "label": "Trend following on sectors, factors, and yield-curve shape",
+      "priority": "medium",
+      "status": "factor_trend_mvp",
+      "core_idea": "Apply trend logic to factor spreads, sector baskets, value-vs-growth, low-volatility-vs-high-beta, and yield-curve-shape trades.",
+      "why_it_matters": "Practitioners increasingly discuss trend following beyond simple asset direction, including factor trends and curve-shape trends.",
+      "implementation_notes": [
+        "Start with ETF spread proxies.",
+        "Use market-neutral relative baskets where possible.",
+        "Validate that signal returns are not just hidden market beta.",
+        "Initial MVP exists through build_factor_trend_report using normalized ETF proxy spreads."
+      ],
+      "data_requirements": ["ETF/factor proxies", "rates/yield curve data", "spread construction tools"],
+      "validation_requirements": ["beta neutrality", "factor attribution", "correlation to existing strategy families"],
+      "sources": [
+        "https://www.ft.com/content/50188553-1aa2-4704-ad9e-ef1e5cf0389e"
+      ]
+    },
+    {
+      "id": "market_making_intraday",
+      "label": "Market making / short-horizon liquidity provision",
+      "priority": "defer",
+      "status": "out_of_scope_until_l2",
+      "core_idea": "Quote bid/ask spreads and manage inventory around microstructure signals.",
+      "why_it_matters": "Top-tier in industry, but fundamentally a different data/execution problem from daily-bar backtesting.",
+      "implementation_notes": [
+        "Requires order book data, queue position, latency modeling, quote updates, adverse selection models, and exchange/broker fee modeling.",
+        "Do not evaluate with the current bar-based engine."
+      ],
+      "data_requirements": ["level 2 order book", "tick trades", "latency metrics", "fee tiers"],
+      "validation_requirements": ["queue simulation", "adverse selection", "fill probability calibration"],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Quantitative_fund"
+      ]
+    }
+  ]
+}

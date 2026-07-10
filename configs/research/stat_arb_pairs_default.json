@@ -1,0 +1,16 @@
+{
+  "min_history": 120,
+  "correlation_lookback": 90,
+  "hedge_lookback": 120,
+  "zscore_lookback": 60,
+  "min_abs_correlation": 0.7,
+  "min_abs_zscore": 1.5,
+  "max_half_life": 30.0,
+  "max_pairs": 20,
+  "gross_exposure_per_pair": 0.2,
+  "allow_short": true,
+  "notes": [
+    "Dependency-light stat-arb MVP uses rolling correlation, log-price hedge ratio, spread z-score, half-life, and a cointegration proxy.",
+    "A future version should add statsmodels Engle-Granger/ADF tests, borrow costs, sector/beta neutrality, and portfolio spread allocation."
+  ]
+}
