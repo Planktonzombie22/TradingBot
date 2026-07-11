@@ -5,7 +5,9 @@ import pandas as pd
 from src.data import (
     CorporateActionPolicy,
     CorporateActionSet,
+    DataDriftPolicy,
     DataQualityValidator,
+    DataSourceSnapshot,
     DividendAction,
     PriceAdjustmentMode,
     SplitAction,
@@ -15,6 +17,7 @@ from src.data import (
     normalize_bar,
     normalize_ohlcv_frame,
     sample_ohlcv,
+    compare_live_data_sources,
     YFinanceDataFeed,
 )
 from src.config import MarketDataConfig
@@ -222,3 +225,71 @@ def test_market_data_manager_accepts_holiday_sized_coverage_gap():
     )
 
     assert loaded.index.min().date().isoformat() == "2024-01-02"
+
+
+def test_live_data_drift_monitor_passes_matching_provider_snapshots():
+    data = sample_ohlcv(periods=5)
+    primary = DataSourceSnapshot("alpaca", "SPY", data, adjustment_mode="raw")
+    secondary = DataSourceSnapshot("yfinance", "SPY", data.copy(), adjustment_mode="raw")
+
+    report = compare_live_data_sources(primary, secondary, DataDriftPolicy(max_close_drift_bps=1, max_ohlc_drift_bps=1))
+
+    assert report.passed
+    assert report.overlap_count == 5
+    assert report.max_close_drift_bps == 0.0
+
+
+def test_live_data_drift_monitor_flags_stale_and_material_price_drift():
+    now = datetime(2024, 1, 2, 15, 0, tzinfo=timezone.utc)
+    index = pd.to_datetime(["2024-01-02T14:55:00Z", "2024-01-02T14:56:00Z"])
+    primary = pd.DataFrame(
+        {
+            "Open": [100.0, 100.0],
+            "High": [101.0, 101.0],
+            "Low": [99.0, 99.0],
+            "Close": [100.0, 100.0],
+            "Volume": [1000.0, 1000.0],
+        },
+        index=index,
+    )
+    drifted = primary.copy()
+    drifted["Close"] = [100.0, 101.0]
+
+    report = compare_live_data_sources(
+        DataSourceSnapshot("alpaca", "SPY", primary),
+        DataSourceSnapshot("secondary", "SPY", drifted),
+        DataDriftPolicy(max_close_drift_bps=20, max_staleness_seconds=60),
+        now=now,
+    )
+
+    codes = {issue.code for issue in report.issues}
+    assert not report.passed
+    assert "STALE_PROVIDER" in codes
+    assert "CLOSE_DRIFT" in codes
+
+
+def test_live_data_drift_monitor_warns_on_adjustment_mode_mismatch():
+    data = sample_ohlcv(periods=3)
+
+    report = compare_live_data_sources(
+        DataSourceSnapshot("alpaca", "SPY", data, adjustment_mode="raw"),
+        DataSourceSnapshot("yfinance", "SPY", data, adjustment_mode="split_adjusted"),
+    )
+
+    assert report.passed
+    assert any(issue.code == "ADJUSTMENT_MODE_MISMATCH" and issue.severity == "WARNING" for issue in report.issues)
+
+
+def test_live_data_drift_monitor_flags_split_like_corporate_action_mismatch():
+    raw = sample_ohlcv(periods=3)
+    adjusted = raw.copy()
+    adjusted[["Open", "High", "Low", "Close"]] = adjusted[["Open", "High", "Low", "Close"]] / 2
+
+    report = compare_live_data_sources(
+        DataSourceSnapshot("alpaca", "SPY", raw, adjustment_mode="raw"),
+        DataSourceSnapshot("yfinance", "SPY", adjusted, adjustment_mode="split_adjusted"),
+        DataDriftPolicy(max_close_drift_bps=20),
+    )
+
+    assert not report.passed
+    assert any(issue.code == "POSSIBLE_CORPORATE_ACTION_MISMATCH" for issue in report.issues)

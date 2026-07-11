@@ -9,7 +9,7 @@ from src.data import MarketDataEvent, MarketDataStream
 from src.execution import Broker, PaperBroker
 from src.models import Order, Signal
 from src.risk import RiskManager
-from src.strategies.base import Strategy
+from src.strategies.core.base import Strategy
 
 from .account import PaperAccountState
 from .events import EngineEvent, EngineEventType

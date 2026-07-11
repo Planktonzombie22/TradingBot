@@ -1,22 +1,35 @@
-from .alpaca_broker import AlpacaPaperBroker
-from .broker import Broker
-from .eod import EndOfDayAction, EndOfDayPolicy
-from .guards import validate_alpaca_paper_safety, validate_execution_mode
-from .intents import BrokerOrderIntent, FillIntent, GeneratedOrderIntent, SignalIntent, TargetPositionIntent
-from .order_plans import BrokerCapabilityProfile, BracketOrderPlan, OCOOrderPlan, validate_order_capabilities
-from .orders import ensure_client_order_id, mark_order
-from .paper_broker import PaperBroker
-from .replacement import OrderReplacementDecision, OrderReplacementPolicy
-from .reconciliation import (
+import importlib as _importlib
+import sys as _sys
+
+from .brokers import AlpacaPaperBroker, Broker, PaperBroker
+from .lifecycle import (
     BrokerAccountSnapshot,
     BrokerPositionSnapshot,
     BrokerReconciler,
     BrokerSyncSnapshot,
+    EndOfDayAction,
+    EndOfDayPolicy,
     ExecutionReport,
     OrderReconciliation,
     ReconciliationResult,
     ReconciliationStatus,
 )
+from .orders import (
+    BrokerCapabilityProfile,
+    BrokerOrderIntent,
+    BracketOrderPlan,
+    FillIntent,
+    GeneratedOrderIntent,
+    OCOOrderPlan,
+    OrderReplacementDecision,
+    OrderReplacementPolicy,
+    SignalIntent,
+    TargetPositionIntent,
+    ensure_client_order_id,
+    mark_order,
+    validate_order_capabilities,
+)
+from .safety import validate_alpaca_paper_safety, validate_execution_mode
 
 __all__ = [
     "AlpacaPaperBroker",
@@ -48,3 +61,22 @@ __all__ = [
     "validate_execution_mode",
     "validate_order_capabilities",
 ]
+
+_MODULE_ALIASES = {
+    "alpaca_broker": "brokers.alpaca",
+    "broker": "brokers.base",
+    "eod": "lifecycle.eod",
+    "guards": "safety.guards",
+    "intents": "orders.intents",
+    "order_plans": "orders.plans",
+    "paper_broker": "brokers.paper",
+    "reconciliation": "lifecycle.reconciliation",
+    "replacement": "orders.replacement",
+}
+
+for _old_module, _new_module in _MODULE_ALIASES.items():
+    _module = _importlib.import_module(f"{__name__}.{_new_module}")
+    _sys.modules[f"{__name__}.{_old_module}"] = _module
+    globals()[_old_module] = _module
+
+del _importlib, _sys, _MODULE_ALIASES, _old_module, _new_module, _module

@@ -19,9 +19,18 @@ from src.backtesting import (
     validate_backtest_result,
 )
 from src.backtesting.types import AccountSnapshot, MarketSnapshot
+from src.backtesting import TradeCommitteeDecision
 from src.data import sample_ohlcv
 from src.models import Order, Signal
-from src.portfolio import EqualWeightAllocation, FixedNotionalAllocation, RiskParityAllocation
+from src.portfolio import (
+    CapitalLedgerPolicy,
+    CapitalRequest,
+    EqualWeightAllocation,
+    FixedNotionalAllocation,
+    RiskParityAllocation,
+    allocate_capital_requests,
+    capital_request_from_decision,
+)
 from src.risk import PortfolioRiskLimits
 from src.strategies.buy_hold import BuyAndHoldStrategy
 from src.strategies.base import Strategy
@@ -99,6 +108,63 @@ def test_risk_parity_allocates_more_to_lower_volatility_symbol():
     by_symbol = {target.symbol: target.weight for target in targets}
 
     assert by_symbol["LOW"] > by_symbol["HIGH"]
+
+
+def test_capital_ledger_allocates_by_edge_and_enforces_family_caps():
+    requests = [
+        CapitalRequest("trendFast", "SPY", "trade_strategy", 0.25, family="trend", edge_score=0.05),
+        CapitalRequest("trendSlow", "QQQ", "trade_strategy", 0.25, family="trend", edge_score=0.04),
+        CapitalRequest("meanReversion", "IWM", "trade_strategy", 0.20, family="mean_reversion", edge_score=0.06),
+    ]
+
+    report = allocate_capital_requests(
+        requests,
+        CapitalLedgerPolicy(cash_reserve=0.20, max_symbol_weight=0.30, max_strategy_weight=0.30, max_family_weight=0.40),
+    )
+    by_strategy = {allocation.request.strategy_name: allocation for allocation in report.allocations}
+
+    assert by_strategy["meanReversion"].allocated_weight == 0.20
+    assert by_strategy["trendFast"].allocated_weight == 0.25
+    assert by_strategy["trendSlow"].allocated_weight == 0.15
+    assert report.weights_by_family["trend"] == 0.40
+    assert report.cash_weight >= 0.20
+
+
+def test_capital_ledger_keeps_hedge_budget_separate_from_primary_capital():
+    requests = [
+        CapitalRequest("strategy", "SPY", "trade_strategy", 0.50, family="trend", edge_score=0.10),
+        CapitalRequest("portfolioHedge", "SH", "hedge", 0.25, family="hedge", edge_score=0.0),
+    ]
+
+    report = allocate_capital_requests(
+        requests,
+        CapitalLedgerPolicy(cash_reserve=0.20, max_symbol_weight=0.60, max_strategy_weight=0.60, max_family_weight=0.60, hedge_budget=0.10),
+    )
+    by_strategy = {allocation.request.strategy_name: allocation for allocation in report.allocations}
+
+    assert by_strategy["strategy"].allocated_weight == 0.50
+    assert by_strategy["portfolioHedge"].allocated_weight == 0.10
+    assert report.hedge_weight == 0.10
+
+
+def test_capital_request_from_committee_decision_preserves_edge_metadata():
+    decision = TradeCommitteeDecision(
+        symbol="SPY",
+        action="trade_strategy",
+        target_weight=0.25,
+        strategy_name="buyHold",
+        reason="approved",
+        gates=(),
+        metadata={"strategy_edge": 0.07},
+    )
+
+    request = capital_request_from_decision(decision, family="benchmark_relative", priority=2)
+
+    assert request.strategy_name == "buyHold"
+    assert request.symbol == "SPY"
+    assert request.requested_weight == 0.25
+    assert request.edge_score == 0.07
+    assert request.priority == 2
 
 
 def test_portfolio_limits_reject_cash_reserve_and_beta_breaches():

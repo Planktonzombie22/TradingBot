@@ -40,6 +40,15 @@ python -m venv trading_env
 trading_env\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
+Install broader profiles only when you need them:
+
+```powershell
+trading_env\Scripts\python.exe -m pip install -r requirements\broker.txt
+trading_env\Scripts\python.exe -m pip install -r requirements\research.txt
+trading_env\Scripts\python.exe -m pip install -r requirements\reporting.txt
+trading_env\Scripts\python.exe -m pip install -r requirements\dev.txt
+```
+
 Run the default offline backtest:
 
 ```powershell
@@ -205,6 +214,19 @@ trading_env\Scripts\python.exe main.py matrix --research-matrix-file configs\res
 ```
 
 Cross-asset universe config lives in `configs\universes\cross_asset_core.json`. The matrix config currently covers large-cap stocks, rates/bonds/credit, crypto via yfinance symbols, commodities/real assets, and FX pairs.
+
+## Dependency Profiles
+
+The project uses layered requirements so the minimal runtime stays light while research and paper-trading work can opt into heavier libraries deliberately.
+
+- `requirements.txt`: default minimal install; delegates to `requirements\base.txt`.
+- `requirements\base.txt`: pandas/numpy/yfinance/dotenv/requests/websocket-client.
+- `requirements\broker.txt`: Alpaca SDK, crypto exchange connectivity, async/websocket helpers.
+- `requirements\research.txt`: scipy, statsmodels, pyarrow, DuckDB, Optuna, and progress tooling for larger research runs.
+- `requirements\reporting.txt`: matplotlib, Plotly, seaborn, Rich, and Jinja2.
+- `requirements\dev.txt`: full local development profile, including tests and notebooks.
+
+Use `src.utils.dependencies.dependency_summary()` to inspect which optional capability packages are installed. Packages such as `numba` and `polars` are tracked as future acceleration candidates, but they are intentionally not part of the default profiles until profiling shows a real bottleneck.
 
 ## Programmatic Usage
 

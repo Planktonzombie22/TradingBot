@@ -1,0 +1,33 @@
+from typing import Optional
+
+import pandas as pd
+
+from src.indicators.core.base import Indicator
+from src.indicators.core.smoothing import wilder_rma
+
+
+class RSI(Indicator):
+    required_columns = ("Close",)
+
+    def __init__(self, df: pd.DataFrame, period: Optional[int] = None):
+        super().__init__(df)
+        self.period = period
+
+    def calculate(self) -> pd.Series:
+        period = self.period
+        if period is None:
+            from src.config import settings as cfg
+
+            period = cfg.RSI_PERIOD
+
+        delta = self.df["Close"].diff()
+        gain = delta.clip(lower=0)
+        loss = -delta.clip(upper=0)
+        avg_gain = wilder_rma(gain, period)
+        avg_loss = wilder_rma(loss, period)
+        rs = avg_gain / avg_loss.replace(0, pd.NA)
+        rsi = 100 - (100 / (1 + rs))
+        rsi = rsi.mask((avg_loss == 0) & (avg_gain > 0), 100.0)
+        rsi = rsi.mask((avg_gain == 0) & (avg_loss > 0), 0.0)
+        rsi = rsi.mask((avg_gain == 0) & (avg_loss == 0), 50.0)
+        return rsi.rename("RSI")

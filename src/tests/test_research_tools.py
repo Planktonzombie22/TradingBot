@@ -7,6 +7,8 @@ from src.backtesting import (
     BatchBacktestJob,
     BatchBacktestRunner,
     BulkBacktestRecord,
+    BacktestValidationReport,
+    CapacityAnalysisConfig,
     CryptoAdaptiveSelectionConfig,
     DynamicAllocationConfig,
     FactorSpreadDefinition,
@@ -18,24 +20,38 @@ from src.backtesting import (
     OptionPosition,
     OptionTailStressScenario,
     PairsResearchConfig,
+    ParameterStabilityReport,
+    PaperTradingExpectation,
+    PaperTradingObservation,
+    PaperTradingScorecardPolicy,
+    PromotionPipelinePolicy,
     ResearchFilterConfig,
+    ResearchCandidateEvidence,
+    StrategyCapacityProfile,
     StylePremiaConfig,
+    TradeCommitteeContext,
+    TradeCommitteePolicy,
     EnsembleAllocationPolicy,
     StrategySelectionPolicy,
     StrategyFamilyEnsemblePolicy,
     WalkForwardGovernanceConfig,
+    WalkForwardGovernanceReport,
     activate_strategies_for_regime,
+    analyze_capacity,
     benchmark_relative_report,
     build_ensemble_allocation,
     build_dynamic_allocation,
     build_factor_trend_report,
+    build_paper_trading_scorecard,
     build_strategy_family_ensemble,
     build_symbol_scorecards,
     build_style_premia_ranking,
     classify_market_regime,
     classify_regime_universe,
+    decide_trade_action,
     discover_stat_arb_pairs,
     evaluate_options_promotion_gate,
+    evaluate_promotion_candidate,
     evaluate_research_filters,
     expand_research_matrix,
     load_research_matrix,
@@ -52,7 +68,7 @@ from src.backtesting import (
     stress_option_position,
     validate_market_clusters,
 )
-from src.data import sample_ohlcv
+from src.data import DataDriftIssue, DataDriftReport, sample_ohlcv
 from src.storage import JsonlStore
 from src.strategies import validate_strategy_params
 from src.strategies.buy_hold import BuyAndHoldStrategy
@@ -147,6 +163,139 @@ def test_walk_forward_governance_rejects_bad_no_retune_holdout():
     assert not report.passed
     assert report.reason == "holdout_score_below_threshold"
     assert report.holdout_score is not None and report.holdout_score < 0
+
+
+def test_promotion_pipeline_creates_paper_manifest_when_all_gates_pass():
+    governance = _governance_report(passed=True, champion_params={"target_fraction": 0.5})
+    capacity = analyze_capacity(
+        StrategyCapacityProfile("buyHold", 0.12, 100_000, 1_000, 1_000_000, 2.0, 0.0, 4),
+        CapacityAnalysisConfig(capital_levels=(10_000, 50_000), max_volume_participation=0.10),
+    )
+    evidence = ResearchCandidateEvidence(
+        strategy_name="buyHold",
+        symbol="SPY",
+        params={"target_fraction": 1.0},
+        source_rules_captured=True,
+        data_validation_passed=True,
+        benchmark_passed=True,
+        risk_gates_passed=True,
+        validation_report=BacktestValidationReport(),
+        governance_report=governance,
+        capacity_report=capacity,
+        benchmark_summary={"excess_return": 0.03},
+    )
+
+    report = evaluate_promotion_candidate(evidence, PromotionPipelinePolicy(minimum_estimated_capacity=10_000))
+
+    assert report.passed
+    assert report.reason == "promotion_ready"
+    assert report.manifest is not None
+    assert report.manifest.params["target_fraction"] == 0.5
+    assert report.to_dict()["manifest"]["broker_mode"] == "alpaca_paper"
+
+
+def test_promotion_pipeline_blocks_candidate_when_capacity_fails():
+    capacity = analyze_capacity(
+        StrategyCapacityProfile("crowded", 0.20, 100_000, 10_000, 20_000, 10.0, 0.0, 20),
+        CapacityAnalysisConfig(capital_levels=(10_000,), max_volume_participation=0.10),
+    )
+    evidence = ResearchCandidateEvidence(
+        strategy_name="crowded",
+        symbol="SMALL",
+        source_rules_captured=True,
+        data_validation_passed=True,
+        benchmark_passed=True,
+        risk_gates_passed=True,
+        validation_report=BacktestValidationReport(),
+        governance_report=_governance_report(passed=True),
+        capacity_report=capacity,
+    )
+
+    report = evaluate_promotion_candidate(evidence)
+
+    assert not report.passed
+    assert report.reason == "no_capacity_level_passed"
+    assert report.manifest is None
+    assert any(gate.name == "capacity" and not gate.passed for gate in report.gates)
+
+
+def test_trade_committee_approves_promoted_strategy_when_inputs_are_clean():
+    decision = decide_trade_action(
+        TradeCommitteeContext(
+            symbol="SPY",
+            promotion_report=_promotion_report(),
+            paper_scorecard=_paper_scorecard(passed=True),
+            data_drift_reports=(_data_drift_report(passed=True),),
+            regime=classify_market_regime(_ohlcv_from_closes([100 + i for i in range(90)], 1_000_000), "SPY"),
+            strategy_edge=0.04,
+            benchmark_edge=0.01,
+        ),
+        TradeCommitteePolicy(max_position_weight=0.30),
+    )
+
+    assert decision.action == "trade_strategy"
+    assert decision.strategy_name == "buyHold"
+    assert decision.target_weight == 0.30
+    assert decision.reason == "committee_approved_strategy"
+    assert decision.to_dict()["metadata"]["regime_quality"] >= 0.55
+
+
+def test_trade_committee_blocks_trading_when_data_drift_fails():
+    decision = decide_trade_action(
+        TradeCommitteeContext(
+            symbol="SPY",
+            promotion_report=_promotion_report(),
+            paper_scorecard=_paper_scorecard(passed=True),
+            data_drift_reports=(_data_drift_report(passed=False),),
+            strategy_edge=0.04,
+            benchmark_edge=0.03,
+        )
+    )
+
+    assert decision.action == "cash"
+    assert decision.target_weight == 0
+    assert decision.reason == "data_drift_failed"
+    assert not next(gate for gate in decision.gates if gate.name == "data_health").passed
+
+
+def test_trade_committee_hedges_existing_exposure_when_paper_behavior_fails():
+    decision = decide_trade_action(
+        TradeCommitteeContext(
+            symbol="SPY",
+            promotion_report=_promotion_report(),
+            paper_scorecard=_paper_scorecard(passed=False),
+            data_drift_reports=(_data_drift_report(passed=True),),
+            strategy_edge=0.04,
+            current_exposure=0.25,
+        ),
+        TradeCommitteePolicy(hedge_weight=0.08),
+    )
+
+    assert decision.action == "hedge"
+    assert decision.target_weight == 0.25
+    assert decision.hedge_weight == 0.08
+    assert decision.reason == "missed_fill_rate_too_high"
+
+
+def test_trade_committee_reduces_exposure_when_regime_quality_degrades():
+    thin_unknown_regime = classify_market_regime(_ohlcv_from_closes([100, 101], 1_000_000), "SPY")
+
+    decision = decide_trade_action(
+        TradeCommitteeContext(
+            symbol="SPY",
+            promotion_report=_promotion_report(),
+            paper_scorecard=_paper_scorecard(passed=True),
+            data_drift_reports=(_data_drift_report(passed=True),),
+            regime=thin_unknown_regime,
+            strategy_edge=0.04,
+            current_exposure=0.30,
+        ),
+        TradeCommitteePolicy(exposure_reduction_multiplier=0.40),
+    )
+
+    assert decision.action == "reduce_exposure"
+    assert round(decision.target_weight, 2) == 0.12
+    assert decision.reason == "regime_quality_below_threshold"
 
 
 def test_grid_search_returns_sorted_results():
@@ -839,6 +988,59 @@ def test_market_cluster_validation_promotes_only_cluster_robust_systems():
     assert report.to_dict()["summaries"]
 
 
+def _promotion_report():
+    capacity = analyze_capacity(
+        StrategyCapacityProfile("buyHold", 0.12, 100_000, 1_000, 1_000_000, 2.0, 0.0, 4),
+        CapacityAnalysisConfig(capital_levels=(10_000, 50_000), max_volume_participation=0.10),
+    )
+    return evaluate_promotion_candidate(
+        ResearchCandidateEvidence(
+            strategy_name="buyHold",
+            symbol="SPY",
+            params={"target_fraction": 1.0},
+            source_rules_captured=True,
+            data_validation_passed=True,
+            benchmark_passed=True,
+            risk_gates_passed=True,
+            validation_report=BacktestValidationReport(),
+            governance_report=_governance_report(passed=True),
+            capacity_report=capacity,
+        ),
+        PromotionPipelinePolicy(minimum_estimated_capacity=10_000),
+    )
+
+
+def _paper_scorecard(passed: bool):
+    expected_fills = 0 if passed else 1
+    return build_paper_trading_scorecard(
+        PaperTradingExpectation(
+            strategy_name="buyHold",
+            symbol="SPY",
+            expected_fills=expected_fills,
+            expected_trades=expected_fills,
+            expected_return=0.04,
+            expected_ending_equity=10400.0,
+        ),
+        PaperTradingObservation(),
+        PaperTradingScorecardPolicy(max_missed_fill_rate=0.0, require_clean_reconciliation=False),
+    )
+
+
+def _data_drift_report(passed: bool):
+    issues = ()
+    if not passed:
+        issues = (DataDriftIssue("ERROR", "CLOSE_DRIFT", "Provider prices differ too much."),)
+    return DataDriftReport(
+        symbol="SPY",
+        primary_provider="alpaca",
+        comparison_provider="yfinance",
+        overlap_count=5,
+        max_close_drift_bps=0.0 if passed else 100.0,
+        max_ohlc_drift_bps=0.0 if passed else 100.0,
+        issues=issues,
+    )
+
+
 def _bulk_record(strategy_symbol: str, strategy: str, total_return: float, max_drawdown: float, trades: int) -> BulkBacktestRecord:
     return BulkBacktestRecord(
         symbol=strategy_symbol,
@@ -850,6 +1052,28 @@ def _bulk_record(strategy_symbol: str, strategy: str, total_return: float, max_d
         trades=trades,
         fills=trades * 2,
         rejections=0,
+    )
+
+
+def _governance_report(passed: bool, champion_params: dict | None = None) -> WalkForwardGovernanceReport:
+    return WalkForwardGovernanceReport(
+        strategy_name="buyHold",
+        symbol="SPY",
+        config=WalkForwardGovernanceConfig(train_size=20, test_size=10, holdout_size=10),
+        windows=(),
+        parameter_stability=ParameterStabilityReport(
+            champion_params=champion_params or {"target_fraction": 1.0},
+            parameter_modes=champion_params or {"target_fraction": 1.0},
+            parameter_stability={"target_fraction": 1.0},
+            stability_score=1.0,
+        ),
+        holdout_result=None,
+        holdout_score=0.05 if passed else -0.05,
+        average_train_score=0.08,
+        average_oos_score=0.04 if passed else -0.02,
+        false_discovery_rate=0.0 if passed else 1.0,
+        passed=passed,
+        reason="governance_passed" if passed else "holdout_score_below_threshold",
     )
 
 

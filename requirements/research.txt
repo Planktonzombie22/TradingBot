@@ -1,0 +1,9 @@
+-r base.txt
+
+# Research statistics, optimization, and high-volume local storage.
+scipy==1.17.1
+statsmodels==0.14.6
+pyarrow>=17.0,<18.0
+duckdb>=1.1,<2.0
+optuna>=4.0,<5.0
+tqdm==4.67.3

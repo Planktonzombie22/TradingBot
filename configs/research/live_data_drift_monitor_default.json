@@ -1,0 +1,16 @@
+{
+  "name": "live_data_drift_monitor_default",
+  "description": "Default thresholds for comparing recent live/paper-trading bars across Alpaca, yfinance, and secondary sources.",
+  "max_close_drift_bps": 20.0,
+  "max_ohlc_drift_bps": 50.0,
+  "max_staleness_seconds": 300,
+  "adjusted_price_warning_bps": 10.0,
+  "corporate_action_ratio_tolerance": 0.03,
+  "require_overlap": true,
+  "review_notes": [
+    "Use Alpaca as the primary source for paper sessions and compare against yfinance or a secondary feed.",
+    "Treat no-overlap and stale-provider issues as hard failures before routing new paper orders.",
+    "Investigate adjustment-mode mismatches before comparing raw and adjusted data.",
+    "Split-like close ratios should trigger corporate-action review before trusting the latest bars."
+  ]
+}

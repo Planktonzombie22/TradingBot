@@ -1,9 +1,22 @@
-from .base import Strategy
-from .buy_hold import BuyAndHoldStrategy
-from .parameters import ParameterSpec, StrategySpec
-from .published_systems import PublishedSmaCrossStrategy
-from .research_systems import (
+import importlib as _importlib
+import sys as _sys
+
+from .core import (
+    STRATEGIES,
+    STRATEGY_SPECS,
+    ParameterSpec,
+    Strategy,
+    StrategySchedule,
+    StrategySpec,
+    get_strategy,
+    list_strategies,
+    register_strategy,
+    strategy_schema,
+    validate_strategy_params,
+)
+from .systems import (
     AroonVortexTrendSystem,
+    BuyAndHoldStrategy,
     ChoppinessRangeSystem,
     CryptoAdaptiveTrendSystem,
     FVGRebalanceSystem,
@@ -23,18 +36,9 @@ from .research_systems import (
     VolatilityBreakoutSystem,
     VolumeMomentumSystem,
     VWAPValueReversionSystem,
+    PublishedSmaCrossStrategy,
+    TuffSystem,
 )
-from .registry import (
-    STRATEGIES,
-    STRATEGY_SPECS,
-    get_strategy,
-    list_strategies,
-    register_strategy,
-    strategy_schema,
-    validate_strategy_params,
-)
-from .scheduling import StrategySchedule
-from .tuff_system import TuffSystem
 
 __all__ = [
     "AroonVortexTrendSystem",
@@ -72,3 +76,21 @@ __all__ = [
     "strategy_schema",
     "validate_strategy_params",
 ]
+
+_MODULE_ALIASES = {
+    "base": "core.base",
+    "buy_hold": "systems.buy_hold",
+    "parameters": "core.parameters",
+    "published_systems": "systems.published",
+    "registry": "core.registry",
+    "research_systems": "systems.research",
+    "scheduling": "core.scheduling",
+    "tuff_system": "systems.tuff",
+}
+
+for _old_module, _new_module in _MODULE_ALIASES.items():
+    _module = _importlib.import_module(f"{__name__}.{_new_module}")
+    _sys.modules[f"{__name__}.{_old_module}"] = _module
+    globals()[_old_module] = _module
+
+del _importlib, _sys, _MODULE_ALIASES, _old_module, _new_module, _module

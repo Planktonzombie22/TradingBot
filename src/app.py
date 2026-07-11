@@ -9,8 +9,8 @@ from src.engine import TradingEngine
 from src.execution import AlpacaPaperBroker, Broker, PaperBroker, validate_alpaca_paper_safety, validate_execution_mode
 from src.models import BacktestResult
 from src.strategies import get_strategy, validate_strategy_params
-from src.strategies.base import Strategy
-from src.strategies.scheduling import StrategySchedule
+from src.strategies.core.base import Strategy
+from src.strategies.core.scheduling import StrategySchedule
 
 
 @dataclass

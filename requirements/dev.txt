@@ -1,0 +1,9 @@
+-r base.txt
+-r broker.txt
+-r research.txt
+-r reporting.txt
+
+# Developer/test tooling.
+pytest==9.0.3
+ipython==9.13.0
+jupyterlab==4.5.7

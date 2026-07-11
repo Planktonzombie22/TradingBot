@@ -1,0 +1,36 @@
+{
+  "name": "default_trade_committee",
+  "description": "Final trade/no-trade policy for promoting validated research into autonomous paper-trading decisions.",
+  "policy": {
+    "require_promotion": true,
+    "require_paper_scorecard": true,
+    "require_data_health": true,
+    "allow_benchmark_fallback": true,
+    "allow_hedging": true,
+    "reduce_on_regime_degradation": true,
+    "min_strategy_edge": 0.0,
+    "min_benchmark_edge": 0.0,
+    "min_regime_quality": 0.55,
+    "max_position_weight": 0.25,
+    "benchmark_weight": 0.2,
+    "hedge_weight": 0.1,
+    "exposure_reduction_multiplier": 0.5
+  },
+  "inputs": {
+    "promotion_report": "Required research-to-paper promotion report.",
+    "paper_scorecard": "Required expected-vs-observed paper-trading behavior report.",
+    "data_drift_reports": "Recent Alpaca-vs-secondary provider drift reports.",
+    "regime": "Current market regime profile for the symbol.",
+    "strategy_edge": "Validated benchmark-relative edge estimate.",
+    "benchmark_edge": "Fallback benchmark edge estimate.",
+    "current_exposure": "Current portfolio weight in the symbol before committee action.",
+    "risk_halt": "Runtime hard stop from engine risk controls."
+  },
+  "actions": [
+    "trade_strategy",
+    "use_benchmark",
+    "hedge",
+    "reduce_exposure",
+    "cash"
+  ]
+}

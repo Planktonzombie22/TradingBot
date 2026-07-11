@@ -1,0 +1,29 @@
+{
+  "name": "promotion_pipeline_default",
+  "description": "Default gates for promoting a research candidate into an Alpaca paper-trading candidate.",
+  "require_source_rules": true,
+  "require_data_validation": true,
+  "require_replication_or_benchmark": true,
+  "require_governance": true,
+  "require_capacity": true,
+  "require_risk_gates": true,
+  "minimum_estimated_capacity": 10000,
+  "paper_manifest_defaults": {
+    "broker_mode": "alpaca_paper",
+    "data_source": "alpaca",
+    "execution_profile": "paper_default",
+    "safeguards": [
+      "paper_trading_only",
+      "runtime_risk_gates_required",
+      "broker_reconciliation_required",
+      "operator_kill_switch_required"
+    ]
+  },
+  "promotion_notes": [
+    "Candidate rules must be captured in the strategy research catalog or equivalent notes.",
+    "Backtest data must pass quality and result-validation gates.",
+    "Candidate must have either benchmark-relative evidence or a replication pass.",
+    "Walk-forward governance must pass before the final holdout parameters can become the paper manifest parameters.",
+    "Capacity and cost stress must pass at the minimum paper capital level."
+  ]
+}

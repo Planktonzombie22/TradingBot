@@ -1,0 +1,15 @@
+{
+  "name": "paper_trading_scorecard_default",
+  "description": "Default thresholds for comparing Alpaca paper-trading sessions against expected backtest behavior.",
+  "max_average_slippage_bps": 10.0,
+  "max_missed_fill_rate": 0.05,
+  "max_reject_rate": 0.02,
+  "max_equity_drift_pct": 0.02,
+  "require_clean_reconciliation": true,
+  "review_notes": [
+    "Compare broker fills against expected backtest fills by order id when available.",
+    "Flag sessions with unresolved broker reconciliation items before trusting paper results.",
+    "Treat missing account equity as not available rather than an automatic scorecard failure.",
+    "Use this scorecard after each paper session before a strategy remains promoted."
+  ]
+}
