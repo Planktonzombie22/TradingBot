@@ -40,13 +40,14 @@ python -m venv trading_env
 trading_env\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-Install broader profiles only when you need them:
+`requirements.txt` points at the full local development profile in this workspace. Install narrower profiles when you want a lighter environment:
 
 ```powershell
+trading_env\Scripts\python.exe -m pip install -r requirements\base.txt
 trading_env\Scripts\python.exe -m pip install -r requirements\broker.txt
 trading_env\Scripts\python.exe -m pip install -r requirements\research.txt
 trading_env\Scripts\python.exe -m pip install -r requirements\reporting.txt
-trading_env\Scripts\python.exe -m pip install -r requirements\dev.txt
+trading_env\Scripts\python.exe -m pip install -r requirements\acceleration.txt
 ```
 
 Run the default offline backtest:
@@ -83,6 +84,12 @@ Run the paper runtime path with sample data:
 
 ```powershell
 trading_env\Scripts\python.exe main.py paper --provider sample --strategy buyHold
+```
+
+Run one guarded autonomous paper-session dry run with sample data:
+
+```powershell
+trading_env\Scripts\python.exe main.py paper-session --provider sample --strategy buyHold --store-dir runs\paper-session-sample
 ```
 
 Use yfinance historical data when network access is available:
@@ -132,7 +139,15 @@ Then run an Alpaca stream/paper entry point:
 trading_env\Scripts\python.exe main.py paper --provider alpaca --symbol SPY
 ```
 
-The Alpaca pieces are intentionally conservative. They provide the architecture for historical data, websocket bars, and paper-order submission, but the final autonomous safety layer still needs the roadmap items around reconciliation, persistence, idempotency, halts, and soak testing.
+Or run the autonomous paper-session dry-run path, which loads data, classifies regime, asks the trade committee for a decision, generates a dry-run execution plan, and writes one audit trail:
+
+```powershell
+trading_env\Scripts\python.exe main.py paper-session --provider alpaca --symbol SPY --store-dir runs\paper-session-alpaca
+```
+
+Add `--comparison-provider yfinance` or another supported provider when you want the session to include a cross-source data drift report before committee approval.
+
+The Alpaca pieces are intentionally conservative. They provide the architecture for historical data, websocket bars, guarded paper-order submission, reconciliation artifacts, and session scorecards. This is still an MVP paper workflow; unattended operation should wait for clean soak sessions and operator monitoring.
 
 Dry-run mode is the default so live data can be tested without accidentally routing broker orders. To enable real Alpaca paper order submission through the broker adapter, use paper credentials, keep `PAPER_TRADING=true`, keep `ALPACA_BASE_URL=https://paper-api.alpaca.markets`, and set:
 
@@ -144,6 +159,12 @@ or pass:
 
 ```powershell
 trading_env\Scripts\python.exe main.py paper --provider alpaca --execution-mode paper --symbol SPY
+```
+
+For the autonomous session command, broker submission is additionally gated by `--submit-orders`:
+
+```powershell
+trading_env\Scripts\python.exe main.py paper-session --provider alpaca --execution-mode paper --symbol SPY --submit-orders
 ```
 
 ## CLI Modes
@@ -159,6 +180,7 @@ Available modes:
 - `backtest`: load historical data, create a strategy, run the backtesting engine, print a summary, and optionally write JSON artifacts.
 - `stream`: create a market data stream and feed events through the runtime engine without treating the run as broker paper trading.
 - `paper`: use the same runtime path as streaming, labeled as the paper-trading workflow. This is the path that will keep gaining broker synchronization and safety controls.
+- `paper-session`: run one guarded committee-to-execution paper session from config, write the full audit trail, and optionally submit paper orders with `--submit-orders`.
 - `report`: run a backtest and write an HTML report.
 - `optimize`: run a parameter grid search and write ranked JSONL optimization artifacts.
 - `bulk`: run many symbols across one or more strategies and write JSONL plus a summary report.
@@ -186,6 +208,8 @@ Common options:
 - `--store-dir`: write JSONL run artifacts under this directory, default `runs`.
 - `--execution-mode`: `dry-run` or `paper`. Dry-run is the default; Alpaca paper order submission requires `paper`.
 - `--flatten-on-stop`: for `stream`/`paper` modes, submit flattening orders before stopping the run. This is useful for replay sessions and should be used deliberately with broker-backed paper execution.
+- `--submit-orders`: for `paper-session` mode, submit generated orders only after the guarded dry-run plan is ready. Requires `--execution-mode paper`.
+- `--comparison-provider`: optional secondary provider for `paper-session` data drift checks.
 - `--param-grid`: JSON object of parameter lists for `optimize` mode.
 - `--param-grid-file`: JSON file containing parameter lists for `optimize` mode. Useful on shells where inline JSON quoting is awkward.
 - `--metric`: metric to optimize, default `total_return`.
@@ -219,14 +243,15 @@ Cross-asset universe config lives in `configs\universes\cross_asset_core.json`. 
 
 The project uses layered requirements so the minimal runtime stays light while research and paper-trading work can opt into heavier libraries deliberately.
 
-- `requirements.txt`: default minimal install; delegates to `requirements\base.txt`.
+- `requirements.txt`: workspace default install; currently delegates to `requirements\dev.txt`.
 - `requirements\base.txt`: pandas/numpy/yfinance/dotenv/requests/websocket-client.
 - `requirements\broker.txt`: Alpaca SDK, crypto exchange connectivity, async/websocket helpers.
 - `requirements\research.txt`: scipy, statsmodels, pyarrow, DuckDB, Optuna, and progress tooling for larger research runs.
 - `requirements\reporting.txt`: matplotlib, Plotly, seaborn, Rich, and Jinja2.
+- `requirements\acceleration.txt`: optional `numba` and `polars` candidates for tasks that profiling identifies as slow.
 - `requirements\dev.txt`: full local development profile, including tests and notebooks.
 
-Use `src.utils.dependencies.dependency_summary()` to inspect which optional capability packages are installed. Packages such as `numba` and `polars` are tracked as future acceleration candidates, but they are intentionally not part of the default profiles until profiling shows a real bottleneck.
+Use `src.utils.dependencies.dependency_summary()` to inspect which optional capability packages are installed. Use `src.utils.profiling` to measure hotspots and `src.utils.acceleration` to turn benchmark results into conservative `numba`/`polars` recommendations with equivalence checks before replacing pandas/Python code.
 
 ## Programmatic Usage
 
@@ -460,8 +485,10 @@ Research helpers:
 - `run_backtest()`: simple compatibility function for scripts.
 - `run_multi_symbol_backtest()`: multi-symbol backtest helper.
 - `grid_search()`: parameter optimization helper.
+- `run_optuna_optimization()`: optional Optuna optimizer backend with seeded sampling, study persistence, categorical/ranged parameter spaces, and holdout scoring.
 - `run_walk_forward()`: walk-forward research helper.
 - `rank_optimization_results()` and `overfitting_report()`: optimizer ranking and overfit diagnostics.
+- Statistical research helpers: confidence intervals, cointegration tests, factor exposure regressions, and Benjamini-Hochberg p-value adjustment when the research dependency profile is installed.
 - `BatchBacktestRunner`: resumable batch runner for symbols, strategies, and parameter sets.
 - `run_bulk_backtests()`: mass backtesting helper for many symbols and strategies.
 
@@ -554,6 +581,16 @@ It can also rebuild a local `PaperBroker` from persisted orders and reports, whi
 
 `RunManifest` and `ImmutableArtifactStore` provide the research artifact boundary. A manifest records run type, strategy, symbols, config, data source, dependency versions, and code version when available. Immutable artifact writes create a run-specific directory and refuse accidental overwrite by default.
 
+`ParquetArtifactStore` and `HistoricalDataCache(storage_format="parquet")` provide optional columnar storage for high-volume research outputs and historical bars. Parquet support requires the research dependency profile:
+
+```powershell
+trading_env\Scripts\python.exe -m pip install -r requirements\research.txt
+```
+
+CSV, JSON, and JSONL remain the default inspection-friendly formats.
+
+`DuckDBResearchStore` provides an optional local query layer over JSONL and Parquet artifacts. This is intended for large bulk backtest runs, optimization sweeps, and paper-session artifact inspection without loading everything into Python first. DuckDB support also lives in `requirements\research.txt`.
+
 ## Reporting
 
 `src/reporting` owns output and presentation:
@@ -571,6 +608,8 @@ This package is deliberately separate from `src/backtesting`. The backtesting en
 - `logger.py`: logging setup.
 - `retry.py`: retry/backoff utilities.
 - `timers.py`: timing helpers.
+- `profiling.py`: benchmark suite helpers for timing indicators, strategy generation, backtest loops, bulk research, storage writes, and paper-session planning before choosing acceleration packages.
+- `acceleration.py`: profiling-driven acceleration recommendations and equivalence checks for optional `numba` or `polars` implementations.
 - `helpers.py`: legacy/general helpers.
 
 Logging is currently enough for the MVP and supports structured JSON logs plus rotating file output.

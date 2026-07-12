@@ -1,0 +1,5 @@
+-r research.txt
+
+# Optional acceleration candidates. Add only when profiling points to a real bottleneck.
+numba>=0.60,<1.0
+polars>=1.0,<2.0

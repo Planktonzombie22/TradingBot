@@ -1,0 +1,63 @@
+{
+  "symbol": "SPY",
+  "action": "trade_strategy",
+  "approved": true,
+  "target_weight": 0.25,
+  "strategy_name": "buyHold",
+  "hedge_weight": 0.0,
+  "reason": "committee_approved_strategy",
+  "gates": [
+    {
+      "name": "risk_halt",
+      "passed": true,
+      "reason": "no_risk_halt",
+      "details": {}
+    },
+    {
+      "name": "data_health",
+      "passed": true,
+      "reason": "data_health_passed",
+      "details": {
+        "reports": 1
+      }
+    },
+    {
+      "name": "promotion",
+      "passed": true,
+      "reason": "promotion_ready",
+      "details": {}
+    },
+    {
+      "name": "paper_behavior",
+      "passed": true,
+      "reason": "not_required",
+      "details": {}
+    },
+    {
+      "name": "regime_quality",
+      "passed": true,
+      "reason": "regime_quality_passed",
+      "details": {
+        "quality": 1.0
+      }
+    },
+    {
+      "name": "edge",
+      "passed": true,
+      "reason": "strategy_edge_passed",
+      "details": {
+        "strategy_edge": 0.01,
+        "benchmark_edge": 0.0
+      }
+    }
+  ],
+  "metadata": {
+    "strategy_edge": 0.01,
+    "benchmark_edge": 0.0,
+    "current_exposure": 0.0,
+    "regime_quality": 1.0,
+    "notes": [
+      "autonomous_paper_session_mvp"
+    ]
+  }
+}

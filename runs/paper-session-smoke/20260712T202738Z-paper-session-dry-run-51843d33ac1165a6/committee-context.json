@@ -1,0 +1,78 @@
+{
+  "symbol": "SPY",
+  "promotion_report": {
+    "passed": true,
+    "reason": "promotion_ready",
+    "evidence": {
+      "strategy_name": "buyHold",
+      "symbol": "SPY",
+      "params": {},
+      "source_rules_captured": true,
+      "data_validation_passed": true,
+      "benchmark_passed": true,
+      "replication_passed": false,
+      "risk_gates_passed": true,
+      "data_range": null,
+      "validation_report": null,
+      "governance": null,
+      "capacity": null,
+      "benchmark_summary": {},
+      "notes": [
+        "runtime_config_candidate"
+      ]
+    },
+    "policy": {
+      "require_source_rules": true,
+      "require_data_validation": true,
+      "require_replication_or_benchmark": true,
+      "require_governance": false,
+      "require_capacity": false,
+      "require_risk_gates": true,
+      "minimum_estimated_capacity": null
+    },
+    "gates": [],
+    "manifest": {
+      "strategy_name": "buyHold",
+      "symbol": "SPY",
+      "params": {},
+      "broker_mode": "alpaca_paper",
+      "data_source": "alpaca",
+      "execution_profile": "paper_default",
+      "manifest_status": "ready_for_paper_session",
+      "safeguards": [
+        "paper_trading_only",
+        "runtime_risk_gates_required",
+        "broker_reconciliation_required",
+        "operator_kill_switch_required"
+      ]
+    }
+  },
+  "paper_scorecard": null,
+  "data_drift_reports": [],
+  "regime": {
+    "symbol": "SPY",
+    "trend_state": "trending",
+    "trend_direction": "up",
+    "volatility_state": "contraction",
+    "liquidity_state": "normal",
+    "macro_sensitivity": "normal",
+    "efficiency_ratio": 0.6489804565386399,
+    "period_return": 0.10526697233522042,
+    "volatility_ratio": 0.5700170177193662,
+    "liquidity_ratio": 1.0044545062248575,
+    "eligible_modes": [
+      "benchmark",
+      "trend_following",
+      "range_scalping",
+      "cash"
+    ]
+  },
+  "strategy_edge": 0.01,
+  "benchmark_edge": 0.0,
+  "current_exposure": 0.0,
+  "risk_halt": false,
+  "risk_reason": null,
+  "notes": [
+    "autonomous_paper_session_mvp"
+  ]
+}

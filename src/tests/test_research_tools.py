@@ -1,5 +1,6 @@
 import pytest
 import pandas as pd
+import numpy as np
 import json
 import math
 
@@ -19,6 +20,7 @@ from src.backtesting import (
     OptionContract,
     OptionPosition,
     OptionTailStressScenario,
+    OptunaOptimizationConfig,
     PairsResearchConfig,
     ParameterStabilityReport,
     PaperTradingExpectation,
@@ -37,6 +39,7 @@ from src.backtesting import (
     WalkForwardGovernanceConfig,
     WalkForwardGovernanceReport,
     activate_strategies_for_regime,
+    adjust_p_values,
     analyze_capacity,
     benchmark_relative_report,
     build_ensemble_allocation,
@@ -48,23 +51,30 @@ from src.backtesting import (
     build_style_premia_ranking,
     classify_market_regime,
     classify_regime_universe,
+    cointegration_test,
+    confidence_interval,
     decide_trade_action,
     discover_stat_arb_pairs,
     evaluate_options_promotion_gate,
     evaluate_promotion_candidate,
     evaluate_research_filters,
     expand_research_matrix,
+    factor_exposure,
     load_research_matrix,
     research_matrix_from_dict,
     run_bulk_backtests,
     grid_search,
+    optuna_available,
     overfitting_report,
     rank_optimization_results,
+    run_optuna_optimization,
     run_research_matrix,
     run_walk_forward,
     run_walk_forward_governance,
+    scipy_available,
     select_crypto_adaptive_universe,
     select_strategies_against_benchmark,
+    statsmodels_available,
     stress_option_position,
     validate_market_clusters,
 )
@@ -327,6 +337,89 @@ def test_optimization_ranking_and_overfitting_report():
     assert len(ranked) == 2
     assert "sharpe" in ranked[0].rank_metrics()
     assert report.minimum_trade_count_met
+
+
+def test_optuna_optimization_runs_seeded_trials_and_persists_study(tmp_path):
+    data = sample_ohlcv(periods=80)
+    storage_url = f"sqlite:///{(tmp_path / 'optuna-study.sqlite3').as_posix()}"
+
+    if not optuna_available():
+        with pytest.raises(RuntimeError, match="requirements/research.txt"):
+            run_optuna_optimization(
+                "buyHold",
+                "SPY",
+                data,
+                {"stop_percent": [0.03, 0.05]},
+                OptunaOptimizationConfig(n_trials=2, storage_url=storage_url),
+            )
+        return
+
+    report = run_optuna_optimization(
+        "buyHold",
+        "SPY",
+        data,
+        {
+            "stop_percent": {"type": "float", "low": 0.03, "high": 0.05},
+            "target_fraction": [0.5, 1.0],
+        },
+        OptunaOptimizationConfig(
+            n_trials=4,
+            sampler_seed=7,
+            study_name="buy_hold_test",
+            storage_url=storage_url,
+            validation_fraction=0.25,
+        ),
+    )
+
+    assert report.best_result is not None
+    assert report.best_score is not None
+    assert len(report.trials) == 4
+    assert report.study_name == "buy_hold_test"
+    assert report.to_dict()["trials"][0]["train_score"] is not None
+    assert report.to_dict()["trials"][0]["holdout_score"] is not None
+    assert (tmp_path / "optuna-study.sqlite3").exists()
+
+
+def test_statistical_research_helpers_measure_confidence_factor_exposure_and_p_values():
+    if not scipy_available():
+        with pytest.raises(RuntimeError, match="requirements/research.txt"):
+            confidence_interval([0.01, 0.02, 0.03])
+        return
+
+    interval = confidence_interval([0.01, 0.02, 0.03, 0.04], confidence=0.95)
+    adjusted = adjust_p_values([0.001, 0.03, 0.20], alpha=0.05)
+
+    assert interval.sample_size == 4
+    assert interval.lower < interval.mean < interval.upper
+    assert adjusted.rejected[0]
+    assert adjusted.adjusted_p_values[0] <= adjusted.adjusted_p_values[1]
+
+
+def test_statsmodels_research_helpers_measure_cointegration_and_factor_betas():
+    rng = np.random.default_rng(7)
+    base = pd.Series(100 + rng.normal(0, 1, 200).cumsum(), dtype="float64")
+    related = base * 1.5 + 2 + pd.Series(rng.normal(0, 0.5, 200), dtype="float64")
+    factors = pd.DataFrame(
+        {
+            "market": [0.01, 0.02, -0.01, 0.03, 0.00],
+            "value": [0.00, 0.01, 0.02, -0.01, 0.01],
+        }
+    )
+    returns = factors["market"] * 1.8 + factors["value"] * 0.4 + 0.001
+
+    if not statsmodels_available():
+        with pytest.raises(RuntimeError, match="requirements/research.txt"):
+            cointegration_test(base, related)
+        return
+
+    coint_report = cointegration_test(base, related)
+    exposure = factor_exposure(returns, factors)
+
+    assert coint_report.p_value < 0.05
+    assert coint_report.passed
+    assert exposure.observations == 5
+    assert exposure.r_squared > 0.99
+    assert exposure.betas["market"] > exposure.betas["value"]
 
 
 def test_batch_backtest_runner_skips_completed_jobs_and_writes_artifacts(tmp_path):

@@ -8,6 +8,7 @@ from .supervisor import (
     PaperSessionSupervisorConfig,
     PaperSessionSupervisorReport,
     prepare_paper_session_dry_run,
+    write_paper_session_audit_trail,
 )
 
 __all__ = [
@@ -27,4 +28,5 @@ __all__ = [
     "TradingEngine",
     "plan_committee_execution",
     "prepare_paper_session_dry_run",
+    "write_paper_session_audit_trail",
 ]

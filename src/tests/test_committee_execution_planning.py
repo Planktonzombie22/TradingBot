@@ -2,19 +2,25 @@ import json
 
 from src.backtesting import (
     PaperSessionManifest,
+    PaperTradingExpectation,
+    PaperTradingObservation,
+    PaperTradingScorecardPolicy,
     PromotionPipelinePolicy,
     PromotionPipelineReport,
     ResearchCandidateEvidence,
     TradeCommitteeContext,
     TradeCommitteeDecision,
+    build_paper_trading_scorecard,
 )
 from src.engine import (
     CommitteeExecutionPolicy,
     PaperAccountState,
+    PaperSessionSupervisor,
     RuntimePosition,
     plan_committee_execution,
     prepare_paper_session_dry_run,
 )
+from src.execution import BrokerReconciler, ExecutionReport
 from src.storage import ImmutableArtifactStore
 
 
@@ -102,10 +108,75 @@ def test_paper_session_supervisor_writes_dry_run_artifacts(tmp_path):
     assert report.ready_for_submission
     assert report.paper_manifest is not None
     assert report.execution_plan.orders[0].order.quantity == 250
-    assert set(report.artifact_paths) == {"manifest", "committee_decision", "execution_plan", "session_report"}
+    assert set(report.artifact_paths) == {"manifest", "committee_context", "committee_decision", "execution_plan", "session_report"}
     session_payload = json.loads(open(report.artifact_paths["session_report"], encoding="utf-8").read())
     assert session_payload["ready_for_submission"]
     assert session_payload["manifest"]["run_type"] == "paper-session-dry-run"
+    assert session_payload["committee_context"]["symbol"] == "SPY"
+
+
+def test_paper_session_supervisor_writes_end_to_end_audit_trail(tmp_path):
+    account = PaperAccountState(100_000)
+    decision = _decision("trade_strategy", target_weight=0.25)
+    supervisor = PaperSessionSupervisor(ImmutableArtifactStore(tmp_path))
+    report = supervisor.prepare_dry_run(
+        _committee_context(with_manifest=True),
+        account,
+        {"SPY": 100.0},
+        decision=decision,
+    )
+    submitted_order = report.execution_plan.orders[0].order
+    submitted_order.status = "FILLED"
+    execution_report = ExecutionReport(
+        order_id=submitted_order.id,
+        status="FILLED",
+        broker_order_id="alpaca-paper-1",
+        filled_quantity=submitted_order.quantity,
+        average_fill_price=100.05,
+    )
+    reconciliation = BrokerReconciler().reconcile_orders([submitted_order], [execution_report])
+    scorecard = build_paper_trading_scorecard(
+        PaperTradingExpectation(
+            strategy_name="buyHold",
+            symbol="SPY",
+            expected_fills=1,
+            expected_trades=1,
+            expected_return=0.01,
+            expected_ending_equity=100_000,
+            expected_fill_prices={submitted_order.id: 100.0},
+        ),
+        PaperTradingObservation(reports=(execution_report,), reconciliation=reconciliation),
+        PaperTradingScorecardPolicy(max_average_slippage_bps=10.0),
+    )
+
+    audited = supervisor.write_audit_trail(
+        report,
+        submitted_orders=(submitted_order,),
+        execution_reports=(execution_report,),
+        reconciliation=reconciliation,
+        paper_scorecard=scorecard,
+        post_session_account_snapshot={"equity": 100_010.0, "cash": 75_000.0},
+    )
+
+    expected_paths = {
+        "manifest",
+        "committee_context",
+        "committee_decision",
+        "execution_plan",
+        "submitted_orders",
+        "execution_reports",
+        "reconciliation",
+        "paper_scorecard",
+        "post_session_account",
+        "session_report",
+    }
+    assert set(audited.artifact_paths) == expected_paths
+    session_payload = json.loads(open(audited.artifact_paths["session_report"], encoding="utf-8").read())
+    assert session_payload["submitted_orders"][0]["status"] == "FILLED"
+    assert session_payload["execution_reports"][0]["broker_order_id"] == "alpaca-paper-1"
+    assert session_payload["reconciliation"]["is_clean"]
+    assert session_payload["paper_scorecard"]["passed"]
+    assert session_payload["post_session_account_snapshot"]["equity"] == 100_010.0
 
 
 def test_paper_session_supervisor_requires_promoted_manifest_before_submit_ready():

@@ -24,9 +24,13 @@ def test_dependency_summary_groups_capabilities_by_tier():
 
 def test_requirement_profiles_are_layered_and_explicit():
     root = Path("requirements")
+    root_requirement = Path("requirements.txt").read_text(encoding="utf-8").strip()
 
-    assert Path("requirements.txt").read_text(encoding="utf-8").strip() == "-r requirements/base.txt"
+    assert root_requirement.startswith("-r requirements/")
+    assert Path(root_requirement.removeprefix("-r ")).exists()
     assert "pandas==3.0.3" in (root / "base.txt").read_text(encoding="utf-8")
     assert "-r base.txt" in (root / "research.txt").read_text(encoding="utf-8")
     assert "optuna" in (root / "research.txt").read_text(encoding="utf-8")
     assert "alpaca-py" in (root / "broker.txt").read_text(encoding="utf-8")
+    assert "numba" in (root / "acceleration.txt").read_text(encoding="utf-8")
+    assert "polars" in (root / "acceleration.txt").read_text(encoding="utf-8")

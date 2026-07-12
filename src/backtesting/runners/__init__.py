@@ -8,7 +8,18 @@ from .governance import (
     run_walk_forward_governance,
 )
 from .multi_symbol import MultiSymbolBacktestResult, run_multi_symbol_backtest
-from .optimization import OptimizationResult, OverfittingReport, grid_search, overfitting_report, rank_optimization_results
+from .optimization import (
+    OptimizationResult,
+    OptunaOptimizationConfig,
+    OptunaOptimizationReport,
+    OptunaTrialRecord,
+    OverfittingReport,
+    grid_search,
+    optuna_available,
+    overfitting_report,
+    rank_optimization_results,
+    run_optuna_optimization,
+)
 from .paper_scorecard import (
     PaperTradingExpectation,
     PaperTradingObservation,
@@ -68,6 +79,9 @@ __all__ = [
     "GovernedWalkForwardWindow",
     "MultiSymbolBacktestResult",
     "OptimizationResult",
+    "OptunaOptimizationConfig",
+    "OptunaOptimizationReport",
+    "OptunaTrialRecord",
     "OverfittingReport",
     "PaperTradingExpectation",
     "PaperTradingObservation",
@@ -102,6 +116,7 @@ __all__ = [
     "build_paper_trading_scorecard",
     "evaluate_promotion_candidate",
     "grid_search",
+    "optuna_available",
     "load_replication_suite",
     "load_research_matrix",
     "overfitting_report",
@@ -111,6 +126,7 @@ __all__ = [
     "decide_trade_action",
     "run_bulk_backtests",
     "run_multi_symbol_backtest",
+    "run_optuna_optimization",
     "run_replication_suite",
     "run_research_matrix",
     "run_walk_forward",

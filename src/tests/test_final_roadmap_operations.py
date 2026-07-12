@@ -2,7 +2,8 @@ from datetime import datetime, timezone
 
 import pytest
 
-from src.config import AlpacaConfig, ExecutionConfig, MarketDataConfig, RuntimeConfig, validate_runtime_environment
+from src.app import TradingApplication
+from src.config import AlpacaConfig, ExecutionConfig, MarketDataConfig, RuntimeConfig, StrategyConfig, validate_runtime_environment
 from src.data import AlpacaMarketDataStream, MarketDataEventType
 from src.deployment import docker_profile, local_windows_task_profile, small_server_profile
 from src.engine import EngineEvent, EngineEventType, EngineState, PaperAccountState, RuntimeRiskMonitor
@@ -16,7 +17,7 @@ from src.monitoring import (
     NotificationRouter,
     build_dashboard_snapshot,
 )
-from src.operations import SoakChecklist
+from src.operations import AutonomousPaperSessionOptions, SoakChecklist, run_autonomous_paper_session
 from src.risk import RiskManager
 
 
@@ -103,6 +104,25 @@ def test_soak_checklist_requires_all_criteria():
         checklist = checklist.with_result(check.name, True, "ok")
 
     assert checklist.passed
+
+
+def test_autonomous_paper_session_dry_run_writes_guarded_report(tmp_path):
+    config = RuntimeConfig(
+        data=MarketDataConfig(symbol="SPY", provider="sample"),
+        strategy=StrategyConfig(name="buyHold", params={"target_fraction": 1.0}),
+    )
+
+    result = run_autonomous_paper_session(
+        TradingApplication(config),
+        AutonomousPaperSessionOptions(artifact_root=str(tmp_path)),
+    )
+
+    assert result.ready_for_submission
+    assert result.orders_planned == 1
+    assert not result.submitted
+    assert result.data_rows > 0
+    assert result.report_path is not None
+    assert "session_report" in result.artifact_paths
 
 
 def test_mocked_alpaca_order_reject_and_cancel_flow():

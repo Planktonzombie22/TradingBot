@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from importlib.util import find_spec
 from pathlib import Path
 from typing import Optional, Union
 
@@ -10,6 +11,7 @@ class HistoricalDataCache:
     """Simple CSV cache for hydrated historical OHLCV data."""
 
     root: Union[str, Path]
+    storage_format: str = "csv"
 
     def read(
         self,
@@ -22,7 +24,11 @@ class HistoricalDataCache:
         path = self.path_for(provider, symbol, interval, start, end)
         if not path.exists():
             return None
-        data = pd.read_csv(path, index_col=0, parse_dates=True)
+        if self.storage_format == "parquet":
+            _require_parquet_support()
+            data = pd.read_parquet(path, engine="pyarrow")
+        else:
+            data = pd.read_csv(path, index_col=0, parse_dates=True)
         data.index.name = "timestamp"
         return data
 
@@ -37,7 +43,11 @@ class HistoricalDataCache:
     ) -> Path:
         path = self.path_for(provider, symbol, interval, start, end)
         path.parent.mkdir(parents=True, exist_ok=True)
-        data.to_csv(path)
+        if self.storage_format == "parquet":
+            _require_parquet_support()
+            data.to_parquet(path, engine="pyarrow", compression="snappy")
+        else:
+            data.to_csv(path)
         return path
 
     def path_for(
@@ -58,8 +68,14 @@ class HistoricalDataCache:
                 end or "none",
             ]
         )
-        return Path(self.root) / f"{safe_key}.csv"
+        suffix = ".parquet" if self.storage_format == "parquet" else ".csv"
+        return Path(self.root) / f"{safe_key}{suffix}"
 
 
 def _safe(value: str) -> str:
     return "".join(char if char.isalnum() or char in {"-", "_"} else "-" for char in value)
+
+
+def _require_parquet_support() -> None:
+    if find_spec("pyarrow") is None:
+        raise RuntimeError("Parquet cache support requires the research dependency profile: pip install -r requirements/research.txt")

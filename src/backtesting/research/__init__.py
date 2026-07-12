@@ -86,6 +86,18 @@ from .stat_arb import (
     PairsResearchReport,
     discover_stat_arb_pairs,
 )
+from .statistics import (
+    CointegrationTestResult,
+    ConfidenceInterval,
+    FactorExposureResult,
+    MultipleTestingResult,
+    adjust_p_values,
+    cointegration_test,
+    confidence_interval,
+    factor_exposure,
+    scipy_available,
+    statsmodels_available,
+)
 from .strategy_ensemble import (
     StrategyFamilyCandidate,
     StrategyFamilyEnsemblePolicy,

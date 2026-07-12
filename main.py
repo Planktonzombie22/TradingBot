@@ -20,6 +20,7 @@ from src.config import load_runtime_config
 from src.engine import EngineEvent
 from src.engine import EngineState
 from src.engine import TradingEngine
+from src.operations import AutonomousPaperSessionOptions, run_autonomous_paper_session
 from src.reporting import format_backtest_summary, plot_backtest, write_backtest_html_report, write_backtest_report
 from src.storage import JsonlStore
 from src.utils.logger import configure_logging
@@ -27,7 +28,12 @@ from src.utils.logger import configure_logging
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="TradingBot MVP runner")
-    parser.add_argument("mode", nargs="?", choices=["backtest", "stream", "paper", "report", "optimize", "bulk", "matrix", "replicate"], default="backtest")
+    parser.add_argument(
+        "mode",
+        nargs="?",
+        choices=["backtest", "stream", "paper", "paper-session", "report", "optimize", "bulk", "matrix", "replicate"],
+        default="backtest",
+    )
     parser.add_argument("--provider", default="sample", choices=["sample", "yfinance", "alpaca"])
     parser.add_argument("--symbol", default="SPY")
     parser.add_argument("--symbols", help="Comma-separated symbol list for bulk mode.")
@@ -48,6 +54,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--store-dir", default="runs", help="Directory for JSONL run artifacts.")
     parser.add_argument("--execution-mode", choices=["dry-run", "paper"], help="Broker execution mode. Defaults to EXECUTION_MODE or dry-run.")
     parser.add_argument("--flatten-on-stop", action="store_true", help="Submit flattening orders before stopping a stream/paper run.")
+    parser.add_argument("--submit-orders", action="store_true", help="Submit generated paper-session orders after the guarded dry-run plan passes.")
+    parser.add_argument("--comparison-provider", choices=["sample", "yfinance", "alpaca"], help="Optional secondary provider for paper-session data drift checks.")
     parser.add_argument("--param-grid", default="{}", help="JSON object of strategy parameter lists for optimize mode.")
     parser.add_argument("--param-grid-file", help="Path to a JSON parameter grid file for optimize mode.")
     parser.add_argument("--metric", default="total_return", help="Metric to optimize.")
@@ -343,6 +351,20 @@ def run_replication_app(args: argparse.Namespace) -> None:
         )
 
 
+def run_paper_session_app(app: TradingApplication, args: argparse.Namespace) -> None:
+    result = run_autonomous_paper_session(
+        app,
+        AutonomousPaperSessionOptions(
+            submit_orders=args.submit_orders,
+            artifact_root=args.store_dir,
+            comparison_provider=args.comparison_provider,
+        ),
+    )
+    print(json.dumps(result.to_dict(), indent=2))
+    if result.report_path:
+        print(f"Paper session report written: {result.report_path}")
+
+
 def _camel_to_snake(value: str) -> str:
     output = []
     for char in value:
@@ -368,6 +390,8 @@ def main() -> None:
         run_stream_app(app, store_dir=args.store_dir, label="Stream", flatten_on_stop=args.flatten_on_stop)
     elif args.mode == "paper":
         run_stream_app(app, store_dir=args.store_dir, label="Paper", flatten_on_stop=args.flatten_on_stop)
+    elif args.mode == "paper-session":
+        run_paper_session_app(app, args)
     elif args.mode == "report":
         run_report_app(app, args.html_output)
     elif args.mode == "optimize":
