@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "acknowledged": false,
+  "source_artifact": "reports\\paper-cleanup-20260731-preview.json",
+  "symbols": [
+    "DIA",
+    "SPY"
+  ],
+  "observed_positions": 2,
+  "observed_notional": 25.250345,
+  "max_positions": 2,
+  "max_notional": 30.3,
+  "expires_at": "2026-08-01T00:00:00+00:00",
+  "instructions": [
+    "Review the source cleanup artifact and Alpaca paper account before use.",
+    "Change acknowledged to true only after operator approval.",
+    "Keep max_positions, max_notional, and expires_at tight; expired or over-limit exposure will not satisfy activation checks."
+  ]
+}

@@ -1,0 +1,2525 @@
+{
+  "run_metadata": {
+    "run_id": "paper-pilot-20260723T141930Z",
+    "code_version": "unknown",
+    "config_hash": "c133c2c7ddb09bea1a90a7da0beb4dc5c7e139a3b34e2c1e8384be8143e0f172",
+    "environment": {
+      "python": "3.11.9",
+      "platform": "Windows-10-10.0.19045-SP0",
+      "machine": "AMD64"
+    },
+    "dependency_versions": {},
+    "provider": "alpaca",
+    "broker_mode": "paper",
+    "artifact_digests": {
+      "reports\\paper-session-schedule.json": "17d1cbd0d9b60978192d994a3e4365be4e400f7ad12217b06c8fad73ccde69cf",
+      "reports\\smoke-paper-session-schedule.json": "5413db37dbf68f31afa793472ac131d5f2cdf7cbc686cecfde4b0d0c32d45262",
+      "reports\\alpaca-paper-broker-proof.json": "a8b2d1a397b1f332956c87ba1b6f99b506b50213e43ef5fff8a740e29c6b6bab",
+      "reports\\alpaca-paper-broker-proof-schedule.json": "12f73eb36ec03900e402e66174f97a4e900d415c7b99f4ee5bb6729b30d5666f"
+    },
+    "created_at": "2026-07-23T14:19:31.110549+00:00"
+  },
+  "evidence": [
+    {
+      "check_id": "unit_test_suite",
+      "status": "skipped",
+      "passed": false,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "consume_existing_evidence",
+      "captured_at": "2026-07-23T14:19:30.933219+00:00",
+      "metadata": {}
+    },
+    {
+      "check_id": "paper_profile_validation",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:30.933219+00:00",
+      "metadata": {
+        "passed": true,
+        "profile_results": {
+          "dry-run": {
+            "passed": true,
+            "validation": {
+              "passed": true,
+              "profile": {
+                "name": "dry-run",
+                "submit_orders": false,
+                "sessions": 3,
+                "required_execution_mode": "dry-run",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "max_position_weight": 0.25,
+                "comparison_provider": null,
+                "description": "No broker orders; validates data, committee, planning, recovery, and artifacts.",
+                "execution_policy": {
+                  "allow_fractional_quantity": false,
+                  "min_order_quantity": 1.0,
+                  "default_hedge_symbol": "SH",
+                  "flatten_on_cash": true,
+                  "max_target_notional": null
+                },
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": null,
+                  "max_new_exposure": null,
+                  "max_turnover": null,
+                  "cash_reserve": 0.0,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [],
+              "warnings": []
+            },
+            "session_options": {
+              "submit_orders": false,
+              "artifact_root": "runs/paper-profile-validation/dry-run",
+              "recover_state": true,
+              "state_db_path": "runs/paper-profile-validation/dry-run.sqlite3",
+              "risk_budget": {
+                "min_order_quantity": 0.0,
+                "min_order_notional": 0.0,
+                "max_session_notional": null,
+                "max_new_exposure": null,
+                "max_turnover": null,
+                "cash_reserve": 0.0,
+                "cooldown_symbols": [],
+                "repeated_reject_symbols": []
+              }
+            },
+            "soak_config": {
+              "sessions": 3,
+              "stop_on_failure": true
+            }
+          },
+          "micro-notional": {
+            "passed": true,
+            "validation": {
+              "passed": true,
+              "profile": {
+                "name": "micro-notional",
+                "submit_orders": true,
+                "sessions": 3,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "max_position_weight": 0.0025,
+                "comparison_provider": null,
+                "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                "execution_policy": {
+                  "allow_fractional_quantity": true,
+                  "min_order_quantity": 1e-06,
+                  "default_hedge_symbol": "SH",
+                  "flatten_on_cash": true,
+                  "max_target_notional": 25.0
+                },
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 25.0,
+                  "max_new_exposure": 0.0025,
+                  "max_turnover": 0.0025,
+                  "cash_reserve": 0.95,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [],
+              "warnings": []
+            },
+            "session_options": {
+              "submit_orders": true,
+              "artifact_root": "runs/paper-profile-validation/micro-notional",
+              "recover_state": true,
+              "state_db_path": "runs/paper-profile-validation/micro-notional.sqlite3",
+              "risk_budget": {
+                "min_order_quantity": 0.0,
+                "min_order_notional": 0.0,
+                "max_session_notional": 25.0,
+                "max_new_exposure": 0.0025,
+                "max_turnover": 0.0025,
+                "cash_reserve": 0.95,
+                "cooldown_symbols": [],
+                "repeated_reject_symbols": []
+              }
+            },
+            "soak_config": {
+              "sessions": 3,
+              "stop_on_failure": true
+            }
+          },
+          "full-paper-rehearsal": {
+            "passed": true,
+            "validation": {
+              "passed": true,
+              "profile": {
+                "name": "full-paper-rehearsal",
+                "submit_orders": true,
+                "sessions": 5,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "max_position_weight": 0.1,
+                "comparison_provider": null,
+                "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                "execution_policy": {
+                  "allow_fractional_quantity": false,
+                  "min_order_quantity": 1.0,
+                  "default_hedge_symbol": "SH",
+                  "flatten_on_cash": true,
+                  "max_target_notional": null
+                },
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 2500.0,
+                  "max_new_exposure": 0.1,
+                  "max_turnover": 0.2,
+                  "cash_reserve": 0.5,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [],
+              "warnings": []
+            },
+            "session_options": {
+              "submit_orders": true,
+              "artifact_root": "runs/paper-profile-validation/full-paper-rehearsal",
+              "recover_state": true,
+              "state_db_path": "runs/paper-profile-validation/full-paper-rehearsal.sqlite3",
+              "risk_budget": {
+                "min_order_quantity": 0.0,
+                "min_order_notional": 0.0,
+                "max_session_notional": 2500.0,
+                "max_new_exposure": 0.1,
+                "max_turnover": 0.2,
+                "cash_reserve": 0.5,
+                "cooldown_symbols": [],
+                "repeated_reject_symbols": []
+              }
+            },
+            "soak_config": {
+              "sessions": 5,
+              "stop_on_failure": true
+            }
+          }
+        },
+        "unsafe_combination_results": {
+          "micro_notional_live_url": {
+            "blocked": true,
+            "validation": {
+              "passed": false,
+              "profile": {
+                "name": "micro-notional",
+                "submit_orders": true,
+                "sessions": 3,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "max_position_weight": 0.0025,
+                "comparison_provider": null,
+                "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                "execution_policy": {
+                  "allow_fractional_quantity": true,
+                  "min_order_quantity": 1e-06,
+                  "default_hedge_symbol": "SH",
+                  "flatten_on_cash": true,
+                  "max_target_notional": 25.0
+                },
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 25.0,
+                  "max_new_exposure": 0.0025,
+                  "max_turnover": 0.0025,
+                  "cash_reserve": 0.95,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [
+                "ALPACA_BASE_URL must point to https://paper-api.alpaca.markets."
+              ],
+              "warnings": []
+            }
+          },
+          "micro_notional_dry_run_mode": {
+            "blocked": true,
+            "validation": {
+              "passed": false,
+              "profile": {
+                "name": "micro-notional",
+                "submit_orders": true,
+                "sessions": 3,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "max_position_weight": 0.0025,
+                "comparison_provider": null,
+                "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                "execution_policy": {
+                  "allow_fractional_quantity": true,
+                  "min_order_quantity": 1e-06,
+                  "default_hedge_symbol": "SH",
+                  "flatten_on_cash": true,
+                  "max_target_notional": 25.0
+                },
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 25.0,
+                  "max_new_exposure": 0.0025,
+                  "max_turnover": 0.0025,
+                  "cash_reserve": 0.95,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [
+                "EXECUTION_MODE must be paper for micro-notional."
+              ],
+              "warnings": []
+            }
+          },
+          "full_rehearsal_missing_keys": {
+            "blocked": true,
+            "validation": {
+              "passed": false,
+              "profile": {
+                "name": "full-paper-rehearsal",
+                "submit_orders": true,
+                "sessions": 5,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "max_position_weight": 0.1,
+                "comparison_provider": null,
+                "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                "execution_policy": {
+                  "allow_fractional_quantity": false,
+                  "min_order_quantity": 1.0,
+                  "default_hedge_symbol": "SH",
+                  "flatten_on_cash": true,
+                  "max_target_notional": null
+                },
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 2500.0,
+                  "max_new_exposure": 0.1,
+                  "max_turnover": 0.2,
+                  "cash_reserve": 0.5,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [
+                "ALPACA_API_KEY is required for submitting paper orders.",
+                "ALPACA_SECRET_KEY is required for submitting paper orders."
+              ],
+              "warnings": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "check_id": "security_configuration",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:30.933219+00:00",
+      "metadata": {
+        "passed": true,
+        "probes": [
+          {
+            "name": "runtime_environment_valid",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "errors": [],
+              "warnings": []
+            }
+          },
+          {
+            "name": "paper_trading_flag_safe",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "paper_trading": true,
+              "execution_mode": "paper"
+            }
+          },
+          {
+            "name": "alpaca_paper_url_safe",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "base_url": "https://paper-api.alpaca.markets",
+              "execution_mode": "paper"
+            }
+          },
+          {
+            "name": "allow_live_trading_guarded",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "allow_live_trading": false
+            }
+          },
+          {
+            "name": "env_values_present_when_required",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "required": [
+                "ALPACA_API_KEY",
+                "ALPACA_SECRET_KEY"
+              ],
+              "present": [
+                "ALPACA_API_KEY",
+                "ALPACA_SECRET_KEY"
+              ]
+            }
+          },
+          {
+            "name": "no_committed_secret_markers",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "markers": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "check_id": "paper_soak_tiers",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:31.079296+00:00",
+      "metadata": {
+        "report": {
+          "passed": true,
+          "tiers": [
+            {
+              "name": "local_sample_soak",
+              "required_sessions": 3,
+              "submit_orders": false,
+              "requires_alpaca": false,
+              "requires_recovery": false,
+              "requires_portfolio": false,
+              "description": "Local sample-provider dry-run soak."
+            },
+            {
+              "name": "alpaca_data_only_dry_run",
+              "required_sessions": 3,
+              "submit_orders": false,
+              "requires_alpaca": true,
+              "requires_recovery": false,
+              "requires_portfolio": false,
+              "description": "Alpaca data path without order submission."
+            },
+            {
+              "name": "alpaca_micro_notional_submit",
+              "required_sessions": 3,
+              "submit_orders": true,
+              "requires_alpaca": true,
+              "requires_recovery": false,
+              "requires_portfolio": false,
+              "description": "Tiny paper submissions with strict risk budgets."
+            },
+            {
+              "name": "portfolio_paper_soak",
+              "required_sessions": 3,
+              "submit_orders": false,
+              "requires_alpaca": false,
+              "requires_recovery": false,
+              "requires_portfolio": true,
+              "description": "Portfolio candidate allocation and consolidated order proof."
+            },
+            {
+              "name": "restart_recovery_soak",
+              "required_sessions": 2,
+              "submit_orders": false,
+              "requires_alpaca": false,
+              "requires_recovery": true,
+              "requires_portfolio": false,
+              "description": "Restart-aware persisted-state recovery proof."
+            },
+            {
+              "name": "full_paper_rehearsal",
+              "required_sessions": 5,
+              "submit_orders": true,
+              "requires_alpaca": true,
+              "requires_recovery": true,
+              "requires_portfolio": true,
+              "description": "Guarded full paper rehearsal after lower tiers pass."
+            }
+          ],
+          "probes": [
+            {
+              "name": "local_sample_soak",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "checks": {
+                  "passed": true,
+                  "minimum_sessions": true,
+                  "submission_mode": true,
+                  "alpaca_requirement": true,
+                  "recovery_requirement": true,
+                  "portfolio_requirement": true
+                },
+                "required": {
+                  "name": "local_sample_soak",
+                  "required_sessions": 3,
+                  "submit_orders": false,
+                  "requires_alpaca": false,
+                  "requires_recovery": false,
+                  "requires_portfolio": false,
+                  "description": "Local sample-provider dry-run soak."
+                },
+                "evidence": {
+                  "passed": true,
+                  "completed_sessions": 3
+                }
+              }
+            },
+            {
+              "name": "alpaca_data_only_dry_run",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "checks": {
+                  "passed": true,
+                  "minimum_sessions": true,
+                  "submission_mode": true,
+                  "alpaca_requirement": true,
+                  "recovery_requirement": true,
+                  "portfolio_requirement": true
+                },
+                "required": {
+                  "name": "alpaca_data_only_dry_run",
+                  "required_sessions": 3,
+                  "submit_orders": false,
+                  "requires_alpaca": true,
+                  "requires_recovery": false,
+                  "requires_portfolio": false,
+                  "description": "Alpaca data path without order submission."
+                },
+                "evidence": {
+                  "passed": true,
+                  "completed_sessions": 3,
+                  "alpaca": true
+                }
+              }
+            },
+            {
+              "name": "alpaca_micro_notional_submit",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "checks": {
+                  "passed": true,
+                  "minimum_sessions": true,
+                  "submission_mode": true,
+                  "alpaca_requirement": true,
+                  "recovery_requirement": true,
+                  "portfolio_requirement": true
+                },
+                "required": {
+                  "name": "alpaca_micro_notional_submit",
+                  "required_sessions": 3,
+                  "submit_orders": true,
+                  "requires_alpaca": true,
+                  "requires_recovery": false,
+                  "requires_portfolio": false,
+                  "description": "Tiny paper submissions with strict risk budgets."
+                },
+                "evidence": {
+                  "passed": true,
+                  "completed_sessions": 3,
+                  "alpaca": true,
+                  "submitted": true
+                }
+              }
+            },
+            {
+              "name": "portfolio_paper_soak",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "checks": {
+                  "passed": true,
+                  "minimum_sessions": true,
+                  "submission_mode": true,
+                  "alpaca_requirement": true,
+                  "recovery_requirement": true,
+                  "portfolio_requirement": true
+                },
+                "required": {
+                  "name": "portfolio_paper_soak",
+                  "required_sessions": 3,
+                  "submit_orders": false,
+                  "requires_alpaca": false,
+                  "requires_recovery": false,
+                  "requires_portfolio": true,
+                  "description": "Portfolio candidate allocation and consolidated order proof."
+                },
+                "evidence": {
+                  "passed": true,
+                  "completed_sessions": 3,
+                  "portfolio": true
+                }
+              }
+            },
+            {
+              "name": "restart_recovery_soak",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "checks": {
+                  "passed": true,
+                  "minimum_sessions": true,
+                  "submission_mode": true,
+                  "alpaca_requirement": true,
+                  "recovery_requirement": true,
+                  "portfolio_requirement": true
+                },
+                "required": {
+                  "name": "restart_recovery_soak",
+                  "required_sessions": 2,
+                  "submit_orders": false,
+                  "requires_alpaca": false,
+                  "requires_recovery": true,
+                  "requires_portfolio": false,
+                  "description": "Restart-aware persisted-state recovery proof."
+                },
+                "evidence": {
+                  "passed": true,
+                  "completed_sessions": 2,
+                  "recovery": true
+                }
+              }
+            },
+            {
+              "name": "full_paper_rehearsal",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "checks": {
+                  "passed": true,
+                  "minimum_sessions": true,
+                  "submission_mode": true,
+                  "alpaca_requirement": true,
+                  "recovery_requirement": true,
+                  "portfolio_requirement": true
+                },
+                "required": {
+                  "name": "full_paper_rehearsal",
+                  "required_sessions": 5,
+                  "submit_orders": true,
+                  "requires_alpaca": true,
+                  "requires_recovery": true,
+                  "requires_portfolio": true,
+                  "description": "Guarded full paper rehearsal after lower tiers pass."
+                },
+                "evidence": {
+                  "passed": true,
+                  "completed_sessions": 5,
+                  "alpaca": true,
+                  "submitted": true,
+                  "recovery": true,
+                  "portfolio": true
+                }
+              }
+            }
+          ]
+        },
+        "fixture": {
+          "local_sample_soak": {
+            "passed": true,
+            "completed_sessions": 3
+          },
+          "alpaca_data_only_dry_run": {
+            "passed": true,
+            "completed_sessions": 3,
+            "alpaca": true
+          },
+          "alpaca_micro_notional_submit": {
+            "passed": true,
+            "completed_sessions": 3,
+            "alpaca": true,
+            "submitted": true
+          },
+          "portfolio_paper_soak": {
+            "passed": true,
+            "completed_sessions": 3,
+            "portfolio": true
+          },
+          "restart_recovery_soak": {
+            "passed": true,
+            "completed_sessions": 2,
+            "recovery": true
+          },
+          "full_paper_rehearsal": {
+            "passed": true,
+            "completed_sessions": 5,
+            "alpaca": true,
+            "submitted": true,
+            "recovery": true,
+            "portfolio": true
+          }
+        }
+      }
+    },
+    {
+      "check_id": "paper_session_schedule",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": "reports\\paper-session-schedule.json",
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:31.079296+00:00",
+      "metadata": {
+        "passed": true,
+        "active_window": "market_open",
+        "windows": [
+          {
+            "name": "pre_market",
+            "start_time": "08:00:00",
+            "end_time": "08:45:00",
+            "required": false,
+            "submit_orders_allowed": false,
+            "description": "Pre-market data and recovery check."
+          },
+          {
+            "name": "market_open",
+            "start_time": "08:30:00",
+            "end_time": "10:00:00",
+            "required": true,
+            "submit_orders_allowed": true,
+            "description": "Opening-session guarded paper decision."
+          },
+          {
+            "name": "intraday",
+            "start_time": "10:00:00",
+            "end_time": "14:30:00",
+            "required": true,
+            "submit_orders_allowed": true,
+            "description": "Intraday data/reconciliation check."
+          },
+          {
+            "name": "market_close",
+            "start_time": "14:30:00",
+            "end_time": "15:15:00",
+            "required": true,
+            "submit_orders_allowed": true,
+            "description": "Closing-session guarded paper decision."
+          },
+          {
+            "name": "end_of_day",
+            "start_time": "15:15:00",
+            "end_time": "17:00:00",
+            "required": true,
+            "submit_orders_allowed": false,
+            "description": "Daily report and no-new-orders evidence window."
+          }
+        ],
+        "records": [
+          {
+            "window_name": "market_open",
+            "ran_at": "2026-07-20T14:26:13.210240+00:00",
+            "passed": true,
+            "submitted": false,
+            "result": {
+              "report_path": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+              "ready_for_submission": true,
+              "submitted": false,
+              "data_rows": 160,
+              "latest_prices": {
+                "SPY": 121.5283941077598
+              },
+              "regime": {
+                "symbol": "SPY",
+                "trend_state": "trending",
+                "trend_direction": "up",
+                "volatility_state": "contraction",
+                "liquidity_state": "normal",
+                "macro_sensitivity": "normal",
+                "efficiency_ratio": 0.6489804565386399,
+                "period_return": 0.10526697233522042,
+                "volatility_ratio": 0.5700170177193662,
+                "liquidity_ratio": 1.0044545062248575,
+                "eligible_modes": [
+                  "benchmark",
+                  "trend_following",
+                  "range_scalping",
+                  "cash"
+                ]
+              },
+              "orders_planned": 1,
+              "orders_submitted": 0,
+              "planned_orders": [
+                {
+                  "id": "ca3a688a-8a99-4603-ad63-758f50dad368",
+                  "client_order_id": null,
+                  "symbol": "SPY",
+                  "side": "BUY",
+                  "quantity": 20.0,
+                  "order_type": "MARKET",
+                  "limit_price": null,
+                  "stop_price": null,
+                  "take_profit_price": null,
+                  "trail_percent": null,
+                  "time_in_force": "day",
+                  "parent_order_id": null,
+                  "order_group_id": null,
+                  "status": "PENDING",
+                  "created_at": "2026-07-20T14:26:13.225868+00:00"
+                }
+              ],
+              "data_drift_reports": 0,
+              "reconciliation_clean": null,
+              "paper_scorecard_passed": null,
+              "recovery": {
+                "enabled": false,
+                "state_path": null,
+                "orders_loaded": 0,
+                "reports_loaded": 0,
+                "positions_loaded": 0,
+                "account_loaded": false,
+                "reconciliation_clean": null,
+                "unresolved_orders": 0,
+                "blocked": false,
+                "passed": true,
+                "reason": "not_enabled"
+              },
+              "risk_budget": null,
+              "submission_guard": {
+                "passed": true,
+                "reason": "submission_guard_passed",
+                "submit_requested": false,
+                "probes": [
+                  {
+                    "name": "submit_requested",
+                    "passed": true,
+                    "reason": "submit_not_requested",
+                    "evidence": {
+                      "submit_orders": false
+                    }
+                  }
+                ]
+              },
+              "warnings": [],
+              "artifact_paths": {
+                "manifest": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\manifest.json",
+                "committee_context": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-context.json",
+                "committee_decision": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-decision.json",
+                "execution_plan": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-plan.json",
+                "session_report": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+                "submitted_orders": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\submitted-orders.json",
+                "execution_reports": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-reports.json",
+                "reconciliation": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\reconciliation.json",
+                "paper_scorecard": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-scorecard.json",
+                "post_session_account": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\post-session-account.json",
+                "recovery": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\recovery.json",
+                "submission_guard": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\submission-guard.json",
+                "paper_session_result": "runs\\paper-session-schedule\\20260720T142613Z-market_open-paper-session\\20260720T142613Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-session-result.json"
+              }
+            }
+          }
+        ],
+        "checks": [
+          {
+            "name": "active_window",
+            "passed": true,
+            "reason": "passed",
+            "window": "market_open",
+            "records": 1
+          },
+          {
+            "name": "paper_session_result",
+            "passed": true,
+            "reason": "passed",
+            "window": "market_open",
+            "submit_orders_allowed": true
+          },
+          {
+            "name": "blocked_window_no_submit",
+            "passed": true,
+            "reason": "passed",
+            "window": "market_open"
+          }
+        ],
+        "artifact_path": "reports\\paper-session-schedule.json"
+      }
+    },
+    {
+      "check_id": "daily_ops_acceptance",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:31.079296+00:00",
+      "metadata": {
+        "report": {
+          "passed": true,
+          "probes": [
+            {
+              "name": "summary_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "summary": {
+                  "promotion_enabled": 0,
+                  "sessions": 3,
+                  "submitted_orders": 0
+                }
+              }
+            },
+            {
+              "name": "recommendations_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "recommendations": [
+                  "Continue dry-run evidence collection before broker-backed submission."
+                ]
+              }
+            },
+            {
+              "name": "unresolved_order_summary_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "reconciliation": {
+                  "unresolved_sessions": 0
+                }
+              }
+            },
+            {
+              "name": "missed_fill_summary_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "fills": {
+                  "missed_or_unsubmitted_sessions": 0
+                }
+              }
+            },
+            {
+              "name": "scorecard_summary_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "scorecards": {
+                  "passed": 3,
+                  "failed": 0
+                }
+              }
+            },
+            {
+              "name": "promotion_queue_summary_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "promotion_queue": {},
+                "summary": {
+                  "promotion_enabled": 0,
+                  "sessions": 3,
+                  "submitted_orders": 0
+                }
+              }
+            },
+            {
+              "name": "warnings_serialized",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "warnings": []
+              }
+            }
+          ]
+        },
+        "fixture": {
+          "summary": {
+            "promotion_enabled": 0,
+            "sessions": 3,
+            "submitted_orders": 0
+          },
+          "recommendations": [
+            "Continue dry-run evidence collection before broker-backed submission."
+          ],
+          "reconciliation": {
+            "unresolved_sessions": 0
+          },
+          "fills": {
+            "missed_or_unsubmitted_sessions": 0
+          },
+          "scorecards": {
+            "passed": 3,
+            "failed": 0
+          },
+          "promotion_queue": {},
+          "warnings": []
+        }
+      }
+    },
+    {
+      "check_id": "observability_acceptance",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:31.079296+00:00",
+      "metadata": {
+        "report": {
+          "passed": true,
+          "probes": [
+            {
+              "name": "required_metrics_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "required": [
+                  "orders",
+                  "equity"
+                ],
+                "available": [
+                  "equity",
+                  "orders",
+                  "paper_session_seconds",
+                  "paper_sessions"
+                ]
+              }
+            },
+            {
+              "name": "health_checks_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "health": [
+                  {
+                    "name": "data",
+                    "healthy": true
+                  },
+                  {
+                    "name": "execution",
+                    "healthy": true
+                  }
+                ]
+              }
+            },
+            {
+              "name": "notification_topics_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "required": [
+                  "startup",
+                  "halt"
+                ],
+                "topics": [
+                  "halt",
+                  "startup"
+                ]
+              }
+            },
+            {
+              "name": "critical_severity_routed",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "severities": [
+                  "CRITICAL",
+                  "INFO"
+                ]
+              }
+            },
+            {
+              "name": "dashboard_account_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "dashboard_keys": [
+                  "account",
+                  "risk_halt"
+                ]
+              }
+            },
+            {
+              "name": "halt_reason_visible",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "risk_halt": {
+                  "halted": true,
+                  "reason": "operator validation fixture"
+                }
+              }
+            }
+          ]
+        },
+        "fixture": {
+          "metrics_snapshot": {
+            "counters": {
+              "orders": 0,
+              "paper_sessions": 3
+            },
+            "gauges": {
+              "equity": 100000.0
+            },
+            "timings": {
+              "paper_session_seconds": 1.0
+            }
+          },
+          "health_statuses": [
+            {
+              "name": "data",
+              "healthy": true
+            },
+            {
+              "name": "execution",
+              "healthy": true
+            }
+          ],
+          "notification_events": [
+            {
+              "topic": "startup",
+              "severity": "INFO"
+            },
+            {
+              "topic": "halt",
+              "severity": "CRITICAL"
+            }
+          ],
+          "dashboard_snapshot": {
+            "account": {
+              "equity": 100000.0
+            },
+            "risk_halt": {
+              "halted": true,
+              "reason": "operator validation fixture"
+            }
+          }
+        }
+      }
+    },
+    {
+      "check_id": "cli_smoke_paper_session",
+      "status": "skipped",
+      "passed": false,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "consume_existing_evidence",
+      "captured_at": "2026-07-23T14:19:30.933219+00:00",
+      "metadata": {}
+    },
+    {
+      "check_id": "cli_smoke_paper_session_schedule",
+      "status": "skipped",
+      "passed": false,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "consume_existing_evidence",
+      "captured_at": "2026-07-23T14:19:30.933219+00:00",
+      "metadata": {}
+    },
+    {
+      "check_id": "cli_smoke_paper_soak",
+      "status": "skipped",
+      "passed": false,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "consume_existing_evidence",
+      "captured_at": "2026-07-23T14:19:30.933219+00:00",
+      "metadata": {}
+    },
+    {
+      "check_id": "perf_paper_session_planning",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": 0.14860309986397624,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:31.079296+00:00",
+      "metadata": {
+        "benchmark_name": "paper-session-planning",
+        "mean_seconds": 0.14860309986397624,
+        "max_mean_seconds": 2.0,
+        "total_seconds": 0.14860309986397624,
+        "max_total_seconds": null
+      }
+    },
+    {
+      "check_id": "alpaca_data_connectivity",
+      "status": "skipped",
+      "passed": false,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "consume_existing_evidence",
+      "captured_at": "2026-07-23T14:19:30.933219+00:00",
+      "metadata": {}
+    },
+    {
+      "check_id": "alpaca_paper_order_lifecycle",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": "reports\\alpaca-paper-broker-proof.json",
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:31.079296+00:00",
+      "metadata": {
+        "paper_broker_proof": {
+          "passed": true,
+          "generated_at": "2026-07-20T14:02:22.410936+00:00",
+          "order_plan": {
+            "symbol": "SPY",
+            "side": "BUY",
+            "quantity": 1.0,
+            "order_type": "LIMIT",
+            "limit_price": 1.0,
+            "planned_notional": 1.0,
+            "max_notional": 25.0,
+            "client_order_id": "tb-proof-20260720-0900ct-01"
+          },
+          "session": "REGULAR",
+          "submit_requested": true,
+          "submit_allowed": true,
+          "submitted": true,
+          "cancelled": true,
+          "reason": "passed",
+          "probes": [
+            {
+              "name": "paper_environment",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "errors": [],
+                "warnings": []
+              }
+            },
+            {
+              "name": "alpaca_provider",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "provider": "alpaca"
+              }
+            },
+            {
+              "name": "paper_execution_mode",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "execution_mode": "paper",
+                "paper_trading": true
+              }
+            },
+            {
+              "name": "paper_endpoint",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "base_url": "https://paper-api.alpaca.markets"
+              }
+            },
+            {
+              "name": "market_session",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "timestamp": "2026-07-20T14:02:22.410936+00:00",
+                "session": "REGULAR",
+                "policy": {
+                  "allow_pre_market": false,
+                  "allow_regular": true,
+                  "allow_after_hours": false
+                }
+              }
+            },
+            {
+              "name": "submit_flag",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "submit_orders": true
+              }
+            },
+            {
+              "name": "tiny_notional",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "planned_notional": 1.0,
+                "max_notional": 25.0
+              }
+            },
+            {
+              "name": "approval_policy",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "configured": true,
+                "policy": {
+                  "symbol_allowlist": [
+                    "SPY"
+                  ],
+                  "max_daily_submissions": 1,
+                  "kill_switch_enabled": false,
+                  "repeated_reject_lockout_threshold": null,
+                  "require_cleanup": true
+                }
+              }
+            },
+            {
+              "name": "approval_kill_switch",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "kill_switch_enabled": false
+              }
+            },
+            {
+              "name": "approval_symbol_allowlist",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "symbol": "SPY",
+                "symbol_allowlist": [
+                  "SPY"
+                ]
+              }
+            },
+            {
+              "name": "approval_daily_submission_limit",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "submitted_today": 0,
+                "max_daily_submissions": 1
+              }
+            },
+            {
+              "name": "approval_repeated_reject_lockout",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "symbol": "SPY",
+                "rejected_reports": 0,
+                "threshold": null
+              }
+            },
+            {
+              "name": "submit_acknowledged",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "status": "PENDING",
+                "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547"
+              }
+            },
+            {
+              "name": "order_not_rejected",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "status": "PENDING",
+                "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547"
+              }
+            },
+            {
+              "name": "cancel_acknowledged",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "status": "CANCELLED",
+                "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547"
+              }
+            },
+            {
+              "name": "execution_report_recorded",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "reports": 1
+              }
+            },
+            {
+              "name": "fill_polling_completed",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "reports": 1,
+                "source": "broker_poll_execution_reports",
+                "error": null
+              }
+            },
+            {
+              "name": "polled_order_converged",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+                "statuses": [
+                  "CANCELLED"
+                ]
+              }
+            },
+            {
+              "name": "post_account_snapshot",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "cash": 100000.0,
+                "equity": 100000.0
+              }
+            },
+            {
+              "name": "proof_order_cleanup",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "open_orders_after": 0,
+                "proof_order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+                "cleanup_required": true
+              }
+            }
+          ],
+          "orders": [
+            {
+              "id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+              "client_order_id": "tb-proof-20260720-0900ct-01",
+              "symbol": "SPY",
+              "side": "BUY",
+              "quantity": 1.0,
+              "order_type": "LIMIT",
+              "limit_price": 1.0,
+              "status": "PENDING",
+              "created_at": "2026-07-20T14:02:23.627250+00:00"
+            },
+            {
+              "id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+              "client_order_id": "tb-proof-20260720-0900ct-01",
+              "symbol": "SPY",
+              "side": "BUY",
+              "quantity": 1.0,
+              "order_type": "LIMIT",
+              "limit_price": 1.0,
+              "status": "CANCELLED",
+              "created_at": "2026-07-20T14:02:23.627250+00:00"
+            }
+          ],
+          "execution_reports": [
+            {
+              "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+              "status": "CANCELLED",
+              "broker_order_id": "8c368843-bd35-4b39-9bc3-202524a243ff",
+              "fill_id": "f388494d-02e0-4491-a891-0ba9bda6addf",
+              "filled_quantity": 0.0,
+              "average_fill_price": null,
+              "submitted_at": "2026-07-20T14:02:24.033537+00:00",
+              "raw": {}
+            }
+          ],
+          "polled_execution_reports": [
+            {
+              "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+              "status": "CANCELLED",
+              "broker_order_id": "8c368843-bd35-4b39-9bc3-202524a243ff",
+              "fill_id": "f9355205-2d18-404d-a5df-34522d240b02",
+              "filled_quantity": 0.0,
+              "average_fill_price": null,
+              "submitted_at": "2026-07-20T14:02:24.252301+00:00",
+              "raw": {
+                "id": "<redacted>",
+                "client_order_id": "tb-proof-20260720-0900ct-01",
+                "created_at": "2026-07-20T14:02:24.302219188Z",
+                "updated_at": "2026-07-20T14:02:24.520416625Z",
+                "submitted_at": "2026-07-20T14:02:24.330738945Z",
+                "filled_at": null,
+                "expired_at": null,
+                "canceled_at": "2026-07-20T14:02:24.5187049Z",
+                "failed_at": null,
+                "replaced_at": null,
+                "replaced_by": null,
+                "replaces": null,
+                "asset_id": "<redacted>",
+                "symbol": "SPY",
+                "asset_class": "us_equity",
+                "notional": null,
+                "qty": "1",
+                "filled_qty": "0",
+                "filled_avg_price": null,
+                "order_class": "",
+                "order_type": "limit",
+                "type": "limit",
+                "side": "buy",
+                "position_intent": "buy_to_open",
+                "time_in_force": "day",
+                "limit_price": "1",
+                "stop_price": null,
+                "status": "canceled",
+                "extended_hours": false,
+                "legs": null,
+                "trail_percent": null,
+                "trail_price": null,
+                "hwm": null,
+                "subtag": null,
+                "source": null,
+                "expires_at": "2026-07-20T20:00:00Z"
+              }
+            }
+          ],
+          "account_snapshot": {
+            "cash": 100000.0,
+            "buying_power": 400000.0,
+            "equity": 100000.0,
+            "daytrade_count": 0,
+            "pattern_day_trader": false,
+            "trading_blocked": false,
+            "account_blocked": false,
+            "captured_at": "2026-07-20T14:02:23.424111+00:00",
+            "raw": {
+              "id": "<redacted>",
+              "admin_configurations": {},
+              "user_configurations": null,
+              "account_number": "<redacted>",
+              "status": "ACTIVE",
+              "crypto_status": "ACTIVE",
+              "options_approved_level": 3,
+              "options_trading_level": 3,
+              "currency": "USD",
+              "buying_power": "400000",
+              "regt_buying_power": "200000",
+              "effective_buying_power": "400000",
+              "non_marginable_buying_power": "100000",
+              "options_buying_power": "100000",
+              "cash": "100000",
+              "accrued_fees": "0",
+              "portfolio_value": "100000",
+              "trading_blocked": false,
+              "transfers_blocked": false,
+              "account_blocked": false,
+              "created_at": "2026-07-01T19:39:08.94948Z",
+              "trade_suspended_by_user": false,
+              "multiplier": "4",
+              "shorting_enabled": true,
+              "equity": "100000",
+              "last_equity": "100000",
+              "long_market_value": "0",
+              "short_market_value": "0",
+              "position_market_value": "0",
+              "initial_margin": "0",
+              "maintenance_margin": "0",
+              "last_maintenance_margin": "0",
+              "sma": "100000",
+              "balance_asof": "2026-07-17",
+              "crypto_tier": 1,
+              "intraday_adjustments": "0",
+              "pending_reg_taf_fees": "0"
+            }
+          },
+          "post_account_snapshot": {
+            "cash": 100000.0,
+            "buying_power": 400000.0,
+            "equity": 100000.0,
+            "daytrade_count": 0,
+            "pattern_day_trader": false,
+            "trading_blocked": false,
+            "account_blocked": false,
+            "captured_at": "2026-07-20T14:02:24.473411+00:00",
+            "raw": {
+              "id": "<redacted>",
+              "admin_configurations": {},
+              "user_configurations": null,
+              "account_number": "<redacted>",
+              "status": "ACTIVE",
+              "crypto_status": "ACTIVE",
+              "options_approved_level": 3,
+              "options_trading_level": 3,
+              "currency": "USD",
+              "buying_power": "400000",
+              "regt_buying_power": "200000",
+              "effective_buying_power": "400000",
+              "non_marginable_buying_power": "100000",
+              "options_buying_power": "100000",
+              "cash": "100000",
+              "accrued_fees": "0",
+              "portfolio_value": "100000",
+              "trading_blocked": false,
+              "transfers_blocked": false,
+              "account_blocked": false,
+              "created_at": "2026-07-01T19:39:08.94948Z",
+              "trade_suspended_by_user": false,
+              "multiplier": "4",
+              "shorting_enabled": true,
+              "equity": "100000",
+              "last_equity": "100000",
+              "long_market_value": "0",
+              "short_market_value": "0",
+              "position_market_value": "0",
+              "initial_margin": "0",
+              "maintenance_margin": "0",
+              "last_maintenance_margin": "0",
+              "sma": "100000",
+              "balance_asof": "2026-07-17",
+              "crypto_tier": 1,
+              "intraday_adjustments": "0",
+              "pending_reg_taf_fees": "0"
+            }
+          },
+          "positions_before": [],
+          "positions_after": [],
+          "open_orders_before": [],
+          "open_orders_after": [],
+          "artifact_path": "reports\\alpaca-paper-broker-proof.json"
+        }
+      }
+    },
+    {
+      "check_id": "paper_broker_proof_schedule",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": "reports\\alpaca-paper-broker-proof-schedule.json",
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:31.079296+00:00",
+      "metadata": {
+        "paper_broker_proof_schedule": {
+          "passed": true,
+          "windows": [
+            {
+              "name": "market_open",
+              "start_time": "08:30:00",
+              "end_time": "10:00:00",
+              "submit_orders_allowed": true,
+              "required": true,
+              "description": "Opening regular-session micro-order broker proof."
+            },
+            {
+              "name": "intraday",
+              "start_time": "10:00:00",
+              "end_time": "14:30:00",
+              "submit_orders_allowed": true,
+              "required": true,
+              "description": "Intraday micro-order broker proof and cleanup."
+            },
+            {
+              "name": "market_close",
+              "start_time": "14:30:00",
+              "end_time": "15:15:00",
+              "submit_orders_allowed": true,
+              "required": true,
+              "description": "Closing regular-session broker proof before end-of-day reporting."
+            },
+            {
+              "name": "end_of_day",
+              "start_time": "15:15:00",
+              "end_time": "17:00:00",
+              "submit_orders_allowed": false,
+              "required": false,
+              "description": "No-submit broker-proof audit window."
+            }
+          ],
+          "records": [
+            {
+              "window_name": "market_open",
+              "ran_at": "2026-07-20T14:02:22.410936+00:00",
+              "passed": true,
+              "submitted": true,
+              "report": {
+                "passed": true,
+                "generated_at": "2026-07-20T14:02:22.410936+00:00",
+                "order_plan": {
+                  "symbol": "SPY",
+                  "side": "BUY",
+                  "quantity": 1.0,
+                  "order_type": "LIMIT",
+                  "limit_price": 1.0,
+                  "planned_notional": 1.0,
+                  "max_notional": 25.0,
+                  "client_order_id": "tb-proof-20260720-0900ct-01"
+                },
+                "session": "REGULAR",
+                "submit_requested": true,
+                "submit_allowed": true,
+                "submitted": true,
+                "cancelled": true,
+                "reason": "passed",
+                "probes": [
+                  {
+                    "name": "paper_environment",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "errors": [],
+                      "warnings": []
+                    }
+                  },
+                  {
+                    "name": "alpaca_provider",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "provider": "alpaca"
+                    }
+                  },
+                  {
+                    "name": "paper_execution_mode",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "execution_mode": "paper",
+                      "paper_trading": true
+                    }
+                  },
+                  {
+                    "name": "paper_endpoint",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "base_url": "https://paper-api.alpaca.markets"
+                    }
+                  },
+                  {
+                    "name": "market_session",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "timestamp": "2026-07-20T14:02:22.410936+00:00",
+                      "session": "REGULAR",
+                      "policy": {
+                        "allow_pre_market": false,
+                        "allow_regular": true,
+                        "allow_after_hours": false
+                      }
+                    }
+                  },
+                  {
+                    "name": "submit_flag",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "submit_orders": true
+                    }
+                  },
+                  {
+                    "name": "tiny_notional",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "planned_notional": 1.0,
+                      "max_notional": 25.0
+                    }
+                  },
+                  {
+                    "name": "approval_policy",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "configured": true,
+                      "policy": {
+                        "symbol_allowlist": [
+                          "SPY"
+                        ],
+                        "max_daily_submissions": 1,
+                        "kill_switch_enabled": false,
+                        "repeated_reject_lockout_threshold": null,
+                        "require_cleanup": true
+                      }
+                    }
+                  },
+                  {
+                    "name": "approval_kill_switch",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "kill_switch_enabled": false
+                    }
+                  },
+                  {
+                    "name": "approval_symbol_allowlist",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "symbol": "SPY",
+                      "symbol_allowlist": [
+                        "SPY"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "approval_daily_submission_limit",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "submitted_today": 0,
+                      "max_daily_submissions": 1
+                    }
+                  },
+                  {
+                    "name": "approval_repeated_reject_lockout",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "symbol": "SPY",
+                      "rejected_reports": 0,
+                      "threshold": null
+                    }
+                  },
+                  {
+                    "name": "submit_acknowledged",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "status": "PENDING",
+                      "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547"
+                    }
+                  },
+                  {
+                    "name": "order_not_rejected",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "status": "PENDING",
+                      "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547"
+                    }
+                  },
+                  {
+                    "name": "cancel_acknowledged",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "status": "CANCELLED",
+                      "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547"
+                    }
+                  },
+                  {
+                    "name": "execution_report_recorded",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "reports": 1
+                    }
+                  },
+                  {
+                    "name": "fill_polling_completed",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "reports": 1,
+                      "source": "broker_poll_execution_reports",
+                      "error": null
+                    }
+                  },
+                  {
+                    "name": "polled_order_converged",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+                      "statuses": [
+                        "CANCELLED"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "post_account_snapshot",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "cash": 100000.0,
+                      "equity": 100000.0
+                    }
+                  },
+                  {
+                    "name": "proof_order_cleanup",
+                    "passed": true,
+                    "reason": "passed",
+                    "evidence": {
+                      "open_orders_after": 0,
+                      "proof_order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+                      "cleanup_required": true
+                    }
+                  }
+                ],
+                "orders": [
+                  {
+                    "id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+                    "client_order_id": "tb-proof-20260720-0900ct-01",
+                    "symbol": "SPY",
+                    "side": "BUY",
+                    "quantity": 1.0,
+                    "order_type": "LIMIT",
+                    "limit_price": 1.0,
+                    "status": "PENDING",
+                    "created_at": "2026-07-20T14:02:23.627250+00:00"
+                  },
+                  {
+                    "id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+                    "client_order_id": "tb-proof-20260720-0900ct-01",
+                    "symbol": "SPY",
+                    "side": "BUY",
+                    "quantity": 1.0,
+                    "order_type": "LIMIT",
+                    "limit_price": 1.0,
+                    "status": "CANCELLED",
+                    "created_at": "2026-07-20T14:02:23.627250+00:00"
+                  }
+                ],
+                "execution_reports": [
+                  {
+                    "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+                    "status": "CANCELLED",
+                    "broker_order_id": "8c368843-bd35-4b39-9bc3-202524a243ff",
+                    "fill_id": "f388494d-02e0-4491-a891-0ba9bda6addf",
+                    "filled_quantity": 0.0,
+                    "average_fill_price": null,
+                    "submitted_at": "2026-07-20T14:02:24.033537+00:00",
+                    "raw": {}
+                  }
+                ],
+                "polled_execution_reports": [
+                  {
+                    "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+                    "status": "CANCELLED",
+                    "broker_order_id": "8c368843-bd35-4b39-9bc3-202524a243ff",
+                    "fill_id": "f9355205-2d18-404d-a5df-34522d240b02",
+                    "filled_quantity": 0.0,
+                    "average_fill_price": null,
+                    "submitted_at": "2026-07-20T14:02:24.252301+00:00",
+                    "raw": {
+                      "id": "<redacted>",
+                      "client_order_id": "tb-proof-20260720-0900ct-01",
+                      "created_at": "2026-07-20T14:02:24.302219188Z",
+                      "updated_at": "2026-07-20T14:02:24.520416625Z",
+                      "submitted_at": "2026-07-20T14:02:24.330738945Z",
+                      "filled_at": null,
+                      "expired_at": null,
+                      "canceled_at": "2026-07-20T14:02:24.5187049Z",
+                      "failed_at": null,
+                      "replaced_at": null,
+                      "replaced_by": null,
+                      "replaces": null,
+                      "asset_id": "<redacted>",
+                      "symbol": "SPY",
+                      "asset_class": "us_equity",
+                      "notional": null,
+                      "qty": "1",
+                      "filled_qty": "0",
+                      "filled_avg_price": null,
+                      "order_class": "",
+                      "order_type": "limit",
+                      "type": "limit",
+                      "side": "buy",
+                      "position_intent": "buy_to_open",
+                      "time_in_force": "day",
+                      "limit_price": "1",
+                      "stop_price": null,
+                      "status": "canceled",
+                      "extended_hours": false,
+                      "legs": null,
+                      "trail_percent": null,
+                      "trail_price": null,
+                      "hwm": null,
+                      "subtag": null,
+                      "source": null,
+                      "expires_at": "2026-07-20T20:00:00Z"
+                    }
+                  }
+                ],
+                "account_snapshot": {
+                  "cash": 100000.0,
+                  "buying_power": 400000.0,
+                  "equity": 100000.0,
+                  "daytrade_count": 0,
+                  "pattern_day_trader": false,
+                  "trading_blocked": false,
+                  "account_blocked": false,
+                  "captured_at": "2026-07-20T14:02:23.424111+00:00",
+                  "raw": {
+                    "id": "<redacted>",
+                    "admin_configurations": {},
+                    "user_configurations": null,
+                    "account_number": "<redacted>",
+                    "status": "ACTIVE",
+                    "crypto_status": "ACTIVE",
+                    "options_approved_level": 3,
+                    "options_trading_level": 3,
+                    "currency": "USD",
+                    "buying_power": "400000",
+                    "regt_buying_power": "200000",
+                    "effective_buying_power": "400000",
+                    "non_marginable_buying_power": "100000",
+                    "options_buying_power": "100000",
+                    "cash": "100000",
+                    "accrued_fees": "0",
+                    "portfolio_value": "100000",
+                    "trading_blocked": false,
+                    "transfers_blocked": false,
+                    "account_blocked": false,
+                    "created_at": "2026-07-01T19:39:08.94948Z",
+                    "trade_suspended_by_user": false,
+                    "multiplier": "4",
+                    "shorting_enabled": true,
+                    "equity": "100000",
+                    "last_equity": "100000",
+                    "long_market_value": "0",
+                    "short_market_value": "0",
+                    "position_market_value": "0",
+                    "initial_margin": "0",
+                    "maintenance_margin": "0",
+                    "last_maintenance_margin": "0",
+                    "sma": "100000",
+                    "balance_asof": "2026-07-17",
+                    "crypto_tier": 1,
+                    "intraday_adjustments": "0",
+                    "pending_reg_taf_fees": "0"
+                  }
+                },
+                "post_account_snapshot": {
+                  "cash": 100000.0,
+                  "buying_power": 400000.0,
+                  "equity": 100000.0,
+                  "daytrade_count": 0,
+                  "pattern_day_trader": false,
+                  "trading_blocked": false,
+                  "account_blocked": false,
+                  "captured_at": "2026-07-20T14:02:24.473411+00:00",
+                  "raw": {
+                    "id": "<redacted>",
+                    "admin_configurations": {},
+                    "user_configurations": null,
+                    "account_number": "<redacted>",
+                    "status": "ACTIVE",
+                    "crypto_status": "ACTIVE",
+                    "options_approved_level": 3,
+                    "options_trading_level": 3,
+                    "currency": "USD",
+                    "buying_power": "400000",
+                    "regt_buying_power": "200000",
+                    "effective_buying_power": "400000",
+                    "non_marginable_buying_power": "100000",
+                    "options_buying_power": "100000",
+                    "cash": "100000",
+                    "accrued_fees": "0",
+                    "portfolio_value": "100000",
+                    "trading_blocked": false,
+                    "transfers_blocked": false,
+                    "account_blocked": false,
+                    "created_at": "2026-07-01T19:39:08.94948Z",
+                    "trade_suspended_by_user": false,
+                    "multiplier": "4",
+                    "shorting_enabled": true,
+                    "equity": "100000",
+                    "last_equity": "100000",
+                    "long_market_value": "0",
+                    "short_market_value": "0",
+                    "position_market_value": "0",
+                    "initial_margin": "0",
+                    "maintenance_margin": "0",
+                    "last_maintenance_margin": "0",
+                    "sma": "100000",
+                    "balance_asof": "2026-07-17",
+                    "crypto_tier": 1,
+                    "intraday_adjustments": "0",
+                    "pending_reg_taf_fees": "0"
+                  }
+                },
+                "positions_before": [],
+                "positions_after": [],
+                "open_orders_before": [],
+                "open_orders_after": [],
+                "artifact_path": "reports\\alpaca-paper-broker-proof.json"
+              }
+            }
+          ],
+          "checks": [
+            {
+              "name": "active_window",
+              "passed": true,
+              "reason": "passed",
+              "window": "market_open",
+              "records": 1
+            },
+            {
+              "name": "broker_proof_result",
+              "passed": true,
+              "reason": "passed",
+              "window": "market_open",
+              "submit_orders_allowed": true
+            },
+            {
+              "name": "blocked_window_no_submit",
+              "passed": true,
+              "reason": "passed",
+              "window": "market_open"
+            }
+          ],
+          "artifact_path": "reports\\alpaca-paper-broker-proof-schedule.json"
+        }
+      }
+    },
+    {
+      "check_id": "real_alpaca_fill_polling",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": "reports\\alpaca-paper-broker-proof.json",
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:31.094923+00:00",
+      "metadata": {
+        "paper_broker_proof_artifact": "reports\\alpaca-paper-broker-proof.json",
+        "submitted": true,
+        "polling_source": "broker_poll_execution_reports",
+        "polled_execution_reports": [
+          {
+            "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+            "status": "CANCELLED",
+            "broker_order_id": "8c368843-bd35-4b39-9bc3-202524a243ff",
+            "fill_id": "f9355205-2d18-404d-a5df-34522d240b02",
+            "filled_quantity": 0.0,
+            "average_fill_price": null,
+            "submitted_at": "2026-07-20T14:02:24.252301+00:00",
+            "raw": {
+              "id": "<redacted>",
+              "client_order_id": "tb-proof-20260720-0900ct-01",
+              "created_at": "2026-07-20T14:02:24.302219188Z",
+              "updated_at": "2026-07-20T14:02:24.520416625Z",
+              "submitted_at": "2026-07-20T14:02:24.330738945Z",
+              "filled_at": null,
+              "expired_at": null,
+              "canceled_at": "2026-07-20T14:02:24.5187049Z",
+              "failed_at": null,
+              "replaced_at": null,
+              "replaced_by": null,
+              "replaces": null,
+              "asset_id": "<redacted>",
+              "symbol": "SPY",
+              "asset_class": "us_equity",
+              "notional": null,
+              "qty": "1",
+              "filled_qty": "0",
+              "filled_avg_price": null,
+              "order_class": "",
+              "order_type": "limit",
+              "type": "limit",
+              "side": "buy",
+              "position_intent": "buy_to_open",
+              "time_in_force": "day",
+              "limit_price": "1",
+              "stop_price": null,
+              "status": "canceled",
+              "extended_hours": false,
+              "legs": null,
+              "trail_percent": null,
+              "trail_price": null,
+              "hwm": null,
+              "subtag": null,
+              "source": null,
+              "expires_at": "2026-07-20T20:00:00Z"
+            }
+          }
+        ],
+        "polling_probe": {
+          "name": "fill_polling_completed",
+          "passed": true,
+          "reason": "passed",
+          "evidence": {
+            "reports": 1,
+            "source": "broker_poll_execution_reports",
+            "error": null
+          }
+        }
+      }
+    },
+    {
+      "check_id": "broker_account_parity",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": "reports\\alpaca-paper-broker-proof.json",
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:31.094923+00:00",
+      "metadata": {
+        "paper_broker_proof_artifact": "reports\\alpaca-paper-broker-proof.json",
+        "submitted": true,
+        "pre_account": {
+          "cash": 100000.0,
+          "buying_power": 400000.0,
+          "equity": 100000.0,
+          "daytrade_count": 0,
+          "pattern_day_trader": false,
+          "trading_blocked": false,
+          "account_blocked": false,
+          "captured_at": "2026-07-20T14:02:23.424111+00:00",
+          "raw": {
+            "id": "<redacted>",
+            "admin_configurations": {},
+            "user_configurations": null,
+            "account_number": "<redacted>",
+            "status": "ACTIVE",
+            "crypto_status": "ACTIVE",
+            "options_approved_level": 3,
+            "options_trading_level": 3,
+            "currency": "USD",
+            "buying_power": "400000",
+            "regt_buying_power": "200000",
+            "effective_buying_power": "400000",
+            "non_marginable_buying_power": "100000",
+            "options_buying_power": "100000",
+            "cash": "100000",
+            "accrued_fees": "0",
+            "portfolio_value": "100000",
+            "trading_blocked": false,
+            "transfers_blocked": false,
+            "account_blocked": false,
+            "created_at": "2026-07-01T19:39:08.94948Z",
+            "trade_suspended_by_user": false,
+            "multiplier": "4",
+            "shorting_enabled": true,
+            "equity": "100000",
+            "last_equity": "100000",
+            "long_market_value": "0",
+            "short_market_value": "0",
+            "position_market_value": "0",
+            "initial_margin": "0",
+            "maintenance_margin": "0",
+            "last_maintenance_margin": "0",
+            "sma": "100000",
+            "balance_asof": "2026-07-17",
+            "crypto_tier": 1,
+            "intraday_adjustments": "0",
+            "pending_reg_taf_fees": "0"
+          }
+        },
+        "post_account": {
+          "cash": 100000.0,
+          "buying_power": 400000.0,
+          "equity": 100000.0,
+          "daytrade_count": 0,
+          "pattern_day_trader": false,
+          "trading_blocked": false,
+          "account_blocked": false,
+          "captured_at": "2026-07-20T14:02:24.473411+00:00",
+          "raw": {
+            "id": "<redacted>",
+            "admin_configurations": {},
+            "user_configurations": null,
+            "account_number": "<redacted>",
+            "status": "ACTIVE",
+            "crypto_status": "ACTIVE",
+            "options_approved_level": 3,
+            "options_trading_level": 3,
+            "currency": "USD",
+            "buying_power": "400000",
+            "regt_buying_power": "200000",
+            "effective_buying_power": "400000",
+            "non_marginable_buying_power": "100000",
+            "options_buying_power": "100000",
+            "cash": "100000",
+            "accrued_fees": "0",
+            "portfolio_value": "100000",
+            "trading_blocked": false,
+            "transfers_blocked": false,
+            "account_blocked": false,
+            "created_at": "2026-07-01T19:39:08.94948Z",
+            "trade_suspended_by_user": false,
+            "multiplier": "4",
+            "shorting_enabled": true,
+            "equity": "100000",
+            "last_equity": "100000",
+            "long_market_value": "0",
+            "short_market_value": "0",
+            "position_market_value": "0",
+            "initial_margin": "0",
+            "maintenance_margin": "0",
+            "last_maintenance_margin": "0",
+            "sma": "100000",
+            "balance_asof": "2026-07-17",
+            "crypto_tier": 1,
+            "intraday_adjustments": "0",
+            "pending_reg_taf_fees": "0"
+          }
+        },
+        "positions_before": [],
+        "positions_after": [],
+        "open_orders_before": [],
+        "open_orders_after": [],
+        "polled_execution_reports": [
+          {
+            "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+            "status": "CANCELLED",
+            "broker_order_id": "8c368843-bd35-4b39-9bc3-202524a243ff",
+            "fill_id": "f9355205-2d18-404d-a5df-34522d240b02",
+            "filled_quantity": 0.0,
+            "average_fill_price": null,
+            "submitted_at": "2026-07-20T14:02:24.252301+00:00",
+            "raw": {
+              "id": "<redacted>",
+              "client_order_id": "tb-proof-20260720-0900ct-01",
+              "created_at": "2026-07-20T14:02:24.302219188Z",
+              "updated_at": "2026-07-20T14:02:24.520416625Z",
+              "submitted_at": "2026-07-20T14:02:24.330738945Z",
+              "filled_at": null,
+              "expired_at": null,
+              "canceled_at": "2026-07-20T14:02:24.5187049Z",
+              "failed_at": null,
+              "replaced_at": null,
+              "replaced_by": null,
+              "replaces": null,
+              "asset_id": "<redacted>",
+              "symbol": "SPY",
+              "asset_class": "us_equity",
+              "notional": null,
+              "qty": "1",
+              "filled_qty": "0",
+              "filled_avg_price": null,
+              "order_class": "",
+              "order_type": "limit",
+              "type": "limit",
+              "side": "buy",
+              "position_intent": "buy_to_open",
+              "time_in_force": "day",
+              "limit_price": "1",
+              "stop_price": null,
+              "status": "canceled",
+              "extended_hours": false,
+              "legs": null,
+              "trail_percent": null,
+              "trail_price": null,
+              "hwm": null,
+              "subtag": null,
+              "source": null,
+              "expires_at": "2026-07-20T20:00:00Z"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "check_id": "paper_account_parity",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": "reports\\alpaca-paper-broker-proof.json",
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:31.094923+00:00",
+      "metadata": {
+        "paper_broker_proof_artifact": "reports\\alpaca-paper-broker-proof.json",
+        "submitted": true,
+        "pre_account": {
+          "cash": 100000.0,
+          "buying_power": 400000.0,
+          "equity": 100000.0,
+          "daytrade_count": 0,
+          "pattern_day_trader": false,
+          "trading_blocked": false,
+          "account_blocked": false,
+          "captured_at": "2026-07-20T14:02:23.424111+00:00",
+          "raw": {
+            "id": "<redacted>",
+            "admin_configurations": {},
+            "user_configurations": null,
+            "account_number": "<redacted>",
+            "status": "ACTIVE",
+            "crypto_status": "ACTIVE",
+            "options_approved_level": 3,
+            "options_trading_level": 3,
+            "currency": "USD",
+            "buying_power": "400000",
+            "regt_buying_power": "200000",
+            "effective_buying_power": "400000",
+            "non_marginable_buying_power": "100000",
+            "options_buying_power": "100000",
+            "cash": "100000",
+            "accrued_fees": "0",
+            "portfolio_value": "100000",
+            "trading_blocked": false,
+            "transfers_blocked": false,
+            "account_blocked": false,
+            "created_at": "2026-07-01T19:39:08.94948Z",
+            "trade_suspended_by_user": false,
+            "multiplier": "4",
+            "shorting_enabled": true,
+            "equity": "100000",
+            "last_equity": "100000",
+            "long_market_value": "0",
+            "short_market_value": "0",
+            "position_market_value": "0",
+            "initial_margin": "0",
+            "maintenance_margin": "0",
+            "last_maintenance_margin": "0",
+            "sma": "100000",
+            "balance_asof": "2026-07-17",
+            "crypto_tier": 1,
+            "intraday_adjustments": "0",
+            "pending_reg_taf_fees": "0"
+          }
+        },
+        "post_account": {
+          "cash": 100000.0,
+          "buying_power": 400000.0,
+          "equity": 100000.0,
+          "daytrade_count": 0,
+          "pattern_day_trader": false,
+          "trading_blocked": false,
+          "account_blocked": false,
+          "captured_at": "2026-07-20T14:02:24.473411+00:00",
+          "raw": {
+            "id": "<redacted>",
+            "admin_configurations": {},
+            "user_configurations": null,
+            "account_number": "<redacted>",
+            "status": "ACTIVE",
+            "crypto_status": "ACTIVE",
+            "options_approved_level": 3,
+            "options_trading_level": 3,
+            "currency": "USD",
+            "buying_power": "400000",
+            "regt_buying_power": "200000",
+            "effective_buying_power": "400000",
+            "non_marginable_buying_power": "100000",
+            "options_buying_power": "100000",
+            "cash": "100000",
+            "accrued_fees": "0",
+            "portfolio_value": "100000",
+            "trading_blocked": false,
+            "transfers_blocked": false,
+            "account_blocked": false,
+            "created_at": "2026-07-01T19:39:08.94948Z",
+            "trade_suspended_by_user": false,
+            "multiplier": "4",
+            "shorting_enabled": true,
+            "equity": "100000",
+            "last_equity": "100000",
+            "long_market_value": "0",
+            "short_market_value": "0",
+            "position_market_value": "0",
+            "initial_margin": "0",
+            "maintenance_margin": "0",
+            "last_maintenance_margin": "0",
+            "sma": "100000",
+            "balance_asof": "2026-07-17",
+            "crypto_tier": 1,
+            "intraday_adjustments": "0",
+            "pending_reg_taf_fees": "0"
+          }
+        },
+        "positions_before": [],
+        "positions_after": [],
+        "open_orders_before": [],
+        "open_orders_after": [],
+        "polled_execution_reports": [
+          {
+            "order_id": "d4ab3f2c-7ad8-4222-b9fb-f3337ffb4547",
+            "status": "CANCELLED",
+            "broker_order_id": "8c368843-bd35-4b39-9bc3-202524a243ff",
+            "fill_id": "f9355205-2d18-404d-a5df-34522d240b02",
+            "filled_quantity": 0.0,
+            "average_fill_price": null,
+            "submitted_at": "2026-07-20T14:02:24.252301+00:00",
+            "raw": {
+              "id": "<redacted>",
+              "client_order_id": "tb-proof-20260720-0900ct-01",
+              "created_at": "2026-07-20T14:02:24.302219188Z",
+              "updated_at": "2026-07-20T14:02:24.520416625Z",
+              "submitted_at": "2026-07-20T14:02:24.330738945Z",
+              "filled_at": null,
+              "expired_at": null,
+              "canceled_at": "2026-07-20T14:02:24.5187049Z",
+              "failed_at": null,
+              "replaced_at": null,
+              "replaced_by": null,
+              "replaces": null,
+              "asset_id": "<redacted>",
+              "symbol": "SPY",
+              "asset_class": "us_equity",
+              "notional": null,
+              "qty": "1",
+              "filled_qty": "0",
+              "filled_avg_price": null,
+              "order_class": "",
+              "order_type": "limit",
+              "type": "limit",
+              "side": "buy",
+              "position_intent": "buy_to_open",
+              "time_in_force": "day",
+              "limit_price": "1",
+              "stop_price": null,
+              "status": "canceled",
+              "extended_hours": false,
+              "legs": null,
+              "trail_percent": null,
+              "trail_price": null,
+              "hwm": null,
+              "subtag": null,
+              "source": null,
+              "expires_at": "2026-07-20T20:00:00Z"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "check_id": "paper_account_cleanup",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": "reports\\paper-pilot-cleanup-after-submit-preview.json",
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-23T14:19:31.094923+00:00",
+      "metadata": {
+        "paper_cleanup_artifact": "reports\\paper-pilot-cleanup-after-submit-preview.json",
+        "submit_requested": false,
+        "attempted": false,
+        "submitted": false,
+        "reconciliation_clean": null,
+        "positions_seen": 0,
+        "planned_orders": 0,
+        "submitted_orders": 0,
+        "polled_execution_reports": 0,
+        "position_summary": [],
+        "guard_reason": null
+      }
+    },
+    {
+      "check_id": "restart_recovery_drill",
+      "status": "skipped",
+      "passed": false,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "consume_existing_evidence",
+      "captured_at": "2026-07-23T14:19:30.933219+00:00",
+      "metadata": {}
+    }
+  ]
+}

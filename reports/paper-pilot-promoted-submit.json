@@ -1,0 +1,99 @@
+{
+  "passed": true,
+  "decision": "ready_for_guarded_promoted_portfolio_submit",
+  "ready_for_promoted_portfolio_submit": true,
+  "blockers": [],
+  "next_actions": [
+    "Proceed to a tiny promoted portfolio paper submit under the normal submission guard."
+  ],
+  "artifacts": {
+    "cleanup": "reports\\paper-pilot-cleanup-before-promoted-submit.json",
+    "paper_submit_validation": "reports\\evidence\\paper-pilot-promoted-submit-validation.json",
+    "activation": "reports\\paper-pilot-activation-promoted-submit.json",
+    "portfolio": "runs\\paper-pilot-promoted-submit\\portfolio-session-report.json"
+  },
+  "cleanup": {
+    "submit_requested": false,
+    "attempted": false,
+    "submitted": false,
+    "positions_seen": 0,
+    "planned_orders": 0,
+    "submitted_orders": 0,
+    "reconciliation_clean": null,
+    "polled_execution_reports": 0,
+    "reason": "preview_only",
+    "artifact_path": "reports\\paper-pilot-cleanup-before-promoted-submit.json"
+  },
+  "validation": {
+    "run_id": "paper-pilot-20260723T142358Z",
+    "provider": "alpaca",
+    "broker_mode": "paper",
+    "checks": {
+      "paper_account_cleanup": {
+        "status": "passed",
+        "reason": "passed",
+        "artifact_path": "reports\\paper-pilot-cleanup-before-promoted-submit.json"
+      },
+      "alpaca_paper_order_lifecycle": {
+        "status": "passed",
+        "reason": "passed",
+        "artifact_path": "reports\\alpaca-paper-broker-proof.json"
+      },
+      "broker_account_parity": {
+        "status": "passed",
+        "reason": "passed",
+        "artifact_path": "reports\\alpaca-paper-broker-proof.json"
+      },
+      "paper_account_parity": {
+        "status": "passed",
+        "reason": "passed",
+        "artifact_path": "reports\\alpaca-paper-broker-proof.json"
+      },
+      "real_alpaca_fill_polling": {
+        "status": "passed",
+        "reason": "passed",
+        "artifact_path": "reports\\alpaca-paper-broker-proof.json"
+      }
+    },
+    "evidence_count": 19,
+    "readiness_score": null
+  },
+  "activation": {
+    "broker_proof_present": true,
+    "broker_proof_passed": true,
+    "broker_proof_submitted": true,
+    "scheduled_proof_present": true,
+    "scheduled_proof_passed": true,
+    "cleanup_present": true,
+    "cleanup_submitted": false,
+    "cleanup_positions_seen": 0,
+    "cleanup_reason": "preview_only",
+    "warnings": [],
+    "recommendations": [
+      "Continue to autonomous paper-session micro-notional promotion."
+    ]
+  },
+  "portfolio": {
+    "ready_for_submission": true,
+    "symbols": [
+      "DIA",
+      "SPY"
+    ],
+    "accepted_symbols": [
+      "DIA",
+      "SPY"
+    ],
+    "candidate_count": 2,
+    "consolidated_order_count": 2,
+    "artifact_path": "runs\\paper-pilot-promoted-submit\\portfolio-session-report.json",
+    "submission": {
+      "submit_requested": true,
+      "attempted": true,
+      "submitted": true,
+      "orders_submitted": 2,
+      "reason": "submitted_consolidated_orders",
+      "reconciliation_clean": true
+    }
+  },
+  "artifact_path": "reports\\paper-pilot-promoted-submit.json"
+}

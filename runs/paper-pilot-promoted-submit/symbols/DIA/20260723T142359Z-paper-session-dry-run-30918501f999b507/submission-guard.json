@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "reason": "submission_guard_passed",
+  "submit_requested": false,
+  "probes": [
+    {
+      "name": "submit_requested",
+      "passed": true,
+      "reason": "submit_not_requested",
+      "evidence": {
+        "submit_orders": false
+      }
+    }
+  ]
+}

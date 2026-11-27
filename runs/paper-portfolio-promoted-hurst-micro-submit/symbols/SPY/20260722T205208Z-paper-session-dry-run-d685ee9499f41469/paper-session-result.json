@@ -1,0 +1,173 @@
+{
+  "report_path": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\session-report.json",
+  "ready_for_submission": false,
+  "submitted": false,
+  "data_rows": 501,
+  "latest_prices": {
+    "SPY": 747.49
+  },
+  "regime": {
+    "symbol": "SPY",
+    "trend_state": "range_bound",
+    "trend_direction": "up",
+    "volatility_state": "normal",
+    "liquidity_state": "normal",
+    "macro_sensitivity": "normal",
+    "efficiency_ratio": 0.12422721652483809,
+    "period_return": 0.04788807424333763,
+    "volatility_ratio": 0.8055152814078168,
+    "liquidity_ratio": 1.0382832683025442,
+    "eligible_modes": [
+      "benchmark",
+      "mean_reversion",
+      "cash"
+    ]
+  },
+  "orders_planned": 1,
+  "orders_submitted": 0,
+  "planned_orders": [
+    {
+      "id": "53918f40-3916-4243-950c-b8b5450247ec",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 19.966555,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-22T20:52:08.809928+00:00"
+    }
+  ],
+  "data_drift_reports": 0,
+  "reconciliation_clean": null,
+  "paper_scorecard_passed": null,
+  "recovery": {
+    "enabled": true,
+    "state_path": "runs/tradingbot.sqlite3",
+    "orders_loaded": 19,
+    "reports_loaded": 19,
+    "positions_loaded": 1,
+    "account_loaded": true,
+    "reconciliation_clean": true,
+    "unresolved_orders": 0,
+    "blocked": false,
+    "passed": true,
+    "reason": "recovery_clean"
+  },
+  "risk_budget": {
+    "passed": false,
+    "reason": "session_notional_above_budget",
+    "budget": {
+      "min_order_quantity": 0.0,
+      "min_order_notional": 0.0,
+      "max_session_notional": 25.0,
+      "max_new_exposure": 0.0025,
+      "max_turnover": 0.0025,
+      "cash_reserve": 0.95,
+      "cooldown_symbols": [],
+      "repeated_reject_symbols": []
+    },
+    "session_notional": 14924.80019695,
+    "new_exposure": 0.6627579536836522,
+    "turnover": 0.6627579536836522,
+    "gates": [
+      {
+        "name": "SPY_min_quantity",
+        "passed": true,
+        "reason": "min_quantity_passed",
+        "value": 19.966555,
+        "threshold": 0.0
+      },
+      {
+        "name": "SPY_min_notional",
+        "passed": true,
+        "reason": "min_notional_passed",
+        "value": 14924.80019695,
+        "threshold": 0.0
+      },
+      {
+        "name": "SPY_cooldown",
+        "passed": true,
+        "reason": "cooldown_passed",
+        "value": "SPY",
+        "threshold": "not_in_cooldown"
+      },
+      {
+        "name": "SPY_repeated_reject",
+        "passed": true,
+        "reason": "repeated_reject_passed",
+        "value": "SPY",
+        "threshold": "not_repeated_reject"
+      },
+      {
+        "name": "max_session_notional",
+        "passed": false,
+        "reason": "session_notional_above_budget",
+        "value": 14924.80019695,
+        "threshold": 25.0
+      },
+      {
+        "name": "max_new_exposure",
+        "passed": false,
+        "reason": "new_exposure_above_budget",
+        "value": 0.6627579536836522,
+        "threshold": 0.0025
+      },
+      {
+        "name": "max_turnover",
+        "passed": false,
+        "reason": "turnover_above_budget",
+        "value": 0.6627579536836522,
+        "threshold": 0.0025
+      },
+      {
+        "name": "cash_reserve",
+        "passed": false,
+        "reason": "cash_reserve_below_budget",
+        "value": 0.0,
+        "threshold": 0.95
+      }
+    ]
+  },
+  "submission_guard": {
+    "passed": true,
+    "reason": "submission_guard_passed",
+    "submit_requested": false,
+    "probes": [
+      {
+        "name": "submit_requested",
+        "passed": true,
+        "reason": "submit_not_requested",
+        "evidence": {
+          "submit_orders": false
+        }
+      }
+    ]
+  },
+  "fill_poll_attempts": 0,
+  "polled_execution_reports": 0,
+  "warnings": [
+    "Risk budget blocked submission: session_notional_above_budget"
+  ],
+  "artifact_paths": {
+    "manifest": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\manifest.json",
+    "committee_context": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\committee-context.json",
+    "committee_decision": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\committee-decision.json",
+    "execution_plan": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\execution-plan.json",
+    "session_report": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\session-report.json",
+    "submitted_orders": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\submitted-orders.json",
+    "execution_reports": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\execution-reports.json",
+    "reconciliation": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\reconciliation.json",
+    "paper_scorecard": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\paper-scorecard.json",
+    "post_session_account": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\post-session-account.json",
+    "recovery": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\recovery.json",
+    "risk_budget": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\risk-budget.json",
+    "submission_guard": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\SPY\\20260722T205208Z-paper-session-dry-run-d685ee9499f41469\\submission-guard.json"
+  }
+}

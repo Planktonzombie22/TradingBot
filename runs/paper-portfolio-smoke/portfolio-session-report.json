@@ -1,0 +1,415 @@
+{
+  "symbols": [
+    "SPY",
+    "QQQ",
+    "IWM"
+  ],
+  "ready_for_submission": true,
+  "accepted_symbols": [
+    "SPY",
+    "QQQ",
+    "IWM"
+  ],
+  "candidate_count": 3,
+  "consolidated_order_count": 3,
+  "capital_report": {
+    "policy": {
+      "cash_reserve": 0.1,
+      "max_symbol_weight": 0.25,
+      "max_strategy_weight": 0.25,
+      "max_family_weight": 0.4,
+      "hedge_budget": 0.1,
+      "min_edge_score": 0.0
+    },
+    "invested_weight": 0.25,
+    "hedge_weight": 0,
+    "cash_weight": 0.75,
+    "weights_by_symbol": {
+      "SPY": 0.1,
+      "QQQ": 0.1,
+      "IWM": 0.05
+    },
+    "weights_by_family": {
+      "portfolio_paper_session": 0.25
+    },
+    "allocations": [
+      {
+        "request": {
+          "strategy_name": "portfolio_candidate",
+          "symbol": "SPY",
+          "action": "trade_strategy",
+          "requested_weight": 0.1,
+          "family": "portfolio_paper_session",
+          "edge_score": 0.01,
+          "priority": 3,
+          "metadata": {
+            "report_path": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+            "warnings": []
+          }
+        },
+        "allocated_weight": 0.1,
+        "accepted": true,
+        "reason": "allocated_requested_weight"
+      },
+      {
+        "request": {
+          "strategy_name": "portfolio_candidate",
+          "symbol": "QQQ",
+          "action": "trade_strategy",
+          "requested_weight": 0.1,
+          "family": "portfolio_paper_session",
+          "edge_score": 0.01,
+          "priority": 2,
+          "metadata": {
+            "report_path": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\session-report.json",
+            "warnings": []
+          }
+        },
+        "allocated_weight": 0.1,
+        "accepted": true,
+        "reason": "allocated_requested_weight"
+      },
+      {
+        "request": {
+          "strategy_name": "portfolio_candidate",
+          "symbol": "IWM",
+          "action": "trade_strategy",
+          "requested_weight": 0.1,
+          "family": "portfolio_paper_session",
+          "edge_score": 0.01,
+          "priority": 1,
+          "metadata": {
+            "report_path": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\session-report.json",
+            "warnings": []
+          }
+        },
+        "allocated_weight": 0.05,
+        "accepted": true,
+        "reason": "allocated_capped_weight"
+      }
+    ]
+  },
+  "consolidated_orders": [
+    {
+      "id": "52e97568-657b-49e3-a5aa-c8ea40ea46f8",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 8.0,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-13T15:08:45.272968+00:00",
+      "allocated_weight": 0.1,
+      "source_report_path": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+      "portfolio_action": "trade_strategy"
+    },
+    {
+      "id": "be948a76-fccb-4a8c-8d39-bfa527695f0f",
+      "client_order_id": null,
+      "symbol": "QQQ",
+      "side": "BUY",
+      "quantity": 8.0,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-13T15:08:45.351101+00:00",
+      "allocated_weight": 0.1,
+      "source_report_path": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\session-report.json",
+      "portfolio_action": "trade_strategy"
+    },
+    {
+      "id": "752dca04-f19e-476a-8da1-bcca4d09ab23",
+      "client_order_id": null,
+      "symbol": "IWM",
+      "side": "BUY",
+      "quantity": 4.0,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-13T15:08:45.413605+00:00",
+      "allocated_weight": 0.05,
+      "source_report_path": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\session-report.json",
+      "portfolio_action": "trade_strategy"
+    }
+  ],
+  "artifact_path": "runs\\paper-portfolio-smoke\\portfolio-session-report.json",
+  "candidates": [
+    {
+      "symbol": "SPY",
+      "ready": true,
+      "orders_planned": 1,
+      "requested_weight": 0.1,
+      "warnings": [],
+      "report_path": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+      "session": {
+        "report_path": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+        "ready_for_submission": true,
+        "submitted": false,
+        "data_rows": 160,
+        "latest_prices": {
+          "SPY": 121.5283941077598
+        },
+        "regime": {
+          "symbol": "SPY",
+          "trend_state": "trending",
+          "trend_direction": "up",
+          "volatility_state": "contraction",
+          "liquidity_state": "normal",
+          "macro_sensitivity": "normal",
+          "efficiency_ratio": 0.6489804565386399,
+          "period_return": 0.10526697233522042,
+          "volatility_ratio": 0.5700170177193662,
+          "liquidity_ratio": 1.0044545062248575,
+          "eligible_modes": [
+            "benchmark",
+            "trend_following",
+            "range_scalping",
+            "cash"
+          ]
+        },
+        "orders_planned": 1,
+        "orders_submitted": 0,
+        "planned_orders": [
+          {
+            "id": "52e97568-657b-49e3-a5aa-c8ea40ea46f8",
+            "client_order_id": null,
+            "symbol": "SPY",
+            "side": "BUY",
+            "quantity": 8.0,
+            "order_type": "MARKET",
+            "limit_price": null,
+            "stop_price": null,
+            "take_profit_price": null,
+            "trail_percent": null,
+            "time_in_force": "day",
+            "parent_order_id": null,
+            "order_group_id": null,
+            "status": "PENDING",
+            "created_at": "2026-07-13T15:08:45.272968+00:00"
+          }
+        ],
+        "data_drift_reports": 0,
+        "reconciliation_clean": null,
+        "paper_scorecard_passed": null,
+        "recovery": {
+          "enabled": false,
+          "state_path": null,
+          "orders_loaded": 0,
+          "reports_loaded": 0,
+          "positions_loaded": 0,
+          "account_loaded": false,
+          "reconciliation_clean": null,
+          "unresolved_orders": 0,
+          "blocked": false,
+          "passed": true,
+          "reason": "not_enabled"
+        },
+        "warnings": [],
+        "artifact_paths": {
+          "manifest": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\manifest.json",
+          "committee_context": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-context.json",
+          "committee_decision": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-decision.json",
+          "execution_plan": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-plan.json",
+          "session_report": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+          "submitted_orders": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\submitted-orders.json",
+          "execution_reports": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-reports.json",
+          "reconciliation": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\reconciliation.json",
+          "paper_scorecard": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-scorecard.json",
+          "post_session_account": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\post-session-account.json",
+          "recovery": "runs\\paper-portfolio-smoke\\symbols\\SPY\\20260713T150845Z-paper-session-dry-run-32bdf9385e58a4d4\\recovery.json"
+        }
+      }
+    },
+    {
+      "symbol": "QQQ",
+      "ready": true,
+      "orders_planned": 1,
+      "requested_weight": 0.1,
+      "warnings": [],
+      "report_path": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\session-report.json",
+      "session": {
+        "report_path": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\session-report.json",
+        "ready_for_submission": true,
+        "submitted": false,
+        "data_rows": 160,
+        "latest_prices": {
+          "QQQ": 121.5283941077598
+        },
+        "regime": {
+          "symbol": "QQQ",
+          "trend_state": "trending",
+          "trend_direction": "up",
+          "volatility_state": "contraction",
+          "liquidity_state": "normal",
+          "macro_sensitivity": "normal",
+          "efficiency_ratio": 0.6489804565386399,
+          "period_return": 0.10526697233522042,
+          "volatility_ratio": 0.5700170177193662,
+          "liquidity_ratio": 1.0044545062248575,
+          "eligible_modes": [
+            "benchmark",
+            "trend_following",
+            "range_scalping",
+            "cash"
+          ]
+        },
+        "orders_planned": 1,
+        "orders_submitted": 0,
+        "planned_orders": [
+          {
+            "id": "be948a76-fccb-4a8c-8d39-bfa527695f0f",
+            "client_order_id": null,
+            "symbol": "QQQ",
+            "side": "BUY",
+            "quantity": 8.0,
+            "order_type": "MARKET",
+            "limit_price": null,
+            "stop_price": null,
+            "take_profit_price": null,
+            "trail_percent": null,
+            "time_in_force": "day",
+            "parent_order_id": null,
+            "order_group_id": null,
+            "status": "PENDING",
+            "created_at": "2026-07-13T15:08:45.351101+00:00"
+          }
+        ],
+        "data_drift_reports": 0,
+        "reconciliation_clean": null,
+        "paper_scorecard_passed": null,
+        "recovery": {
+          "enabled": false,
+          "state_path": null,
+          "orders_loaded": 0,
+          "reports_loaded": 0,
+          "positions_loaded": 0,
+          "account_loaded": false,
+          "reconciliation_clean": null,
+          "unresolved_orders": 0,
+          "blocked": false,
+          "passed": true,
+          "reason": "not_enabled"
+        },
+        "warnings": [],
+        "artifact_paths": {
+          "manifest": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\manifest.json",
+          "committee_context": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\committee-context.json",
+          "committee_decision": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\committee-decision.json",
+          "execution_plan": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\execution-plan.json",
+          "session_report": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\session-report.json",
+          "submitted_orders": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\submitted-orders.json",
+          "execution_reports": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\execution-reports.json",
+          "reconciliation": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\reconciliation.json",
+          "paper_scorecard": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\paper-scorecard.json",
+          "post_session_account": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\post-session-account.json",
+          "recovery": "runs\\paper-portfolio-smoke\\symbols\\QQQ\\20260713T150845Z-paper-session-dry-run-ee4d2b3104fdfd9e\\recovery.json"
+        }
+      }
+    },
+    {
+      "symbol": "IWM",
+      "ready": true,
+      "orders_planned": 1,
+      "requested_weight": 0.1,
+      "warnings": [],
+      "report_path": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\session-report.json",
+      "session": {
+        "report_path": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\session-report.json",
+        "ready_for_submission": true,
+        "submitted": false,
+        "data_rows": 160,
+        "latest_prices": {
+          "IWM": 121.5283941077598
+        },
+        "regime": {
+          "symbol": "IWM",
+          "trend_state": "trending",
+          "trend_direction": "up",
+          "volatility_state": "contraction",
+          "liquidity_state": "normal",
+          "macro_sensitivity": "normal",
+          "efficiency_ratio": 0.6489804565386399,
+          "period_return": 0.10526697233522042,
+          "volatility_ratio": 0.5700170177193662,
+          "liquidity_ratio": 1.0044545062248575,
+          "eligible_modes": [
+            "benchmark",
+            "trend_following",
+            "range_scalping",
+            "cash"
+          ]
+        },
+        "orders_planned": 1,
+        "orders_submitted": 0,
+        "planned_orders": [
+          {
+            "id": "752dca04-f19e-476a-8da1-bcca4d09ab23",
+            "client_order_id": null,
+            "symbol": "IWM",
+            "side": "BUY",
+            "quantity": 8.0,
+            "order_type": "MARKET",
+            "limit_price": null,
+            "stop_price": null,
+            "take_profit_price": null,
+            "trail_percent": null,
+            "time_in_force": "day",
+            "parent_order_id": null,
+            "order_group_id": null,
+            "status": "PENDING",
+            "created_at": "2026-07-13T15:08:45.413605+00:00"
+          }
+        ],
+        "data_drift_reports": 0,
+        "reconciliation_clean": null,
+        "paper_scorecard_passed": null,
+        "recovery": {
+          "enabled": false,
+          "state_path": null,
+          "orders_loaded": 0,
+          "reports_loaded": 0,
+          "positions_loaded": 0,
+          "account_loaded": false,
+          "reconciliation_clean": null,
+          "unresolved_orders": 0,
+          "blocked": false,
+          "passed": true,
+          "reason": "not_enabled"
+        },
+        "warnings": [],
+        "artifact_paths": {
+          "manifest": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\manifest.json",
+          "committee_context": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\committee-context.json",
+          "committee_decision": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\committee-decision.json",
+          "execution_plan": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\execution-plan.json",
+          "session_report": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\session-report.json",
+          "submitted_orders": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\submitted-orders.json",
+          "execution_reports": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\execution-reports.json",
+          "reconciliation": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\reconciliation.json",
+          "paper_scorecard": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\paper-scorecard.json",
+          "post_session_account": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\post-session-account.json",
+          "recovery": "runs\\paper-portfolio-smoke\\symbols\\IWM\\20260713T150845Z-paper-session-dry-run-51d29da5c7a31fd5\\recovery.json"
+        }
+      }
+    }
+  ]
+}

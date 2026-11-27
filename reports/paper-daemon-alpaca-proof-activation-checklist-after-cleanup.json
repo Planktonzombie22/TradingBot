@@ -1,0 +1,58 @@
+{
+  "passed": false,
+  "checks": {
+    "daemon_completed_without_error": true,
+    "heartbeat_fresh_or_completed": true,
+    "kill_switch_clear_after_proof": true,
+    "kill_switch_proof_passed": true,
+    "broker_monitor_clean": true,
+    "cleanup_review_resolved": true,
+    "paper_exposure_acknowledged": true,
+    "data_parity_clean": true,
+    "active_submit_observed": false
+  },
+  "blockers": [
+    "active_submit_observed"
+  ],
+  "warnings": [
+    "no_orders_submitted",
+    "cleanup_orders_planned",
+    "monitor_failures_present",
+    "position_mismatches_present",
+    "daemon_heartbeat_stale"
+  ],
+  "recommended_action": "run_micro_notional_daemon_during_active_submit_window",
+  "evidence": {
+    "daemon_status": "completed",
+    "latest_reason": "max_iterations_completed",
+    "total_iterations": 1,
+    "submitted_iterations": 0,
+    "monitor_failed_iterations": 1,
+    "monitor_position_mismatches": 2,
+    "monitor_stale_open_orders": 0,
+    "cleanup_planned_orders": 2,
+    "cleanup_submitted_orders": 0,
+    "latest_cleanup_reason": "flatten_orders_submitted",
+    "latest_cleanup_submitted": true,
+    "latest_cleanup_attempted": true,
+    "latest_cleanup_planned_orders": 2,
+    "latest_cleanup_artifact": "reports\\paper-cleanup-20260731-regular-submit.json",
+    "observed_positions": 0,
+    "observed_notional": 0.0,
+    "paper_exposure_acknowledged": false,
+    "paper_exposure_acknowledgement_reason": "no_paper_exposure_present",
+    "data_parity_failed_iterations": 0,
+    "data_parity_failed_checks": 0,
+    "command_center_passed": false,
+    "command_center_monitor_status": "passed",
+    "kill_switch_proof_passed": true,
+    "artifact_paths": [
+      "reports\\paper-daemon-alpaca-proof-report.json",
+      "reports\\paper-daemon-alpaca-proof-schedule-20260730T223938Z-0001.json",
+      "reports\\paper-daemon-alpaca-proof-cleanup-0001.json",
+      "reports\\paper-daemon-alpaca-proof-monitor-0001.json",
+      "reports\\paper-daemon-alpaca-proof-parity-0001.json",
+      "reports\\paper-daemon-alpaca-proof-report.json"
+    ]
+  }
+}

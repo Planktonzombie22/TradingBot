@@ -1,0 +1,13 @@
+{
+  "status": "completed",
+  "iteration": 1,
+  "last_heartbeat_at": "2026-07-30T14:37:51.108111+00:00",
+  "kill_switch_path": "runs\\paper-daemon-data-parity-smoke.kill",
+  "state_path": "runs\\paper-daemon-data-parity-smoke-state.json",
+  "heartbeat_path": "runs\\paper-daemon-data-parity-smoke-heartbeat.json",
+  "lock_path": "runs\\paper-daemon-data-parity-smoke.lock",
+  "next_run_at": null,
+  "last_reason": "max_iterations_completed",
+  "last_error": null,
+  "last_active_window": "market_open"
+}

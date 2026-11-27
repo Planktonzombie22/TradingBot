@@ -71,12 +71,15 @@ from .regime import MarketRegimeConfig, MarketRegimeProfile, classify_market_reg
 from .scorecards import ScorecardReport, StrategyScorecardEntry, SymbolResearchScorecard, build_symbol_scorecards
 from .selection import (
     BenchmarkRelativeReport,
+    BenchmarkPromotionCandidate,
+    BenchmarkPromotionReport,
     StrategyBenchmarkComparison,
     StrategyBenchmarkSummary,
     StrategySelectionPolicy,
     StrategySelectionReport,
     SymbolStrategySelection,
     benchmark_relative_report,
+    build_benchmark_promotion_report,
     select_strategies_against_benchmark,
 )
 from .stat_arb import (

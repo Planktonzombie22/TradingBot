@@ -1,0 +1,290 @@
+{
+  "manifest": {
+    "run_id": "2114f4d7-022d-4a1a-8aac-753c564979de",
+    "run_type": "paper-session-dry-run",
+    "strategy": "buyHold",
+    "symbols": [
+      "SPY"
+    ],
+    "config": {
+      "mode": "dry-run",
+      "committee_reason": "regime_quality_below_threshold",
+      "committee_action": "cash",
+      "paper_manifest_status": "ready_for_paper_session"
+    },
+    "data_source": {
+      "provider": "alpaca",
+      "symbol": "SPY",
+      "period": "2y",
+      "interval": "1d",
+      "start": null,
+      "end": null,
+      "rows": 1
+    },
+    "dependency_versions": {
+      "python": "3.11.9"
+    },
+    "code_version": "a909740",
+    "created_at": "2026-07-20T15:29:42.704227+00:00",
+    "stable_hash": "399188357df6ae96"
+  },
+  "paper_manifest": {
+    "strategy_name": "buyHold",
+    "symbol": "SPY",
+    "params": {},
+    "broker_mode": "alpaca_paper",
+    "data_source": "alpaca",
+    "execution_profile": "paper_default",
+    "manifest_status": "ready_for_paper_session",
+    "safeguards": [
+      "paper_trading_only",
+      "runtime_risk_gates_required",
+      "broker_reconciliation_required",
+      "operator_kill_switch_required"
+    ]
+  },
+  "decision": {
+    "symbol": "SPY",
+    "action": "cash",
+    "approved": false,
+    "target_weight": 0.0,
+    "strategy_name": null,
+    "hedge_weight": 0.0,
+    "reason": "regime_quality_below_threshold",
+    "gates": [
+      {
+        "name": "risk_halt",
+        "passed": true,
+        "reason": "no_risk_halt",
+        "details": {}
+      },
+      {
+        "name": "data_health",
+        "passed": true,
+        "reason": "data_health_passed",
+        "details": {
+          "reports": 0
+        }
+      },
+      {
+        "name": "promotion",
+        "passed": true,
+        "reason": "promotion_ready",
+        "details": {}
+      },
+      {
+        "name": "paper_behavior",
+        "passed": true,
+        "reason": "not_required",
+        "details": {}
+      },
+      {
+        "name": "regime_quality",
+        "passed": false,
+        "reason": "regime_quality_below_threshold",
+        "details": {
+          "quality": 0.35,
+          "threshold": 0.55
+        }
+      },
+      {
+        "name": "edge",
+        "passed": true,
+        "reason": "strategy_edge_passed",
+        "details": {
+          "strategy_edge": 0.01,
+          "benchmark_edge": 0.0
+        }
+      }
+    ],
+    "metadata": {
+      "strategy_edge": 0.01,
+      "benchmark_edge": 0.0,
+      "current_exposure": 0.0,
+      "regime_quality": 0.35,
+      "notes": [
+        "autonomous_paper_session_mvp"
+      ]
+    }
+  },
+  "execution_plan": {
+    "decision": {
+      "symbol": "SPY",
+      "action": "cash",
+      "approved": false,
+      "target_weight": 0.0,
+      "strategy_name": null,
+      "hedge_weight": 0.0,
+      "reason": "regime_quality_below_threshold",
+      "gates": [
+        {
+          "name": "risk_halt",
+          "passed": true,
+          "reason": "no_risk_halt",
+          "details": {}
+        },
+        {
+          "name": "data_health",
+          "passed": true,
+          "reason": "data_health_passed",
+          "details": {
+            "reports": 0
+          }
+        },
+        {
+          "name": "promotion",
+          "passed": true,
+          "reason": "promotion_ready",
+          "details": {}
+        },
+        {
+          "name": "paper_behavior",
+          "passed": true,
+          "reason": "not_required",
+          "details": {}
+        },
+        {
+          "name": "regime_quality",
+          "passed": false,
+          "reason": "regime_quality_below_threshold",
+          "details": {
+            "quality": 0.35,
+            "threshold": 0.55
+          }
+        },
+        {
+          "name": "edge",
+          "passed": true,
+          "reason": "strategy_edge_passed",
+          "details": {
+            "strategy_edge": 0.01,
+            "benchmark_edge": 0.0
+          }
+        }
+      ],
+      "metadata": {
+        "strategy_edge": 0.01,
+        "benchmark_edge": 0.0,
+        "current_exposure": 0.0,
+        "regime_quality": 0.35,
+        "notes": [
+          "autonomous_paper_session_mvp"
+        ]
+      }
+    },
+    "reason": "cash_flatten_plan",
+    "has_orders": false,
+    "targets": [],
+    "orders": [],
+    "warnings": []
+  },
+  "account_snapshot": {
+    "cash": 100000.0,
+    "equity": 100000.0,
+    "realized_pnl": 0.0,
+    "positions": {}
+  },
+  "latest_prices": {
+    "SPY": 745.29
+  },
+  "committee_context": {
+    "symbol": "SPY",
+    "promotion_report": {
+      "passed": true,
+      "reason": "promotion_ready",
+      "evidence": {
+        "strategy_name": "buyHold",
+        "symbol": "SPY",
+        "params": {},
+        "source_rules_captured": true,
+        "data_validation_passed": true,
+        "benchmark_passed": true,
+        "replication_passed": false,
+        "risk_gates_passed": true,
+        "data_range": null,
+        "validation_report": null,
+        "governance": null,
+        "capacity": null,
+        "benchmark_summary": {},
+        "notes": [
+          "runtime_config_candidate"
+        ]
+      },
+      "policy": {
+        "require_source_rules": true,
+        "require_data_validation": true,
+        "require_replication_or_benchmark": true,
+        "require_governance": false,
+        "require_capacity": false,
+        "require_risk_gates": true,
+        "minimum_estimated_capacity": null
+      },
+      "gates": [],
+      "manifest": {
+        "strategy_name": "buyHold",
+        "symbol": "SPY",
+        "params": {},
+        "broker_mode": "alpaca_paper",
+        "data_source": "alpaca",
+        "execution_profile": "paper_default",
+        "manifest_status": "ready_for_paper_session",
+        "safeguards": [
+          "paper_trading_only",
+          "runtime_risk_gates_required",
+          "broker_reconciliation_required",
+          "operator_kill_switch_required"
+        ]
+      }
+    },
+    "paper_scorecard": null,
+    "data_drift_reports": [],
+    "regime": {
+      "symbol": "SPY",
+      "trend_state": "unknown",
+      "trend_direction": "flat",
+      "volatility_state": "unknown",
+      "liquidity_state": "unknown",
+      "macro_sensitivity": "normal",
+      "efficiency_ratio": 0.0,
+      "period_return": 0.0,
+      "volatility_ratio": 0.0,
+      "liquidity_ratio": 0.0,
+      "eligible_modes": [
+        "benchmark",
+        "cash"
+      ]
+    },
+    "strategy_edge": 0.01,
+    "benchmark_edge": 0.0,
+    "current_exposure": 0.0,
+    "risk_halt": false,
+    "risk_reason": null,
+    "notes": [
+      "autonomous_paper_session_mvp"
+    ]
+  },
+  "submitted_orders": [],
+  "execution_reports": [],
+  "reconciliation": null,
+  "paper_scorecard": null,
+  "post_session_account_snapshot": {
+    "cash": 100000.0,
+    "equity": 100000.0,
+    "realized_pnl": 0.0,
+    "positions": {}
+  },
+  "artifact_paths": {
+    "manifest": "runs\\alpaca-micro-paper-session\\20260720T152942Z-paper-session-dry-run-399188357df6ae96\\manifest.json",
+    "committee_context": "runs\\alpaca-micro-paper-session\\20260720T152942Z-paper-session-dry-run-399188357df6ae96\\committee-context.json",
+    "committee_decision": "runs\\alpaca-micro-paper-session\\20260720T152942Z-paper-session-dry-run-399188357df6ae96\\committee-decision.json",
+    "execution_plan": "runs\\alpaca-micro-paper-session\\20260720T152942Z-paper-session-dry-run-399188357df6ae96\\execution-plan.json",
+    "session_report": "runs\\alpaca-micro-paper-session\\20260720T152942Z-paper-session-dry-run-399188357df6ae96\\session-report.json",
+    "submitted_orders": "runs\\alpaca-micro-paper-session\\20260720T152942Z-paper-session-dry-run-399188357df6ae96\\submitted-orders.json",
+    "execution_reports": "runs\\alpaca-micro-paper-session\\20260720T152942Z-paper-session-dry-run-399188357df6ae96\\execution-reports.json",
+    "reconciliation": "runs\\alpaca-micro-paper-session\\20260720T152942Z-paper-session-dry-run-399188357df6ae96\\reconciliation.json",
+    "paper_scorecard": "runs\\alpaca-micro-paper-session\\20260720T152942Z-paper-session-dry-run-399188357df6ae96\\paper-scorecard.json",
+    "post_session_account": "runs\\alpaca-micro-paper-session\\20260720T152942Z-paper-session-dry-run-399188357df6ae96\\post-session-account.json"
+  },
+  "warnings": [],
+  "ready_for_submission": false
+}

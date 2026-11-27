@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "reason": "asset_metadata_ready",
+  "assets": [
+    {
+      "symbol": "DIA",
+      "asset_class": "etf",
+      "calendar_policy": "us_equity_regular",
+      "fractional_trading": true,
+      "tradable": true,
+      "shortable": false,
+      "easy_to_borrow": false,
+      "marginable": false,
+      "maintenance_margin": null
+    },
+    {
+      "symbol": "SPY",
+      "asset_class": "etf",
+      "calendar_policy": "us_equity_regular",
+      "fractional_trading": true,
+      "tradable": true,
+      "shortable": false,
+      "easy_to_borrow": false,
+      "marginable": false,
+      "maintenance_margin": null
+    }
+  ],
+  "artifact_path": "reports\\paper-asset-metadata-data-reliability-smoke.json"
+}

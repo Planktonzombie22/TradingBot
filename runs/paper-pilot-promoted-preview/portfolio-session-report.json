@@ -1,0 +1,544 @@
+{
+  "symbols": [
+    "DIA",
+    "SPY"
+  ],
+  "ready_for_submission": true,
+  "accepted_symbols": [
+    "DIA",
+    "SPY"
+  ],
+  "candidate_count": 2,
+  "consolidated_order_count": 2,
+  "submission": {
+    "submit_requested": false,
+    "attempted": false,
+    "submitted": false,
+    "orders_submitted": 0,
+    "reason": "submit_not_requested",
+    "reconciliation_clean": null,
+    "submission_guard": null,
+    "notional_budget": {
+      "passed": false,
+      "reason": "portfolio_notional_exceeds_budget",
+      "estimated_notional": 25.000005442,
+      "max_notional": 25.0,
+      "unknown_orders": 0
+    },
+    "fill_poll_attempts": 0,
+    "polled_execution_reports": 0,
+    "submitted_orders": [],
+    "execution_reports": [],
+    "reconciliation": null
+  },
+  "capital_report": {
+    "policy": {
+      "cash_reserve": 0.1,
+      "max_symbol_weight": 0.25,
+      "max_strategy_weight": 0.25,
+      "max_family_weight": 0.4,
+      "hedge_budget": 0.1,
+      "min_edge_score": 0.0
+    },
+    "invested_weight": 0.2,
+    "hedge_weight": 0,
+    "cash_weight": 0.8,
+    "weights_by_symbol": {
+      "DIA": 0.1,
+      "SPY": 0.1
+    },
+    "weights_by_family": {
+      "portfolio_paper_session": 0.2
+    },
+    "allocations": [
+      {
+        "request": {
+          "strategy_name": "hurstCycleReversion",
+          "symbol": "DIA",
+          "action": "trade_strategy",
+          "requested_weight": 0.1,
+          "family": "portfolio_paper_session",
+          "edge_score": 0.01,
+          "priority": 2,
+          "metadata": {
+            "params": {
+              "hurst_period": 60,
+              "max_hurst": 0.45,
+              "zscore_period": 15,
+              "entry_zscore": 1.4,
+              "exit_zscore": 0.25,
+              "atr_stop_multiple": 1.8
+            },
+            "report_path": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+            "warnings": []
+          }
+        },
+        "allocated_weight": 0.1,
+        "accepted": true,
+        "reason": "allocated_requested_weight"
+      },
+      {
+        "request": {
+          "strategy_name": "hurstCycleReversion",
+          "symbol": "SPY",
+          "action": "trade_strategy",
+          "requested_weight": 0.1,
+          "family": "portfolio_paper_session",
+          "edge_score": 0.01,
+          "priority": 1,
+          "metadata": {
+            "params": {
+              "hurst_period": 60,
+              "max_hurst": 0.45,
+              "zscore_period": 15,
+              "entry_zscore": 1.4,
+              "exit_zscore": 0.25,
+              "atr_stop_multiple": 1.8
+            },
+            "report_path": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\session-report.json",
+            "warnings": []
+          }
+        },
+        "allocated_weight": 0.1,
+        "accepted": true,
+        "reason": "allocated_requested_weight"
+      }
+    ]
+  },
+  "consolidated_orders": [
+    {
+      "id": "f4339b3e-1614-43d1-b276-7d459fd47cac",
+      "client_order_id": null,
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 0.02419687,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-23T14:17:45.707519+00:00",
+      "allocated_weight": 0.1,
+      "strategy_name": "hurstCycleReversion",
+      "source_report_path": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+      "portfolio_action": "trade_strategy",
+      "latest_price": 516.6,
+      "estimated_notional": 12.500103042,
+      "original_quantity": 0.048393,
+      "original_estimated_notional": 24.9998238,
+      "portfolio_notional_scale": 0.5000075621143694
+    },
+    {
+      "id": "ef0e1e45-564f-4869-baea-3985c3048730",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 0.01689176,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-23T14:17:46.212745+00:00",
+      "allocated_weight": 0.1,
+      "strategy_name": "hurstCycleReversion",
+      "source_report_path": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\session-report.json",
+      "portfolio_action": "trade_strategy",
+      "latest_price": 740.0,
+      "estimated_notional": 12.4999024,
+      "original_quantity": 0.033783,
+      "original_estimated_notional": 24.99942,
+      "portfolio_notional_scale": 0.5000075621143694
+    }
+  ],
+  "artifact_path": "runs\\paper-pilot-promoted-preview\\portfolio-session-report.json",
+  "candidates": [
+    {
+      "symbol": "DIA",
+      "strategy": "hurstCycleReversion",
+      "params": {
+        "hurst_period": 60,
+        "max_hurst": 0.45,
+        "zscore_period": 15,
+        "entry_zscore": 1.4,
+        "exit_zscore": 0.25,
+        "atr_stop_multiple": 1.8
+      },
+      "ready": true,
+      "orders_planned": 1,
+      "requested_weight": 0.1,
+      "warnings": [],
+      "report_path": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+      "session": {
+        "report_path": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+        "ready_for_submission": true,
+        "submitted": false,
+        "data_rows": 501,
+        "latest_prices": {
+          "DIA": 516.6
+        },
+        "regime": {
+          "symbol": "DIA",
+          "trend_state": "mixed",
+          "trend_direction": "up",
+          "volatility_state": "contraction",
+          "liquidity_state": "normal",
+          "macro_sensitivity": "normal",
+          "efficiency_ratio": 0.15291579126682137,
+          "period_return": 0.05499622194539189,
+          "volatility_ratio": 0.7447475143130767,
+          "liquidity_ratio": 0.9872287626962142,
+          "eligible_modes": [
+            "benchmark",
+            "mean_reversion",
+            "range_scalping",
+            "cash"
+          ]
+        },
+        "orders_planned": 1,
+        "orders_submitted": 0,
+        "planned_orders": [
+          {
+            "id": "f4339b3e-1614-43d1-b276-7d459fd47cac",
+            "client_order_id": null,
+            "symbol": "DIA",
+            "side": "BUY",
+            "quantity": 0.048393,
+            "order_type": "MARKET",
+            "limit_price": null,
+            "stop_price": null,
+            "take_profit_price": null,
+            "trail_percent": null,
+            "time_in_force": "day",
+            "parent_order_id": null,
+            "order_group_id": null,
+            "status": "PENDING",
+            "created_at": "2026-07-23T14:17:45.707519+00:00"
+          }
+        ],
+        "data_drift_reports": 0,
+        "reconciliation_clean": null,
+        "paper_scorecard_passed": null,
+        "recovery": {
+          "enabled": false,
+          "state_path": null,
+          "orders_loaded": 0,
+          "reports_loaded": 0,
+          "positions_loaded": 0,
+          "account_loaded": false,
+          "reconciliation_clean": null,
+          "unresolved_orders": 0,
+          "blocked": false,
+          "passed": true,
+          "reason": "not_enabled"
+        },
+        "risk_budget": {
+          "passed": true,
+          "reason": "risk_budget_passed",
+          "budget": {
+            "min_order_quantity": 0.0,
+            "min_order_notional": 0.0,
+            "max_session_notional": 25.0,
+            "max_new_exposure": 0.0025,
+            "max_turnover": 0.0025,
+            "cash_reserve": 0.95,
+            "cooldown_symbols": [],
+            "repeated_reject_symbols": []
+          },
+          "session_notional": 24.9998238,
+          "new_exposure": 0.00249998238,
+          "turnover": 0.00249998238,
+          "gates": [
+            {
+              "name": "DIA_min_quantity",
+              "passed": true,
+              "reason": "min_quantity_passed",
+              "value": 0.048393,
+              "threshold": 0.0
+            },
+            {
+              "name": "DIA_min_notional",
+              "passed": true,
+              "reason": "min_notional_passed",
+              "value": 24.9998238,
+              "threshold": 0.0
+            },
+            {
+              "name": "DIA_cooldown",
+              "passed": true,
+              "reason": "cooldown_passed",
+              "value": "DIA",
+              "threshold": "not_in_cooldown"
+            },
+            {
+              "name": "DIA_repeated_reject",
+              "passed": true,
+              "reason": "repeated_reject_passed",
+              "value": "DIA",
+              "threshold": "not_repeated_reject"
+            },
+            {
+              "name": "max_session_notional",
+              "passed": true,
+              "reason": "budget_passed",
+              "value": 24.9998238,
+              "threshold": 25.0
+            },
+            {
+              "name": "max_new_exposure",
+              "passed": true,
+              "reason": "budget_passed",
+              "value": 0.00249998238,
+              "threshold": 0.0025
+            },
+            {
+              "name": "max_turnover",
+              "passed": true,
+              "reason": "budget_passed",
+              "value": 0.00249998238,
+              "threshold": 0.0025
+            },
+            {
+              "name": "cash_reserve",
+              "passed": true,
+              "reason": "cash_reserve_passed",
+              "value": 0.99750001762,
+              "threshold": 0.95
+            }
+          ]
+        },
+        "submission_guard": {
+          "passed": true,
+          "reason": "submission_guard_passed",
+          "submit_requested": false,
+          "probes": [
+            {
+              "name": "submit_requested",
+              "passed": true,
+              "reason": "submit_not_requested",
+              "evidence": {
+                "submit_orders": false
+              }
+            }
+          ]
+        },
+        "fill_poll_attempts": 0,
+        "polled_execution_reports": 0,
+        "warnings": [],
+        "artifact_paths": {
+          "manifest": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\manifest.json",
+          "committee_context": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\committee-context.json",
+          "committee_decision": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\committee-decision.json",
+          "execution_plan": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\execution-plan.json",
+          "session_report": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+          "submitted_orders": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\submitted-orders.json",
+          "execution_reports": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\execution-reports.json",
+          "reconciliation": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\reconciliation.json",
+          "paper_scorecard": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\paper-scorecard.json",
+          "post_session_account": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\post-session-account.json",
+          "recovery": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\recovery.json",
+          "risk_budget": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\risk-budget.json",
+          "submission_guard": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\submission-guard.json",
+          "paper_session_result": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\paper-session-result.json"
+        }
+      }
+    },
+    {
+      "symbol": "SPY",
+      "strategy": "hurstCycleReversion",
+      "params": {
+        "hurst_period": 60,
+        "max_hurst": 0.45,
+        "zscore_period": 15,
+        "entry_zscore": 1.4,
+        "exit_zscore": 0.25,
+        "atr_stop_multiple": 1.8
+      },
+      "ready": true,
+      "orders_planned": 1,
+      "requested_weight": 0.1,
+      "warnings": [],
+      "report_path": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\session-report.json",
+      "session": {
+        "report_path": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\session-report.json",
+        "ready_for_submission": true,
+        "submitted": false,
+        "data_rows": 501,
+        "latest_prices": {
+          "SPY": 740.0
+        },
+        "regime": {
+          "symbol": "SPY",
+          "trend_state": "range_bound",
+          "trend_direction": "up",
+          "volatility_state": "normal",
+          "liquidity_state": "normal",
+          "macro_sensitivity": "normal",
+          "efficiency_ratio": 0.107188566552901,
+          "period_return": 0.042473762062407605,
+          "volatility_ratio": 0.8479978236065231,
+          "liquidity_ratio": 0.9999721779556106,
+          "eligible_modes": [
+            "benchmark",
+            "mean_reversion",
+            "cash"
+          ]
+        },
+        "orders_planned": 1,
+        "orders_submitted": 0,
+        "planned_orders": [
+          {
+            "id": "ef0e1e45-564f-4869-baea-3985c3048730",
+            "client_order_id": null,
+            "symbol": "SPY",
+            "side": "BUY",
+            "quantity": 0.033783,
+            "order_type": "MARKET",
+            "limit_price": null,
+            "stop_price": null,
+            "take_profit_price": null,
+            "trail_percent": null,
+            "time_in_force": "day",
+            "parent_order_id": null,
+            "order_group_id": null,
+            "status": "PENDING",
+            "created_at": "2026-07-23T14:17:46.212745+00:00"
+          }
+        ],
+        "data_drift_reports": 0,
+        "reconciliation_clean": null,
+        "paper_scorecard_passed": null,
+        "recovery": {
+          "enabled": false,
+          "state_path": null,
+          "orders_loaded": 0,
+          "reports_loaded": 0,
+          "positions_loaded": 0,
+          "account_loaded": false,
+          "reconciliation_clean": null,
+          "unresolved_orders": 0,
+          "blocked": false,
+          "passed": true,
+          "reason": "not_enabled"
+        },
+        "risk_budget": {
+          "passed": true,
+          "reason": "risk_budget_passed",
+          "budget": {
+            "min_order_quantity": 0.0,
+            "min_order_notional": 0.0,
+            "max_session_notional": 25.0,
+            "max_new_exposure": 0.0025,
+            "max_turnover": 0.0025,
+            "cash_reserve": 0.95,
+            "cooldown_symbols": [],
+            "repeated_reject_symbols": []
+          },
+          "session_notional": 24.99942,
+          "new_exposure": 0.0024999420000000002,
+          "turnover": 0.0024999420000000002,
+          "gates": [
+            {
+              "name": "SPY_min_quantity",
+              "passed": true,
+              "reason": "min_quantity_passed",
+              "value": 0.033783,
+              "threshold": 0.0
+            },
+            {
+              "name": "SPY_min_notional",
+              "passed": true,
+              "reason": "min_notional_passed",
+              "value": 24.99942,
+              "threshold": 0.0
+            },
+            {
+              "name": "SPY_cooldown",
+              "passed": true,
+              "reason": "cooldown_passed",
+              "value": "SPY",
+              "threshold": "not_in_cooldown"
+            },
+            {
+              "name": "SPY_repeated_reject",
+              "passed": true,
+              "reason": "repeated_reject_passed",
+              "value": "SPY",
+              "threshold": "not_repeated_reject"
+            },
+            {
+              "name": "max_session_notional",
+              "passed": true,
+              "reason": "budget_passed",
+              "value": 24.99942,
+              "threshold": 25.0
+            },
+            {
+              "name": "max_new_exposure",
+              "passed": true,
+              "reason": "budget_passed",
+              "value": 0.0024999420000000002,
+              "threshold": 0.0025
+            },
+            {
+              "name": "max_turnover",
+              "passed": true,
+              "reason": "budget_passed",
+              "value": 0.0024999420000000002,
+              "threshold": 0.0025
+            },
+            {
+              "name": "cash_reserve",
+              "passed": true,
+              "reason": "cash_reserve_passed",
+              "value": 0.997500058,
+              "threshold": 0.95
+            }
+          ]
+        },
+        "submission_guard": {
+          "passed": true,
+          "reason": "submission_guard_passed",
+          "submit_requested": false,
+          "probes": [
+            {
+              "name": "submit_requested",
+              "passed": true,
+              "reason": "submit_not_requested",
+              "evidence": {
+                "submit_orders": false
+              }
+            }
+          ]
+        },
+        "fill_poll_attempts": 0,
+        "polled_execution_reports": 0,
+        "warnings": [],
+        "artifact_paths": {
+          "manifest": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\manifest.json",
+          "committee_context": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\committee-context.json",
+          "committee_decision": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\committee-decision.json",
+          "execution_plan": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\execution-plan.json",
+          "session_report": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\session-report.json",
+          "submitted_orders": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\submitted-orders.json",
+          "execution_reports": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\execution-reports.json",
+          "reconciliation": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\reconciliation.json",
+          "paper_scorecard": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\paper-scorecard.json",
+          "post_session_account": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\post-session-account.json",
+          "recovery": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\recovery.json",
+          "risk_budget": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\risk-budget.json",
+          "submission_guard": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\submission-guard.json",
+          "paper_session_result": "runs\\paper-pilot-promoted-preview\\symbols\\SPY\\20260723T141746Z-paper-session-dry-run-d685ee9499f41469\\paper-session-result.json"
+        }
+      }
+    }
+  ]
+}

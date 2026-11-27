@@ -1,0 +1,358 @@
+{
+  "passed": true,
+  "budgets": [
+    {
+      "check_id": "perf_indicator_calculation",
+      "benchmark_name": "indicator-calculation",
+      "category": "indicator",
+      "max_mean_seconds": 0.1,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_strategy_generation",
+      "benchmark_name": "strategy-generation",
+      "category": "strategy_generation",
+      "max_mean_seconds": 0.1,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_single_backtest",
+      "benchmark_name": "single-backtest",
+      "category": "backtest_loop",
+      "max_mean_seconds": 1.0,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_bulk_research",
+      "benchmark_name": "bulk-research",
+      "category": "bulk_research",
+      "max_mean_seconds": 10.0,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_storage_write",
+      "benchmark_name": "storage-write",
+      "category": "storage_write",
+      "max_mean_seconds": 0.25,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_paper_session_planning",
+      "benchmark_name": "paper-session-planning",
+      "category": "paper_session_planning",
+      "max_mean_seconds": 2.0,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_broker_reconciliation",
+      "benchmark_name": "broker-reconciliation",
+      "category": "broker_reconciliation",
+      "max_mean_seconds": 0.25,
+      "max_total_seconds": null
+    }
+  ],
+  "benchmark_report": {
+    "total_elapsed_seconds": 0.2993942000903189,
+    "slowest": {
+      "name": "paper-session-planning",
+      "category": "paper_session_planning",
+      "runs": 1,
+      "min_seconds": 0.13237990019842982,
+      "max_seconds": 0.13237990019842982,
+      "mean_seconds": 0.13237990019842982,
+      "median_seconds": 0.13237990019842982,
+      "total_seconds": 0.13237990019842982,
+      "metadata": {
+        "provider": "sample"
+      }
+    },
+    "by_category": {
+      "indicator": 0.0004752997774630785,
+      "strategy_generation": 0.0009449999779462814,
+      "backtest_loop": 0.03628579992800951,
+      "bulk_research": 0.12715360010042787,
+      "storage_write": 0.001932400045916438,
+      "paper_session_planning": 0.13237990019842982,
+      "broker_reconciliation": 0.00022220006212592125
+    },
+    "summaries": [
+      {
+        "name": "indicator-calculation",
+        "category": "indicator",
+        "runs": 1,
+        "min_seconds": 0.0004752997774630785,
+        "max_seconds": 0.0004752997774630785,
+        "mean_seconds": 0.0004752997774630785,
+        "median_seconds": 0.0004752997774630785,
+        "total_seconds": 0.0004752997774630785,
+        "metadata": {
+          "rows": 160
+        }
+      },
+      {
+        "name": "strategy-generation",
+        "category": "strategy_generation",
+        "runs": 1,
+        "min_seconds": 0.0009449999779462814,
+        "max_seconds": 0.0009449999779462814,
+        "mean_seconds": 0.0009449999779462814,
+        "median_seconds": 0.0009449999779462814,
+        "total_seconds": 0.0009449999779462814,
+        "metadata": {
+          "rows": 160,
+          "strategy": "buyHold"
+        }
+      },
+      {
+        "name": "single-backtest",
+        "category": "backtest_loop",
+        "runs": 1,
+        "min_seconds": 0.03628579992800951,
+        "max_seconds": 0.03628579992800951,
+        "mean_seconds": 0.03628579992800951,
+        "median_seconds": 0.03628579992800951,
+        "total_seconds": 0.03628579992800951,
+        "metadata": {
+          "rows": 160,
+          "strategy": "buyHold"
+        }
+      },
+      {
+        "name": "bulk-research",
+        "category": "bulk_research",
+        "runs": 1,
+        "min_seconds": 0.12715360010042787,
+        "max_seconds": 0.12715360010042787,
+        "mean_seconds": 0.12715360010042787,
+        "median_seconds": 0.12715360010042787,
+        "total_seconds": 0.12715360010042787,
+        "metadata": {
+          "symbols": 2,
+          "strategy": "buyHold"
+        }
+      },
+      {
+        "name": "storage-write",
+        "category": "storage_write",
+        "runs": 1,
+        "min_seconds": 0.001932400045916438,
+        "max_seconds": 0.001932400045916438,
+        "mean_seconds": 0.001932400045916438,
+        "median_seconds": 0.001932400045916438,
+        "total_seconds": 0.001932400045916438,
+        "metadata": {}
+      },
+      {
+        "name": "paper-session-planning",
+        "category": "paper_session_planning",
+        "runs": 1,
+        "min_seconds": 0.13237990019842982,
+        "max_seconds": 0.13237990019842982,
+        "mean_seconds": 0.13237990019842982,
+        "median_seconds": 0.13237990019842982,
+        "total_seconds": 0.13237990019842982,
+        "metadata": {
+          "provider": "sample"
+        }
+      },
+      {
+        "name": "broker-reconciliation",
+        "category": "broker_reconciliation",
+        "runs": 1,
+        "min_seconds": 0.00022220006212592125,
+        "max_seconds": 0.00022220006212592125,
+        "mean_seconds": 0.00022220006212592125,
+        "median_seconds": 0.00022220006212592125,
+        "total_seconds": 0.00022220006212592125,
+        "metadata": {
+          "orders": 10
+        }
+      }
+    ],
+    "measurements": [
+      {
+        "name": "indicator-calculation",
+        "category": "indicator",
+        "elapsed_seconds": 0.0004752997774630785
+      },
+      {
+        "name": "strategy-generation",
+        "category": "strategy_generation",
+        "elapsed_seconds": 0.0009449999779462814
+      },
+      {
+        "name": "single-backtest",
+        "category": "backtest_loop",
+        "elapsed_seconds": 0.03628579992800951
+      },
+      {
+        "name": "bulk-research",
+        "category": "bulk_research",
+        "elapsed_seconds": 0.12715360010042787
+      },
+      {
+        "name": "storage-write",
+        "category": "storage_write",
+        "elapsed_seconds": 0.001932400045916438
+      },
+      {
+        "name": "paper-session-planning",
+        "category": "paper_session_planning",
+        "elapsed_seconds": 0.13237990019842982
+      },
+      {
+        "name": "broker-reconciliation",
+        "category": "broker_reconciliation",
+        "elapsed_seconds": 0.00022220006212592125
+      }
+    ]
+  },
+  "acceleration_plan": {
+    "min_mean_seconds": 0.1,
+    "ready_count": 0,
+    "decisions": [
+      {
+        "target_name": "paper-session-planning",
+        "category": "paper_session_planning",
+        "mean_seconds": 0.13237990019842982,
+        "recommended_backend": "none",
+        "backend_available": false,
+        "ready_for_implementation": false,
+        "reason": "no_acceleration_backend_mapped",
+        "metadata": {
+          "threshold": 0.1,
+          "runs": 1,
+          "total_seconds": 0.13237990019842982
+        }
+      },
+      {
+        "target_name": "bulk-research",
+        "category": "bulk_research",
+        "mean_seconds": 0.12715360010042787,
+        "recommended_backend": "polars",
+        "backend_available": false,
+        "ready_for_implementation": false,
+        "reason": "polars_not_installed",
+        "metadata": {
+          "threshold": 0.1,
+          "runs": 1,
+          "total_seconds": 0.12715360010042787
+        }
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "check_id": "perf_indicator_calculation",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": 0.0004752997774630785,
+      "reason": "passed",
+      "captured_at": "2026-07-14T13:52:46.105005+00:00",
+      "metadata": {
+        "benchmark_name": "indicator-calculation",
+        "mean_seconds": 0.0004752997774630785,
+        "max_mean_seconds": 0.1,
+        "total_seconds": 0.0004752997774630785,
+        "max_total_seconds": null
+      }
+    },
+    {
+      "check_id": "perf_strategy_generation",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": 0.0009449999779462814,
+      "reason": "passed",
+      "captured_at": "2026-07-14T13:52:46.105005+00:00",
+      "metadata": {
+        "benchmark_name": "strategy-generation",
+        "mean_seconds": 0.0009449999779462814,
+        "max_mean_seconds": 0.1,
+        "total_seconds": 0.0009449999779462814,
+        "max_total_seconds": null
+      }
+    },
+    {
+      "check_id": "perf_single_backtest",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": 0.03628579992800951,
+      "reason": "passed",
+      "captured_at": "2026-07-14T13:52:46.105005+00:00",
+      "metadata": {
+        "benchmark_name": "single-backtest",
+        "mean_seconds": 0.03628579992800951,
+        "max_mean_seconds": 1.0,
+        "total_seconds": 0.03628579992800951,
+        "max_total_seconds": null
+      }
+    },
+    {
+      "check_id": "perf_bulk_research",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": 0.12715360010042787,
+      "reason": "passed",
+      "captured_at": "2026-07-14T13:52:46.105005+00:00",
+      "metadata": {
+        "benchmark_name": "bulk-research",
+        "mean_seconds": 0.12715360010042787,
+        "max_mean_seconds": 10.0,
+        "total_seconds": 0.12715360010042787,
+        "max_total_seconds": null
+      }
+    },
+    {
+      "check_id": "perf_storage_write",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": 0.001932400045916438,
+      "reason": "passed",
+      "captured_at": "2026-07-14T13:52:46.105005+00:00",
+      "metadata": {
+        "benchmark_name": "storage-write",
+        "mean_seconds": 0.001932400045916438,
+        "max_mean_seconds": 0.25,
+        "total_seconds": 0.001932400045916438,
+        "max_total_seconds": null
+      }
+    },
+    {
+      "check_id": "perf_paper_session_planning",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": 0.13237990019842982,
+      "reason": "passed",
+      "captured_at": "2026-07-14T13:52:46.105005+00:00",
+      "metadata": {
+        "benchmark_name": "paper-session-planning",
+        "mean_seconds": 0.13237990019842982,
+        "max_mean_seconds": 2.0,
+        "total_seconds": 0.13237990019842982,
+        "max_total_seconds": null
+      }
+    },
+    {
+      "check_id": "perf_broker_reconciliation",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": 0.00022220006212592125,
+      "reason": "passed",
+      "captured_at": "2026-07-14T13:52:46.105005+00:00",
+      "metadata": {
+        "benchmark_name": "broker-reconciliation",
+        "mean_seconds": 0.00022220006212592125,
+        "max_mean_seconds": 0.25,
+        "total_seconds": 0.00022220006212592125,
+        "max_total_seconds": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,394 @@
+{
+  "selection_summary": {
+    "benchmark_strategy": "buyHold",
+    "symbols": 10,
+    "comparisons": 30,
+    "action_counts": {
+      "trade_strategy": 2,
+      "use_benchmark": 8
+    },
+    "selected_strategy_counts": {
+      "hurstCycleReversion": 2,
+      "buyHold": 8
+    },
+    "missing_benchmarks": []
+  },
+  "candidate_count": 2,
+  "enabled_count": 2,
+  "candidates": [
+    {
+      "symbol": "DIA",
+      "strategy": "hurstCycleReversion",
+      "action": "paper_rehearsal_candidate",
+      "status": "paper_candidate",
+      "reason": "promotion_ready",
+      "score": 0.14158239647703716,
+      "comparison": {
+        "symbol": "DIA",
+        "strategy": "hurstCycleReversion",
+        "benchmark_strategy": "buyHold",
+        "strategy_return": 0.45678327151172926,
+        "benchmark_return": 0.3295924093251033,
+        "excess_return": 0.12719086218662595,
+        "strategy_drawdown": -0.1261662143693255,
+        "benchmark_drawdown": -0.15954928295014792,
+        "drawdown_improvement": 0.033383068580822406,
+        "trades": 23,
+        "rejections": 0,
+        "score": 0.14158239647703716,
+        "decision": "select_strategy",
+        "reason": "passes_benchmark_relative_gates",
+        "trade_efficiency": 0.005530037486375042,
+        "tail_risk": -0.1261662143693255
+      },
+      "promotion_report": {
+        "passed": true,
+        "reason": "promotion_ready",
+        "evidence": {
+          "strategy_name": "hurstCycleReversion",
+          "symbol": "DIA",
+          "params": {
+            "hurst_period": 60,
+            "max_hurst": 0.45,
+            "zscore_period": 15,
+            "entry_zscore": 1.4,
+            "exit_zscore": 0.25,
+            "atr_stop_multiple": 1.8
+          },
+          "source_rules_captured": true,
+          "data_validation_passed": true,
+          "benchmark_passed": true,
+          "replication_passed": false,
+          "risk_gates_passed": true,
+          "data_range": null,
+          "validation_report": null,
+          "governance": null,
+          "capacity": null,
+          "benchmark_summary": {
+            "symbol": "DIA",
+            "strategy": "hurstCycleReversion",
+            "benchmark_strategy": "buyHold",
+            "strategy_return": 0.45678327151172926,
+            "benchmark_return": 0.3295924093251033,
+            "excess_return": 0.12719086218662595,
+            "strategy_drawdown": -0.1261662143693255,
+            "benchmark_drawdown": -0.15954928295014792,
+            "drawdown_improvement": 0.033383068580822406,
+            "trades": 23,
+            "rejections": 0,
+            "score": 0.14158239647703716,
+            "decision": "select_strategy",
+            "reason": "passes_benchmark_relative_gates",
+            "trade_efficiency": 0.005530037486375042,
+            "tail_risk": -0.1261662143693255
+          },
+          "notes": [
+            "benchmark_relative_selection",
+            "requires_paper_rehearsal_before_capital"
+          ]
+        },
+        "policy": {
+          "require_source_rules": true,
+          "require_data_validation": true,
+          "require_replication_or_benchmark": true,
+          "require_governance": false,
+          "require_capacity": false,
+          "require_risk_gates": true,
+          "minimum_estimated_capacity": null
+        },
+        "gates": [
+          {
+            "name": "source_rules",
+            "passed": true,
+            "reason": "source_rules_captured",
+            "details": {}
+          },
+          {
+            "name": "data_validation",
+            "passed": true,
+            "reason": "data_validation_passed",
+            "details": {}
+          },
+          {
+            "name": "replication_or_benchmark",
+            "passed": true,
+            "reason": "benchmark_passed",
+            "details": {}
+          },
+          {
+            "name": "walk_forward_governance",
+            "passed": true,
+            "reason": "not_required",
+            "details": {}
+          },
+          {
+            "name": "capacity",
+            "passed": true,
+            "reason": "not_required",
+            "details": {}
+          },
+          {
+            "name": "risk_gates",
+            "passed": true,
+            "reason": "risk_gates_passed",
+            "details": {}
+          }
+        ],
+        "manifest": {
+          "strategy_name": "hurstCycleReversion",
+          "symbol": "DIA",
+          "params": {
+            "hurst_period": 60,
+            "max_hurst": 0.45,
+            "zscore_period": 15,
+            "entry_zscore": 1.4,
+            "exit_zscore": 0.25,
+            "atr_stop_multiple": 1.8
+          },
+          "broker_mode": "alpaca_paper",
+          "data_source": "alpaca",
+          "execution_profile": "paper_default",
+          "manifest_status": "ready_for_paper_session",
+          "safeguards": [
+            "paper_trading_only",
+            "runtime_risk_gates_required",
+            "broker_reconciliation_required",
+            "operator_kill_switch_required"
+          ]
+        }
+      },
+      "paper_manifest": {
+        "strategy_name": "hurstCycleReversion",
+        "symbol": "DIA",
+        "params": {
+          "hurst_period": 60,
+          "max_hurst": 0.45,
+          "zscore_period": 15,
+          "entry_zscore": 1.4,
+          "exit_zscore": 0.25,
+          "atr_stop_multiple": 1.8
+        },
+        "broker_mode": "alpaca_paper",
+        "data_source": "alpaca",
+        "execution_profile": "paper_default",
+        "manifest_status": "ready_for_paper_session",
+        "safeguards": [
+          "paper_trading_only",
+          "runtime_risk_gates_required",
+          "broker_reconciliation_required",
+          "operator_kill_switch_required"
+        ]
+      }
+    },
+    {
+      "symbol": "SPY",
+      "strategy": "hurstCycleReversion",
+      "action": "paper_rehearsal_candidate",
+      "status": "paper_candidate",
+      "reason": "promotion_ready",
+      "score": 0.24409572140241398,
+      "comparison": {
+        "symbol": "SPY",
+        "strategy": "hurstCycleReversion",
+        "benchmark_strategy": "buyHold",
+        "strategy_return": 0.6036696473120589,
+        "benchmark_return": 0.38033407161314153,
+        "excess_return": 0.22333557569891732,
+        "strategy_drawdown": -0.14005109923356418,
+        "benchmark_drawdown": -0.18737139064055752,
+        "drawdown_improvement": 0.04732029140699334,
+        "trades": 29,
+        "rejections": 0,
+        "score": 0.24409572140241398,
+        "decision": "select_strategy",
+        "reason": "passes_benchmark_relative_gates",
+        "trade_efficiency": 0.007701226748238529,
+        "tail_risk": -0.14005109923356418
+      },
+      "promotion_report": {
+        "passed": true,
+        "reason": "promotion_ready",
+        "evidence": {
+          "strategy_name": "hurstCycleReversion",
+          "symbol": "SPY",
+          "params": {
+            "hurst_period": 60,
+            "max_hurst": 0.45,
+            "zscore_period": 15,
+            "entry_zscore": 1.4,
+            "exit_zscore": 0.25,
+            "atr_stop_multiple": 1.8
+          },
+          "source_rules_captured": true,
+          "data_validation_passed": true,
+          "benchmark_passed": true,
+          "replication_passed": false,
+          "risk_gates_passed": true,
+          "data_range": null,
+          "validation_report": null,
+          "governance": null,
+          "capacity": null,
+          "benchmark_summary": {
+            "symbol": "SPY",
+            "strategy": "hurstCycleReversion",
+            "benchmark_strategy": "buyHold",
+            "strategy_return": 0.6036696473120589,
+            "benchmark_return": 0.38033407161314153,
+            "excess_return": 0.22333557569891732,
+            "strategy_drawdown": -0.14005109923356418,
+            "benchmark_drawdown": -0.18737139064055752,
+            "drawdown_improvement": 0.04732029140699334,
+            "trades": 29,
+            "rejections": 0,
+            "score": 0.24409572140241398,
+            "decision": "select_strategy",
+            "reason": "passes_benchmark_relative_gates",
+            "trade_efficiency": 0.007701226748238529,
+            "tail_risk": -0.14005109923356418
+          },
+          "notes": [
+            "benchmark_relative_selection",
+            "requires_paper_rehearsal_before_capital"
+          ]
+        },
+        "policy": {
+          "require_source_rules": true,
+          "require_data_validation": true,
+          "require_replication_or_benchmark": true,
+          "require_governance": false,
+          "require_capacity": false,
+          "require_risk_gates": true,
+          "minimum_estimated_capacity": null
+        },
+        "gates": [
+          {
+            "name": "source_rules",
+            "passed": true,
+            "reason": "source_rules_captured",
+            "details": {}
+          },
+          {
+            "name": "data_validation",
+            "passed": true,
+            "reason": "data_validation_passed",
+            "details": {}
+          },
+          {
+            "name": "replication_or_benchmark",
+            "passed": true,
+            "reason": "benchmark_passed",
+            "details": {}
+          },
+          {
+            "name": "walk_forward_governance",
+            "passed": true,
+            "reason": "not_required",
+            "details": {}
+          },
+          {
+            "name": "capacity",
+            "passed": true,
+            "reason": "not_required",
+            "details": {}
+          },
+          {
+            "name": "risk_gates",
+            "passed": true,
+            "reason": "risk_gates_passed",
+            "details": {}
+          }
+        ],
+        "manifest": {
+          "strategy_name": "hurstCycleReversion",
+          "symbol": "SPY",
+          "params": {
+            "hurst_period": 60,
+            "max_hurst": 0.45,
+            "zscore_period": 15,
+            "entry_zscore": 1.4,
+            "exit_zscore": 0.25,
+            "atr_stop_multiple": 1.8
+          },
+          "broker_mode": "alpaca_paper",
+          "data_source": "alpaca",
+          "execution_profile": "paper_default",
+          "manifest_status": "ready_for_paper_session",
+          "safeguards": [
+            "paper_trading_only",
+            "runtime_risk_gates_required",
+            "broker_reconciliation_required",
+            "operator_kill_switch_required"
+          ]
+        }
+      },
+      "paper_manifest": {
+        "strategy_name": "hurstCycleReversion",
+        "symbol": "SPY",
+        "params": {
+          "hurst_period": 60,
+          "max_hurst": 0.45,
+          "zscore_period": 15,
+          "entry_zscore": 1.4,
+          "exit_zscore": 0.25,
+          "atr_stop_multiple": 1.8
+        },
+        "broker_mode": "alpaca_paper",
+        "data_source": "alpaca",
+        "execution_profile": "paper_default",
+        "manifest_status": "ready_for_paper_session",
+        "safeguards": [
+          "paper_trading_only",
+          "runtime_risk_gates_required",
+          "broker_reconciliation_required",
+          "operator_kill_switch_required"
+        ]
+      }
+    }
+  ],
+  "enabled_manifests": [
+    {
+      "strategy_name": "hurstCycleReversion",
+      "symbol": "DIA",
+      "params": {
+        "hurst_period": 60,
+        "max_hurst": 0.45,
+        "zscore_period": 15,
+        "entry_zscore": 1.4,
+        "exit_zscore": 0.25,
+        "atr_stop_multiple": 1.8
+      },
+      "broker_mode": "alpaca_paper",
+      "data_source": "alpaca",
+      "execution_profile": "paper_default",
+      "manifest_status": "ready_for_paper_session",
+      "safeguards": [
+        "paper_trading_only",
+        "runtime_risk_gates_required",
+        "broker_reconciliation_required",
+        "operator_kill_switch_required"
+      ]
+    },
+    {
+      "strategy_name": "hurstCycleReversion",
+      "symbol": "SPY",
+      "params": {
+        "hurst_period": 60,
+        "max_hurst": 0.45,
+        "zscore_period": 15,
+        "entry_zscore": 1.4,
+        "exit_zscore": 0.25,
+        "atr_stop_multiple": 1.8
+      },
+      "broker_mode": "alpaca_paper",
+      "data_source": "alpaca",
+      "execution_profile": "paper_default",
+      "manifest_status": "ready_for_paper_session",
+      "safeguards": [
+        "paper_trading_only",
+        "runtime_risk_gates_required",
+        "broker_reconciliation_required",
+        "operator_kill_switch_required"
+      ]
+    }
+  ]
+}

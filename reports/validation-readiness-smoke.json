@@ -1,0 +1,3351 @@
+{
+  "manifest": {
+    "name": "tradingbot-validation-manifest",
+    "version": "1",
+    "checks": [
+      {
+        "check_id": "unit_test_suite",
+        "category": "code_tests",
+        "subsystem": "tests",
+        "description": "Full unit and integration suite passes.",
+        "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+        "required_for": [
+          "paper_readiness",
+          "release_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 180
+      },
+      {
+        "check_id": "alpaca_data_connectivity",
+        "category": "live_data",
+        "subsystem": "data",
+        "description": "Alpaca historical/latest/websocket data connectivity passes.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "live_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 120
+      },
+      {
+        "check_id": "alpaca_paper_order_lifecycle",
+        "category": "broker_lifecycle",
+        "subsystem": "execution",
+        "description": "Tiny-notional Alpaca paper submit/cancel/reconcile lifecycle passes.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "live_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 180
+      },
+      {
+        "check_id": "broker_account_parity",
+        "category": "broker_parity",
+        "subsystem": "execution",
+        "description": "Local account state matches Alpaca paper account snapshots.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "live_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 120
+      },
+      {
+        "check_id": "failure_injection_suite",
+        "category": "failure_injection",
+        "subsystem": "runtime",
+        "description": "Network, broker, stale-data, malformed-payload, and lifecycle fault tests pass.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "release_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 180
+      },
+      {
+        "check_id": "restart_recovery_drill",
+        "category": "recovery",
+        "subsystem": "storage",
+        "description": "Crash/restart drills prove state reload and unresolved-order blocking.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "live_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 180
+      },
+      {
+        "check_id": "data_quality_torture",
+        "category": "data_quality",
+        "subsystem": "data",
+        "description": "Adjusted/raw, missing/duplicate bar, calendar, gap, and zero-volume tests pass.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "release_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 180
+      },
+      {
+        "check_id": "backtester_differential",
+        "category": "backtest_validation",
+        "subsystem": "backtesting",
+        "description": "Backtester output matches independent/reference calculations for simple scenarios.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "release_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 180
+      },
+      {
+        "check_id": "strategy_robustness",
+        "category": "strategy_validation",
+        "subsystem": "strategies",
+        "description": "Walk-forward, perturbation, cluster, cost-stress, and benchmark-relative gates pass.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "optimization_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 300
+      },
+      {
+        "check_id": "optimizer_validation",
+        "category": "optimizer_validation",
+        "subsystem": "backtesting",
+        "description": "Optimizer reproducibility, leakage, persistence, pruning, and metric tests pass.",
+        "command": null,
+        "required_for": [
+          "optimization_readiness",
+          "release_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 300
+      },
+      {
+        "check_id": "portfolio_risk_stress",
+        "category": "risk_stress",
+        "subsystem": "risk",
+        "description": "Concentration, exposure, cash, margin, correlation shock, and kill-switch tests pass.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "live_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 180
+      },
+      {
+        "check_id": "paper_soak_tiers",
+        "category": "paper_soak",
+        "subsystem": "operations",
+        "description": "Local, data-only, micro-notional, portfolio, recovery, and rehearsal soaks pass.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "live_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 900
+      },
+      {
+        "check_id": "daily_ops_acceptance",
+        "category": "operator_reports",
+        "subsystem": "reporting",
+        "description": "Daily paper report scenarios produce correct decisions and recommendations.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "release_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 120
+      },
+      {
+        "check_id": "observability_acceptance",
+        "category": "observability",
+        "subsystem": "monitoring",
+        "description": "Logs, metrics, health checks, notifications, audit IDs, and halt reasons pass.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "release_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 120
+      },
+      {
+        "check_id": "security_configuration",
+        "category": "security",
+        "subsystem": "config",
+        "description": "Secrets, paper/live URL, env, and deployment safety checks pass.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "live_readiness",
+          "release_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 120
+      },
+      {
+        "check_id": "deployment_rehearsal",
+        "category": "deployment",
+        "subsystem": "deployment",
+        "description": "Windows, Docker, server, persistence, watchdog, and restart rehearsals pass.",
+        "command": null,
+        "required_for": [
+          "release_readiness",
+          "live_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 600
+      },
+      {
+        "check_id": "golden_artifacts",
+        "category": "golden_artifacts",
+        "subsystem": "storage",
+        "description": "Frozen input/output artifacts match for critical reports and decisions.",
+        "command": null,
+        "required_for": [
+          "release_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 120
+      },
+      {
+        "check_id": "paper_profile_validation",
+        "category": "paper_profiles",
+        "subsystem": "operations",
+        "description": "Alpaca paper profiles validate risk budgets and block unsafe combinations.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "release_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 60
+      },
+      {
+        "check_id": "release_checklist_bundle",
+        "category": "release",
+        "subsystem": "validation",
+        "description": "Release checklist bundle is generated with fast, full, paper, performance, and deployment gates.",
+        "command": null,
+        "required_for": [
+          "release_readiness"
+        ],
+        "threshold": {},
+        "expected_artifacts": [],
+        "timeout_seconds": 60
+      },
+      {
+        "check_id": "cli_smoke_backtest",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "description": "CLI smoke test for `backtest` mode.",
+        "command": "trading_env\\Scripts\\python.exe main.py backtest --provider sample --symbol SPY --timeout-seconds 60",
+        "required_for": [
+          "paper_readiness"
+        ],
+        "threshold": {
+          "expected_exit_code": 0
+        },
+        "expected_artifacts": [
+          "runs/equity.jsonl",
+          "runs/fills.jsonl"
+        ],
+        "timeout_seconds": 60.0
+      },
+      {
+        "check_id": "cli_smoke_report",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "description": "CLI smoke test for `report` mode.",
+        "command": "trading_env\\Scripts\\python.exe main.py report --provider sample --symbol SPY --html-output reports/smoke-backtest.html --timeout-seconds 60",
+        "required_for": [
+          "paper_readiness"
+        ],
+        "threshold": {
+          "expected_exit_code": 0
+        },
+        "expected_artifacts": [
+          "reports/smoke-backtest.html"
+        ],
+        "timeout_seconds": 60.0
+      },
+      {
+        "check_id": "cli_smoke_optimize",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "description": "CLI smoke test for `optimize` mode.",
+        "command": "trading_env\\Scripts\\python.exe main.py optimize --provider sample --symbol SPY --param-grid-file configs/optimization/mean_reversion_daily.json --timeout-seconds 180",
+        "required_for": [
+          "paper_readiness"
+        ],
+        "threshold": {
+          "expected_exit_code": 0
+        },
+        "expected_artifacts": [
+          "runs/optimization-results.jsonl"
+        ],
+        "timeout_seconds": 180
+      },
+      {
+        "check_id": "cli_smoke_bulk",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "description": "CLI smoke test for `bulk` mode.",
+        "command": "trading_env\\Scripts\\python.exe main.py bulk --provider sample --symbols SPY,QQQ --strategies buyHold --max-symbols 2 --timeout-seconds 180",
+        "required_for": [
+          "paper_readiness"
+        ],
+        "threshold": {
+          "expected_exit_code": 0
+        },
+        "expected_artifacts": [
+          "reports/bulk-backtest-summary.json"
+        ],
+        "timeout_seconds": 180
+      },
+      {
+        "check_id": "cli_smoke_matrix",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "description": "CLI smoke test for `matrix` mode.",
+        "command": "trading_env\\Scripts\\python.exe main.py matrix --research-matrix-file configs/research/sample_cross_asset_matrix.json --strategies buyHold --max-symbols 1 --timeout-seconds 180",
+        "required_for": [
+          "paper_readiness"
+        ],
+        "threshold": {
+          "expected_exit_code": 0
+        },
+        "expected_artifacts": [
+          "reports/research-matrix-summary.json"
+        ],
+        "timeout_seconds": 180
+      },
+      {
+        "check_id": "cli_smoke_replicate",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "description": "CLI smoke test for `replicate` mode.",
+        "command": "trading_env\\Scripts\\python.exe main.py replicate --replication-file configs/research/published_strategy_replications.json --timeout-seconds 180",
+        "required_for": [
+          "paper_readiness"
+        ],
+        "threshold": {
+          "expected_exit_code": 0
+        },
+        "expected_artifacts": [
+          "reports/published-strategy-replication.json"
+        ],
+        "timeout_seconds": 180
+      },
+      {
+        "check_id": "cli_smoke_stream",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "description": "CLI smoke test for `stream` mode.",
+        "command": "trading_env\\Scripts\\python.exe main.py stream --provider sample --symbol SPY --timeout-seconds 60",
+        "required_for": [
+          "paper_readiness"
+        ],
+        "threshold": {
+          "expected_exit_code": 0
+        },
+        "expected_artifacts": [
+          "runs/engine-events.jsonl"
+        ],
+        "timeout_seconds": 60.0
+      },
+      {
+        "check_id": "cli_smoke_paper",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "description": "CLI smoke test for `paper` mode.",
+        "command": "trading_env\\Scripts\\python.exe main.py paper --provider sample --symbol SPY --timeout-seconds 60",
+        "required_for": [
+          "paper_readiness"
+        ],
+        "threshold": {
+          "expected_exit_code": 0
+        },
+        "expected_artifacts": [
+          "runs/engine-events.jsonl"
+        ],
+        "timeout_seconds": 60.0
+      },
+      {
+        "check_id": "cli_smoke_paper_session",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "description": "CLI smoke test for `paper-session` mode.",
+        "command": "trading_env\\Scripts\\python.exe main.py paper-session --provider sample --symbol SPY --store-dir runs/paper-session-smoke --timeout-seconds 60",
+        "required_for": [
+          "paper_readiness"
+        ],
+        "threshold": {
+          "expected_exit_code": 0
+        },
+        "expected_artifacts": [
+          "runs/paper-session-smoke"
+        ],
+        "timeout_seconds": 60.0
+      },
+      {
+        "check_id": "cli_smoke_paper_soak",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "description": "CLI smoke test for `paper-soak` mode.",
+        "command": "trading_env\\Scripts\\python.exe main.py paper-soak --provider sample --symbol SPY --soak-sessions 2 --store-dir runs/paper-soak-smoke --timeout-seconds 120",
+        "required_for": [
+          "paper_readiness"
+        ],
+        "threshold": {
+          "expected_exit_code": 0
+        },
+        "expected_artifacts": [
+          "runs/paper-soak-smoke"
+        ],
+        "timeout_seconds": 120
+      },
+      {
+        "check_id": "cli_smoke_paper_portfolio",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "description": "CLI smoke test for `paper-portfolio` mode.",
+        "command": "trading_env\\Scripts\\python.exe main.py paper-portfolio --provider sample --symbols SPY,QQQ --max-symbols 2 --store-dir runs/paper-portfolio-smoke --timeout-seconds 120",
+        "required_for": [
+          "paper_readiness"
+        ],
+        "threshold": {
+          "expected_exit_code": 0
+        },
+        "expected_artifacts": [
+          "runs/paper-portfolio-smoke"
+        ],
+        "timeout_seconds": 120
+      },
+      {
+        "check_id": "perf_indicator_calculation",
+        "category": "performance_budget",
+        "subsystem": "indicator",
+        "description": "Performance budget for benchmark `indicator-calculation`.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "optimization_readiness"
+        ],
+        "threshold": {
+          "max_mean_seconds": 0.1,
+          "max_total_seconds": null
+        },
+        "expected_artifacts": [],
+        "timeout_seconds": null
+      },
+      {
+        "check_id": "perf_strategy_generation",
+        "category": "performance_budget",
+        "subsystem": "strategy_generation",
+        "description": "Performance budget for benchmark `strategy-generation`.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "optimization_readiness"
+        ],
+        "threshold": {
+          "max_mean_seconds": 0.1,
+          "max_total_seconds": null
+        },
+        "expected_artifacts": [],
+        "timeout_seconds": null
+      },
+      {
+        "check_id": "perf_single_backtest",
+        "category": "performance_budget",
+        "subsystem": "backtest_loop",
+        "description": "Performance budget for benchmark `single-backtest`.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "optimization_readiness"
+        ],
+        "threshold": {
+          "max_mean_seconds": 1.0,
+          "max_total_seconds": null
+        },
+        "expected_artifacts": [],
+        "timeout_seconds": null
+      },
+      {
+        "check_id": "perf_bulk_research",
+        "category": "performance_budget",
+        "subsystem": "bulk_research",
+        "description": "Performance budget for benchmark `bulk-research`.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "optimization_readiness"
+        ],
+        "threshold": {
+          "max_mean_seconds": 10.0,
+          "max_total_seconds": null
+        },
+        "expected_artifacts": [],
+        "timeout_seconds": null
+      },
+      {
+        "check_id": "perf_storage_write",
+        "category": "performance_budget",
+        "subsystem": "storage_write",
+        "description": "Performance budget for benchmark `storage-write`.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "optimization_readiness"
+        ],
+        "threshold": {
+          "max_mean_seconds": 0.25,
+          "max_total_seconds": null
+        },
+        "expected_artifacts": [],
+        "timeout_seconds": null
+      },
+      {
+        "check_id": "perf_paper_session_planning",
+        "category": "performance_budget",
+        "subsystem": "paper_session_planning",
+        "description": "Performance budget for benchmark `paper-session-planning`.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "optimization_readiness"
+        ],
+        "threshold": {
+          "max_mean_seconds": 2.0,
+          "max_total_seconds": null
+        },
+        "expected_artifacts": [],
+        "timeout_seconds": null
+      },
+      {
+        "check_id": "perf_broker_reconciliation",
+        "category": "performance_budget",
+        "subsystem": "broker_reconciliation",
+        "description": "Performance budget for benchmark `broker-reconciliation`.",
+        "command": null,
+        "required_for": [
+          "paper_readiness",
+          "optimization_readiness"
+        ],
+        "threshold": {
+          "max_mean_seconds": 0.25,
+          "max_total_seconds": null
+        },
+        "expected_artifacts": [],
+        "timeout_seconds": null
+      }
+    ]
+  },
+  "evidence_bundle": {
+    "passed": true,
+    "sources": [],
+    "invalid_sources": [],
+    "evidence": [],
+    "latest_evidence": []
+  },
+  "readiness_index": {
+    "target": "paper_readiness",
+    "passed": false,
+    "readiness_score": 0.0,
+    "required_checks": 33,
+    "passed_required": 0,
+    "missing_required": [
+      "unit_test_suite",
+      "alpaca_data_connectivity",
+      "alpaca_paper_order_lifecycle",
+      "broker_account_parity",
+      "failure_injection_suite",
+      "restart_recovery_drill",
+      "data_quality_torture",
+      "backtester_differential",
+      "strategy_robustness",
+      "portfolio_risk_stress",
+      "paper_soak_tiers",
+      "daily_ops_acceptance",
+      "observability_acceptance",
+      "security_configuration",
+      "paper_profile_validation",
+      "cli_smoke_backtest",
+      "cli_smoke_report",
+      "cli_smoke_optimize",
+      "cli_smoke_bulk",
+      "cli_smoke_matrix",
+      "cli_smoke_replicate",
+      "cli_smoke_stream",
+      "cli_smoke_paper",
+      "cli_smoke_paper_session",
+      "cli_smoke_paper_soak",
+      "cli_smoke_paper_portfolio",
+      "perf_indicator_calculation",
+      "perf_strategy_generation",
+      "perf_single_backtest",
+      "perf_bulk_research",
+      "perf_storage_write",
+      "perf_paper_session_planning",
+      "perf_broker_reconciliation"
+    ],
+    "failed_required": [],
+    "checks": [
+      {
+        "spec": {
+          "check_id": "unit_test_suite",
+          "category": "code_tests",
+          "subsystem": "tests",
+          "description": "Full unit and integration suite passes.",
+          "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "unit_test_suite",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "alpaca_data_connectivity",
+          "category": "live_data",
+          "subsystem": "data",
+          "description": "Alpaca historical/latest/websocket data connectivity passes.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "live_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 120
+        },
+        "evidence": {
+          "check_id": "alpaca_data_connectivity",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "alpaca_paper_order_lifecycle",
+          "category": "broker_lifecycle",
+          "subsystem": "execution",
+          "description": "Tiny-notional Alpaca paper submit/cancel/reconcile lifecycle passes.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "live_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "alpaca_paper_order_lifecycle",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "broker_account_parity",
+          "category": "broker_parity",
+          "subsystem": "execution",
+          "description": "Local account state matches Alpaca paper account snapshots.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "live_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 120
+        },
+        "evidence": {
+          "check_id": "broker_account_parity",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "failure_injection_suite",
+          "category": "failure_injection",
+          "subsystem": "runtime",
+          "description": "Network, broker, stale-data, malformed-payload, and lifecycle fault tests pass.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "failure_injection_suite",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "restart_recovery_drill",
+          "category": "recovery",
+          "subsystem": "storage",
+          "description": "Crash/restart drills prove state reload and unresolved-order blocking.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "live_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "restart_recovery_drill",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "data_quality_torture",
+          "category": "data_quality",
+          "subsystem": "data",
+          "description": "Adjusted/raw, missing/duplicate bar, calendar, gap, and zero-volume tests pass.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "data_quality_torture",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "backtester_differential",
+          "category": "backtest_validation",
+          "subsystem": "backtesting",
+          "description": "Backtester output matches independent/reference calculations for simple scenarios.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "backtester_differential",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "strategy_robustness",
+          "category": "strategy_validation",
+          "subsystem": "strategies",
+          "description": "Walk-forward, perturbation, cluster, cost-stress, and benchmark-relative gates pass.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "optimization_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 300
+        },
+        "evidence": {
+          "check_id": "strategy_robustness",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "portfolio_risk_stress",
+          "category": "risk_stress",
+          "subsystem": "risk",
+          "description": "Concentration, exposure, cash, margin, correlation shock, and kill-switch tests pass.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "live_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "portfolio_risk_stress",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "paper_soak_tiers",
+          "category": "paper_soak",
+          "subsystem": "operations",
+          "description": "Local, data-only, micro-notional, portfolio, recovery, and rehearsal soaks pass.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "live_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 900
+        },
+        "evidence": {
+          "check_id": "paper_soak_tiers",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "daily_ops_acceptance",
+          "category": "operator_reports",
+          "subsystem": "reporting",
+          "description": "Daily paper report scenarios produce correct decisions and recommendations.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 120
+        },
+        "evidence": {
+          "check_id": "daily_ops_acceptance",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "observability_acceptance",
+          "category": "observability",
+          "subsystem": "monitoring",
+          "description": "Logs, metrics, health checks, notifications, audit IDs, and halt reasons pass.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 120
+        },
+        "evidence": {
+          "check_id": "observability_acceptance",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "security_configuration",
+          "category": "security",
+          "subsystem": "config",
+          "description": "Secrets, paper/live URL, env, and deployment safety checks pass.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "live_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 120
+        },
+        "evidence": {
+          "check_id": "security_configuration",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "paper_profile_validation",
+          "category": "paper_profiles",
+          "subsystem": "operations",
+          "description": "Alpaca paper profiles validate risk budgets and block unsafe combinations.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 60
+        },
+        "evidence": {
+          "check_id": "paper_profile_validation",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "cli_smoke_backtest",
+          "category": "cli_smoke",
+          "subsystem": "cli",
+          "description": "CLI smoke test for `backtest` mode.",
+          "command": "trading_env\\Scripts\\python.exe main.py backtest --provider sample --symbol SPY --timeout-seconds 60",
+          "required_for": [
+            "paper_readiness"
+          ],
+          "threshold": {
+            "expected_exit_code": 0
+          },
+          "expected_artifacts": [
+            "runs/equity.jsonl",
+            "runs/fills.jsonl"
+          ],
+          "timeout_seconds": 60.0
+        },
+        "evidence": {
+          "check_id": "cli_smoke_backtest",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "cli_smoke_report",
+          "category": "cli_smoke",
+          "subsystem": "cli",
+          "description": "CLI smoke test for `report` mode.",
+          "command": "trading_env\\Scripts\\python.exe main.py report --provider sample --symbol SPY --html-output reports/smoke-backtest.html --timeout-seconds 60",
+          "required_for": [
+            "paper_readiness"
+          ],
+          "threshold": {
+            "expected_exit_code": 0
+          },
+          "expected_artifacts": [
+            "reports/smoke-backtest.html"
+          ],
+          "timeout_seconds": 60.0
+        },
+        "evidence": {
+          "check_id": "cli_smoke_report",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "cli_smoke_optimize",
+          "category": "cli_smoke",
+          "subsystem": "cli",
+          "description": "CLI smoke test for `optimize` mode.",
+          "command": "trading_env\\Scripts\\python.exe main.py optimize --provider sample --symbol SPY --param-grid-file configs/optimization/mean_reversion_daily.json --timeout-seconds 180",
+          "required_for": [
+            "paper_readiness"
+          ],
+          "threshold": {
+            "expected_exit_code": 0
+          },
+          "expected_artifacts": [
+            "runs/optimization-results.jsonl"
+          ],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "cli_smoke_optimize",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "cli_smoke_bulk",
+          "category": "cli_smoke",
+          "subsystem": "cli",
+          "description": "CLI smoke test for `bulk` mode.",
+          "command": "trading_env\\Scripts\\python.exe main.py bulk --provider sample --symbols SPY,QQQ --strategies buyHold --max-symbols 2 --timeout-seconds 180",
+          "required_for": [
+            "paper_readiness"
+          ],
+          "threshold": {
+            "expected_exit_code": 0
+          },
+          "expected_artifacts": [
+            "reports/bulk-backtest-summary.json"
+          ],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "cli_smoke_bulk",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "cli_smoke_matrix",
+          "category": "cli_smoke",
+          "subsystem": "cli",
+          "description": "CLI smoke test for `matrix` mode.",
+          "command": "trading_env\\Scripts\\python.exe main.py matrix --research-matrix-file configs/research/sample_cross_asset_matrix.json --strategies buyHold --max-symbols 1 --timeout-seconds 180",
+          "required_for": [
+            "paper_readiness"
+          ],
+          "threshold": {
+            "expected_exit_code": 0
+          },
+          "expected_artifacts": [
+            "reports/research-matrix-summary.json"
+          ],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "cli_smoke_matrix",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "cli_smoke_replicate",
+          "category": "cli_smoke",
+          "subsystem": "cli",
+          "description": "CLI smoke test for `replicate` mode.",
+          "command": "trading_env\\Scripts\\python.exe main.py replicate --replication-file configs/research/published_strategy_replications.json --timeout-seconds 180",
+          "required_for": [
+            "paper_readiness"
+          ],
+          "threshold": {
+            "expected_exit_code": 0
+          },
+          "expected_artifacts": [
+            "reports/published-strategy-replication.json"
+          ],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "cli_smoke_replicate",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "cli_smoke_stream",
+          "category": "cli_smoke",
+          "subsystem": "cli",
+          "description": "CLI smoke test for `stream` mode.",
+          "command": "trading_env\\Scripts\\python.exe main.py stream --provider sample --symbol SPY --timeout-seconds 60",
+          "required_for": [
+            "paper_readiness"
+          ],
+          "threshold": {
+            "expected_exit_code": 0
+          },
+          "expected_artifacts": [
+            "runs/engine-events.jsonl"
+          ],
+          "timeout_seconds": 60.0
+        },
+        "evidence": {
+          "check_id": "cli_smoke_stream",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "cli_smoke_paper",
+          "category": "cli_smoke",
+          "subsystem": "cli",
+          "description": "CLI smoke test for `paper` mode.",
+          "command": "trading_env\\Scripts\\python.exe main.py paper --provider sample --symbol SPY --timeout-seconds 60",
+          "required_for": [
+            "paper_readiness"
+          ],
+          "threshold": {
+            "expected_exit_code": 0
+          },
+          "expected_artifacts": [
+            "runs/engine-events.jsonl"
+          ],
+          "timeout_seconds": 60.0
+        },
+        "evidence": {
+          "check_id": "cli_smoke_paper",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "cli_smoke_paper_session",
+          "category": "cli_smoke",
+          "subsystem": "cli",
+          "description": "CLI smoke test for `paper-session` mode.",
+          "command": "trading_env\\Scripts\\python.exe main.py paper-session --provider sample --symbol SPY --store-dir runs/paper-session-smoke --timeout-seconds 60",
+          "required_for": [
+            "paper_readiness"
+          ],
+          "threshold": {
+            "expected_exit_code": 0
+          },
+          "expected_artifacts": [
+            "runs/paper-session-smoke"
+          ],
+          "timeout_seconds": 60.0
+        },
+        "evidence": {
+          "check_id": "cli_smoke_paper_session",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "cli_smoke_paper_soak",
+          "category": "cli_smoke",
+          "subsystem": "cli",
+          "description": "CLI smoke test for `paper-soak` mode.",
+          "command": "trading_env\\Scripts\\python.exe main.py paper-soak --provider sample --symbol SPY --soak-sessions 2 --store-dir runs/paper-soak-smoke --timeout-seconds 120",
+          "required_for": [
+            "paper_readiness"
+          ],
+          "threshold": {
+            "expected_exit_code": 0
+          },
+          "expected_artifacts": [
+            "runs/paper-soak-smoke"
+          ],
+          "timeout_seconds": 120
+        },
+        "evidence": {
+          "check_id": "cli_smoke_paper_soak",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "cli_smoke_paper_portfolio",
+          "category": "cli_smoke",
+          "subsystem": "cli",
+          "description": "CLI smoke test for `paper-portfolio` mode.",
+          "command": "trading_env\\Scripts\\python.exe main.py paper-portfolio --provider sample --symbols SPY,QQQ --max-symbols 2 --store-dir runs/paper-portfolio-smoke --timeout-seconds 120",
+          "required_for": [
+            "paper_readiness"
+          ],
+          "threshold": {
+            "expected_exit_code": 0
+          },
+          "expected_artifacts": [
+            "runs/paper-portfolio-smoke"
+          ],
+          "timeout_seconds": 120
+        },
+        "evidence": {
+          "check_id": "cli_smoke_paper_portfolio",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "perf_indicator_calculation",
+          "category": "performance_budget",
+          "subsystem": "indicator",
+          "description": "Performance budget for benchmark `indicator-calculation`.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "optimization_readiness"
+          ],
+          "threshold": {
+            "max_mean_seconds": 0.1,
+            "max_total_seconds": null
+          },
+          "expected_artifacts": [],
+          "timeout_seconds": null
+        },
+        "evidence": {
+          "check_id": "perf_indicator_calculation",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "perf_strategy_generation",
+          "category": "performance_budget",
+          "subsystem": "strategy_generation",
+          "description": "Performance budget for benchmark `strategy-generation`.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "optimization_readiness"
+          ],
+          "threshold": {
+            "max_mean_seconds": 0.1,
+            "max_total_seconds": null
+          },
+          "expected_artifacts": [],
+          "timeout_seconds": null
+        },
+        "evidence": {
+          "check_id": "perf_strategy_generation",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "perf_single_backtest",
+          "category": "performance_budget",
+          "subsystem": "backtest_loop",
+          "description": "Performance budget for benchmark `single-backtest`.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "optimization_readiness"
+          ],
+          "threshold": {
+            "max_mean_seconds": 1.0,
+            "max_total_seconds": null
+          },
+          "expected_artifacts": [],
+          "timeout_seconds": null
+        },
+        "evidence": {
+          "check_id": "perf_single_backtest",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "perf_bulk_research",
+          "category": "performance_budget",
+          "subsystem": "bulk_research",
+          "description": "Performance budget for benchmark `bulk-research`.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "optimization_readiness"
+          ],
+          "threshold": {
+            "max_mean_seconds": 10.0,
+            "max_total_seconds": null
+          },
+          "expected_artifacts": [],
+          "timeout_seconds": null
+        },
+        "evidence": {
+          "check_id": "perf_bulk_research",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "perf_storage_write",
+          "category": "performance_budget",
+          "subsystem": "storage_write",
+          "description": "Performance budget for benchmark `storage-write`.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "optimization_readiness"
+          ],
+          "threshold": {
+            "max_mean_seconds": 0.25,
+            "max_total_seconds": null
+          },
+          "expected_artifacts": [],
+          "timeout_seconds": null
+        },
+        "evidence": {
+          "check_id": "perf_storage_write",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "perf_paper_session_planning",
+          "category": "performance_budget",
+          "subsystem": "paper_session_planning",
+          "description": "Performance budget for benchmark `paper-session-planning`.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "optimization_readiness"
+          ],
+          "threshold": {
+            "max_mean_seconds": 2.0,
+            "max_total_seconds": null
+          },
+          "expected_artifacts": [],
+          "timeout_seconds": null
+        },
+        "evidence": {
+          "check_id": "perf_paper_session_planning",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "perf_broker_reconciliation",
+          "category": "performance_budget",
+          "subsystem": "broker_reconciliation",
+          "description": "Performance budget for benchmark `broker-reconciliation`.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "optimization_readiness"
+          ],
+          "threshold": {
+            "max_mean_seconds": 0.25,
+            "max_total_seconds": null
+          },
+          "expected_artifacts": [],
+          "timeout_seconds": null
+        },
+        "evidence": {
+          "check_id": "perf_broker_reconciliation",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      }
+    ]
+  },
+  "evidence_freshness": {
+    "passed": false,
+    "stale_check_ids": [],
+    "missing_check_ids": [
+      "unit_test_suite",
+      "alpaca_data_connectivity",
+      "alpaca_paper_order_lifecycle",
+      "broker_account_parity",
+      "failure_injection_suite",
+      "restart_recovery_drill",
+      "data_quality_torture",
+      "backtester_differential",
+      "strategy_robustness",
+      "portfolio_risk_stress",
+      "paper_soak_tiers",
+      "daily_ops_acceptance",
+      "observability_acceptance",
+      "security_configuration",
+      "paper_profile_validation",
+      "cli_smoke_backtest",
+      "cli_smoke_report",
+      "cli_smoke_optimize",
+      "cli_smoke_bulk",
+      "cli_smoke_matrix",
+      "cli_smoke_replicate",
+      "cli_smoke_stream",
+      "cli_smoke_paper",
+      "cli_smoke_paper_session",
+      "cli_smoke_paper_soak",
+      "cli_smoke_paper_portfolio",
+      "perf_indicator_calculation",
+      "perf_strategy_generation",
+      "perf_single_backtest",
+      "perf_bulk_research",
+      "perf_storage_write",
+      "perf_paper_session_planning",
+      "perf_broker_reconciliation"
+    ],
+    "max_age_hours": 24.0,
+    "evaluated_at": "2026-07-16T15:19:11.967495+00:00"
+  },
+  "action_plan": {
+    "target": "paper_readiness",
+    "passed": false,
+    "actions": [
+      {
+        "check_id": "unit_test_suite",
+        "category": "code_tests",
+        "subsystem": "tests",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests"
+      },
+      {
+        "check_id": "alpaca_data_connectivity",
+        "category": "live_data",
+        "subsystem": "data",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "alpaca_paper_order_lifecycle",
+        "category": "broker_lifecycle",
+        "subsystem": "execution",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "broker_account_parity",
+        "category": "broker_parity",
+        "subsystem": "execution",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "failure_injection_suite",
+        "category": "failure_injection",
+        "subsystem": "runtime",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "restart_recovery_drill",
+        "category": "recovery",
+        "subsystem": "storage",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "data_quality_torture",
+        "category": "data_quality",
+        "subsystem": "data",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "backtester_differential",
+        "category": "backtest_validation",
+        "subsystem": "backtesting",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "strategy_robustness",
+        "category": "strategy_validation",
+        "subsystem": "strategies",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "portfolio_risk_stress",
+        "category": "risk_stress",
+        "subsystem": "risk",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "paper_soak_tiers",
+        "category": "paper_soak",
+        "subsystem": "operations",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "daily_ops_acceptance",
+        "category": "operator_reports",
+        "subsystem": "reporting",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "observability_acceptance",
+        "category": "observability",
+        "subsystem": "monitoring",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "security_configuration",
+        "category": "security",
+        "subsystem": "config",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "paper_profile_validation",
+        "category": "paper_profiles",
+        "subsystem": "operations",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "cli_smoke_backtest",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe main.py backtest --provider sample --symbol SPY --timeout-seconds 60"
+      },
+      {
+        "check_id": "cli_smoke_report",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe main.py report --provider sample --symbol SPY --html-output reports/smoke-backtest.html --timeout-seconds 60"
+      },
+      {
+        "check_id": "cli_smoke_optimize",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe main.py optimize --provider sample --symbol SPY --param-grid-file configs/optimization/mean_reversion_daily.json --timeout-seconds 180"
+      },
+      {
+        "check_id": "cli_smoke_bulk",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe main.py bulk --provider sample --symbols SPY,QQQ --strategies buyHold --max-symbols 2 --timeout-seconds 180"
+      },
+      {
+        "check_id": "cli_smoke_matrix",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe main.py matrix --research-matrix-file configs/research/sample_cross_asset_matrix.json --strategies buyHold --max-symbols 1 --timeout-seconds 180"
+      },
+      {
+        "check_id": "cli_smoke_replicate",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe main.py replicate --replication-file configs/research/published_strategy_replications.json --timeout-seconds 180"
+      },
+      {
+        "check_id": "cli_smoke_stream",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe main.py stream --provider sample --symbol SPY --timeout-seconds 60"
+      },
+      {
+        "check_id": "cli_smoke_paper",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe main.py paper --provider sample --symbol SPY --timeout-seconds 60"
+      },
+      {
+        "check_id": "cli_smoke_paper_session",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe main.py paper-session --provider sample --symbol SPY --store-dir runs/paper-session-smoke --timeout-seconds 60"
+      },
+      {
+        "check_id": "cli_smoke_paper_soak",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe main.py paper-soak --provider sample --symbol SPY --soak-sessions 2 --store-dir runs/paper-soak-smoke --timeout-seconds 120"
+      },
+      {
+        "check_id": "cli_smoke_paper_portfolio",
+        "category": "cli_smoke",
+        "subsystem": "cli",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": "trading_env\\Scripts\\python.exe main.py paper-portfolio --provider sample --symbols SPY,QQQ --max-symbols 2 --store-dir runs/paper-portfolio-smoke --timeout-seconds 120"
+      },
+      {
+        "check_id": "perf_indicator_calculation",
+        "category": "performance_budget",
+        "subsystem": "indicator",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "perf_strategy_generation",
+        "category": "performance_budget",
+        "subsystem": "strategy_generation",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "perf_single_backtest",
+        "category": "performance_budget",
+        "subsystem": "backtest_loop",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "perf_bulk_research",
+        "category": "performance_budget",
+        "subsystem": "bulk_research",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "perf_storage_write",
+        "category": "performance_budget",
+        "subsystem": "storage_write",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "perf_paper_session_planning",
+        "category": "performance_budget",
+        "subsystem": "paper_session_planning",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      },
+      {
+        "check_id": "perf_broker_reconciliation",
+        "category": "performance_budget",
+        "subsystem": "broker_reconciliation",
+        "status": "missing",
+        "reason": "no_current_evidence",
+        "command": null
+      }
+    ],
+    "next_commands": [
+      "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+      "trading_env\\Scripts\\python.exe main.py backtest --provider sample --symbol SPY --timeout-seconds 60",
+      "trading_env\\Scripts\\python.exe main.py report --provider sample --symbol SPY --html-output reports/smoke-backtest.html --timeout-seconds 60",
+      "trading_env\\Scripts\\python.exe main.py optimize --provider sample --symbol SPY --param-grid-file configs/optimization/mean_reversion_daily.json --timeout-seconds 180",
+      "trading_env\\Scripts\\python.exe main.py bulk --provider sample --symbols SPY,QQQ --strategies buyHold --max-symbols 2 --timeout-seconds 180",
+      "trading_env\\Scripts\\python.exe main.py matrix --research-matrix-file configs/research/sample_cross_asset_matrix.json --strategies buyHold --max-symbols 1 --timeout-seconds 180",
+      "trading_env\\Scripts\\python.exe main.py replicate --replication-file configs/research/published_strategy_replications.json --timeout-seconds 180",
+      "trading_env\\Scripts\\python.exe main.py stream --provider sample --symbol SPY --timeout-seconds 60",
+      "trading_env\\Scripts\\python.exe main.py paper --provider sample --symbol SPY --timeout-seconds 60",
+      "trading_env\\Scripts\\python.exe main.py paper-session --provider sample --symbol SPY --store-dir runs/paper-session-smoke --timeout-seconds 60",
+      "trading_env\\Scripts\\python.exe main.py paper-soak --provider sample --symbol SPY --soak-sessions 2 --store-dir runs/paper-soak-smoke --timeout-seconds 120",
+      "trading_env\\Scripts\\python.exe main.py paper-portfolio --provider sample --symbols SPY,QQQ --max-symbols 2 --store-dir runs/paper-portfolio-smoke --timeout-seconds 120"
+    ]
+  },
+  "not_live_ready": {
+    "live_ready": false,
+    "status": "not_live_ready",
+    "missing_checks": [
+      "unit_test_suite",
+      "alpaca_data_connectivity",
+      "alpaca_paper_order_lifecycle",
+      "broker_account_parity",
+      "failure_injection_suite",
+      "restart_recovery_drill",
+      "data_quality_torture",
+      "backtester_differential",
+      "strategy_robustness",
+      "portfolio_risk_stress",
+      "paper_soak_tiers",
+      "daily_ops_acceptance",
+      "observability_acceptance",
+      "security_configuration",
+      "paper_profile_validation",
+      "cli_smoke_backtest",
+      "cli_smoke_report",
+      "cli_smoke_optimize",
+      "cli_smoke_bulk",
+      "cli_smoke_matrix",
+      "cli_smoke_replicate",
+      "cli_smoke_stream",
+      "cli_smoke_paper",
+      "cli_smoke_paper_session",
+      "cli_smoke_paper_soak",
+      "cli_smoke_paper_portfolio",
+      "perf_indicator_calculation",
+      "perf_strategy_generation",
+      "perf_single_backtest",
+      "perf_bulk_research",
+      "perf_storage_write",
+      "perf_paper_session_planning",
+      "perf_broker_reconciliation"
+    ],
+    "failed_checks": [],
+    "next_commands": [
+      "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+      "trading_env\\Scripts\\python.exe main.py backtest --provider sample --symbol SPY --timeout-seconds 60",
+      "trading_env\\Scripts\\python.exe main.py report --provider sample --symbol SPY --html-output reports/smoke-backtest.html --timeout-seconds 60",
+      "trading_env\\Scripts\\python.exe main.py optimize --provider sample --symbol SPY --param-grid-file configs/optimization/mean_reversion_daily.json --timeout-seconds 180",
+      "trading_env\\Scripts\\python.exe main.py bulk --provider sample --symbols SPY,QQQ --strategies buyHold --max-symbols 2 --timeout-seconds 180",
+      "trading_env\\Scripts\\python.exe main.py matrix --research-matrix-file configs/research/sample_cross_asset_matrix.json --strategies buyHold --max-symbols 1 --timeout-seconds 180",
+      "trading_env\\Scripts\\python.exe main.py replicate --replication-file configs/research/published_strategy_replications.json --timeout-seconds 180",
+      "trading_env\\Scripts\\python.exe main.py stream --provider sample --symbol SPY --timeout-seconds 60",
+      "trading_env\\Scripts\\python.exe main.py paper --provider sample --symbol SPY --timeout-seconds 60",
+      "trading_env\\Scripts\\python.exe main.py paper-session --provider sample --symbol SPY --store-dir runs/paper-session-smoke --timeout-seconds 60",
+      "trading_env\\Scripts\\python.exe main.py paper-soak --provider sample --symbol SPY --soak-sessions 2 --store-dir runs/paper-soak-smoke --timeout-seconds 120",
+      "trading_env\\Scripts\\python.exe main.py paper-portfolio --provider sample --symbols SPY,QQQ --max-symbols 2 --store-dir runs/paper-portfolio-smoke --timeout-seconds 120"
+    ],
+    "readiness_index": {
+      "target": "paper_readiness",
+      "passed": false,
+      "readiness_score": 0.0,
+      "required_checks": 33,
+      "passed_required": 0,
+      "missing_required": [
+        "unit_test_suite",
+        "alpaca_data_connectivity",
+        "alpaca_paper_order_lifecycle",
+        "broker_account_parity",
+        "failure_injection_suite",
+        "restart_recovery_drill",
+        "data_quality_torture",
+        "backtester_differential",
+        "strategy_robustness",
+        "portfolio_risk_stress",
+        "paper_soak_tiers",
+        "daily_ops_acceptance",
+        "observability_acceptance",
+        "security_configuration",
+        "paper_profile_validation",
+        "cli_smoke_backtest",
+        "cli_smoke_report",
+        "cli_smoke_optimize",
+        "cli_smoke_bulk",
+        "cli_smoke_matrix",
+        "cli_smoke_replicate",
+        "cli_smoke_stream",
+        "cli_smoke_paper",
+        "cli_smoke_paper_session",
+        "cli_smoke_paper_soak",
+        "cli_smoke_paper_portfolio",
+        "perf_indicator_calculation",
+        "perf_strategy_generation",
+        "perf_single_backtest",
+        "perf_bulk_research",
+        "perf_storage_write",
+        "perf_paper_session_planning",
+        "perf_broker_reconciliation"
+      ],
+      "failed_required": [],
+      "checks": [
+        {
+          "spec": {
+            "check_id": "unit_test_suite",
+            "category": "code_tests",
+            "subsystem": "tests",
+            "description": "Full unit and integration suite passes.",
+            "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "unit_test_suite",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "alpaca_data_connectivity",
+            "category": "live_data",
+            "subsystem": "data",
+            "description": "Alpaca historical/latest/websocket data connectivity passes.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "live_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "alpaca_data_connectivity",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "alpaca_paper_order_lifecycle",
+            "category": "broker_lifecycle",
+            "subsystem": "execution",
+            "description": "Tiny-notional Alpaca paper submit/cancel/reconcile lifecycle passes.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "live_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "alpaca_paper_order_lifecycle",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "broker_account_parity",
+            "category": "broker_parity",
+            "subsystem": "execution",
+            "description": "Local account state matches Alpaca paper account snapshots.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "live_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "broker_account_parity",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "failure_injection_suite",
+            "category": "failure_injection",
+            "subsystem": "runtime",
+            "description": "Network, broker, stale-data, malformed-payload, and lifecycle fault tests pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "failure_injection_suite",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "restart_recovery_drill",
+            "category": "recovery",
+            "subsystem": "storage",
+            "description": "Crash/restart drills prove state reload and unresolved-order blocking.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "live_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "restart_recovery_drill",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "data_quality_torture",
+            "category": "data_quality",
+            "subsystem": "data",
+            "description": "Adjusted/raw, missing/duplicate bar, calendar, gap, and zero-volume tests pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "data_quality_torture",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "backtester_differential",
+            "category": "backtest_validation",
+            "subsystem": "backtesting",
+            "description": "Backtester output matches independent/reference calculations for simple scenarios.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "backtester_differential",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "strategy_robustness",
+            "category": "strategy_validation",
+            "subsystem": "strategies",
+            "description": "Walk-forward, perturbation, cluster, cost-stress, and benchmark-relative gates pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "optimization_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 300
+          },
+          "evidence": {
+            "check_id": "strategy_robustness",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "portfolio_risk_stress",
+            "category": "risk_stress",
+            "subsystem": "risk",
+            "description": "Concentration, exposure, cash, margin, correlation shock, and kill-switch tests pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "live_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "portfolio_risk_stress",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "paper_soak_tiers",
+            "category": "paper_soak",
+            "subsystem": "operations",
+            "description": "Local, data-only, micro-notional, portfolio, recovery, and rehearsal soaks pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "live_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 900
+          },
+          "evidence": {
+            "check_id": "paper_soak_tiers",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "daily_ops_acceptance",
+            "category": "operator_reports",
+            "subsystem": "reporting",
+            "description": "Daily paper report scenarios produce correct decisions and recommendations.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "daily_ops_acceptance",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "observability_acceptance",
+            "category": "observability",
+            "subsystem": "monitoring",
+            "description": "Logs, metrics, health checks, notifications, audit IDs, and halt reasons pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "observability_acceptance",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "security_configuration",
+            "category": "security",
+            "subsystem": "config",
+            "description": "Secrets, paper/live URL, env, and deployment safety checks pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "live_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "security_configuration",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "paper_profile_validation",
+            "category": "paper_profiles",
+            "subsystem": "operations",
+            "description": "Alpaca paper profiles validate risk budgets and block unsafe combinations.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 60
+          },
+          "evidence": {
+            "check_id": "paper_profile_validation",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "cli_smoke_backtest",
+            "category": "cli_smoke",
+            "subsystem": "cli",
+            "description": "CLI smoke test for `backtest` mode.",
+            "command": "trading_env\\Scripts\\python.exe main.py backtest --provider sample --symbol SPY --timeout-seconds 60",
+            "required_for": [
+              "paper_readiness"
+            ],
+            "threshold": {
+              "expected_exit_code": 0
+            },
+            "expected_artifacts": [
+              "runs/equity.jsonl",
+              "runs/fills.jsonl"
+            ],
+            "timeout_seconds": 60.0
+          },
+          "evidence": {
+            "check_id": "cli_smoke_backtest",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "cli_smoke_report",
+            "category": "cli_smoke",
+            "subsystem": "cli",
+            "description": "CLI smoke test for `report` mode.",
+            "command": "trading_env\\Scripts\\python.exe main.py report --provider sample --symbol SPY --html-output reports/smoke-backtest.html --timeout-seconds 60",
+            "required_for": [
+              "paper_readiness"
+            ],
+            "threshold": {
+              "expected_exit_code": 0
+            },
+            "expected_artifacts": [
+              "reports/smoke-backtest.html"
+            ],
+            "timeout_seconds": 60.0
+          },
+          "evidence": {
+            "check_id": "cli_smoke_report",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "cli_smoke_optimize",
+            "category": "cli_smoke",
+            "subsystem": "cli",
+            "description": "CLI smoke test for `optimize` mode.",
+            "command": "trading_env\\Scripts\\python.exe main.py optimize --provider sample --symbol SPY --param-grid-file configs/optimization/mean_reversion_daily.json --timeout-seconds 180",
+            "required_for": [
+              "paper_readiness"
+            ],
+            "threshold": {
+              "expected_exit_code": 0
+            },
+            "expected_artifacts": [
+              "runs/optimization-results.jsonl"
+            ],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "cli_smoke_optimize",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "cli_smoke_bulk",
+            "category": "cli_smoke",
+            "subsystem": "cli",
+            "description": "CLI smoke test for `bulk` mode.",
+            "command": "trading_env\\Scripts\\python.exe main.py bulk --provider sample --symbols SPY,QQQ --strategies buyHold --max-symbols 2 --timeout-seconds 180",
+            "required_for": [
+              "paper_readiness"
+            ],
+            "threshold": {
+              "expected_exit_code": 0
+            },
+            "expected_artifacts": [
+              "reports/bulk-backtest-summary.json"
+            ],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "cli_smoke_bulk",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "cli_smoke_matrix",
+            "category": "cli_smoke",
+            "subsystem": "cli",
+            "description": "CLI smoke test for `matrix` mode.",
+            "command": "trading_env\\Scripts\\python.exe main.py matrix --research-matrix-file configs/research/sample_cross_asset_matrix.json --strategies buyHold --max-symbols 1 --timeout-seconds 180",
+            "required_for": [
+              "paper_readiness"
+            ],
+            "threshold": {
+              "expected_exit_code": 0
+            },
+            "expected_artifacts": [
+              "reports/research-matrix-summary.json"
+            ],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "cli_smoke_matrix",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "cli_smoke_replicate",
+            "category": "cli_smoke",
+            "subsystem": "cli",
+            "description": "CLI smoke test for `replicate` mode.",
+            "command": "trading_env\\Scripts\\python.exe main.py replicate --replication-file configs/research/published_strategy_replications.json --timeout-seconds 180",
+            "required_for": [
+              "paper_readiness"
+            ],
+            "threshold": {
+              "expected_exit_code": 0
+            },
+            "expected_artifacts": [
+              "reports/published-strategy-replication.json"
+            ],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "cli_smoke_replicate",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "cli_smoke_stream",
+            "category": "cli_smoke",
+            "subsystem": "cli",
+            "description": "CLI smoke test for `stream` mode.",
+            "command": "trading_env\\Scripts\\python.exe main.py stream --provider sample --symbol SPY --timeout-seconds 60",
+            "required_for": [
+              "paper_readiness"
+            ],
+            "threshold": {
+              "expected_exit_code": 0
+            },
+            "expected_artifacts": [
+              "runs/engine-events.jsonl"
+            ],
+            "timeout_seconds": 60.0
+          },
+          "evidence": {
+            "check_id": "cli_smoke_stream",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "cli_smoke_paper",
+            "category": "cli_smoke",
+            "subsystem": "cli",
+            "description": "CLI smoke test for `paper` mode.",
+            "command": "trading_env\\Scripts\\python.exe main.py paper --provider sample --symbol SPY --timeout-seconds 60",
+            "required_for": [
+              "paper_readiness"
+            ],
+            "threshold": {
+              "expected_exit_code": 0
+            },
+            "expected_artifacts": [
+              "runs/engine-events.jsonl"
+            ],
+            "timeout_seconds": 60.0
+          },
+          "evidence": {
+            "check_id": "cli_smoke_paper",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "cli_smoke_paper_session",
+            "category": "cli_smoke",
+            "subsystem": "cli",
+            "description": "CLI smoke test for `paper-session` mode.",
+            "command": "trading_env\\Scripts\\python.exe main.py paper-session --provider sample --symbol SPY --store-dir runs/paper-session-smoke --timeout-seconds 60",
+            "required_for": [
+              "paper_readiness"
+            ],
+            "threshold": {
+              "expected_exit_code": 0
+            },
+            "expected_artifacts": [
+              "runs/paper-session-smoke"
+            ],
+            "timeout_seconds": 60.0
+          },
+          "evidence": {
+            "check_id": "cli_smoke_paper_session",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "cli_smoke_paper_soak",
+            "category": "cli_smoke",
+            "subsystem": "cli",
+            "description": "CLI smoke test for `paper-soak` mode.",
+            "command": "trading_env\\Scripts\\python.exe main.py paper-soak --provider sample --symbol SPY --soak-sessions 2 --store-dir runs/paper-soak-smoke --timeout-seconds 120",
+            "required_for": [
+              "paper_readiness"
+            ],
+            "threshold": {
+              "expected_exit_code": 0
+            },
+            "expected_artifacts": [
+              "runs/paper-soak-smoke"
+            ],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "cli_smoke_paper_soak",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "cli_smoke_paper_portfolio",
+            "category": "cli_smoke",
+            "subsystem": "cli",
+            "description": "CLI smoke test for `paper-portfolio` mode.",
+            "command": "trading_env\\Scripts\\python.exe main.py paper-portfolio --provider sample --symbols SPY,QQQ --max-symbols 2 --store-dir runs/paper-portfolio-smoke --timeout-seconds 120",
+            "required_for": [
+              "paper_readiness"
+            ],
+            "threshold": {
+              "expected_exit_code": 0
+            },
+            "expected_artifacts": [
+              "runs/paper-portfolio-smoke"
+            ],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "cli_smoke_paper_portfolio",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "perf_indicator_calculation",
+            "category": "performance_budget",
+            "subsystem": "indicator",
+            "description": "Performance budget for benchmark `indicator-calculation`.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "optimization_readiness"
+            ],
+            "threshold": {
+              "max_mean_seconds": 0.1,
+              "max_total_seconds": null
+            },
+            "expected_artifacts": [],
+            "timeout_seconds": null
+          },
+          "evidence": {
+            "check_id": "perf_indicator_calculation",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "perf_strategy_generation",
+            "category": "performance_budget",
+            "subsystem": "strategy_generation",
+            "description": "Performance budget for benchmark `strategy-generation`.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "optimization_readiness"
+            ],
+            "threshold": {
+              "max_mean_seconds": 0.1,
+              "max_total_seconds": null
+            },
+            "expected_artifacts": [],
+            "timeout_seconds": null
+          },
+          "evidence": {
+            "check_id": "perf_strategy_generation",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "perf_single_backtest",
+            "category": "performance_budget",
+            "subsystem": "backtest_loop",
+            "description": "Performance budget for benchmark `single-backtest`.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "optimization_readiness"
+            ],
+            "threshold": {
+              "max_mean_seconds": 1.0,
+              "max_total_seconds": null
+            },
+            "expected_artifacts": [],
+            "timeout_seconds": null
+          },
+          "evidence": {
+            "check_id": "perf_single_backtest",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "perf_bulk_research",
+            "category": "performance_budget",
+            "subsystem": "bulk_research",
+            "description": "Performance budget for benchmark `bulk-research`.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "optimization_readiness"
+            ],
+            "threshold": {
+              "max_mean_seconds": 10.0,
+              "max_total_seconds": null
+            },
+            "expected_artifacts": [],
+            "timeout_seconds": null
+          },
+          "evidence": {
+            "check_id": "perf_bulk_research",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "perf_storage_write",
+            "category": "performance_budget",
+            "subsystem": "storage_write",
+            "description": "Performance budget for benchmark `storage-write`.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "optimization_readiness"
+            ],
+            "threshold": {
+              "max_mean_seconds": 0.25,
+              "max_total_seconds": null
+            },
+            "expected_artifacts": [],
+            "timeout_seconds": null
+          },
+          "evidence": {
+            "check_id": "perf_storage_write",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "perf_paper_session_planning",
+            "category": "performance_budget",
+            "subsystem": "paper_session_planning",
+            "description": "Performance budget for benchmark `paper-session-planning`.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "optimization_readiness"
+            ],
+            "threshold": {
+              "max_mean_seconds": 2.0,
+              "max_total_seconds": null
+            },
+            "expected_artifacts": [],
+            "timeout_seconds": null
+          },
+          "evidence": {
+            "check_id": "perf_paper_session_planning",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "perf_broker_reconciliation",
+            "category": "performance_budget",
+            "subsystem": "broker_reconciliation",
+            "description": "Performance budget for benchmark `broker-reconciliation`.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "optimization_readiness"
+            ],
+            "threshold": {
+              "max_mean_seconds": 0.25,
+              "max_total_seconds": null
+            },
+            "expected_artifacts": [],
+            "timeout_seconds": null
+          },
+          "evidence": {
+            "check_id": "perf_broker_reconciliation",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        }
+      ]
+    },
+    "live_readiness": {}
+  },
+  "cli_smoke_plan": [
+    {
+      "mode": "backtest",
+      "check_id": "cli_smoke_backtest",
+      "command": "trading_env\\Scripts\\python.exe main.py backtest --provider sample --symbol SPY --timeout-seconds 60",
+      "expected_exit_code": 0,
+      "expected_artifacts": [
+        "runs/equity.jsonl",
+        "runs/fills.jsonl"
+      ],
+      "timeout_seconds": 60.0
+    },
+    {
+      "mode": "report",
+      "check_id": "cli_smoke_report",
+      "command": "trading_env\\Scripts\\python.exe main.py report --provider sample --symbol SPY --html-output reports/smoke-backtest.html --timeout-seconds 60",
+      "expected_exit_code": 0,
+      "expected_artifacts": [
+        "reports/smoke-backtest.html"
+      ],
+      "timeout_seconds": 60.0
+    },
+    {
+      "mode": "optimize",
+      "check_id": "cli_smoke_optimize",
+      "command": "trading_env\\Scripts\\python.exe main.py optimize --provider sample --symbol SPY --param-grid-file configs/optimization/mean_reversion_daily.json --timeout-seconds 180",
+      "expected_exit_code": 0,
+      "expected_artifacts": [
+        "runs/optimization-results.jsonl"
+      ],
+      "timeout_seconds": 180
+    },
+    {
+      "mode": "bulk",
+      "check_id": "cli_smoke_bulk",
+      "command": "trading_env\\Scripts\\python.exe main.py bulk --provider sample --symbols SPY,QQQ --strategies buyHold --max-symbols 2 --timeout-seconds 180",
+      "expected_exit_code": 0,
+      "expected_artifacts": [
+        "reports/bulk-backtest-summary.json"
+      ],
+      "timeout_seconds": 180
+    },
+    {
+      "mode": "matrix",
+      "check_id": "cli_smoke_matrix",
+      "command": "trading_env\\Scripts\\python.exe main.py matrix --research-matrix-file configs/research/sample_cross_asset_matrix.json --strategies buyHold --max-symbols 1 --timeout-seconds 180",
+      "expected_exit_code": 0,
+      "expected_artifacts": [
+        "reports/research-matrix-summary.json"
+      ],
+      "timeout_seconds": 180
+    },
+    {
+      "mode": "replicate",
+      "check_id": "cli_smoke_replicate",
+      "command": "trading_env\\Scripts\\python.exe main.py replicate --replication-file configs/research/published_strategy_replications.json --timeout-seconds 180",
+      "expected_exit_code": 0,
+      "expected_artifacts": [
+        "reports/published-strategy-replication.json"
+      ],
+      "timeout_seconds": 180
+    },
+    {
+      "mode": "stream",
+      "check_id": "cli_smoke_stream",
+      "command": "trading_env\\Scripts\\python.exe main.py stream --provider sample --symbol SPY --timeout-seconds 60",
+      "expected_exit_code": 0,
+      "expected_artifacts": [
+        "runs/engine-events.jsonl"
+      ],
+      "timeout_seconds": 60.0
+    },
+    {
+      "mode": "paper",
+      "check_id": "cli_smoke_paper",
+      "command": "trading_env\\Scripts\\python.exe main.py paper --provider sample --symbol SPY --timeout-seconds 60",
+      "expected_exit_code": 0,
+      "expected_artifacts": [
+        "runs/engine-events.jsonl"
+      ],
+      "timeout_seconds": 60.0
+    },
+    {
+      "mode": "paper-session",
+      "check_id": "cli_smoke_paper_session",
+      "command": "trading_env\\Scripts\\python.exe main.py paper-session --provider sample --symbol SPY --store-dir runs/paper-session-smoke --timeout-seconds 60",
+      "expected_exit_code": 0,
+      "expected_artifacts": [
+        "runs/paper-session-smoke"
+      ],
+      "timeout_seconds": 60.0
+    },
+    {
+      "mode": "paper-soak",
+      "check_id": "cli_smoke_paper_soak",
+      "command": "trading_env\\Scripts\\python.exe main.py paper-soak --provider sample --symbol SPY --soak-sessions 2 --store-dir runs/paper-soak-smoke --timeout-seconds 120",
+      "expected_exit_code": 0,
+      "expected_artifacts": [
+        "runs/paper-soak-smoke"
+      ],
+      "timeout_seconds": 120
+    },
+    {
+      "mode": "paper-portfolio",
+      "check_id": "cli_smoke_paper_portfolio",
+      "command": "trading_env\\Scripts\\python.exe main.py paper-portfolio --provider sample --symbols SPY,QQQ --max-symbols 2 --store-dir runs/paper-portfolio-smoke --timeout-seconds 120",
+      "expected_exit_code": 0,
+      "expected_artifacts": [
+        "runs/paper-portfolio-smoke"
+      ],
+      "timeout_seconds": 120
+    }
+  ],
+  "performance_budgets": [
+    {
+      "check_id": "perf_indicator_calculation",
+      "benchmark_name": "indicator-calculation",
+      "category": "indicator",
+      "max_mean_seconds": 0.1,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_strategy_generation",
+      "benchmark_name": "strategy-generation",
+      "category": "strategy_generation",
+      "max_mean_seconds": 0.1,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_single_backtest",
+      "benchmark_name": "single-backtest",
+      "category": "backtest_loop",
+      "max_mean_seconds": 1.0,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_bulk_research",
+      "benchmark_name": "bulk-research",
+      "category": "bulk_research",
+      "max_mean_seconds": 10.0,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_storage_write",
+      "benchmark_name": "storage-write",
+      "category": "storage_write",
+      "max_mean_seconds": 0.25,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_paper_session_planning",
+      "benchmark_name": "paper-session-planning",
+      "category": "paper_session_planning",
+      "max_mean_seconds": 2.0,
+      "max_total_seconds": null
+    },
+    {
+      "check_id": "perf_broker_reconciliation",
+      "benchmark_name": "broker-reconciliation",
+      "category": "broker_reconciliation",
+      "max_mean_seconds": 0.25,
+      "max_total_seconds": null
+    }
+  ],
+  "paper_profile_validation": {
+    "passed": true,
+    "profile_results": {
+      "dry-run": {
+        "passed": true,
+        "validation": {
+          "passed": true,
+          "profile": {
+            "name": "dry-run",
+            "submit_orders": false,
+            "sessions": 3,
+            "required_execution_mode": "dry-run",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "No broker orders; validates data, committee, planning, recovery, and artifacts.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": null,
+              "max_new_exposure": null,
+              "max_turnover": null,
+              "cash_reserve": 0.0,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [],
+          "warnings": []
+        },
+        "session_options": {
+          "submit_orders": false,
+          "artifact_root": "runs/paper-profile-validation/dry-run",
+          "recover_state": true,
+          "state_db_path": "runs/paper-profile-validation/dry-run.sqlite3",
+          "risk_budget": {
+            "min_order_quantity": 0.0,
+            "min_order_notional": 0.0,
+            "max_session_notional": null,
+            "max_new_exposure": null,
+            "max_turnover": null,
+            "cash_reserve": 0.0,
+            "cooldown_symbols": [],
+            "repeated_reject_symbols": []
+          }
+        },
+        "soak_config": {
+          "sessions": 3,
+          "stop_on_failure": true
+        }
+      },
+      "micro-notional": {
+        "passed": true,
+        "validation": {
+          "passed": true,
+          "profile": {
+            "name": "micro-notional",
+            "submit_orders": true,
+            "sessions": 3,
+            "required_execution_mode": "paper",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": 25.0,
+              "max_new_exposure": 0.0025,
+              "max_turnover": 0.0025,
+              "cash_reserve": 0.95,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [],
+          "warnings": []
+        },
+        "session_options": {
+          "submit_orders": true,
+          "artifact_root": "runs/paper-profile-validation/micro-notional",
+          "recover_state": true,
+          "state_db_path": "runs/paper-profile-validation/micro-notional.sqlite3",
+          "risk_budget": {
+            "min_order_quantity": 0.0,
+            "min_order_notional": 0.0,
+            "max_session_notional": 25.0,
+            "max_new_exposure": 0.0025,
+            "max_turnover": 0.0025,
+            "cash_reserve": 0.95,
+            "cooldown_symbols": [],
+            "repeated_reject_symbols": []
+          }
+        },
+        "soak_config": {
+          "sessions": 3,
+          "stop_on_failure": true
+        }
+      },
+      "full-paper-rehearsal": {
+        "passed": true,
+        "validation": {
+          "passed": true,
+          "profile": {
+            "name": "full-paper-rehearsal",
+            "submit_orders": true,
+            "sessions": 5,
+            "required_execution_mode": "paper",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": 2500.0,
+              "max_new_exposure": 0.1,
+              "max_turnover": 0.2,
+              "cash_reserve": 0.5,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [],
+          "warnings": []
+        },
+        "session_options": {
+          "submit_orders": true,
+          "artifact_root": "runs/paper-profile-validation/full-paper-rehearsal",
+          "recover_state": true,
+          "state_db_path": "runs/paper-profile-validation/full-paper-rehearsal.sqlite3",
+          "risk_budget": {
+            "min_order_quantity": 0.0,
+            "min_order_notional": 0.0,
+            "max_session_notional": 2500.0,
+            "max_new_exposure": 0.1,
+            "max_turnover": 0.2,
+            "cash_reserve": 0.5,
+            "cooldown_symbols": [],
+            "repeated_reject_symbols": []
+          }
+        },
+        "soak_config": {
+          "sessions": 5,
+          "stop_on_failure": true
+        }
+      }
+    },
+    "unsafe_combination_results": {
+      "micro_notional_live_url": {
+        "blocked": true,
+        "validation": {
+          "passed": false,
+          "profile": {
+            "name": "micro-notional",
+            "submit_orders": true,
+            "sessions": 3,
+            "required_execution_mode": "paper",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": 25.0,
+              "max_new_exposure": 0.0025,
+              "max_turnover": 0.0025,
+              "cash_reserve": 0.95,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [
+            "ALPACA_BASE_URL must point to https://paper-api.alpaca.markets."
+          ],
+          "warnings": []
+        }
+      },
+      "micro_notional_dry_run_mode": {
+        "blocked": true,
+        "validation": {
+          "passed": false,
+          "profile": {
+            "name": "micro-notional",
+            "submit_orders": true,
+            "sessions": 3,
+            "required_execution_mode": "paper",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": 25.0,
+              "max_new_exposure": 0.0025,
+              "max_turnover": 0.0025,
+              "cash_reserve": 0.95,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [
+            "EXECUTION_MODE must be paper for micro-notional."
+          ],
+          "warnings": []
+        }
+      },
+      "full_rehearsal_missing_keys": {
+        "blocked": true,
+        "validation": {
+          "passed": false,
+          "profile": {
+            "name": "full-paper-rehearsal",
+            "submit_orders": true,
+            "sessions": 5,
+            "required_execution_mode": "paper",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": 2500.0,
+              "max_new_exposure": 0.1,
+              "max_turnover": 0.2,
+              "cash_reserve": 0.5,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [
+            "ALPACA_API_KEY is required for submitting paper orders.",
+            "ALPACA_SECRET_KEY is required for submitting paper orders."
+          ],
+          "warnings": []
+        }
+      }
+    }
+  },
+  "release_checklist": {
+    "output_bundle": "reports/release-validation-bundle.json",
+    "steps": [
+      {
+        "name": "fast_unit_suite",
+        "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+        "required": true,
+        "description": "Run the full local automated suite."
+      },
+      {
+        "name": "validation_manifest",
+        "command": "trading_env\\Scripts\\python.exe main.py validate --validation-output reports/validation-readiness.json",
+        "required": true,
+        "description": "Write the current readiness index and not-live-ready report."
+      },
+      {
+        "name": "performance_profile",
+        "command": "trading_env\\Scripts\\python.exe main.py profile --profiling-output reports/profiling-report.json",
+        "required": true,
+        "description": "Run critical-path benchmark tasks and budget checks."
+      },
+      {
+        "name": "paper_dry_run",
+        "command": "trading_env\\Scripts\\python.exe main.py paper-session --provider sample --symbol SPY --store-dir runs/release-paper-dry-run --timeout-seconds 60",
+        "required": true,
+        "description": "Prove local paper-session artifact generation."
+      },
+      {
+        "name": "paper_profile_validation",
+        "command": null,
+        "required": true,
+        "description": "Review paper-profile validation evidence in the release bundle."
+      },
+      {
+        "name": "alpaca_micro_notional_submit",
+        "command": "trading_env\\Scripts\\python.exe main.py paper-session --provider alpaca --execution-mode paper --paper-profile micro-notional --symbol SPY --store-dir runs/release-alpaca-micro --timeout-seconds 180",
+        "required": false,
+        "description": "Optional broker-backed micro-notional paper proof when credentials and market conditions are available."
+      },
+      {
+        "name": "deployment_rehearsal",
+        "command": null,
+        "required": false,
+        "description": "Manual/deployment environment rehearsal until automated deployment runners exist."
+      }
+    ]
+  },
+  "readiness_html_path": "reports\\readiness-smoke.html"
+}

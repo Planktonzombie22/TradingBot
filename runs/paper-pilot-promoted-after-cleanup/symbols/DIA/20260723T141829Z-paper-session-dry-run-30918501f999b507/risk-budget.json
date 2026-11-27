@@ -1,0 +1,75 @@
+{
+  "passed": true,
+  "reason": "risk_budget_passed",
+  "budget": {
+    "min_order_quantity": 0.0,
+    "min_order_notional": 0.0,
+    "max_session_notional": 25.0,
+    "max_new_exposure": 0.0025,
+    "max_turnover": 0.0025,
+    "cash_reserve": 0.95,
+    "cooldown_symbols": [],
+    "repeated_reject_symbols": []
+  },
+  "session_notional": 24.99961704,
+  "new_exposure": 0.002499961704,
+  "turnover": 0.002499961704,
+  "gates": [
+    {
+      "name": "DIA_min_quantity",
+      "passed": true,
+      "reason": "min_quantity_passed",
+      "value": 0.048372,
+      "threshold": 0.0
+    },
+    {
+      "name": "DIA_min_notional",
+      "passed": true,
+      "reason": "min_notional_passed",
+      "value": 24.99961704,
+      "threshold": 0.0
+    },
+    {
+      "name": "DIA_cooldown",
+      "passed": true,
+      "reason": "cooldown_passed",
+      "value": "DIA",
+      "threshold": "not_in_cooldown"
+    },
+    {
+      "name": "DIA_repeated_reject",
+      "passed": true,
+      "reason": "repeated_reject_passed",
+      "value": "DIA",
+      "threshold": "not_repeated_reject"
+    },
+    {
+      "name": "max_session_notional",
+      "passed": true,
+      "reason": "budget_passed",
+      "value": 24.99961704,
+      "threshold": 25.0
+    },
+    {
+      "name": "max_new_exposure",
+      "passed": true,
+      "reason": "budget_passed",
+      "value": 0.002499961704,
+      "threshold": 0.0025
+    },
+    {
+      "name": "max_turnover",
+      "passed": true,
+      "reason": "budget_passed",
+      "value": 0.002499961704,
+      "threshold": 0.0025
+    },
+    {
+      "name": "cash_reserve",
+      "passed": true,
+      "reason": "cash_reserve_passed",
+      "value": 0.9975000382959999,
+      "threshold": 0.95
+    }
+  ]
+}

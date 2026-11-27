@@ -1,0 +1,48 @@
+{
+  "passed": false,
+  "reason": "stale_data",
+  "observed_at": "2026-07-24T18:22:44.264802+00:00",
+  "statuses": [
+    {
+      "symbol": "DIA",
+      "source": "latest_trade",
+      "timestamp": "2026-07-23T14:24:00.945922+00:00",
+      "age_seconds": 100723.31888,
+      "max_age_seconds": 900.0,
+      "asset_class": "equity",
+      "passed": false,
+      "reason": "stale_data"
+    },
+    {
+      "symbol": "DIA",
+      "source": "latest_quote",
+      "timestamp": "2026-07-23T14:24:00.945922+00:00",
+      "age_seconds": 100723.31888,
+      "max_age_seconds": 900.0,
+      "asset_class": "equity",
+      "passed": false,
+      "reason": "stale_data"
+    },
+    {
+      "symbol": "SPY",
+      "source": "latest_trade",
+      "timestamp": "2026-07-23T14:24:01.164686+00:00",
+      "age_seconds": 100723.100116,
+      "max_age_seconds": 900.0,
+      "asset_class": "equity",
+      "passed": false,
+      "reason": "stale_data"
+    },
+    {
+      "symbol": "SPY",
+      "source": "latest_quote",
+      "timestamp": "2026-07-23T14:24:01.164686+00:00",
+      "age_seconds": 100723.100116,
+      "max_age_seconds": 900.0,
+      "asset_class": "equity",
+      "passed": false,
+      "reason": "stale_data"
+    }
+  ],
+  "artifact_path": "reports\\paper-data-freshness-data-reliability-smoke.json"
+}

@@ -1,0 +1,13 @@
+{
+  "status": "kill_switch_active",
+  "iteration": 0,
+  "last_heartbeat_at": "2026-07-30T22:40:30.109229+00:00",
+  "kill_switch_path": "runs\\paper-daemon-alpaca-proof.kill",
+  "state_path": "runs\\paper-daemon-alpaca-kill-proof-state.json",
+  "heartbeat_path": "runs\\paper-daemon-alpaca-kill-proof-heartbeat.json",
+  "lock_path": "runs\\paper-daemon-alpaca-kill-proof.lock",
+  "next_run_at": null,
+  "last_reason": "kill_switch_present_before_start",
+  "last_error": null,
+  "last_active_window": null
+}

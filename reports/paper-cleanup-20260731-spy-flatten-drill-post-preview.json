@@ -1,0 +1,16 @@
+{
+  "submit_requested": false,
+  "attempted": false,
+  "submitted": false,
+  "positions_seen": [],
+  "planned_orders": [],
+  "submitted_orders": [],
+  "execution_reports": [],
+  "submission_guard": null,
+  "reconciliation": null,
+  "reconciliation_clean": null,
+  "fill_poll_attempts": 0,
+  "polled_execution_reports": 0,
+  "reason": "preview_only",
+  "artifact_path": "reports\\paper-cleanup-20260731-spy-flatten-drill-post-preview.json"
+}

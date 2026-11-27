@@ -1,0 +1,56 @@
+{
+  "passed": false,
+  "checks": {
+    "activation_checklist_passed": true,
+    "supervised_soak_passed": false,
+    "command_center_passed": true,
+    "monitor_passed": true,
+    "cleanup_closure_resolved": true,
+    "data_parity_passed": true,
+    "notional_decision_allows_hold_or_escalation": true,
+    "stewardship_passed": true,
+    "flatten_drill_passed": true
+  },
+  "blockers": [
+    "supervised_soak_passed"
+  ],
+  "warnings": [
+    "insufficient_clean_daemon_activations",
+    "insufficient_submitted_daemon_activations",
+    "insufficient_active_window_coverage"
+  ],
+  "recommended_action": "collect_more_clean_submitted_daemon_windows_before_escalation",
+  "evidence": {
+    "clean_activations": 1,
+    "submitted_activations": 1,
+    "active_windows": [
+      "intraday"
+    ],
+    "required_clean_activations": 3,
+    "required_active_windows": 2,
+    "observed_notional": 0.0,
+    "closed_symbols": [
+      "SPY"
+    ],
+    "cleanup_reason": "flatten_orders_submitted",
+    "notional_action": "hold",
+    "notional_recommendation": 25.0,
+    "flatten_drill_target_symbols": [
+      "SPY"
+    ],
+    "flatten_drill_closed_symbols": [
+      "SPY"
+    ],
+    "artifact_paths": [
+      "reports\\paper-daemon-alpaca-active-proof-report.json",
+      "reports\\paper-daemon-alpaca-active-proof-schedule-20260731T153725Z-0001.json",
+      "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\session-report.json",
+      "reports\\paper-daemon-alpaca-active-proof-cleanup-0001.json",
+      "reports\\paper-daemon-alpaca-active-proof-monitor-0001.json",
+      "reports\\paper-daemon-alpaca-active-proof-parity-0001.json",
+      "reports\\paper-command-center-20260731-active-proof.json",
+      "reports\\paper-monitor-20260731-spy-flatten-drill-closed.json",
+      "reports\\paper-cleanup-20260731-spy-flatten-drill-submit.json"
+    ]
+  }
+}

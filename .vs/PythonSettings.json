@@ -1,5 +1,0 @@
-{
-  "Interpreter": "trading_env\\Scripts\\python.exe",
-  "SuppressEnvironmentCreationPrompt": true,
-  "TestFramework": "Pytest"
-}

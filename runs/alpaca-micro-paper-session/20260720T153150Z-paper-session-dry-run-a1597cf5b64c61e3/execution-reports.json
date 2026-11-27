@@ -1,0 +1,51 @@
+{
+  "reports": [
+    {
+      "order_id": "2c2b07b0-fc18-43ad-a7db-5f739e2850e3",
+      "status": "FILLED",
+      "broker_order_id": "55af5e59-41d0-4c52-98dc-7d88de4c0e84",
+      "fill_id": "3425ff3e-c3d6-43a8-a44b-7f84ec1c4f02",
+      "filled_quantity": 0.033521,
+      "average_fill_price": 745.948,
+      "submitted_at": "2026-07-20T15:31:51.322410+00:00",
+      "raw": {
+        "id": "<redacted>",
+        "client_order_id": "tradingbot-ce836f53f519be1f9959b4d9",
+        "created_at": "2026-07-20T15:31:51.204594451Z",
+        "updated_at": "2026-07-20T15:31:51.23340486Z",
+        "submitted_at": "2026-07-20T15:31:51.204594451Z",
+        "filled_at": "2026-07-20T15:31:51.232497004Z",
+        "expired_at": null,
+        "canceled_at": null,
+        "failed_at": null,
+        "replaced_at": null,
+        "replaced_by": null,
+        "replaces": null,
+        "asset_id": "<redacted>",
+        "symbol": "SPY",
+        "asset_class": "us_equity",
+        "notional": null,
+        "qty": "0.033521",
+        "filled_qty": "0.033521",
+        "filled_avg_price": "745.948",
+        "order_class": "",
+        "order_type": "market",
+        "type": "market",
+        "side": "buy",
+        "position_intent": "buy_to_open",
+        "time_in_force": "day",
+        "limit_price": null,
+        "stop_price": null,
+        "status": "filled",
+        "extended_hours": false,
+        "legs": null,
+        "trail_percent": null,
+        "trail_price": null,
+        "hwm": null,
+        "subtag": null,
+        "source": null,
+        "expires_at": "2026-07-20T20:00:00Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,424 @@
+{
+  "passed": true,
+  "completed_sessions": 3,
+  "config": {
+    "sessions": 3,
+    "require_ready": true,
+    "require_no_warnings": true,
+    "require_artifacts": true,
+    "require_reconciliation_when_submitted": true,
+    "require_scorecard_when_submitted": true,
+    "stop_on_failure": false,
+    "min_clean_streak_for_promotion": 3,
+    "operator_acknowledged_failure": false,
+    "operator_failure_action": null
+  },
+  "options": {
+    "submit_orders": false,
+    "artifact_root": "runs\\paper-soak-scoreboard-batch",
+    "comparison_provider": null,
+    "require_data_health": true,
+    "max_position_weight": 0.25
+  },
+  "checks": [
+    {
+      "name": "minimum_sessions",
+      "passed": true,
+      "evidence": "completed=3 required=3"
+    },
+    {
+      "name": "all_ready_for_submission",
+      "passed": true,
+      "evidence": "ready=3 total=3"
+    },
+    {
+      "name": "no_session_warnings",
+      "passed": true,
+      "evidence": "warnings=0"
+    },
+    {
+      "name": "artifact_reports_written",
+      "passed": true,
+      "evidence": "reports=3 total=3"
+    },
+    {
+      "name": "submitted_orders_reconciled",
+      "passed": true,
+      "evidence": "submitted_sessions=0 unreconciled=0"
+    },
+    {
+      "name": "paper_scorecards_passed",
+      "passed": true,
+      "evidence": "submitted_sessions=0 failed_scorecards=0"
+    }
+  ],
+  "scoreboard": {
+    "passed_sessions": 3,
+    "failed_sessions": 0,
+    "current_pass_streak": 3,
+    "current_fail_streak": 0,
+    "failure_reasons": [],
+    "total_exposure": 7291.7036464655885,
+    "total_pnl": null,
+    "average_runtime_seconds": 0.18411440014218292,
+    "sessions": [
+      {
+        "index": 1,
+        "passed": true,
+        "ready_for_submission": true,
+        "submitted": false,
+        "runtime_seconds": 0.15755240013822913,
+        "exposure": 2430.567882155196,
+        "pnl": null,
+        "fill_quality": "not_submitted",
+        "drift_reports": 0,
+        "monitor_status": "not_required_for_session",
+        "failure_reasons": [],
+        "report_path": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json"
+      },
+      {
+        "index": 2,
+        "passed": true,
+        "ready_for_submission": true,
+        "submitted": false,
+        "runtime_seconds": 0.13347360026091337,
+        "exposure": 2430.567882155196,
+        "pnl": null,
+        "fill_quality": "not_submitted",
+        "drift_reports": 0,
+        "monitor_status": "not_required_for_session",
+        "failure_reasons": [],
+        "report_path": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json"
+      },
+      {
+        "index": 3,
+        "passed": true,
+        "ready_for_submission": true,
+        "submitted": false,
+        "runtime_seconds": 0.2613172000274062,
+        "exposure": 2430.567882155196,
+        "pnl": null,
+        "fill_quality": "not_submitted",
+        "drift_reports": 0,
+        "monitor_status": "not_required_for_session",
+        "failure_reasons": [],
+        "report_path": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json"
+      }
+    ]
+  },
+  "promotion_gate": {
+    "passed": true,
+    "graduation_allowed": true,
+    "reason": "paper_soak_clean_streak_passed",
+    "required_clean_streak": 3,
+    "current_clean_streak": 3
+  },
+  "failure_halt": {
+    "halted": false,
+    "acknowledged": false,
+    "operator_action": null,
+    "release_allowed": true,
+    "reason": "passed",
+    "allowed_actions": [
+      "retry",
+      "flatten",
+      "disable"
+    ]
+  },
+  "sessions": [
+    {
+      "report_path": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+      "ready_for_submission": true,
+      "submitted": false,
+      "data_rows": 160,
+      "latest_prices": {
+        "SPY": 121.5283941077598
+      },
+      "regime": {
+        "symbol": "SPY",
+        "trend_state": "trending",
+        "trend_direction": "up",
+        "volatility_state": "contraction",
+        "liquidity_state": "normal",
+        "macro_sensitivity": "normal",
+        "efficiency_ratio": 0.6489804565386399,
+        "period_return": 0.10526697233522042,
+        "volatility_ratio": 0.5700170177193662,
+        "liquidity_ratio": 1.0044545062248575,
+        "eligible_modes": [
+          "benchmark",
+          "trend_following",
+          "range_scalping",
+          "cash"
+        ]
+      },
+      "orders_planned": 1,
+      "orders_submitted": 0,
+      "planned_orders": [
+        {
+          "id": "26f4d569-8f83-4733-b6a4-92f01faff877",
+          "client_order_id": null,
+          "symbol": "SPY",
+          "side": "BUY",
+          "quantity": 20.0,
+          "order_type": "MARKET",
+          "limit_price": null,
+          "stop_price": null,
+          "take_profit_price": null,
+          "trail_percent": null,
+          "time_in_force": "day",
+          "parent_order_id": null,
+          "order_group_id": null,
+          "status": "PENDING",
+          "created_at": "2026-07-24T17:55:24.384194+00:00"
+        }
+      ],
+      "data_drift_reports": 0,
+      "reconciliation_clean": null,
+      "paper_scorecard_passed": null,
+      "recovery": {
+        "enabled": false,
+        "state_path": null,
+        "orders_loaded": 0,
+        "reports_loaded": 0,
+        "positions_loaded": 0,
+        "account_loaded": false,
+        "reconciliation_clean": null,
+        "unresolved_orders": 0,
+        "blocked": false,
+        "passed": true,
+        "reason": "not_enabled"
+      },
+      "risk_budget": null,
+      "submission_guard": {
+        "passed": true,
+        "reason": "submission_guard_passed",
+        "submit_requested": false,
+        "probes": [
+          {
+            "name": "submit_requested",
+            "passed": true,
+            "reason": "submit_not_requested",
+            "evidence": {
+              "submit_orders": false
+            }
+          }
+        ]
+      },
+      "fill_poll_attempts": 0,
+      "polled_execution_reports": 0,
+      "warnings": [],
+      "artifact_paths": {
+        "manifest": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\manifest.json",
+        "committee_context": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-context.json",
+        "committee_decision": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-decision.json",
+        "execution_plan": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-plan.json",
+        "session_report": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+        "submitted_orders": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\submitted-orders.json",
+        "execution_reports": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-reports.json",
+        "reconciliation": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\reconciliation.json",
+        "paper_scorecard": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-scorecard.json",
+        "post_session_account": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\post-session-account.json",
+        "recovery": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\recovery.json",
+        "submission_guard": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\submission-guard.json",
+        "paper_session_result": "runs\\paper-soak-scoreboard-batch\\session-01\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-session-result.json"
+      }
+    },
+    {
+      "report_path": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+      "ready_for_submission": true,
+      "submitted": false,
+      "data_rows": 160,
+      "latest_prices": {
+        "SPY": 121.5283941077598
+      },
+      "regime": {
+        "symbol": "SPY",
+        "trend_state": "trending",
+        "trend_direction": "up",
+        "volatility_state": "contraction",
+        "liquidity_state": "normal",
+        "macro_sensitivity": "normal",
+        "efficiency_ratio": 0.6489804565386399,
+        "period_return": 0.10526697233522042,
+        "volatility_ratio": 0.5700170177193662,
+        "liquidity_ratio": 1.0044545062248575,
+        "eligible_modes": [
+          "benchmark",
+          "trend_following",
+          "range_scalping",
+          "cash"
+        ]
+      },
+      "orders_planned": 1,
+      "orders_submitted": 0,
+      "planned_orders": [
+        {
+          "id": "cac3cfe8-a648-4163-a3f4-fa5c593f83e8",
+          "client_order_id": null,
+          "symbol": "SPY",
+          "side": "BUY",
+          "quantity": 20.0,
+          "order_type": "MARKET",
+          "limit_price": null,
+          "stop_price": null,
+          "take_profit_price": null,
+          "trail_percent": null,
+          "time_in_force": "day",
+          "parent_order_id": null,
+          "order_group_id": null,
+          "status": "PENDING",
+          "created_at": "2026-07-24T17:55:24.546232+00:00"
+        }
+      ],
+      "data_drift_reports": 0,
+      "reconciliation_clean": null,
+      "paper_scorecard_passed": null,
+      "recovery": {
+        "enabled": false,
+        "state_path": null,
+        "orders_loaded": 0,
+        "reports_loaded": 0,
+        "positions_loaded": 0,
+        "account_loaded": false,
+        "reconciliation_clean": null,
+        "unresolved_orders": 0,
+        "blocked": false,
+        "passed": true,
+        "reason": "not_enabled"
+      },
+      "risk_budget": null,
+      "submission_guard": {
+        "passed": true,
+        "reason": "submission_guard_passed",
+        "submit_requested": false,
+        "probes": [
+          {
+            "name": "submit_requested",
+            "passed": true,
+            "reason": "submit_not_requested",
+            "evidence": {
+              "submit_orders": false
+            }
+          }
+        ]
+      },
+      "fill_poll_attempts": 0,
+      "polled_execution_reports": 0,
+      "warnings": [],
+      "artifact_paths": {
+        "manifest": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\manifest.json",
+        "committee_context": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-context.json",
+        "committee_decision": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-decision.json",
+        "execution_plan": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-plan.json",
+        "session_report": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+        "submitted_orders": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\submitted-orders.json",
+        "execution_reports": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-reports.json",
+        "reconciliation": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\reconciliation.json",
+        "paper_scorecard": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-scorecard.json",
+        "post_session_account": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\post-session-account.json",
+        "recovery": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\recovery.json",
+        "submission_guard": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\submission-guard.json",
+        "paper_session_result": "runs\\paper-soak-scoreboard-batch\\session-02\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-session-result.json"
+      }
+    },
+    {
+      "report_path": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+      "ready_for_submission": true,
+      "submitted": false,
+      "data_rows": 160,
+      "latest_prices": {
+        "SPY": 121.5283941077598
+      },
+      "regime": {
+        "symbol": "SPY",
+        "trend_state": "trending",
+        "trend_direction": "up",
+        "volatility_state": "contraction",
+        "liquidity_state": "normal",
+        "macro_sensitivity": "normal",
+        "efficiency_ratio": 0.6489804565386399,
+        "period_return": 0.10526697233522042,
+        "volatility_ratio": 0.5700170177193662,
+        "liquidity_ratio": 1.0044545062248575,
+        "eligible_modes": [
+          "benchmark",
+          "trend_following",
+          "range_scalping",
+          "cash"
+        ]
+      },
+      "orders_planned": 1,
+      "orders_submitted": 0,
+      "planned_orders": [
+        {
+          "id": "79889a44-c503-463a-9f4c-40de35cb6acb",
+          "client_order_id": null,
+          "symbol": "SPY",
+          "side": "BUY",
+          "quantity": 20.0,
+          "order_type": "MARKET",
+          "limit_price": null,
+          "stop_price": null,
+          "take_profit_price": null,
+          "trail_percent": null,
+          "time_in_force": "day",
+          "parent_order_id": null,
+          "order_group_id": null,
+          "status": "PENDING",
+          "created_at": "2026-07-24T17:55:24.671564+00:00"
+        }
+      ],
+      "data_drift_reports": 0,
+      "reconciliation_clean": null,
+      "paper_scorecard_passed": null,
+      "recovery": {
+        "enabled": false,
+        "state_path": null,
+        "orders_loaded": 0,
+        "reports_loaded": 0,
+        "positions_loaded": 0,
+        "account_loaded": false,
+        "reconciliation_clean": null,
+        "unresolved_orders": 0,
+        "blocked": false,
+        "passed": true,
+        "reason": "not_enabled"
+      },
+      "risk_budget": null,
+      "submission_guard": {
+        "passed": true,
+        "reason": "submission_guard_passed",
+        "submit_requested": false,
+        "probes": [
+          {
+            "name": "submit_requested",
+            "passed": true,
+            "reason": "submit_not_requested",
+            "evidence": {
+              "submit_orders": false
+            }
+          }
+        ]
+      },
+      "fill_poll_attempts": 0,
+      "polled_execution_reports": 0,
+      "warnings": [],
+      "artifact_paths": {
+        "manifest": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\manifest.json",
+        "committee_context": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-context.json",
+        "committee_decision": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-decision.json",
+        "execution_plan": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-plan.json",
+        "session_report": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+        "submitted_orders": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\submitted-orders.json",
+        "execution_reports": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-reports.json",
+        "reconciliation": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\reconciliation.json",
+        "paper_scorecard": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-scorecard.json",
+        "post_session_account": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\post-session-account.json",
+        "recovery": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\recovery.json",
+        "submission_guard": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\submission-guard.json",
+        "paper_session_result": "runs\\paper-soak-scoreboard-batch\\session-03\\20260724T175524Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-session-result.json"
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Iterable, Optional
 from urllib.parse import urlencode
 
@@ -33,8 +33,10 @@ class AlpacaHistoricalDataFeed(DataFeed):
     ) -> pd.DataFrame:
         self._validate_credentials()
         timeframe = _to_alpaca_timeframe(interval)
+        effective_start = start or _period_to_start(period)
+        effective_end = end
         if self.cache is not None:
-            cached = self.cache.read(self.cache_provider_key, symbol, timeframe, start, end)
+            cached = self.cache.read(self.cache_provider_key, symbol, timeframe, effective_start, effective_end)
             if cached is not None:
                 return cached
 
@@ -44,10 +46,10 @@ class AlpacaHistoricalDataFeed(DataFeed):
             "adjustment": "all",
             "limit": 10_000,
         }
-        if start:
-            query["start"] = start
-        if end:
-            query["end"] = end
+        if effective_start:
+            query["start"] = effective_start
+        if effective_end:
+            query["end"] = effective_end
 
         bars: list[dict] = []
         page_token = None
@@ -57,14 +59,14 @@ class AlpacaHistoricalDataFeed(DataFeed):
                 page_query["page_token"] = page_token
             url = f"https://data.alpaca.markets/v2/stocks/{symbol}/bars?{urlencode(page_query)}"
             payload = self.client.request("GET", url)
-            bars.extend(payload.get("bars", []))
+            bars.extend(payload.get("bars") or [])
             page_token = payload.get("next_page_token")
             if not page_token:
                 break
 
         data = normalize_ohlcv_frame(_bars_payload_to_frame(bars))
         if self.cache is not None and not data.empty:
-            self.cache.write(self.cache_provider_key, symbol, timeframe, data, start, end)
+            self.cache.write(self.cache_provider_key, symbol, timeframe, data, effective_start, effective_end)
         return data
 
     def get_stream(self, symbol: str) -> Iterable[Bar]:
@@ -84,6 +86,26 @@ def _to_alpaca_timeframe(interval: str) -> str:
         "1d": "1Day",
     }
     return mapping.get(interval, interval)
+
+
+def _period_to_start(period: Optional[str], now: Optional[datetime] = None) -> Optional[str]:
+    if not period:
+        return None
+    text = period.strip().lower()
+    if len(text) < 2 or not text[:-1].isdigit():
+        return None
+    amount = int(text[:-1])
+    unit = text[-1]
+    days_by_unit = {
+        "d": 1,
+        "w": 7,
+        "m": 31,
+        "y": 365,
+    }
+    if unit not in days_by_unit or amount <= 0:
+        return None
+    anchor = now or datetime.now(timezone.utc)
+    return (anchor - timedelta(days=amount * days_by_unit[unit])).isoformat()
 
 
 def _bars_payload_to_frame(bars: list[dict]) -> pd.DataFrame:

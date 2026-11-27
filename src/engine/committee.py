@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+import math
 from typing import Mapping, Sequence
 
 from src.backtesting import TradeCommitteeDecision
@@ -14,6 +15,7 @@ class CommitteeExecutionPolicy:
     min_order_quantity: float = 1.0
     default_hedge_symbol: str = "SH"
     flatten_on_cash: bool = True
+    max_target_notional: float | None = None
 
 
 @dataclass(frozen=True)
@@ -171,12 +173,16 @@ def _target_quantity(
     if price is None or price <= 0:
         warnings.append(f"Missing valid price for {symbol.upper()}.")
         return 0.0
-    return _normalize_quantity((equity * target_weight) / float(price), policy)
+    target_notional = equity * target_weight
+    if policy.max_target_notional is not None:
+        target_notional = min(target_notional, policy.max_target_notional)
+    return _normalize_quantity(target_notional / float(price), policy)
 
 
 def _normalize_quantity(quantity: float, policy: CommitteeExecutionPolicy) -> float:
     if policy.allow_fractional_quantity:
-        return round(quantity, 6)
+        direction = 1 if quantity >= 0 else -1
+        return direction * math.floor(abs(quantity) * 1_000_000) / 1_000_000
     if abs(quantity) < policy.min_order_quantity:
         return 0.0
     return float(int(quantity))

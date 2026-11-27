@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "checks": {
+    "pre_monitor_passed": true,
+    "flatten_plan_passed": true,
+    "cleanup_submitted": true,
+    "cleanup_reconciled": true,
+    "cleanup_filled": true,
+    "post_monitor_flat": true,
+    "closed_symbols_recorded": true,
+    "stewardship_passed": true
+  },
+  "target_symbols": [
+    "SPY"
+  ],
+  "closed_symbols": [
+    "SPY"
+  ],
+  "submitted_orders": 1,
+  "filled_orders": 1,
+  "blockers": [],
+  "warnings": [],
+  "recommended_action": "flatten_drill_passed_continue_next_supervised_daemon_window",
+  "evidence": {
+    "pre_monitor_artifact": "reports\\paper-monitor-20260731-flatten-drill-precheck.json",
+    "flatten_plan_artifact": "reports\\paper-controlled-flatten-20260731-active-spy.json",
+    "cleanup_artifact": "reports\\paper-cleanup-20260731-spy-flatten-drill-submit.json",
+    "post_monitor_artifact": "reports\\paper-monitor-20260731-spy-flatten-drill-closed.json",
+    "stewardship_active_positions": 0,
+    "observed_notional_before": 25.139485,
+    "observed_notional_after": 0.0,
+    "cleanup_reason": "flatten_orders_submitted"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "symbol": "SPY",
+  "promotion_report": {
+    "passed": true,
+    "reason": "promotion_ready",
+    "evidence": {
+      "strategy_name": "hurstCycleReversion",
+      "symbol": "SPY",
+      "params": {
+        "hurst_period": 60,
+        "max_hurst": 0.45,
+        "zscore_period": 15,
+        "entry_zscore": 1.4,
+        "exit_zscore": 0.25,
+        "atr_stop_multiple": 1.8
+      },
+      "source_rules_captured": true,
+      "data_validation_passed": true,
+      "benchmark_passed": true,
+      "replication_passed": false,
+      "risk_gates_passed": true,
+      "data_range": null,
+      "validation_report": null,
+      "governance": null,
+      "capacity": null,
+      "benchmark_summary": {},
+      "notes": [
+        "runtime_config_candidate"
+      ]
+    },
+    "policy": {
+      "require_source_rules": true,
+      "require_data_validation": true,
+      "require_replication_or_benchmark": true,
+      "require_governance": false,
+      "require_capacity": false,
+      "require_risk_gates": true,
+      "minimum_estimated_capacity": null
+    },
+    "gates": [],
+    "manifest": {
+      "strategy_name": "hurstCycleReversion",
+      "symbol": "SPY",
+      "params": {
+        "hurst_period": 60,
+        "max_hurst": 0.45,
+        "zscore_period": 15,
+        "entry_zscore": 1.4,
+        "exit_zscore": 0.25,
+        "atr_stop_multiple": 1.8
+      },
+      "broker_mode": "alpaca_paper",
+      "data_source": "alpaca",
+      "execution_profile": "paper_default",
+      "manifest_status": "ready_for_paper_session",
+      "safeguards": [
+        "paper_trading_only",
+        "runtime_risk_gates_required",
+        "broker_reconciliation_required",
+        "operator_kill_switch_required"
+      ]
+    }
+  },
+  "paper_scorecard": null,
+  "data_drift_reports": [],
+  "regime": {
+    "symbol": "SPY",
+    "trend_state": "range_bound",
+    "trend_direction": "up",
+    "volatility_state": "normal",
+    "liquidity_state": "normal",
+    "macro_sensitivity": "normal",
+    "efficiency_ratio": 0.10714920544633653,
+    "period_return": 0.04245967457913635,
+    "volatility_ratio": 0.8480967177346025,
+    "liquidity_ratio": 1.00011683230305,
+    "eligible_modes": [
+      "benchmark",
+      "mean_reversion",
+      "cash"
+    ]
+  },
+  "strategy_edge": 0.01,
+  "benchmark_edge": 0.0,
+  "current_exposure": 0.0,
+  "risk_halt": false,
+  "risk_reason": null,
+  "notes": [
+    "autonomous_paper_session_mvp"
+  ]
+}

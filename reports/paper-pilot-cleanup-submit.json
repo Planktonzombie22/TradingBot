@@ -1,0 +1,234 @@
+{
+  "submit_requested": true,
+  "attempted": true,
+  "submitted": true,
+  "positions_seen": [
+    {
+      "symbol": "SPY",
+      "quantity": 0.033521,
+      "average_entry_price": 745.948,
+      "market_value": 24.808892,
+      "raw": {
+        "asset_id": "<redacted>",
+        "symbol": "SPY",
+        "exchange": "ARCA",
+        "asset_class": "us_equity",
+        "asset_marginable": true,
+        "qty": "0.033521",
+        "qty_available": "0.033521",
+        "avg_entry_price": "745.948",
+        "side": "long",
+        "market_value": "24.808892",
+        "cost_basis": "25.004923",
+        "unrealized_pl": "-0.196031",
+        "unrealized_plpc": "-0.00784",
+        "unrealized_intraday_pl": "-0.245039",
+        "unrealized_intraday_plpc": "-0.00978",
+        "current_price": "740.1",
+        "lastday_price": "747.41",
+        "change_today": "-0.00978"
+      }
+    }
+  ],
+  "planned_orders": [
+    {
+      "id": "16e98b29-fc43-40ff-92f9-948ff5488ad0",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 0.033521,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-23T14:18:06.380809+00:00"
+    }
+  ],
+  "submitted_orders": [
+    {
+      "id": "16e98b29-fc43-40ff-92f9-948ff5488ad0",
+      "client_order_id": "tradingbot-dd66785a811fc3c910606780",
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 0.033521,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "FILLED",
+      "created_at": "2026-07-23T14:18:06.380809+00:00"
+    }
+  ],
+  "execution_reports": [
+    {
+      "order_id": "16e98b29-fc43-40ff-92f9-948ff5488ad0",
+      "status": "FILLED",
+      "broker_order_id": "87796b15-8c39-4160-a1d1-79d9d5257243",
+      "fill_id": "aa2d39c1-0208-4cf5-a8a7-5f776d821a1a",
+      "filled_quantity": 0.033521,
+      "average_fill_price": 740.114,
+      "submitted_at": "2026-07-23T14:18:06.844045+00:00",
+      "raw": {
+        "id": "<redacted>",
+        "client_order_id": "tradingbot-dd66785a811fc3c910606780",
+        "created_at": "2026-07-23T14:18:07.79908232Z",
+        "updated_at": "2026-07-23T14:18:07.80668636Z",
+        "submitted_at": "2026-07-23T14:18:07.79908232Z",
+        "filled_at": "2026-07-23T14:18:07.805787872Z",
+        "expired_at": null,
+        "canceled_at": null,
+        "failed_at": null,
+        "replaced_at": null,
+        "replaced_by": null,
+        "replaces": null,
+        "asset_id": "<redacted>",
+        "symbol": "SPY",
+        "asset_class": "us_equity",
+        "notional": null,
+        "qty": "0.033521",
+        "filled_qty": "0.033521",
+        "filled_avg_price": "740.114",
+        "order_class": "",
+        "order_type": "market",
+        "type": "market",
+        "side": "sell",
+        "position_intent": "sell_to_close",
+        "time_in_force": "day",
+        "limit_price": null,
+        "stop_price": null,
+        "status": "filled",
+        "extended_hours": false,
+        "legs": null,
+        "trail_percent": null,
+        "trail_price": null,
+        "hwm": null,
+        "subtag": null,
+        "source": null,
+        "expires_at": "2026-07-23T20:00:00Z"
+      }
+    }
+  ],
+  "submission_guard": {
+    "passed": true,
+    "reason": "submission_guard_passed",
+    "submit_requested": true,
+    "probes": [
+      {
+        "name": "submit_requested",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "submit_orders": true,
+          "orders": 1
+        }
+      },
+      {
+        "name": "market_session",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "timestamp": "2026-07-23T14:18:06.380809+00:00",
+          "session": "REGULAR",
+          "policy": {
+            "allow_pre_market": false,
+            "allow_regular": true,
+            "allow_after_hours": false
+          }
+        }
+      },
+      {
+        "name": "orders_present",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "orders": 1
+        }
+      },
+      {
+        "name": "approval_policy",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "configured": true,
+          "policy": {
+            "symbol_allowlist": [
+              "SPY"
+            ],
+            "max_daily_submissions": null,
+            "kill_switch_enabled": false,
+            "repeated_reject_lockout_threshold": null,
+            "require_cleanup": true
+          }
+        }
+      },
+      {
+        "name": "approval_kill_switch",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "kill_switch_enabled": false
+        }
+      },
+      {
+        "name": "approval_symbol_allowlist",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "symbols": [
+            "SPY"
+          ],
+          "symbol_allowlist": [
+            "SPY"
+          ],
+          "disallowed": []
+        }
+      },
+      {
+        "name": "approval_daily_submission_limit",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "submitted_today": 0,
+          "max_daily_submissions": null
+        }
+      },
+      {
+        "name": "approval_repeated_reject_lockout",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "rejected_symbols": {},
+          "threshold": null
+        }
+      }
+    ]
+  },
+  "reconciliation": {
+    "is_clean": true,
+    "unresolved": 0,
+    "orders": [
+      {
+        "order_id": "16e98b29-fc43-40ff-92f9-948ff5488ad0",
+        "status": "MATCHED",
+        "local_status": "FILLED",
+        "broker_status": "FILLED",
+        "broker_order_id": "87796b15-8c39-4160-a1d1-79d9d5257243",
+        "message": ""
+      }
+    ]
+  },
+  "reconciliation_clean": true,
+  "fill_poll_attempts": 1,
+  "polled_execution_reports": 1,
+  "reason": "flatten_orders_submitted",
+  "artifact_path": "reports\\paper-pilot-cleanup-submit.json"
+}

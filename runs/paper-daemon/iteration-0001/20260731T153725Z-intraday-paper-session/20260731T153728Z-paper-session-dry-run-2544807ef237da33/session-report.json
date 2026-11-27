@@ -1,0 +1,464 @@
+{
+  "manifest": {
+    "run_id": "b3de193a-0b1a-4357-b6a5-551d8c2e6263",
+    "run_type": "paper-session-dry-run",
+    "strategy": "buyHold",
+    "symbols": [
+      "SPY"
+    ],
+    "config": {
+      "mode": "dry-run",
+      "committee_reason": "committee_approved_strategy",
+      "committee_action": "trade_strategy",
+      "paper_manifest_status": "ready_for_paper_session"
+    },
+    "data_source": {
+      "provider": "alpaca",
+      "symbol": "SPY",
+      "period": "2y",
+      "interval": "1d",
+      "start": null,
+      "end": null,
+      "rows": 501
+    },
+    "dependency_versions": {
+      "python": "3.11.9"
+    },
+    "code_version": "a909740",
+    "created_at": "2026-07-31T15:37:28.278532+00:00",
+    "stable_hash": "2544807ef237da33"
+  },
+  "paper_manifest": {
+    "strategy_name": "buyHold",
+    "symbol": "SPY",
+    "params": {},
+    "broker_mode": "alpaca_paper",
+    "data_source": "alpaca",
+    "execution_profile": "paper_default",
+    "manifest_status": "ready_for_paper_session",
+    "safeguards": [
+      "paper_trading_only",
+      "runtime_risk_gates_required",
+      "broker_reconciliation_required",
+      "operator_kill_switch_required"
+    ]
+  },
+  "decision": {
+    "symbol": "SPY",
+    "action": "trade_strategy",
+    "approved": true,
+    "target_weight": 0.0025,
+    "strategy_name": "buyHold",
+    "hedge_weight": 0.0,
+    "reason": "committee_approved_strategy",
+    "gates": [
+      {
+        "name": "risk_halt",
+        "passed": true,
+        "reason": "no_risk_halt",
+        "details": {}
+      },
+      {
+        "name": "data_health",
+        "passed": true,
+        "reason": "data_health_passed",
+        "details": {
+          "reports": 0
+        }
+      },
+      {
+        "name": "promotion",
+        "passed": true,
+        "reason": "promotion_ready",
+        "details": {}
+      },
+      {
+        "name": "paper_behavior",
+        "passed": true,
+        "reason": "not_required",
+        "details": {}
+      },
+      {
+        "name": "regime_quality",
+        "passed": true,
+        "reason": "regime_quality_passed",
+        "details": {
+          "quality": 0.95
+        }
+      },
+      {
+        "name": "edge",
+        "passed": true,
+        "reason": "strategy_edge_passed",
+        "details": {
+          "strategy_edge": 0.01,
+          "benchmark_edge": 0.0
+        }
+      }
+    ],
+    "metadata": {
+      "strategy_edge": 0.01,
+      "benchmark_edge": 0.0,
+      "current_exposure": 0.0,
+      "regime_quality": 0.95,
+      "notes": [
+        "autonomous_paper_session_mvp"
+      ]
+    }
+  },
+  "execution_plan": {
+    "decision": {
+      "symbol": "SPY",
+      "action": "trade_strategy",
+      "approved": true,
+      "target_weight": 0.0025,
+      "strategy_name": "buyHold",
+      "hedge_weight": 0.0,
+      "reason": "committee_approved_strategy",
+      "gates": [
+        {
+          "name": "risk_halt",
+          "passed": true,
+          "reason": "no_risk_halt",
+          "details": {}
+        },
+        {
+          "name": "data_health",
+          "passed": true,
+          "reason": "data_health_passed",
+          "details": {
+            "reports": 0
+          }
+        },
+        {
+          "name": "promotion",
+          "passed": true,
+          "reason": "promotion_ready",
+          "details": {}
+        },
+        {
+          "name": "paper_behavior",
+          "passed": true,
+          "reason": "not_required",
+          "details": {}
+        },
+        {
+          "name": "regime_quality",
+          "passed": true,
+          "reason": "regime_quality_passed",
+          "details": {
+            "quality": 0.95
+          }
+        },
+        {
+          "name": "edge",
+          "passed": true,
+          "reason": "strategy_edge_passed",
+          "details": {
+            "strategy_edge": 0.01,
+            "benchmark_edge": 0.0
+          }
+        }
+      ],
+      "metadata": {
+        "strategy_edge": 0.01,
+        "benchmark_edge": 0.0,
+        "current_exposure": 0.0,
+        "regime_quality": 0.95,
+        "notes": [
+          "autonomous_paper_session_mvp"
+        ]
+      }
+    },
+    "reason": "committee_approved_strategy",
+    "has_orders": true,
+    "targets": [
+      {
+        "symbol": "SPY",
+        "target_quantity": 0.033723
+      }
+    ],
+    "orders": [
+      {
+        "symbol": "SPY",
+        "side": "BUY",
+        "quantity": 0.033723,
+        "order_type": "MARKET",
+        "source_target": "SPY"
+      }
+    ],
+    "warnings": []
+  },
+  "account_snapshot": {
+    "cash": 99999.92,
+    "equity": 99999.92,
+    "realized_pnl": 0.0,
+    "positions": {}
+  },
+  "latest_prices": {
+    "SPY": 741.33
+  },
+  "committee_context": {
+    "symbol": "SPY",
+    "promotion_report": {
+      "passed": true,
+      "reason": "promotion_ready",
+      "evidence": {
+        "strategy_name": "buyHold",
+        "symbol": "SPY",
+        "params": {},
+        "source_rules_captured": true,
+        "data_validation_passed": true,
+        "benchmark_passed": true,
+        "replication_passed": false,
+        "risk_gates_passed": true,
+        "data_range": null,
+        "validation_report": null,
+        "governance": null,
+        "capacity": null,
+        "benchmark_summary": {},
+        "notes": [
+          "runtime_config_candidate"
+        ]
+      },
+      "policy": {
+        "require_source_rules": true,
+        "require_data_validation": true,
+        "require_replication_or_benchmark": true,
+        "require_governance": false,
+        "require_capacity": false,
+        "require_risk_gates": true,
+        "minimum_estimated_capacity": null
+      },
+      "gates": [],
+      "manifest": {
+        "strategy_name": "buyHold",
+        "symbol": "SPY",
+        "params": {},
+        "broker_mode": "alpaca_paper",
+        "data_source": "alpaca",
+        "execution_profile": "paper_default",
+        "manifest_status": "ready_for_paper_session",
+        "safeguards": [
+          "paper_trading_only",
+          "runtime_risk_gates_required",
+          "broker_reconciliation_required",
+          "operator_kill_switch_required"
+        ]
+      }
+    },
+    "paper_scorecard": null,
+    "data_drift_reports": [],
+    "regime": {
+      "symbol": "SPY",
+      "trend_state": "range_bound",
+      "trend_direction": "flat",
+      "volatility_state": "normal",
+      "liquidity_state": "normal",
+      "macro_sensitivity": "normal",
+      "efficiency_ratio": 0.032676348547718045,
+      "period_return": 0.012911952779144142,
+      "volatility_ratio": 0.9056471436501756,
+      "liquidity_ratio": 0.9565243299418639,
+      "eligible_modes": [
+        "benchmark",
+        "mean_reversion",
+        "cash"
+      ]
+    },
+    "strategy_edge": 0.01,
+    "benchmark_edge": 0.0,
+    "current_exposure": 0.0,
+    "risk_halt": false,
+    "risk_reason": null,
+    "notes": [
+      "autonomous_paper_session_mvp"
+    ]
+  },
+  "submitted_orders": [
+    {
+      "id": "68224fcd-331d-40d4-8cba-12d6c526af06",
+      "client_order_id": "tradingbot-3963fcf6b0a0f55b296c5957",
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 0.033723,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "FILLED",
+      "created_at": "2026-07-31T15:37:28.184774+00:00"
+    }
+  ],
+  "execution_reports": [
+    {
+      "order_id": "68224fcd-331d-40d4-8cba-12d6c526af06",
+      "status": "FILLED",
+      "broker_order_id": "7ac8062a-d9dc-4637-9569-83ad029699ac",
+      "fill_id": "510d6487-6688-492b-a366-7d1a12b2f5bd",
+      "filled_quantity": 0.033723,
+      "average_fill_price": 741.646,
+      "submitted_at": "2026-07-31T15:37:28.747315+00:00",
+      "raw": {
+        "id": "<redacted>",
+        "client_order_id": "tradingbot-3963fcf6b0a0f55b296c5957",
+        "created_at": "2026-07-31T15:37:28.476896471Z",
+        "updated_at": "2026-07-31T15:37:28.50144802Z",
+        "submitted_at": "2026-07-31T15:37:28.476896471Z",
+        "filled_at": "2026-07-31T15:37:28.500427053Z",
+        "expired_at": null,
+        "canceled_at": null,
+        "failed_at": null,
+        "replaced_at": null,
+        "replaced_by": null,
+        "replaces": null,
+        "asset_id": "<redacted>",
+        "symbol": "SPY",
+        "asset_class": "us_equity",
+        "notional": null,
+        "qty": "0.033723",
+        "filled_qty": "0.033723",
+        "filled_avg_price": "741.646",
+        "order_class": "",
+        "order_type": "market",
+        "type": "market",
+        "side": "buy",
+        "position_intent": "buy_to_open",
+        "time_in_force": "day",
+        "limit_price": null,
+        "stop_price": null,
+        "status": "filled",
+        "extended_hours": false,
+        "legs": null,
+        "trail_percent": null,
+        "trail_price": null,
+        "hwm": null,
+        "subtag": null,
+        "source": null,
+        "expires_at": "2026-07-31T20:00:00Z"
+      }
+    }
+  ],
+  "reconciliation": {
+    "is_clean": true,
+    "captured_at": "2026-07-31T15:37:28.747315+00:00",
+    "unresolved": [],
+    "orders": [
+      {
+        "order_id": "68224fcd-331d-40d4-8cba-12d6c526af06",
+        "status": "MATCHED",
+        "local_status": "FILLED",
+        "broker_status": "FILLED",
+        "broker_order_id": "7ac8062a-d9dc-4637-9569-83ad029699ac",
+        "message": ""
+      }
+    ]
+  },
+  "paper_scorecard": {
+    "passed": true,
+    "reason": "paper_behavior_in_line",
+    "expectation": {
+      "strategy_name": "buyHold",
+      "symbol": "SPY",
+      "expected_fills": 1,
+      "expected_trades": 1,
+      "expected_return": 0.0,
+      "expected_ending_equity": 99999.909343532,
+      "expected_fill_prices": {
+        "68224fcd-331d-40d4-8cba-12d6c526af06": 741.33
+      }
+    },
+    "observation": {
+      "reports": [
+        {
+          "order_id": "68224fcd-331d-40d4-8cba-12d6c526af06",
+          "status": "FILLED",
+          "broker_order_id": "7ac8062a-d9dc-4637-9569-83ad029699ac",
+          "filled_quantity": 0.033723,
+          "average_fill_price": 741.646
+        }
+      ],
+      "account": null,
+      "reconciliation_clean": true,
+      "broker_statement": {}
+    },
+    "policy": {
+      "max_average_slippage_bps": 10.0,
+      "max_missed_fill_rate": 0.05,
+      "max_reject_rate": 0.02,
+      "max_equity_drift_pct": 0.02,
+      "require_clean_reconciliation": true
+    },
+    "average_slippage_bps": 4.262609094464237,
+    "missed_fill_rate": 0.0,
+    "reject_rate": 0.0,
+    "equity_drift_pct": null,
+    "gates": [
+      {
+        "name": "average_slippage_bps",
+        "passed": true,
+        "value": 4.262609094464237,
+        "threshold": 10.0,
+        "reason": "passed"
+      },
+      {
+        "name": "missed_fill_rate",
+        "passed": true,
+        "value": 0.0,
+        "threshold": 0.05,
+        "reason": "passed"
+      },
+      {
+        "name": "reject_rate",
+        "passed": true,
+        "value": 0.0,
+        "threshold": 0.02,
+        "reason": "passed"
+      },
+      {
+        "name": "equity_drift_pct",
+        "passed": true,
+        "value": null,
+        "threshold": 0.02,
+        "reason": "not_available"
+      },
+      {
+        "name": "reconciliation",
+        "passed": true,
+        "value": true,
+        "threshold": true,
+        "reason": "passed"
+      }
+    ]
+  },
+  "post_session_account_snapshot": {
+    "cash": 99974.909471942,
+    "equity": 99999.909343532,
+    "realized_pnl": 0.0,
+    "positions": {
+      "SPY": {
+        "quantity": 0.033723,
+        "average_price": 741.646,
+        "market_value": 24.999871590000005
+      }
+    }
+  },
+  "artifact_paths": {
+    "manifest": "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\manifest.json",
+    "committee_context": "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\committee-context.json",
+    "committee_decision": "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\committee-decision.json",
+    "execution_plan": "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\execution-plan.json",
+    "session_report": "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\session-report.json",
+    "submitted_orders": "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\submitted-orders.json",
+    "execution_reports": "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\execution-reports.json",
+    "reconciliation": "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\reconciliation.json",
+    "paper_scorecard": "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\paper-scorecard.json",
+    "post_session_account": "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\post-session-account.json"
+  },
+  "warnings": [],
+  "ready_for_submission": true
+}

@@ -1,0 +1,55 @@
+{
+  "completed": 40,
+  "failed": 0,
+  "strategy_summary": [
+    {
+      "strategy": "buyHold",
+      "markets": 10,
+      "average_return": 0.48679943679159904,
+      "median_return": 0.4323506066364116,
+      "best_return": 1.0075075075075075,
+      "worst_return": -0.014243672748675816,
+      "average_max_drawdown": -0.2564844468526424,
+      "win_rate": 0.9,
+      "total_trades": 10,
+      "total_rejections": 0
+    },
+    {
+      "strategy": "hurstCycleReversion",
+      "markets": 10,
+      "average_return": 0.31398987972769665,
+      "median_return": 0.35181800524317225,
+      "best_return": 0.6036696473120589,
+      "worst_return": -0.0590224638112184,
+      "average_max_drawdown": -0.18457948097987983,
+      "win_rate": 0.8,
+      "total_trades": 262,
+      "total_rejections": 0
+    },
+    {
+      "strategy": "volumePressureBreakout",
+      "markets": 10,
+      "average_return": 0.0532477698229577,
+      "median_return": 0.08262504310920685,
+      "best_return": 0.2077555243368679,
+      "worst_return": -0.1929210848309931,
+      "average_max_drawdown": -0.15385860201347717,
+      "win_rate": 0.6,
+      "total_trades": 302,
+      "total_rejections": 0
+    },
+    {
+      "strategy": "absorptionSweepReversal",
+      "markets": 10,
+      "average_return": 0.007673264322732794,
+      "median_return": 0.009362106285583649,
+      "best_return": 0.09848804466947349,
+      "worst_return": -0.0880846622634981,
+      "average_max_drawdown": -0.03804356535417538,
+      "win_rate": 0.7,
+      "total_trades": 36,
+      "total_rejections": 0
+    }
+  ],
+  "errors": []
+}

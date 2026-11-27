@@ -1,0 +1,29 @@
+{
+  "run_id": "d2ad5955-ecdc-41b1-b876-862e6c0e0585",
+  "run_type": "paper-session-dry-run",
+  "strategy": "buyHold",
+  "symbols": [
+    "IWM"
+  ],
+  "config": {
+    "mode": "dry-run",
+    "committee_reason": "committee_approved_strategy",
+    "committee_action": "trade_strategy",
+    "paper_manifest_status": "ready_for_paper_session"
+  },
+  "data_source": {
+    "provider": "sample",
+    "symbol": "IWM",
+    "period": "2y",
+    "interval": "1d",
+    "start": null,
+    "end": null,
+    "rows": 160
+  },
+  "dependency_versions": {
+    "python": "3.11.9"
+  },
+  "code_version": "a909740",
+  "created_at": "2026-07-13T15:08:45.444856+00:00",
+  "stable_hash": "51d29da5c7a31fd5"
+}

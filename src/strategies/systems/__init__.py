@@ -1,11 +1,13 @@
 from .buy_hold import BuyAndHoldStrategy
 from .published import PublishedSmaCrossStrategy
 from .research import (
+    AbsorptionSweepReversalSystem,
     AroonVortexTrendSystem,
     ChoppinessRangeSystem,
     CryptoAdaptiveTrendSystem,
     FVGRebalanceSystem,
     GapFadeSystem,
+    HurstCycleReversionSystem,
     IchimokuCloudTrendSystem,
     LiquiditySweepReversalSystem,
     ManagedFuturesMomentumSystem,
@@ -19,18 +21,21 @@ from .research import (
     TuffContrarianSystem,
     TuffRegimeSwitchSystem,
     VolatilityBreakoutSystem,
+    VolumePressureBreakoutSystem,
     VolumeMomentumSystem,
     VWAPValueReversionSystem,
 )
 from .tuff import TuffSystem
 
 __all__ = [
+    "AbsorptionSweepReversalSystem",
     "AroonVortexTrendSystem",
     "BuyAndHoldStrategy",
     "ChoppinessRangeSystem",
     "CryptoAdaptiveTrendSystem",
     "FVGRebalanceSystem",
     "GapFadeSystem",
+    "HurstCycleReversionSystem",
     "IchimokuCloudTrendSystem",
     "LiquiditySweepReversalSystem",
     "ManagedFuturesMomentumSystem",
@@ -46,6 +51,7 @@ __all__ = [
     "TuffRegimeSwitchSystem",
     "TuffSystem",
     "VolatilityBreakoutSystem",
+    "VolumePressureBreakoutSystem",
     "VolumeMomentumSystem",
     "VWAPValueReversionSystem",
 ]

@@ -13,6 +13,7 @@ from .trend import (
     EfficiencyRatio,
     ElderRayIndex,
     EMA,
+    HurstExponent,
     IchimokuCloud,
     MACD,
     RollingZScore,
@@ -22,9 +23,10 @@ from .trend import (
     VortexIndicator,
 )
 from .volatility import ATR, BollingerBands, KeltnerChannel
-from .volume import AnchoredVWAP, ChaikinMoneyFlow, MoneyFlowIndex, OBV, RelativeVolume, VWAP
+from .volume import AbsorptionRatio, AnchoredVWAP, ChaikinMoneyFlow, CloseLocationValue, MoneyFlowIndex, OBV, RelativeVolume, VolumePressure, VWAP
 
 __all__ = [
+    "AbsorptionRatio",
     "ADX",
     "Aroon",
     "AnchoredVWAP",
@@ -32,12 +34,14 @@ __all__ = [
     "BollingerBands",
     "ChaikinMoneyFlow",
     "ChoppinessIndex",
+    "CloseLocationValue",
     "DEMA",
     "DonchianChannel",
     "EfficiencyRatio",
     "ElderRayIndex",
     "EMA",
     "FairValueGap",
+    "HurstExponent",
     "IchimokuCloud",
     "Indicator",
     "KeltnerChannel",
@@ -57,6 +61,7 @@ __all__ = [
     "SuperTrend",
     "UlcerIndex",
     "VortexIndicator",
+    "VolumePressure",
     "VWAP",
 ]
 

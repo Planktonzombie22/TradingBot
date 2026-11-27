@@ -1,0 +1,101 @@
+{
+  "passed": false,
+  "decision": "blocked_cleanup_required",
+  "ready_for_promoted_portfolio_submit": false,
+  "blockers": [
+    "paper_account_cleanup:preview_only"
+  ],
+  "next_actions": [
+    "Run guarded paper-cleanup during an allowed market session until the cleanup artifact is flat or reconciled cleanly."
+  ],
+  "artifacts": {
+    "cleanup": "reports\\paper-pilot-cleanup-preview.json",
+    "paper_submit_validation": "reports\\evidence\\paper-pilot-promoted-preview-validation.json",
+    "activation": "reports\\paper-pilot-activation-preview.json",
+    "portfolio": "runs\\paper-pilot-promoted-preview\\portfolio-session-report.json"
+  },
+  "cleanup": {
+    "submit_requested": false,
+    "attempted": false,
+    "submitted": false,
+    "positions_seen": 1,
+    "planned_orders": 1,
+    "submitted_orders": 0,
+    "reconciliation_clean": null,
+    "polled_execution_reports": 0,
+    "reason": "preview_only",
+    "artifact_path": "reports\\paper-pilot-cleanup-preview.json"
+  },
+  "validation": {
+    "run_id": "paper-pilot-20260723T141744Z",
+    "provider": "alpaca",
+    "broker_mode": "paper",
+    "checks": {
+      "paper_account_cleanup": {
+        "status": "failed",
+        "reason": "preview_only",
+        "artifact_path": "reports\\paper-pilot-cleanup-preview.json"
+      },
+      "alpaca_paper_order_lifecycle": {
+        "status": "passed",
+        "reason": "passed",
+        "artifact_path": "reports\\alpaca-paper-broker-proof.json"
+      },
+      "broker_account_parity": {
+        "status": "passed",
+        "reason": "passed",
+        "artifact_path": "reports\\alpaca-paper-broker-proof.json"
+      },
+      "paper_account_parity": {
+        "status": "passed",
+        "reason": "passed",
+        "artifact_path": "reports\\alpaca-paper-broker-proof.json"
+      },
+      "real_alpaca_fill_polling": {
+        "status": "passed",
+        "reason": "passed",
+        "artifact_path": "reports\\alpaca-paper-broker-proof.json"
+      }
+    },
+    "evidence_count": 19,
+    "readiness_score": null
+  },
+  "activation": {
+    "passed": false,
+    "broker_proof_present": false,
+    "broker_proof_passed": false,
+    "broker_proof_submitted": false,
+    "cleanup_present": false,
+    "cleanup_blocked": false,
+    "cleanup_positions_remaining": null,
+    "warnings": [
+      "Paper cleanup preview still shows 1 open position(s)."
+    ],
+    "recommendations": [
+      "Run guarded paper cleanup during the next regular market-session window before retrying promoted portfolios."
+    ]
+  },
+  "portfolio": {
+    "ready_for_submission": true,
+    "symbols": [
+      "DIA",
+      "SPY"
+    ],
+    "accepted_symbols": [
+      "DIA",
+      "SPY"
+    ],
+    "candidate_count": 2,
+    "consolidated_order_count": 2,
+    "artifact_path": "runs\\paper-pilot-promoted-preview\\portfolio-session-report.json",
+    "submission": {
+      "submit_requested": false,
+      "attempted": false,
+      "submitted": false,
+      "orders_submitted": 0,
+      "reason": "submit_not_requested",
+      "reconciliation_clean": null
+    }
+  },
+  "artifact_path": "reports\\paper-pilot-promoted-preview.json"
+}

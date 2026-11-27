@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "reason": "passed",
+  "expected_positions": {},
+  "observed_positions": {},
+  "matches": [],
+  "observed_notional": 0,
+  "max_expected_notional": 30.0,
+  "notional_tolerance": 0.6,
+  "exposure_within_budget": true,
+  "unexpected_symbols": [],
+  "missing_symbols": [],
+  "closed_symbols": [
+    "DIA",
+    "SPY"
+  ],
+  "lifecycle": {
+    "passed": true,
+    "observed_at": "2026-07-31T15:34:45.420083+00:00",
+    "positions": [],
+    "scorecards": [],
+    "active_positions": 0,
+    "exposure_registry": {
+      "active_expected_symbols": [],
+      "orphan_symbols": [],
+      "missing_expected_symbols": [],
+      "stale_symbols": [],
+      "expired_symbols": [],
+      "cleanup_debt_symbols": []
+    },
+    "artifact_path": null
+  },
+  "open_orders": null,
+  "artifact_path": "reports\\paper-monitor-20260731-after-cleanup-closed.json"
+}

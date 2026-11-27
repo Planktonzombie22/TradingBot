@@ -391,3 +391,33 @@ def test_crypto_adaptive_trend_caps_short_exposure_in_bearish_crypto_tape():
     assert sell_signals
     assert -0.25 <= sell_signals[0].meta["target_position_fraction"] < 0
     assert sell_signals[0].meta["rolling_sharpe"] < 0
+
+
+def test_new_pressure_and_cycle_research_systems_are_registered_and_emit_valid_signals():
+    strategies = {
+        "volumePressureBreakout": {"channel_period": 15, "pressure_period": 10, "min_pressure": 0.1, "min_efficiency": 0.0},
+        "absorptionSweepReversal": {"sweep_lookback": 10, "absorption_period": 10, "min_absorption": 0.5},
+        "hurstCycleReversion": {"hurst_period": 40, "zscore_period": 10, "entry_zscore": 0.8},
+    }
+    index = pd.date_range("2024-01-01", periods=140)
+    closes = [100 + (i % 18 - 9) * 0.8 + i * 0.05 for i in range(140)]
+    data = pd.DataFrame(
+        {
+            "Open": [close * 0.998 for close in closes],
+            "High": [close * 1.015 for close in closes],
+            "Low": [close * 0.985 for close in closes],
+            "Close": closes,
+            "Volume": [1000 + (i % 11) * 130 for i in range(140)],
+        },
+        index=index,
+    )
+
+    for strategy_name, params in strategies.items():
+        assert strategy_name in list_strategies()
+        strategy = get_strategy(strategy_name)("SPY", **params)
+        signals = strategy.generate_signals(data)
+
+        assert len(signals) == len(data)
+        assert set(signal.action for signal in signals).issubset({"BUY", "SELL", "CLOSE", "HOLD"})
+        assert not strategy.indicators.empty
+        assert strategy_schema(strategy_name)["parameters"]

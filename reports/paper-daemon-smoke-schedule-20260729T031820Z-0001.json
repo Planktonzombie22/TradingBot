@@ -1,0 +1,55 @@
+{
+  "passed": false,
+  "active_window": null,
+  "windows": [
+    {
+      "name": "pre_market",
+      "start_time": "08:00:00",
+      "end_time": "08:45:00",
+      "required": false,
+      "submit_orders_allowed": false,
+      "description": "Pre-market data and recovery check."
+    },
+    {
+      "name": "market_open",
+      "start_time": "08:30:00",
+      "end_time": "10:00:00",
+      "required": true,
+      "submit_orders_allowed": true,
+      "description": "Opening-session guarded paper decision."
+    },
+    {
+      "name": "intraday",
+      "start_time": "10:00:00",
+      "end_time": "14:30:00",
+      "required": true,
+      "submit_orders_allowed": true,
+      "description": "Intraday data/reconciliation check."
+    },
+    {
+      "name": "market_close",
+      "start_time": "14:30:00",
+      "end_time": "15:15:00",
+      "required": true,
+      "submit_orders_allowed": true,
+      "description": "Closing-session guarded paper decision."
+    },
+    {
+      "name": "end_of_day",
+      "start_time": "15:15:00",
+      "end_time": "17:00:00",
+      "required": true,
+      "submit_orders_allowed": false,
+      "description": "Daily report and no-new-orders evidence window."
+    }
+  ],
+  "records": [],
+  "checks": [
+    {
+      "name": "active_window",
+      "passed": false,
+      "reason": "no_active_paper_session_window"
+    }
+  ],
+  "artifact_path": "reports\\paper-daemon-smoke-schedule-20260729T031820Z-0001.json"
+}

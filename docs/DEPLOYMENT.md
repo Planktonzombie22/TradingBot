@@ -69,6 +69,38 @@ The code exposes deployment profile scaffolds in `src.deployment`:
 
 Treat these as templates, not a green light for unattended trading. Run the paper soak checklist first.
 
-## 9. Soak Checklist
+## 9. Windows Paper Daemon
+
+For a manual double-click start, use `Run Paper Daemon.bat`. It refuses to start when `runs\paper-daemon.kill` exists.
+
+For Windows Task Scheduler, create a task that starts in this repository directory and runs:
+
+```powershell
+trading_env\Scripts\python.exe main.py paper-daemon --provider alpaca --execution-mode paper --symbol SPY --paper-profile micro-notional --submit-orders
+```
+
+Useful operator commands:
+
+```powershell
+trading_env\Scripts\python.exe main.py paper-daemon-status
+trading_env\Scripts\python.exe main.py paper-daemon-stop
+trading_env\Scripts\python.exe main.py paper-daemon-clear-stop
+```
+
+The daemon now uses a local single-instance lock at `runs\paper-daemon.lock`. If a prior process crashed, the lock can be replaced after the configured stale age with `--paper-daemon-lock-stale-seconds`.
+
+Do not configure automatic restart for paper order submission until the daemon has clean soak evidence, current monitor evidence, and a tested kill-switch drill.
+
+## 10. Soak Checklist
 
 Before unattended paper trading, complete `docs/PAPER_TRADING_SOAK_CHECKLIST.md`.
+
+## 11. Desktop GUI Packaging
+
+The GUI can already be opened with:
+
+```powershell
+trading_env\Scripts\python.exe gui_app.py
+```
+
+`src.deployment.build_gui_executable_packaging_report()` now creates a PyInstaller packaging plan for a future one-file Windows operator app. The report validates that `gui_app.py`, `main.py`, and `src/` exist, records the included config/docs paths, and emits the exact command shape without running the freezer. Treat this as release evidence first; build the executable only after the GUI has clean smoke tests and current paper-soak artifacts.

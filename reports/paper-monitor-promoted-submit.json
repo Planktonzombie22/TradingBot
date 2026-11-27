@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "reason": "passed",
+  "expected_positions": {
+    "DIA": 0.02420645,
+    "SPY": 0.01688732
+  },
+  "observed_positions": {
+    "DIA": 0.02420645,
+    "SPY": 0.01688732
+  },
+  "matches": [
+    {
+      "symbol": "DIA",
+      "expected_quantity": 0.02420645,
+      "observed_quantity": 0.02420645,
+      "difference": 0.0,
+      "market_value": 12.495127,
+      "matched": true
+    },
+    {
+      "symbol": "SPY",
+      "expected_quantity": 0.01688732,
+      "observed_quantity": 0.01688732,
+      "difference": 0.0,
+      "market_value": 12.485978,
+      "matched": true
+    }
+  ],
+  "observed_notional": 24.981105,
+  "max_expected_notional": 25.0,
+  "exposure_within_budget": true,
+  "unexpected_symbols": [],
+  "missing_symbols": [],
+  "artifact_path": "reports\\paper-monitor-promoted-submit.json"
+}

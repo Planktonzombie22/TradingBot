@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "reason": "no_exit_orders_needed",
+  "requires_operator_action": false,
+  "include_active_positions": false,
+  "cleanup_debt_symbols": [],
+  "orders": [],
+  "artifact_path": "reports\\paper-exit-preview-next-batch.json"
+}

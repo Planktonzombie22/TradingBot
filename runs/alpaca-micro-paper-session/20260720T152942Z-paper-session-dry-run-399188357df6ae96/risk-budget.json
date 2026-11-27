@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "reason": "risk_budget_passed",
+  "budget": {
+    "min_order_quantity": 0.0,
+    "min_order_notional": 0.0,
+    "max_session_notional": 25.0,
+    "max_new_exposure": 0.0025,
+    "max_turnover": 0.0025,
+    "cash_reserve": 0.95,
+    "cooldown_symbols": [],
+    "repeated_reject_symbols": []
+  },
+  "session_notional": 0,
+  "new_exposure": 0.0,
+  "turnover": 0.0,
+  "gates": [
+    {
+      "name": "max_session_notional",
+      "passed": true,
+      "reason": "budget_passed",
+      "value": 0,
+      "threshold": 25.0
+    },
+    {
+      "name": "max_new_exposure",
+      "passed": true,
+      "reason": "budget_passed",
+      "value": 0.0,
+      "threshold": 0.0025
+    },
+    {
+      "name": "max_turnover",
+      "passed": true,
+      "reason": "budget_passed",
+      "value": 0.0,
+      "threshold": 0.0025
+    },
+    {
+      "name": "cash_reserve",
+      "passed": true,
+      "reason": "cash_reserve_passed",
+      "value": 1.0,
+      "threshold": 0.95
+    }
+  ]
+}

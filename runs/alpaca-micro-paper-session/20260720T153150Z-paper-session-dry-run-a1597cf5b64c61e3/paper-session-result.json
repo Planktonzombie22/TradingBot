@@ -1,0 +1,251 @@
+{
+  "report_path": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\session-report.json",
+  "ready_for_submission": true,
+  "submitted": true,
+  "data_rows": 500,
+  "latest_prices": {
+    "SPY": 745.8
+  },
+  "regime": {
+    "symbol": "SPY",
+    "trend_state": "range_bound",
+    "trend_direction": "up",
+    "volatility_state": "normal",
+    "liquidity_state": "normal",
+    "macro_sensitivity": "normal",
+    "efficiency_ratio": 0.14102794662446477,
+    "period_return": 0.05549186940092543,
+    "volatility_ratio": 0.8874841362538237,
+    "liquidity_ratio": 1.049553866884593,
+    "eligible_modes": [
+      "benchmark",
+      "mean_reversion",
+      "cash"
+    ]
+  },
+  "orders_planned": 1,
+  "orders_submitted": 1,
+  "planned_orders": [
+    {
+      "id": "<redacted>",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 0.033521,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-20T15:31:50.770260+00:00"
+    }
+  ],
+  "data_drift_reports": 0,
+  "reconciliation_clean": true,
+  "paper_scorecard_passed": true,
+  "recovery": {
+    "enabled": true,
+    "state_path": "runs/tradingbot.sqlite3",
+    "orders_loaded": 3,
+    "reports_loaded": 3,
+    "positions_loaded": 1,
+    "account_loaded": true,
+    "reconciliation_clean": true,
+    "unresolved_orders": 0,
+    "blocked": false,
+    "passed": true,
+    "reason": "recovery_clean"
+  },
+  "risk_budget": {
+    "passed": true,
+    "reason": "risk_budget_passed",
+    "budget": {
+      "min_order_quantity": 0.0,
+      "min_order_notional": 0.0,
+      "max_session_notional": 25.0,
+      "max_new_exposure": 0.0025,
+      "max_turnover": 0.0025,
+      "cash_reserve": 0.95,
+      "cooldown_symbols": [],
+      "repeated_reject_symbols": []
+    },
+    "session_notional": 24.9999618,
+    "new_exposure": 0.000249999618,
+    "turnover": 0.000249999618,
+    "gates": [
+      {
+        "name": "SPY_min_quantity",
+        "passed": true,
+        "reason": "min_quantity_passed",
+        "value": 0.033521,
+        "threshold": 0.0
+      },
+      {
+        "name": "SPY_min_notional",
+        "passed": true,
+        "reason": "min_notional_passed",
+        "value": 24.9999618,
+        "threshold": 0.0
+      },
+      {
+        "name": "SPY_cooldown",
+        "passed": true,
+        "reason": "cooldown_passed",
+        "value": "SPY",
+        "threshold": "not_in_cooldown"
+      },
+      {
+        "name": "SPY_repeated_reject",
+        "passed": true,
+        "reason": "repeated_reject_passed",
+        "value": "SPY",
+        "threshold": "not_repeated_reject"
+      },
+      {
+        "name": "max_session_notional",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 24.9999618,
+        "threshold": 25.0
+      },
+      {
+        "name": "max_new_exposure",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 0.000249999618,
+        "threshold": 0.0025
+      },
+      {
+        "name": "max_turnover",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 0.000249999618,
+        "threshold": 0.0025
+      },
+      {
+        "name": "cash_reserve",
+        "passed": true,
+        "reason": "cash_reserve_passed",
+        "value": 0.999750000382,
+        "threshold": 0.95
+      }
+    ]
+  },
+  "submission_guard": {
+    "passed": true,
+    "reason": "submission_guard_passed",
+    "submit_requested": true,
+    "probes": [
+      {
+        "name": "submit_requested",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "submit_orders": true,
+          "orders": 1
+        }
+      },
+      {
+        "name": "market_session",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "timestamp": "2026-07-20T15:31:50.910898+00:00",
+          "session": "REGULAR",
+          "policy": {
+            "allow_pre_market": false,
+            "allow_regular": true,
+            "allow_after_hours": false
+          }
+        }
+      },
+      {
+        "name": "orders_present",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "orders": 1
+        }
+      },
+      {
+        "name": "approval_policy",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "configured": true,
+          "policy": {
+            "symbol_allowlist": [
+              "SPY"
+            ],
+            "max_daily_submissions": null,
+            "kill_switch_enabled": false,
+            "repeated_reject_lockout_threshold": null,
+            "require_cleanup": true
+          }
+        }
+      },
+      {
+        "name": "approval_kill_switch",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "kill_switch_enabled": false
+        }
+      },
+      {
+        "name": "approval_symbol_allowlist",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "symbols": [
+            "SPY"
+          ],
+          "symbol_allowlist": [
+            "SPY"
+          ],
+          "disallowed": []
+        }
+      },
+      {
+        "name": "approval_daily_submission_limit",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "submitted_today": 0,
+          "max_daily_submissions": null
+        }
+      },
+      {
+        "name": "approval_repeated_reject_lockout",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "rejected_symbols": {},
+          "threshold": null
+        }
+      }
+    ]
+  },
+  "fill_poll_attempts": 1,
+  "polled_execution_reports": 1,
+  "warnings": [],
+  "artifact_paths": {
+    "manifest": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\manifest.json",
+    "committee_context": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\committee-context.json",
+    "committee_decision": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\committee-decision.json",
+    "execution_plan": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\execution-plan.json",
+    "session_report": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\session-report.json",
+    "submitted_orders": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\submitted-orders.json",
+    "execution_reports": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\execution-reports.json",
+    "reconciliation": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\reconciliation.json",
+    "paper_scorecard": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\paper-scorecard.json",
+    "post_session_account": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\post-session-account.json",
+    "recovery": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\recovery.json",
+    "risk_budget": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\risk-budget.json",
+    "submission_guard": "runs\\alpaca-micro-paper-session\\20260720T153150Z-paper-session-dry-run-a1597cf5b64c61e3\\submission-guard.json"
+  }
+}

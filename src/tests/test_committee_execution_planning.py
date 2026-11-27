@@ -37,6 +37,45 @@ def test_committee_trade_strategy_decision_generates_target_buy_order():
     assert plan.orders[0].source_target is plan.targets[0]
 
 
+def test_committee_execution_policy_caps_target_notional_with_fractional_sizing():
+    account = PaperAccountState(100_000)
+    decision = _decision("trade_strategy", target_weight=0.25)
+
+    plan = plan_committee_execution(
+        decision,
+        account,
+        {"SPY": 500.0},
+        policy=CommitteeExecutionPolicy(
+            allow_fractional_quantity=True,
+            min_order_quantity=0.000001,
+            max_target_notional=25.0,
+        ),
+    )
+
+    assert plan.targets[0].target_quantity == 0.05
+    assert plan.orders[0].order.quantity == 0.05
+
+
+def test_fractional_committee_sizing_truncates_to_stay_inside_notional_cap():
+    account = PaperAccountState(100_000)
+    decision = _decision("trade_strategy", target_weight=0.25)
+
+    plan = plan_committee_execution(
+        decision,
+        account,
+        {"SPY": 521.565},
+        policy=CommitteeExecutionPolicy(
+            allow_fractional_quantity=True,
+            min_order_quantity=0.000001,
+            max_target_notional=25.0,
+        ),
+    )
+
+    quantity = plan.orders[0].order.quantity
+    assert quantity == 0.047932
+    assert quantity * 521.565 <= 25.0
+
+
 def test_committee_cash_decision_flattens_existing_positions():
     account = PaperAccountState(100_000)
     account.positions["SPY"] = _position("SPY", 40, 100)
@@ -177,6 +216,41 @@ def test_paper_session_supervisor_writes_end_to_end_audit_trail(tmp_path):
     assert session_payload["reconciliation"]["is_clean"]
     assert session_payload["paper_scorecard"]["passed"]
     assert session_payload["post_session_account_snapshot"]["equity"] == 100_010.0
+
+
+def test_paper_session_supervisor_redacts_sensitive_raw_execution_payloads(tmp_path):
+    account = PaperAccountState(100_000)
+    decision = _decision("trade_strategy", target_weight=0.25)
+    supervisor = PaperSessionSupervisor(ImmutableArtifactStore(tmp_path))
+    report = supervisor.prepare_dry_run(
+        _committee_context(with_manifest=True),
+        account,
+        {"SPY": 100.0},
+        decision=decision,
+    )
+    submitted_order = report.execution_plan.orders[0].order
+    execution_report = ExecutionReport(
+        order_id=submitted_order.id,
+        status=submitted_order.status,
+        broker_order_id="alpaca-paper-1",
+        raw={
+            "id": "broker-order-id",
+            "asset_id": "asset-id",
+            "nested": {"account_id": "account-id"},
+            "status": "accepted",
+        },
+    )
+
+    audited = supervisor.write_audit_trail(report, submitted_orders=[submitted_order], execution_reports=[execution_report])
+
+    session_payload = json.loads(open(audited.artifact_paths["session_report"], encoding="utf-8").read())
+    execution_payload = json.loads(open(audited.artifact_paths["execution_reports"], encoding="utf-8").read())
+    raw = session_payload["execution_reports"][0]["raw"]
+    assert raw["id"] == "<redacted>"
+    assert raw["asset_id"] == "<redacted>"
+    assert raw["nested"]["account_id"] == "<redacted>"
+    assert raw["status"] == "accepted"
+    assert execution_payload["reports"][0]["raw"]["asset_id"] == "<redacted>"
 
 
 def test_paper_session_supervisor_requires_promoted_manifest_before_submit_ready():

@@ -1,0 +1,7 @@
+{
+  "channel_period": [20, 40, 60],
+  "pressure_period": [10, 20, 30],
+  "min_pressure": [0.25, 0.45, 0.70],
+  "min_efficiency": [0.10, 0.20, 0.35],
+  "atr_stop_multiple": [2.0, 2.8, 3.5]
+}

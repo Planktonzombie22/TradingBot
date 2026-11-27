@@ -1,0 +1,56 @@
+{
+  "passed": false,
+  "generated_at": "2026-07-30T16:03:29.726807+00:00",
+  "provider": "sample",
+  "symbol": "SPY",
+  "strategy": "buyHold",
+  "execution_mode": "dry-run",
+  "paper_profile": "sample-data",
+  "daemon": {
+    "status": "completed",
+    "heartbeat_state": "stale",
+    "kill_switch_active": false,
+    "iteration": 3,
+    "active_window": "intraday",
+    "last_reason": "max_iterations_completed",
+    "next_run_at": null
+  },
+  "paper": {
+    "monitor_status": "missing",
+    "monitor_reason": "paper_monitor_missing",
+    "observed_positions": 0,
+    "observed_notional": null,
+    "open_orders": 0,
+    "stale_open_orders": 0,
+    "data_parity_status": "passed",
+    "data_parity_reason": "websocket_rest_parity_passed",
+    "data_parity_failed_checks": 0,
+    "total_unrealized_pnl": null,
+    "total_market_value": null,
+    "drawdown_pct": null,
+    "mark_to_market_equity": null,
+    "fills_seen": 2,
+    "latest_fill": "SPY SELL 100.0 @ 121.5283941077598"
+  },
+  "artifacts_present": [
+    "daemon_state",
+    "daemon_report",
+    "fills"
+  ],
+  "artifacts_missing": [
+    "monitor",
+    "pnl",
+    "drawdown"
+  ],
+  "last_artifacts": [
+    "reports\\paper-daemon-profile-smoke-schedule-20260730T150203Z-0003.json",
+    "runs\\paper-daemon\\iteration-0003\\20260730T150203Z-intraday-paper-session\\20260730T150204Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+    "reports\\paper-daemon-profile-smoke-parity-0003.json",
+    "reports\\paper-daemon-profile-smoke-report.json"
+  ],
+  "warnings": [
+    "daemon_heartbeat_stale"
+  ],
+  "recommended_action": "start_or_recover_paper_daemon",
+  "artifact_path": "reports\\paper-command-center-smoke.json"
+}

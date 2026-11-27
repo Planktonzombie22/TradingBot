@@ -1,0 +1,29 @@
+{
+  "run_id": "905b9bfb-efb8-4a06-95c1-334c17556a40",
+  "run_type": "paper-session-dry-run",
+  "strategy": "buyHold",
+  "symbols": [
+    "SPY"
+  ],
+  "config": {
+    "mode": "dry-run",
+    "committee_reason": "committee_approved_strategy",
+    "committee_action": "trade_strategy",
+    "paper_manifest_status": "ready_for_paper_session"
+  },
+  "data_source": {
+    "provider": "sample",
+    "symbol": "SPY",
+    "period": "2y",
+    "interval": "1d",
+    "start": null,
+    "end": null,
+    "rows": 160
+  },
+  "dependency_versions": {
+    "python": "3.11.9"
+  },
+  "code_version": "a909740",
+  "created_at": "2026-07-17T16:34:57.286040+00:00",
+  "stable_hash": "32bdf9385e58a4d4"
+}

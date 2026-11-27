@@ -1,0 +1,29 @@
+{
+  "run_id": "7f0da5d1-9032-433e-9c1e-8557b66609c4",
+  "run_type": "paper-session-dry-run",
+  "strategy": "hurstCycleReversion",
+  "symbols": [
+    "DIA"
+  ],
+  "config": {
+    "mode": "dry-run",
+    "committee_reason": "committee_approved_strategy",
+    "committee_action": "trade_strategy",
+    "paper_manifest_status": "ready_for_paper_session"
+  },
+  "data_source": {
+    "provider": "alpaca",
+    "symbol": "DIA",
+    "period": "2y",
+    "interval": "1d",
+    "start": null,
+    "end": null,
+    "rows": 501
+  },
+  "dependency_versions": {
+    "python": "3.11.9"
+  },
+  "code_version": "a909740",
+  "created_at": "2026-07-22T20:46:23.565020+00:00",
+  "stable_hash": "30918501f999b507"
+}

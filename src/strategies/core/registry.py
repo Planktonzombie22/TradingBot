@@ -5,12 +5,14 @@ from .parameters import ParameterSpec, StrategySpec
 from ..systems.buy_hold import BuyAndHoldStrategy
 from ..systems.published import PublishedSmaCrossStrategy
 from ..systems.research import (
+    AbsorptionSweepReversalSystem,
     MeanReversionSystem,
     AroonVortexTrendSystem,
     ChoppinessRangeSystem,
     CryptoAdaptiveTrendSystem,
     FVGRebalanceSystem,
     GapFadeSystem,
+    HurstCycleReversionSystem,
     IchimokuCloudTrendSystem,
     LiquiditySweepReversalSystem,
     ManagedFuturesMomentumSystem,
@@ -23,6 +25,7 @@ from ..systems.research import (
     TuffContrarianSystem,
     TuffRegimeSwitchSystem,
     VolatilityBreakoutSystem,
+    VolumePressureBreakoutSystem,
     VolumeMomentumSystem,
     VWAPValueReversionSystem,
 )
@@ -33,12 +36,14 @@ StrategySpecRegistry = Dict[str, StrategySpec]
 
 
 STRATEGIES: StrategyRegistry = {
+    "absorptionSweepReversal": AbsorptionSweepReversalSystem,
     "buyHold": BuyAndHoldStrategy,
     "aroonVortexTrend": AroonVortexTrendSystem,
     "choppinessRange": ChoppinessRangeSystem,
     "cryptoAdaptiveTrend": CryptoAdaptiveTrendSystem,
     "fvgRebalance": FVGRebalanceSystem,
     "gapFade": GapFadeSystem,
+    "hurstCycleReversion": HurstCycleReversionSystem,
     "ichimokuCloudTrend": IchimokuCloudTrendSystem,
     "liquiditySweepReversal": LiquiditySweepReversalSystem,
     "managedFuturesMomentum": ManagedFuturesMomentumSystem,
@@ -54,6 +59,7 @@ STRATEGIES: StrategyRegistry = {
     "tuffSystem": TuffSystem,
     "trendPullback": TrendPullbackSystem,
     "volatilityBreakout": VolatilityBreakoutSystem,
+    "volumePressureBreakout": VolumePressureBreakoutSystem,
     "volumeMomentum": VolumeMomentumSystem,
     "vwapValueReversion": VWAPValueReversionSystem,
 }
@@ -176,6 +182,16 @@ STRATEGY_SPECS: StrategySpecRegistry = {
             "atr_stop_multiple": ParameterSpec("atr_stop_multiple", default=3.0, type_=float, minimum=0.1, optimize_values=[2.0, 3.0, 4.0]),
         },
     ),
+    "volumePressureBreakout": StrategySpec(
+        VolumePressureBreakoutSystem,
+        parameters={
+            "channel_period": ParameterSpec("channel_period", default=40, type_=int, minimum=5, optimize_values=[20, 40, 60]),
+            "pressure_period": ParameterSpec("pressure_period", default=20, type_=int, minimum=2, optimize_values=[10, 20, 30]),
+            "min_pressure": ParameterSpec("min_pressure", default=0.45, type_=float, minimum=0.0, optimize_values=[0.25, 0.45, 0.70]),
+            "min_efficiency": ParameterSpec("min_efficiency", default=0.20, type_=float, minimum=0.0, maximum=1.0, optimize_values=[0.10, 0.20, 0.35]),
+            "atr_stop_multiple": ParameterSpec("atr_stop_multiple", default=2.8, type_=float, minimum=0.1, optimize_values=[2.0, 2.8, 3.5]),
+        },
+    ),
     "squeezeExpansion": StrategySpec(
         SqueezeExpansionSystem,
         parameters={
@@ -220,6 +236,16 @@ STRATEGY_SPECS: StrategySpecRegistry = {
             "atr_stop_multiple": ParameterSpec("atr_stop_multiple", default=2.0, type_=float, minimum=0.1, optimize_values=[1.5, 2.0, 2.5]),
         },
     ),
+    "absorptionSweepReversal": StrategySpec(
+        AbsorptionSweepReversalSystem,
+        parameters={
+            "sweep_lookback": ParameterSpec("sweep_lookback", default=20, type_=int, minimum=3, optimize_values=[10, 20, 30]),
+            "absorption_period": ParameterSpec("absorption_period", default=20, type_=int, minimum=3, optimize_values=[10, 20, 30]),
+            "min_absorption": ParameterSpec("min_absorption", default=1.6, type_=float, minimum=0.0, optimize_values=[1.2, 1.6, 2.2]),
+            "pressure_threshold": ParameterSpec("pressure_threshold", default=0.15, type_=float, minimum=0.0, optimize_values=[0.05, 0.15, 0.30]),
+            "atr_stop_multiple": ParameterSpec("atr_stop_multiple", default=2.0, type_=float, minimum=0.1, optimize_values=[1.5, 2.0, 2.5]),
+        },
+    ),
     "structureBreakoutRetest": StrategySpec(
         StructureBreakoutRetestSystem,
         parameters={
@@ -250,6 +276,17 @@ STRATEGY_SPECS: StrategySpecRegistry = {
             "band_deviation": ParameterSpec("band_deviation", default=2.0, type_=float, minimum=0.5, optimize_values=[1.5, 2.0, 2.5]),
             "mfi_extreme": ParameterSpec("mfi_extreme", default=40, type_=int, minimum=1, maximum=49, optimize_values=[35, 40, 45]),
             "atr_stop_multiple": ParameterSpec("atr_stop_multiple", default=1.8, type_=float, minimum=0.1, optimize_values=[1.5, 1.8, 2.2]),
+        },
+    ),
+    "hurstCycleReversion": StrategySpec(
+        HurstCycleReversionSystem,
+        parameters={
+            "hurst_period": ParameterSpec("hurst_period", default=80, type_=int, minimum=20, optimize_values=[60, 80, 120]),
+            "max_hurst": ParameterSpec("max_hurst", default=0.45, type_=float, minimum=0.0, maximum=1.0, optimize_values=[0.40, 0.45, 0.50]),
+            "zscore_period": ParameterSpec("zscore_period", default=20, type_=int, minimum=5, optimize_values=[15, 20, 30]),
+            "entry_zscore": ParameterSpec("entry_zscore", default=1.4, type_=float, minimum=0.1, optimize_values=[1.0, 1.4, 1.8]),
+            "exit_zscore": ParameterSpec("exit_zscore", default=0.25, type_=float, minimum=0.0, optimize_values=[0.10, 0.25, 0.50]),
+            "atr_stop_multiple": ParameterSpec("atr_stop_multiple", default=1.8, type_=float, minimum=0.1, optimize_values=[1.4, 1.8, 2.2]),
         },
     ),
     "aroonVortexTrend": StrategySpec(

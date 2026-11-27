@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "current_notional": 25.0,
+  "recommended_notional": 25.0,
+  "action": "hold",
+  "reason": "failed_daemon_iteration_failed_monitor_position_mismatch_cleanup_review_required",
+  "triggers": [
+    "failed_daemon_iteration",
+    "failed_monitor",
+    "position_mismatch",
+    "cleanup_review_required"
+  ],
+  "clean_iterations": 0,
+  "submitted_iterations": 1,
+  "required_clean_iterations": 10,
+  "downshifted": false,
+  "escalated": false,
+  "evidence": {
+    "passed": false,
+    "report_date": "2026-07-31",
+    "daemon_status": "completed",
+    "latest_reason": "max_iterations_completed",
+    "total_iterations": 1,
+    "passed_iterations": 0,
+    "failed_iterations": 1,
+    "skipped_iterations": 0,
+    "submitted_iterations": 1,
+    "cleanup_planned_orders": 1,
+    "cleanup_submitted_orders": 0,
+    "monitor_failed_iterations": 1,
+    "monitor_stale_open_orders": 0,
+    "monitor_position_mismatches": 1,
+    "data_parity_failed_iterations": 0,
+    "data_parity_failed_checks": 0,
+    "active_windows": [
+      "intraday"
+    ],
+    "artifact_paths": [
+      "reports\\paper-daemon-alpaca-active-proof-report.json",
+      "reports\\paper-daemon-alpaca-active-proof-schedule-20260731T153725Z-0001.json",
+      "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\session-report.json",
+      "reports\\paper-daemon-alpaca-active-proof-cleanup-0001.json",
+      "reports\\paper-daemon-alpaca-active-proof-monitor-0001.json",
+      "reports\\paper-daemon-alpaca-active-proof-parity-0001.json"
+    ],
+    "warnings": [
+      "failed_iterations_present",
+      "cleanup_orders_planned",
+      "monitor_failures_present",
+      "position_mismatches_present"
+    ],
+    "recommended_action": "review_failures_before_next_daemon_start"
+  }
+}

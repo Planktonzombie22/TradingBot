@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "state_path": "runs/tradingbot.sqlite3",
+  "orders_loaded": 30,
+  "reports_loaded": 30,
+  "positions_loaded": 1,
+  "account_loaded": true,
+  "reconciliation_clean": true,
+  "unresolved_orders": 0,
+  "blocked": false,
+  "passed": true,
+  "reason": "recovery_clean"
+}

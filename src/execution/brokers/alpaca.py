@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from typing import Iterable, Optional
 
 from src.config import AlpacaConfig
@@ -86,6 +87,18 @@ class AlpacaPaperBroker(Broker):
         return updated
 
     def open_orders(self) -> Iterable[Order]:
+        self._validate_credentials()
+        raw_orders = self._request("GET", "/v2/orders?status=open", None)
+        if isinstance(raw_orders, list):
+            orders = tuple(_order_from_alpaca_order(raw) for raw in raw_orders)
+            self.orders.update({order.id: order for order in orders})
+            self.reports.update(
+                {
+                    order.id: ExecutionReport.from_order(order, broker_order_id=raw.get("id"), raw=raw)
+                    for order, raw in zip(orders, raw_orders)
+                }
+            )
+            return orders
         return [order for order in self.orders.values() if order.status == "PENDING"]
 
     def account_snapshot(self) -> BrokerAccountSnapshot:
@@ -119,6 +132,24 @@ class AlpacaPaperBroker(Broker):
     def execution_reports(self) -> Iterable[ExecutionReport]:
         return list(self.reports.values())
 
+    def poll_execution_reports(self, orders: Iterable[Order]) -> Iterable[ExecutionReport]:
+        """Refresh local execution reports from Alpaca Trading REST order state."""
+
+        self._validate_credentials()
+        polled: list[ExecutionReport] = []
+        for order in orders:
+            existing = self.reports.get(order.id)
+            if existing is None or existing.broker_order_id is None:
+                continue
+            raw = self._request("GET", f"/v2/orders/{existing.broker_order_id}", None)
+            status = _alpaca_status_to_order_status(str(raw.get("status", "accepted")))
+            updated = mark_order(self.orders.get(order.id, order), status)
+            self.orders[updated.id] = updated
+            report = _execution_report_from_alpaca_order(updated, raw, existing.broker_order_id)
+            self.reports[updated.id] = report
+            polled.append(report)
+        return polled
+
     def _request(self, method: str, path: str, payload: Optional[dict]) -> dict:
         return self.client.request(method, f"{self.config.base_url}{path}", payload)
 
@@ -143,3 +174,46 @@ def _alpaca_status_to_order_status(status: str) -> str:
     if status in {"rejected"}:
         return "REJECTED"
     return "PENDING"
+
+
+def _execution_report_from_alpaca_order(order: Order, raw: dict, fallback_broker_order_id: str | None) -> ExecutionReport:
+    return ExecutionReport(
+        order_id=order.id,
+        status=order.status,
+        broker_order_id=raw.get("id") or fallback_broker_order_id,
+        filled_quantity=float(raw.get("filled_qty", 0) or 0),
+        average_fill_price=_optional_float(raw.get("filled_avg_price")),
+        raw=raw,
+    )
+
+
+def _optional_float(value) -> float | None:
+    if value in {None, ""}:
+        return None
+    return float(value)
+
+
+def _order_from_alpaca_order(raw: dict) -> Order:
+    side = str(raw.get("side") or "buy").upper()
+    order_type = str(raw.get("type") or "market").upper()
+    created_at = _optional_datetime(raw.get("created_at")) or datetime.now(timezone.utc)
+    return Order(
+        symbol=str(raw.get("symbol") or "").upper(),
+        side="BUY" if side == "BUY" else "SELL",
+        quantity=float(raw.get("qty") or 0.0),
+        order_type=order_type,
+        limit_price=_optional_float(raw.get("limit_price")),
+        stop_price=_optional_float(raw.get("stop_price")),
+        time_in_force=str(raw.get("time_in_force") or "day"),
+        status=_alpaca_status_to_order_status(str(raw.get("status") or "accepted")),
+        created_at=created_at,
+        id=str(raw.get("client_order_id") or raw.get("id") or ""),
+        client_order_id=raw.get("client_order_id"),
+    )
+
+
+def _optional_datetime(value) -> datetime | None:
+    if not isinstance(value, str) or not value:
+        return None
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)

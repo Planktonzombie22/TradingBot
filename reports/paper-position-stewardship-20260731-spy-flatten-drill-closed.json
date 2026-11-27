@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "monitor_passed": true,
+  "max_active_age_hours": 72.0,
+  "active_positions": 0,
+  "closed_symbols": [
+    "SPY"
+  ],
+  "blockers": [],
+  "warnings": [],
+  "recommended_action": "no_active_paper_positions_to_steward",
+  "positions": []
+}

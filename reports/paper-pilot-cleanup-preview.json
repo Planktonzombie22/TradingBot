@@ -1,0 +1,61 @@
+{
+  "submit_requested": false,
+  "attempted": false,
+  "submitted": false,
+  "positions_seen": [
+    {
+      "symbol": "SPY",
+      "quantity": 0.033521,
+      "average_entry_price": 745.948,
+      "market_value": 24.803529,
+      "raw": {
+        "asset_id": "<redacted>",
+        "symbol": "SPY",
+        "exchange": "ARCA",
+        "asset_class": "us_equity",
+        "asset_marginable": true,
+        "qty": "0.033521",
+        "qty_available": "0.033521",
+        "avg_entry_price": "745.948",
+        "side": "long",
+        "market_value": "24.803529",
+        "cost_basis": "25.004923",
+        "unrealized_pl": "-0.201394",
+        "unrealized_plpc": "-0.00805",
+        "unrealized_intraday_pl": "-0.250402",
+        "unrealized_intraday_plpc": "-0.00999",
+        "current_price": "739.94",
+        "lastday_price": "747.41",
+        "change_today": "-0.00999"
+      }
+    }
+  ],
+  "planned_orders": [
+    {
+      "id": "594f665a-4343-49c6-a717-c3d67499b0c2",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 0.033521,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-23T14:17:44.657385+00:00"
+    }
+  ],
+  "submitted_orders": [],
+  "execution_reports": [],
+  "submission_guard": null,
+  "reconciliation": null,
+  "reconciliation_clean": null,
+  "fill_poll_attempts": 0,
+  "polled_execution_reports": 0,
+  "reason": "preview_only",
+  "artifact_path": "reports\\paper-pilot-cleanup-preview.json"
+}

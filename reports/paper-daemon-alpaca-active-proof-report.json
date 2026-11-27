@@ -1,0 +1,78 @@
+{
+  "passed": false,
+  "stopped_by_kill_switch": false,
+  "options": {
+    "interval_seconds": 0.0,
+    "max_iterations": 1,
+    "kill_switch_path": "runs\\paper-daemon-alpaca-active-proof.kill",
+    "state_path": "runs\\paper-daemon-alpaca-active-proof-state.json",
+    "heartbeat_path": "runs\\paper-daemon-alpaca-active-proof-heartbeat.json",
+    "lock_path": "runs\\paper-daemon-alpaca-active-proof.lock",
+    "lock_stale_after_seconds": 1800.0,
+    "artifact_root": "runs/paper-daemon",
+    "schedule_output_path": "reports\\paper-daemon-alpaca-active-proof-schedule.json",
+    "report_path": "reports\\paper-daemon-alpaca-active-proof-report.json",
+    "cleanup_each_iteration": true,
+    "cleanup_submit_orders": false,
+    "cleanup_output_path": "reports\\paper-daemon-alpaca-active-proof-cleanup.json",
+    "monitor_each_iteration": true,
+    "monitor_output_path": "reports\\paper-daemon-alpaca-active-proof-monitor.json",
+    "monitor_max_open_order_age_minutes": 15.0,
+    "data_parity_each_iteration": true,
+    "data_parity_output_path": "reports\\paper-daemon-alpaca-active-proof-parity.json",
+    "data_parity_max_close_drift_bps": 5.0,
+    "submit_orders": true
+  },
+  "state": {
+    "status": "completed",
+    "iteration": 1,
+    "last_heartbeat_at": "2026-07-31T15:37:29.543310+00:00",
+    "kill_switch_path": "runs\\paper-daemon-alpaca-active-proof.kill",
+    "state_path": "runs\\paper-daemon-alpaca-active-proof-state.json",
+    "heartbeat_path": "runs\\paper-daemon-alpaca-active-proof-heartbeat.json",
+    "lock_path": "runs\\paper-daemon-alpaca-active-proof.lock",
+    "next_run_at": null,
+    "last_reason": "max_iterations_completed",
+    "last_error": null,
+    "last_active_window": "intraday"
+  },
+  "iterations": [
+    {
+      "iteration": 1,
+      "started_at": "2026-07-31T15:37:25.215809+00:00",
+      "ended_at": "2026-07-31T15:37:29.543310+00:00",
+      "status": "completed",
+      "reason": "passed",
+      "active_window": "intraday",
+      "submitted": true,
+      "passed": false,
+      "artifact_paths": [
+        "reports\\paper-daemon-alpaca-active-proof-schedule-20260731T153725Z-0001.json",
+        "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\session-report.json",
+        "reports\\paper-daemon-alpaca-active-proof-cleanup-0001.json",
+        "reports\\paper-daemon-alpaca-active-proof-monitor-0001.json",
+        "reports\\paper-daemon-alpaca-active-proof-parity-0001.json"
+      ],
+      "cleanup_artifact_path": "reports\\paper-daemon-alpaca-active-proof-cleanup-0001.json",
+      "cleanup_reason": "preview_only",
+      "cleanup_planned_orders": 1,
+      "cleanup_submitted_orders": 0,
+      "monitor_artifact_path": "reports\\paper-daemon-alpaca-active-proof-monitor-0001.json",
+      "monitor_passed": false,
+      "monitor_reason": "unexpected_paper_positions",
+      "monitor_unexpected_symbols": [
+        "SPY"
+      ],
+      "monitor_missing_symbols": [],
+      "monitor_position_mismatches": 1,
+      "monitor_stale_open_orders": 0,
+      "monitor_observed_notional": 25.009651,
+      "data_parity_artifact_path": "reports\\paper-daemon-alpaca-active-proof-parity-0001.json",
+      "data_parity_passed": true,
+      "data_parity_reason": "websocket_rest_parity_passed",
+      "data_parity_checks": 1,
+      "data_parity_failed_checks": 0
+    }
+  ],
+  "artifact_path": "reports\\paper-daemon-alpaca-active-proof-report.json"
+}

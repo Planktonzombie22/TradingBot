@@ -1,0 +1,351 @@
+{
+  "run_metadata": {
+    "run_id": "smoke-cli",
+    "code_version": "unknown",
+    "config_hash": "a53c6fd6bec0f37a7122c29a09d9e42b72326c971ad2d48c8fadc6c40f390768",
+    "environment": {
+      "python": "3.11.9",
+      "platform": "Windows-10-10.0.19045-SP0",
+      "machine": "AMD64"
+    },
+    "dependency_versions": {},
+    "provider": "sample",
+    "broker_mode": "dry-run",
+    "artifact_digests": {},
+    "created_at": "2026-07-17T15:00:32.704579+00:00"
+  },
+  "evidence": [
+    {
+      "check_id": "paper_profile_validation",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:00:32.688952+00:00",
+      "metadata": {
+        "passed": true,
+        "profile_results": {
+          "dry-run": {
+            "passed": true,
+            "validation": {
+              "passed": true,
+              "profile": {
+                "name": "dry-run",
+                "submit_orders": false,
+                "sessions": 3,
+                "required_execution_mode": "dry-run",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "No broker orders; validates data, committee, planning, recovery, and artifacts.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": null,
+                  "max_new_exposure": null,
+                  "max_turnover": null,
+                  "cash_reserve": 0.0,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [],
+              "warnings": []
+            },
+            "session_options": {
+              "submit_orders": false,
+              "artifact_root": "runs/paper-profile-validation/dry-run",
+              "recover_state": true,
+              "state_db_path": "runs/paper-profile-validation/dry-run.sqlite3",
+              "risk_budget": {
+                "min_order_quantity": 0.0,
+                "min_order_notional": 0.0,
+                "max_session_notional": null,
+                "max_new_exposure": null,
+                "max_turnover": null,
+                "cash_reserve": 0.0,
+                "cooldown_symbols": [],
+                "repeated_reject_symbols": []
+              }
+            },
+            "soak_config": {
+              "sessions": 3,
+              "stop_on_failure": true
+            }
+          },
+          "micro-notional": {
+            "passed": true,
+            "validation": {
+              "passed": true,
+              "profile": {
+                "name": "micro-notional",
+                "submit_orders": true,
+                "sessions": 3,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 25.0,
+                  "max_new_exposure": 0.0025,
+                  "max_turnover": 0.0025,
+                  "cash_reserve": 0.95,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [],
+              "warnings": []
+            },
+            "session_options": {
+              "submit_orders": true,
+              "artifact_root": "runs/paper-profile-validation/micro-notional",
+              "recover_state": true,
+              "state_db_path": "runs/paper-profile-validation/micro-notional.sqlite3",
+              "risk_budget": {
+                "min_order_quantity": 0.0,
+                "min_order_notional": 0.0,
+                "max_session_notional": 25.0,
+                "max_new_exposure": 0.0025,
+                "max_turnover": 0.0025,
+                "cash_reserve": 0.95,
+                "cooldown_symbols": [],
+                "repeated_reject_symbols": []
+              }
+            },
+            "soak_config": {
+              "sessions": 3,
+              "stop_on_failure": true
+            }
+          },
+          "full-paper-rehearsal": {
+            "passed": true,
+            "validation": {
+              "passed": true,
+              "profile": {
+                "name": "full-paper-rehearsal",
+                "submit_orders": true,
+                "sessions": 5,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 2500.0,
+                  "max_new_exposure": 0.1,
+                  "max_turnover": 0.2,
+                  "cash_reserve": 0.5,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [],
+              "warnings": []
+            },
+            "session_options": {
+              "submit_orders": true,
+              "artifact_root": "runs/paper-profile-validation/full-paper-rehearsal",
+              "recover_state": true,
+              "state_db_path": "runs/paper-profile-validation/full-paper-rehearsal.sqlite3",
+              "risk_budget": {
+                "min_order_quantity": 0.0,
+                "min_order_notional": 0.0,
+                "max_session_notional": 2500.0,
+                "max_new_exposure": 0.1,
+                "max_turnover": 0.2,
+                "cash_reserve": 0.5,
+                "cooldown_symbols": [],
+                "repeated_reject_symbols": []
+              }
+            },
+            "soak_config": {
+              "sessions": 5,
+              "stop_on_failure": true
+            }
+          }
+        },
+        "unsafe_combination_results": {
+          "micro_notional_live_url": {
+            "blocked": true,
+            "validation": {
+              "passed": false,
+              "profile": {
+                "name": "micro-notional",
+                "submit_orders": true,
+                "sessions": 3,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 25.0,
+                  "max_new_exposure": 0.0025,
+                  "max_turnover": 0.0025,
+                  "cash_reserve": 0.95,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [
+                "ALPACA_BASE_URL must point to https://paper-api.alpaca.markets."
+              ],
+              "warnings": []
+            }
+          },
+          "micro_notional_dry_run_mode": {
+            "blocked": true,
+            "validation": {
+              "passed": false,
+              "profile": {
+                "name": "micro-notional",
+                "submit_orders": true,
+                "sessions": 3,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 25.0,
+                  "max_new_exposure": 0.0025,
+                  "max_turnover": 0.0025,
+                  "cash_reserve": 0.95,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [
+                "EXECUTION_MODE must be paper for micro-notional."
+              ],
+              "warnings": []
+            }
+          },
+          "full_rehearsal_missing_keys": {
+            "blocked": true,
+            "validation": {
+              "passed": false,
+              "profile": {
+                "name": "full-paper-rehearsal",
+                "submit_orders": true,
+                "sessions": 5,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 2500.0,
+                  "max_new_exposure": 0.1,
+                  "max_turnover": 0.2,
+                  "cash_reserve": 0.5,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [
+                "ALPACA_API_KEY is required for submitting paper orders.",
+                "ALPACA_SECRET_KEY is required for submitting paper orders."
+              ],
+              "warnings": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "check_id": "security_configuration",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:00:32.688952+00:00",
+      "metadata": {
+        "passed": true,
+        "probes": [
+          {
+            "name": "runtime_environment_valid",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "errors": [],
+              "warnings": []
+            }
+          },
+          {
+            "name": "paper_trading_flag_safe",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "paper_trading": true,
+              "execution_mode": "dry-run"
+            }
+          },
+          {
+            "name": "alpaca_paper_url_safe",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "base_url": "https://paper-api.alpaca.markets",
+              "execution_mode": "dry-run"
+            }
+          },
+          {
+            "name": "allow_live_trading_guarded",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "allow_live_trading": false
+            }
+          },
+          {
+            "name": "env_values_present_when_required",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "required": [],
+              "present": [
+                "ALPACA_API_KEY",
+                "ALPACA_SECRET_KEY"
+              ]
+            }
+          },
+          {
+            "name": "no_committed_secret_markers",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "markers": []
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "passed": true,
+  "reason": "paper_behavior_in_line",
+  "expectation": {
+    "strategy_name": "buyHold",
+    "symbol": "SPY",
+    "expected_fills": 1,
+    "expected_trades": 1,
+    "expected_return": 0.0,
+    "expected_ending_equity": 99999.995038892,
+    "expected_fill_prices": {
+      "2c2b07b0-fc18-43ad-a7db-5f739e2850e3": 745.8
+    }
+  },
+  "observation": {
+    "reports": [
+      {
+        "order_id": "2c2b07b0-fc18-43ad-a7db-5f739e2850e3",
+        "status": "FILLED",
+        "broker_order_id": "55af5e59-41d0-4c52-98dc-7d88de4c0e84",
+        "filled_quantity": 0.033521,
+        "average_fill_price": 745.948
+      }
+    ],
+    "account": null,
+    "reconciliation_clean": true,
+    "broker_statement": {}
+  },
+  "policy": {
+    "max_average_slippage_bps": 10.0,
+    "max_missed_fill_rate": 0.05,
+    "max_reject_rate": 0.02,
+    "max_equity_drift_pct": 0.02,
+    "require_clean_reconciliation": true
+  },
+  "average_slippage_bps": 1.9844462322341723,
+  "missed_fill_rate": 0.0,
+  "reject_rate": 0.0,
+  "equity_drift_pct": null,
+  "gates": [
+    {
+      "name": "average_slippage_bps",
+      "passed": true,
+      "value": 1.9844462322341723,
+      "threshold": 10.0,
+      "reason": "passed"
+    },
+    {
+      "name": "missed_fill_rate",
+      "passed": true,
+      "value": 0.0,
+      "threshold": 0.05,
+      "reason": "passed"
+    },
+    {
+      "name": "reject_rate",
+      "passed": true,
+      "value": 0.0,
+      "threshold": 0.02,
+      "reason": "passed"
+    },
+    {
+      "name": "equity_drift_pct",
+      "passed": true,
+      "value": null,
+      "threshold": 0.02,
+      "reason": "not_available"
+    },
+    {
+      "name": "reconciliation",
+      "passed": true,
+      "value": true,
+      "threshold": true,
+      "reason": "passed"
+    }
+  ]
+}

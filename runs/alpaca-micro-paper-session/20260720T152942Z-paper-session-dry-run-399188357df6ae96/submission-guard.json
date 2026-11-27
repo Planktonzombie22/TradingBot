@@ -1,0 +1,93 @@
+{
+  "passed": false,
+  "reason": "no_orders_to_submit",
+  "submit_requested": true,
+  "probes": [
+    {
+      "name": "submit_requested",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "submit_orders": true,
+        "orders": 0
+      }
+    },
+    {
+      "name": "market_session",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "timestamp": "2026-07-20T15:29:42.704227+00:00",
+        "session": "REGULAR",
+        "policy": {
+          "allow_pre_market": false,
+          "allow_regular": true,
+          "allow_after_hours": false
+        }
+      }
+    },
+    {
+      "name": "orders_present",
+      "passed": false,
+      "reason": "no_orders_to_submit",
+      "evidence": {
+        "orders": 0
+      }
+    },
+    {
+      "name": "approval_policy",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "configured": true,
+        "policy": {
+          "symbol_allowlist": [
+            "SPY"
+          ],
+          "max_daily_submissions": null,
+          "kill_switch_enabled": false,
+          "repeated_reject_lockout_threshold": null,
+          "require_cleanup": true
+        }
+      }
+    },
+    {
+      "name": "approval_kill_switch",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "kill_switch_enabled": false
+      }
+    },
+    {
+      "name": "approval_symbol_allowlist",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "symbols": [],
+        "symbol_allowlist": [
+          "SPY"
+        ],
+        "disallowed": []
+      }
+    },
+    {
+      "name": "approval_daily_submission_limit",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "submitted_today": 0,
+        "max_daily_submissions": null
+      }
+    },
+    {
+      "name": "approval_repeated_reject_lockout",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "rejected_symbols": {},
+        "threshold": null
+      }
+    }
+  ]
+}

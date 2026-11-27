@@ -1,0 +1,2847 @@
+{
+  "release_checklist": {
+    "output_bundle": "reports/release-validation-bundle.json",
+    "steps": [
+      {
+        "name": "fast_unit_suite",
+        "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+        "required": true,
+        "description": "Run the full local automated suite."
+      },
+      {
+        "name": "validation_manifest",
+        "command": "trading_env\\Scripts\\python.exe main.py validate --validation-output reports/validation-readiness.json",
+        "required": true,
+        "description": "Write the current readiness index and not-live-ready report."
+      },
+      {
+        "name": "performance_profile",
+        "command": "trading_env\\Scripts\\python.exe main.py profile --profiling-output reports/profiling-report.json",
+        "required": true,
+        "description": "Run critical-path benchmark tasks and budget checks."
+      },
+      {
+        "name": "paper_dry_run",
+        "command": "trading_env\\Scripts\\python.exe main.py paper-session --provider sample --symbol SPY --store-dir runs/release-paper-dry-run --timeout-seconds 60",
+        "required": true,
+        "description": "Prove local paper-session artifact generation."
+      },
+      {
+        "name": "paper_profile_validation",
+        "command": null,
+        "required": true,
+        "description": "Review paper-profile validation evidence in the release bundle."
+      },
+      {
+        "name": "alpaca_micro_notional_submit",
+        "command": "trading_env\\Scripts\\python.exe main.py paper-session --provider alpaca --execution-mode paper --paper-profile micro-notional --symbol SPY --store-dir runs/release-alpaca-micro --timeout-seconds 180",
+        "required": false,
+        "description": "Optional broker-backed micro-notional paper proof when credentials and market conditions are available."
+      },
+      {
+        "name": "deployment_rehearsal",
+        "command": null,
+        "required": false,
+        "description": "Manual/deployment environment rehearsal until automated deployment runners exist."
+      }
+    ]
+  },
+  "evidence_bundle": {
+    "passed": true,
+    "sources": [],
+    "invalid_sources": [],
+    "evidence": [],
+    "latest_evidence": []
+  },
+  "paper_profile_validation": {
+    "passed": true,
+    "profile_results": {
+      "dry-run": {
+        "passed": true,
+        "validation": {
+          "passed": true,
+          "profile": {
+            "name": "dry-run",
+            "submit_orders": false,
+            "sessions": 3,
+            "required_execution_mode": "dry-run",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "No broker orders; validates data, committee, planning, recovery, and artifacts.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": null,
+              "max_new_exposure": null,
+              "max_turnover": null,
+              "cash_reserve": 0.0,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [],
+          "warnings": []
+        },
+        "session_options": {
+          "submit_orders": false,
+          "artifact_root": "runs/paper-profile-validation/dry-run",
+          "recover_state": true,
+          "state_db_path": "runs/paper-profile-validation/dry-run.sqlite3",
+          "risk_budget": {
+            "min_order_quantity": 0.0,
+            "min_order_notional": 0.0,
+            "max_session_notional": null,
+            "max_new_exposure": null,
+            "max_turnover": null,
+            "cash_reserve": 0.0,
+            "cooldown_symbols": [],
+            "repeated_reject_symbols": []
+          }
+        },
+        "soak_config": {
+          "sessions": 3,
+          "stop_on_failure": true
+        }
+      },
+      "micro-notional": {
+        "passed": true,
+        "validation": {
+          "passed": true,
+          "profile": {
+            "name": "micro-notional",
+            "submit_orders": true,
+            "sessions": 3,
+            "required_execution_mode": "paper",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": 25.0,
+              "max_new_exposure": 0.0025,
+              "max_turnover": 0.0025,
+              "cash_reserve": 0.95,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [],
+          "warnings": []
+        },
+        "session_options": {
+          "submit_orders": true,
+          "artifact_root": "runs/paper-profile-validation/micro-notional",
+          "recover_state": true,
+          "state_db_path": "runs/paper-profile-validation/micro-notional.sqlite3",
+          "risk_budget": {
+            "min_order_quantity": 0.0,
+            "min_order_notional": 0.0,
+            "max_session_notional": 25.0,
+            "max_new_exposure": 0.0025,
+            "max_turnover": 0.0025,
+            "cash_reserve": 0.95,
+            "cooldown_symbols": [],
+            "repeated_reject_symbols": []
+          }
+        },
+        "soak_config": {
+          "sessions": 3,
+          "stop_on_failure": true
+        }
+      },
+      "full-paper-rehearsal": {
+        "passed": true,
+        "validation": {
+          "passed": true,
+          "profile": {
+            "name": "full-paper-rehearsal",
+            "submit_orders": true,
+            "sessions": 5,
+            "required_execution_mode": "paper",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": 2500.0,
+              "max_new_exposure": 0.1,
+              "max_turnover": 0.2,
+              "cash_reserve": 0.5,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [],
+          "warnings": []
+        },
+        "session_options": {
+          "submit_orders": true,
+          "artifact_root": "runs/paper-profile-validation/full-paper-rehearsal",
+          "recover_state": true,
+          "state_db_path": "runs/paper-profile-validation/full-paper-rehearsal.sqlite3",
+          "risk_budget": {
+            "min_order_quantity": 0.0,
+            "min_order_notional": 0.0,
+            "max_session_notional": 2500.0,
+            "max_new_exposure": 0.1,
+            "max_turnover": 0.2,
+            "cash_reserve": 0.5,
+            "cooldown_symbols": [],
+            "repeated_reject_symbols": []
+          }
+        },
+        "soak_config": {
+          "sessions": 5,
+          "stop_on_failure": true
+        }
+      }
+    },
+    "unsafe_combination_results": {
+      "micro_notional_live_url": {
+        "blocked": true,
+        "validation": {
+          "passed": false,
+          "profile": {
+            "name": "micro-notional",
+            "submit_orders": true,
+            "sessions": 3,
+            "required_execution_mode": "paper",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": 25.0,
+              "max_new_exposure": 0.0025,
+              "max_turnover": 0.0025,
+              "cash_reserve": 0.95,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [
+            "ALPACA_BASE_URL must point to https://paper-api.alpaca.markets."
+          ],
+          "warnings": []
+        }
+      },
+      "micro_notional_dry_run_mode": {
+        "blocked": true,
+        "validation": {
+          "passed": false,
+          "profile": {
+            "name": "micro-notional",
+            "submit_orders": true,
+            "sessions": 3,
+            "required_execution_mode": "paper",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": 25.0,
+              "max_new_exposure": 0.0025,
+              "max_turnover": 0.0025,
+              "cash_reserve": 0.95,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [
+            "EXECUTION_MODE must be paper for micro-notional."
+          ],
+          "warnings": []
+        }
+      },
+      "full_rehearsal_missing_keys": {
+        "blocked": true,
+        "validation": {
+          "passed": false,
+          "profile": {
+            "name": "full-paper-rehearsal",
+            "submit_orders": true,
+            "sessions": 5,
+            "required_execution_mode": "paper",
+            "require_alpaca_provider": true,
+            "require_paper_trading": true,
+            "require_paper_url": true,
+            "recover_state": true,
+            "comparison_provider": null,
+            "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+            "risk_budget": {
+              "min_order_quantity": 0.0,
+              "min_order_notional": 0.0,
+              "max_session_notional": 2500.0,
+              "max_new_exposure": 0.1,
+              "max_turnover": 0.2,
+              "cash_reserve": 0.5,
+              "cooldown_symbols": [],
+              "repeated_reject_symbols": []
+            }
+          },
+          "errors": [
+            "ALPACA_API_KEY is required for submitting paper orders.",
+            "ALPACA_SECRET_KEY is required for submitting paper orders."
+          ],
+          "warnings": []
+        }
+      }
+    }
+  },
+  "readiness_index": {
+    "target": "release_readiness",
+    "passed": false,
+    "readiness_score": 0.16666666666666666,
+    "required_checks": 12,
+    "passed_required": 2,
+    "missing_required": [
+      "unit_test_suite",
+      "failure_injection_suite",
+      "data_quality_torture",
+      "backtester_differential",
+      "optimizer_validation",
+      "daily_ops_acceptance",
+      "observability_acceptance",
+      "security_configuration",
+      "deployment_rehearsal",
+      "golden_artifacts"
+    ],
+    "failed_required": [],
+    "checks": [
+      {
+        "spec": {
+          "check_id": "unit_test_suite",
+          "category": "code_tests",
+          "subsystem": "tests",
+          "description": "Full unit and integration suite passes.",
+          "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "unit_test_suite",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "failure_injection_suite",
+          "category": "failure_injection",
+          "subsystem": "runtime",
+          "description": "Network, broker, stale-data, malformed-payload, and lifecycle fault tests pass.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "failure_injection_suite",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "data_quality_torture",
+          "category": "data_quality",
+          "subsystem": "data",
+          "description": "Adjusted/raw, missing/duplicate bar, calendar, gap, and zero-volume tests pass.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "data_quality_torture",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "backtester_differential",
+          "category": "backtest_validation",
+          "subsystem": "backtesting",
+          "description": "Backtester output matches independent/reference calculations for simple scenarios.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 180
+        },
+        "evidence": {
+          "check_id": "backtester_differential",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "optimizer_validation",
+          "category": "optimizer_validation",
+          "subsystem": "backtesting",
+          "description": "Optimizer reproducibility, leakage, persistence, pruning, and metric tests pass.",
+          "command": null,
+          "required_for": [
+            "optimization_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 300
+        },
+        "evidence": {
+          "check_id": "optimizer_validation",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "daily_ops_acceptance",
+          "category": "operator_reports",
+          "subsystem": "reporting",
+          "description": "Daily paper report scenarios produce correct decisions and recommendations.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 120
+        },
+        "evidence": {
+          "check_id": "daily_ops_acceptance",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "observability_acceptance",
+          "category": "observability",
+          "subsystem": "monitoring",
+          "description": "Logs, metrics, health checks, notifications, audit IDs, and halt reasons pass.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 120
+        },
+        "evidence": {
+          "check_id": "observability_acceptance",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "security_configuration",
+          "category": "security",
+          "subsystem": "config",
+          "description": "Secrets, paper/live URL, env, and deployment safety checks pass.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "live_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 120
+        },
+        "evidence": {
+          "check_id": "security_configuration",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "deployment_rehearsal",
+          "category": "deployment",
+          "subsystem": "deployment",
+          "description": "Windows, Docker, server, persistence, watchdog, and restart rehearsals pass.",
+          "command": null,
+          "required_for": [
+            "release_readiness",
+            "live_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 600
+        },
+        "evidence": {
+          "check_id": "deployment_rehearsal",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "golden_artifacts",
+          "category": "golden_artifacts",
+          "subsystem": "storage",
+          "description": "Frozen input/output artifacts match for critical reports and decisions.",
+          "command": null,
+          "required_for": [
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 120
+        },
+        "evidence": {
+          "check_id": "golden_artifacts",
+          "status": "missing",
+          "passed": false,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "no_current_evidence",
+          "captured_at": "2026-07-16T15:19:11.983121+00:00",
+          "metadata": {}
+        }
+      },
+      {
+        "spec": {
+          "check_id": "paper_profile_validation",
+          "category": "paper_profiles",
+          "subsystem": "operations",
+          "description": "Alpaca paper profiles validate risk budgets and block unsafe combinations.",
+          "command": null,
+          "required_for": [
+            "paper_readiness",
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 60
+        },
+        "evidence": {
+          "check_id": "paper_profile_validation",
+          "status": "passed",
+          "passed": true,
+          "artifact_path": null,
+          "elapsed_seconds": null,
+          "reason": "paper_profiles_validated",
+          "captured_at": "2026-07-16T15:19:11.967495+00:00",
+          "metadata": {
+            "passed": true,
+            "profile_results": {
+              "dry-run": {
+                "passed": true,
+                "validation": {
+                  "passed": true,
+                  "profile": {
+                    "name": "dry-run",
+                    "submit_orders": false,
+                    "sessions": 3,
+                    "required_execution_mode": "dry-run",
+                    "require_alpaca_provider": true,
+                    "require_paper_trading": true,
+                    "require_paper_url": true,
+                    "recover_state": true,
+                    "comparison_provider": null,
+                    "description": "No broker orders; validates data, committee, planning, recovery, and artifacts.",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": null,
+                      "max_new_exposure": null,
+                      "max_turnover": null,
+                      "cash_reserve": 0.0,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "errors": [],
+                  "warnings": []
+                },
+                "session_options": {
+                  "submit_orders": false,
+                  "artifact_root": "runs/paper-profile-validation/dry-run",
+                  "recover_state": true,
+                  "state_db_path": "runs/paper-profile-validation/dry-run.sqlite3",
+                  "risk_budget": {
+                    "min_order_quantity": 0.0,
+                    "min_order_notional": 0.0,
+                    "max_session_notional": null,
+                    "max_new_exposure": null,
+                    "max_turnover": null,
+                    "cash_reserve": 0.0,
+                    "cooldown_symbols": [],
+                    "repeated_reject_symbols": []
+                  }
+                },
+                "soak_config": {
+                  "sessions": 3,
+                  "stop_on_failure": true
+                }
+              },
+              "micro-notional": {
+                "passed": true,
+                "validation": {
+                  "passed": true,
+                  "profile": {
+                    "name": "micro-notional",
+                    "submit_orders": true,
+                    "sessions": 3,
+                    "required_execution_mode": "paper",
+                    "require_alpaca_provider": true,
+                    "require_paper_trading": true,
+                    "require_paper_url": true,
+                    "recover_state": true,
+                    "comparison_provider": null,
+                    "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": 25.0,
+                      "max_new_exposure": 0.0025,
+                      "max_turnover": 0.0025,
+                      "cash_reserve": 0.95,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "errors": [],
+                  "warnings": []
+                },
+                "session_options": {
+                  "submit_orders": true,
+                  "artifact_root": "runs/paper-profile-validation/micro-notional",
+                  "recover_state": true,
+                  "state_db_path": "runs/paper-profile-validation/micro-notional.sqlite3",
+                  "risk_budget": {
+                    "min_order_quantity": 0.0,
+                    "min_order_notional": 0.0,
+                    "max_session_notional": 25.0,
+                    "max_new_exposure": 0.0025,
+                    "max_turnover": 0.0025,
+                    "cash_reserve": 0.95,
+                    "cooldown_symbols": [],
+                    "repeated_reject_symbols": []
+                  }
+                },
+                "soak_config": {
+                  "sessions": 3,
+                  "stop_on_failure": true
+                }
+              },
+              "full-paper-rehearsal": {
+                "passed": true,
+                "validation": {
+                  "passed": true,
+                  "profile": {
+                    "name": "full-paper-rehearsal",
+                    "submit_orders": true,
+                    "sessions": 5,
+                    "required_execution_mode": "paper",
+                    "require_alpaca_provider": true,
+                    "require_paper_trading": true,
+                    "require_paper_url": true,
+                    "recover_state": true,
+                    "comparison_provider": null,
+                    "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": 2500.0,
+                      "max_new_exposure": 0.1,
+                      "max_turnover": 0.2,
+                      "cash_reserve": 0.5,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "errors": [],
+                  "warnings": []
+                },
+                "session_options": {
+                  "submit_orders": true,
+                  "artifact_root": "runs/paper-profile-validation/full-paper-rehearsal",
+                  "recover_state": true,
+                  "state_db_path": "runs/paper-profile-validation/full-paper-rehearsal.sqlite3",
+                  "risk_budget": {
+                    "min_order_quantity": 0.0,
+                    "min_order_notional": 0.0,
+                    "max_session_notional": 2500.0,
+                    "max_new_exposure": 0.1,
+                    "max_turnover": 0.2,
+                    "cash_reserve": 0.5,
+                    "cooldown_symbols": [],
+                    "repeated_reject_symbols": []
+                  }
+                },
+                "soak_config": {
+                  "sessions": 5,
+                  "stop_on_failure": true
+                }
+              }
+            },
+            "unsafe_combination_results": {
+              "micro_notional_live_url": {
+                "blocked": true,
+                "validation": {
+                  "passed": false,
+                  "profile": {
+                    "name": "micro-notional",
+                    "submit_orders": true,
+                    "sessions": 3,
+                    "required_execution_mode": "paper",
+                    "require_alpaca_provider": true,
+                    "require_paper_trading": true,
+                    "require_paper_url": true,
+                    "recover_state": true,
+                    "comparison_provider": null,
+                    "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": 25.0,
+                      "max_new_exposure": 0.0025,
+                      "max_turnover": 0.0025,
+                      "cash_reserve": 0.95,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "errors": [
+                    "ALPACA_BASE_URL must point to https://paper-api.alpaca.markets."
+                  ],
+                  "warnings": []
+                }
+              },
+              "micro_notional_dry_run_mode": {
+                "blocked": true,
+                "validation": {
+                  "passed": false,
+                  "profile": {
+                    "name": "micro-notional",
+                    "submit_orders": true,
+                    "sessions": 3,
+                    "required_execution_mode": "paper",
+                    "require_alpaca_provider": true,
+                    "require_paper_trading": true,
+                    "require_paper_url": true,
+                    "recover_state": true,
+                    "comparison_provider": null,
+                    "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": 25.0,
+                      "max_new_exposure": 0.0025,
+                      "max_turnover": 0.0025,
+                      "cash_reserve": 0.95,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "errors": [
+                    "EXECUTION_MODE must be paper for micro-notional."
+                  ],
+                  "warnings": []
+                }
+              },
+              "full_rehearsal_missing_keys": {
+                "blocked": true,
+                "validation": {
+                  "passed": false,
+                  "profile": {
+                    "name": "full-paper-rehearsal",
+                    "submit_orders": true,
+                    "sessions": 5,
+                    "required_execution_mode": "paper",
+                    "require_alpaca_provider": true,
+                    "require_paper_trading": true,
+                    "require_paper_url": true,
+                    "recover_state": true,
+                    "comparison_provider": null,
+                    "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": 2500.0,
+                      "max_new_exposure": 0.1,
+                      "max_turnover": 0.2,
+                      "cash_reserve": 0.5,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "errors": [
+                    "ALPACA_API_KEY is required for submitting paper orders.",
+                    "ALPACA_SECRET_KEY is required for submitting paper orders."
+                  ],
+                  "warnings": []
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "spec": {
+          "check_id": "release_checklist_bundle",
+          "category": "release",
+          "subsystem": "validation",
+          "description": "Release checklist bundle is generated with fast, full, paper, performance, and deployment gates.",
+          "command": null,
+          "required_for": [
+            "release_readiness"
+          ],
+          "threshold": {},
+          "expected_artifacts": [],
+          "timeout_seconds": 60
+        },
+        "evidence": {
+          "check_id": "release_checklist_bundle",
+          "status": "passed",
+          "passed": true,
+          "artifact_path": "reports\\release-validation-smoke.json",
+          "elapsed_seconds": null,
+          "reason": "release_checklist_generated",
+          "captured_at": "2026-07-16T15:19:11.967495+00:00",
+          "metadata": {}
+        }
+      }
+    ]
+  },
+  "release_decision": {
+    "decision": "blocked",
+    "passed": false,
+    "readiness_index": {
+      "target": "release_readiness",
+      "passed": false,
+      "readiness_score": 0.16666666666666666,
+      "required_checks": 12,
+      "passed_required": 2,
+      "missing_required": [
+        "unit_test_suite",
+        "failure_injection_suite",
+        "data_quality_torture",
+        "backtester_differential",
+        "optimizer_validation",
+        "daily_ops_acceptance",
+        "observability_acceptance",
+        "security_configuration",
+        "deployment_rehearsal",
+        "golden_artifacts"
+      ],
+      "failed_required": [],
+      "checks": [
+        {
+          "spec": {
+            "check_id": "unit_test_suite",
+            "category": "code_tests",
+            "subsystem": "tests",
+            "description": "Full unit and integration suite passes.",
+            "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "unit_test_suite",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:11.983121+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "failure_injection_suite",
+            "category": "failure_injection",
+            "subsystem": "runtime",
+            "description": "Network, broker, stale-data, malformed-payload, and lifecycle fault tests pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "failure_injection_suite",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:11.983121+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "data_quality_torture",
+            "category": "data_quality",
+            "subsystem": "data",
+            "description": "Adjusted/raw, missing/duplicate bar, calendar, gap, and zero-volume tests pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "data_quality_torture",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:11.983121+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "backtester_differential",
+            "category": "backtest_validation",
+            "subsystem": "backtesting",
+            "description": "Backtester output matches independent/reference calculations for simple scenarios.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "backtester_differential",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:11.983121+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "optimizer_validation",
+            "category": "optimizer_validation",
+            "subsystem": "backtesting",
+            "description": "Optimizer reproducibility, leakage, persistence, pruning, and metric tests pass.",
+            "command": null,
+            "required_for": [
+              "optimization_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 300
+          },
+          "evidence": {
+            "check_id": "optimizer_validation",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:11.983121+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "daily_ops_acceptance",
+            "category": "operator_reports",
+            "subsystem": "reporting",
+            "description": "Daily paper report scenarios produce correct decisions and recommendations.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "daily_ops_acceptance",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:11.983121+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "observability_acceptance",
+            "category": "observability",
+            "subsystem": "monitoring",
+            "description": "Logs, metrics, health checks, notifications, audit IDs, and halt reasons pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "observability_acceptance",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:11.983121+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "security_configuration",
+            "category": "security",
+            "subsystem": "config",
+            "description": "Secrets, paper/live URL, env, and deployment safety checks pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "live_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "security_configuration",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:11.983121+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "deployment_rehearsal",
+            "category": "deployment",
+            "subsystem": "deployment",
+            "description": "Windows, Docker, server, persistence, watchdog, and restart rehearsals pass.",
+            "command": null,
+            "required_for": [
+              "release_readiness",
+              "live_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 600
+          },
+          "evidence": {
+            "check_id": "deployment_rehearsal",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:11.983121+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "golden_artifacts",
+            "category": "golden_artifacts",
+            "subsystem": "storage",
+            "description": "Frozen input/output artifacts match for critical reports and decisions.",
+            "command": null,
+            "required_for": [
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "golden_artifacts",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:11.983121+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "paper_profile_validation",
+            "category": "paper_profiles",
+            "subsystem": "operations",
+            "description": "Alpaca paper profiles validate risk budgets and block unsafe combinations.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 60
+          },
+          "evidence": {
+            "check_id": "paper_profile_validation",
+            "status": "passed",
+            "passed": true,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "paper_profiles_validated",
+            "captured_at": "2026-07-16T15:19:11.967495+00:00",
+            "metadata": {
+              "passed": true,
+              "profile_results": {
+                "dry-run": {
+                  "passed": true,
+                  "validation": {
+                    "passed": true,
+                    "profile": {
+                      "name": "dry-run",
+                      "submit_orders": false,
+                      "sessions": 3,
+                      "required_execution_mode": "dry-run",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "No broker orders; validates data, committee, planning, recovery, and artifacts.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": null,
+                        "max_new_exposure": null,
+                        "max_turnover": null,
+                        "cash_reserve": 0.0,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [],
+                    "warnings": []
+                  },
+                  "session_options": {
+                    "submit_orders": false,
+                    "artifact_root": "runs/paper-profile-validation/dry-run",
+                    "recover_state": true,
+                    "state_db_path": "runs/paper-profile-validation/dry-run.sqlite3",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": null,
+                      "max_new_exposure": null,
+                      "max_turnover": null,
+                      "cash_reserve": 0.0,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "soak_config": {
+                    "sessions": 3,
+                    "stop_on_failure": true
+                  }
+                },
+                "micro-notional": {
+                  "passed": true,
+                  "validation": {
+                    "passed": true,
+                    "profile": {
+                      "name": "micro-notional",
+                      "submit_orders": true,
+                      "sessions": 3,
+                      "required_execution_mode": "paper",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 25.0,
+                        "max_new_exposure": 0.0025,
+                        "max_turnover": 0.0025,
+                        "cash_reserve": 0.95,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [],
+                    "warnings": []
+                  },
+                  "session_options": {
+                    "submit_orders": true,
+                    "artifact_root": "runs/paper-profile-validation/micro-notional",
+                    "recover_state": true,
+                    "state_db_path": "runs/paper-profile-validation/micro-notional.sqlite3",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": 25.0,
+                      "max_new_exposure": 0.0025,
+                      "max_turnover": 0.0025,
+                      "cash_reserve": 0.95,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "soak_config": {
+                    "sessions": 3,
+                    "stop_on_failure": true
+                  }
+                },
+                "full-paper-rehearsal": {
+                  "passed": true,
+                  "validation": {
+                    "passed": true,
+                    "profile": {
+                      "name": "full-paper-rehearsal",
+                      "submit_orders": true,
+                      "sessions": 5,
+                      "required_execution_mode": "paper",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 2500.0,
+                        "max_new_exposure": 0.1,
+                        "max_turnover": 0.2,
+                        "cash_reserve": 0.5,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [],
+                    "warnings": []
+                  },
+                  "session_options": {
+                    "submit_orders": true,
+                    "artifact_root": "runs/paper-profile-validation/full-paper-rehearsal",
+                    "recover_state": true,
+                    "state_db_path": "runs/paper-profile-validation/full-paper-rehearsal.sqlite3",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": 2500.0,
+                      "max_new_exposure": 0.1,
+                      "max_turnover": 0.2,
+                      "cash_reserve": 0.5,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "soak_config": {
+                    "sessions": 5,
+                    "stop_on_failure": true
+                  }
+                }
+              },
+              "unsafe_combination_results": {
+                "micro_notional_live_url": {
+                  "blocked": true,
+                  "validation": {
+                    "passed": false,
+                    "profile": {
+                      "name": "micro-notional",
+                      "submit_orders": true,
+                      "sessions": 3,
+                      "required_execution_mode": "paper",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 25.0,
+                        "max_new_exposure": 0.0025,
+                        "max_turnover": 0.0025,
+                        "cash_reserve": 0.95,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [
+                      "ALPACA_BASE_URL must point to https://paper-api.alpaca.markets."
+                    ],
+                    "warnings": []
+                  }
+                },
+                "micro_notional_dry_run_mode": {
+                  "blocked": true,
+                  "validation": {
+                    "passed": false,
+                    "profile": {
+                      "name": "micro-notional",
+                      "submit_orders": true,
+                      "sessions": 3,
+                      "required_execution_mode": "paper",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 25.0,
+                        "max_new_exposure": 0.0025,
+                        "max_turnover": 0.0025,
+                        "cash_reserve": 0.95,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [
+                      "EXECUTION_MODE must be paper for micro-notional."
+                    ],
+                    "warnings": []
+                  }
+                },
+                "full_rehearsal_missing_keys": {
+                  "blocked": true,
+                  "validation": {
+                    "passed": false,
+                    "profile": {
+                      "name": "full-paper-rehearsal",
+                      "submit_orders": true,
+                      "sessions": 5,
+                      "required_execution_mode": "paper",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 2500.0,
+                        "max_new_exposure": 0.1,
+                        "max_turnover": 0.2,
+                        "cash_reserve": 0.5,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [
+                      "ALPACA_API_KEY is required for submitting paper orders.",
+                      "ALPACA_SECRET_KEY is required for submitting paper orders."
+                    ],
+                    "warnings": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "spec": {
+            "check_id": "release_checklist_bundle",
+            "category": "release",
+            "subsystem": "validation",
+            "description": "Release checklist bundle is generated with fast, full, paper, performance, and deployment gates.",
+            "command": null,
+            "required_for": [
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 60
+          },
+          "evidence": {
+            "check_id": "release_checklist_bundle",
+            "status": "passed",
+            "passed": true,
+            "artifact_path": "reports\\release-validation-smoke.json",
+            "elapsed_seconds": null,
+            "reason": "release_checklist_generated",
+            "captured_at": "2026-07-16T15:19:11.967495+00:00",
+            "metadata": {}
+          }
+        }
+      ]
+    },
+    "freshness_report": {
+      "passed": false,
+      "stale_check_ids": [],
+      "missing_check_ids": [
+        "unit_test_suite",
+        "failure_injection_suite",
+        "data_quality_torture",
+        "backtester_differential",
+        "optimizer_validation",
+        "daily_ops_acceptance",
+        "observability_acceptance",
+        "security_configuration",
+        "deployment_rehearsal",
+        "golden_artifacts"
+      ],
+      "max_age_hours": 24.0,
+      "evaluated_at": "2026-07-16T15:19:11.967495+00:00"
+    },
+    "action_plan": {
+      "target": "release_readiness",
+      "passed": false,
+      "actions": [
+        {
+          "check_id": "unit_test_suite",
+          "category": "code_tests",
+          "subsystem": "tests",
+          "status": "missing",
+          "reason": "no_current_evidence",
+          "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests"
+        },
+        {
+          "check_id": "failure_injection_suite",
+          "category": "failure_injection",
+          "subsystem": "runtime",
+          "status": "missing",
+          "reason": "no_current_evidence",
+          "command": null
+        },
+        {
+          "check_id": "data_quality_torture",
+          "category": "data_quality",
+          "subsystem": "data",
+          "status": "missing",
+          "reason": "no_current_evidence",
+          "command": null
+        },
+        {
+          "check_id": "backtester_differential",
+          "category": "backtest_validation",
+          "subsystem": "backtesting",
+          "status": "missing",
+          "reason": "no_current_evidence",
+          "command": null
+        },
+        {
+          "check_id": "optimizer_validation",
+          "category": "optimizer_validation",
+          "subsystem": "backtesting",
+          "status": "missing",
+          "reason": "no_current_evidence",
+          "command": null
+        },
+        {
+          "check_id": "daily_ops_acceptance",
+          "category": "operator_reports",
+          "subsystem": "reporting",
+          "status": "missing",
+          "reason": "no_current_evidence",
+          "command": null
+        },
+        {
+          "check_id": "observability_acceptance",
+          "category": "observability",
+          "subsystem": "monitoring",
+          "status": "missing",
+          "reason": "no_current_evidence",
+          "command": null
+        },
+        {
+          "check_id": "security_configuration",
+          "category": "security",
+          "subsystem": "config",
+          "status": "missing",
+          "reason": "no_current_evidence",
+          "command": null
+        },
+        {
+          "check_id": "deployment_rehearsal",
+          "category": "deployment",
+          "subsystem": "deployment",
+          "status": "missing",
+          "reason": "no_current_evidence",
+          "command": null
+        },
+        {
+          "check_id": "golden_artifacts",
+          "category": "golden_artifacts",
+          "subsystem": "storage",
+          "status": "missing",
+          "reason": "no_current_evidence",
+          "command": null
+        }
+      ],
+      "next_commands": [
+        "trading_env\\Scripts\\python.exe -m pytest src\\tests"
+      ]
+    },
+    "not_live_ready": {
+      "live_ready": false,
+      "status": "not_live_ready",
+      "missing_checks": [
+        "unit_test_suite",
+        "failure_injection_suite",
+        "data_quality_torture",
+        "backtester_differential",
+        "optimizer_validation",
+        "daily_ops_acceptance",
+        "observability_acceptance",
+        "security_configuration",
+        "deployment_rehearsal",
+        "golden_artifacts"
+      ],
+      "failed_checks": [],
+      "next_commands": [
+        "trading_env\\Scripts\\python.exe -m pytest src\\tests"
+      ],
+      "readiness_index": {
+        "target": "release_readiness",
+        "passed": false,
+        "readiness_score": 0.16666666666666666,
+        "required_checks": 12,
+        "passed_required": 2,
+        "missing_required": [
+          "unit_test_suite",
+          "failure_injection_suite",
+          "data_quality_torture",
+          "backtester_differential",
+          "optimizer_validation",
+          "daily_ops_acceptance",
+          "observability_acceptance",
+          "security_configuration",
+          "deployment_rehearsal",
+          "golden_artifacts"
+        ],
+        "failed_required": [],
+        "checks": [
+          {
+            "spec": {
+              "check_id": "unit_test_suite",
+              "category": "code_tests",
+              "subsystem": "tests",
+              "description": "Full unit and integration suite passes.",
+              "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+              "required_for": [
+                "paper_readiness",
+                "release_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 180
+            },
+            "evidence": {
+              "check_id": "unit_test_suite",
+              "status": "missing",
+              "passed": false,
+              "artifact_path": null,
+              "elapsed_seconds": null,
+              "reason": "no_current_evidence",
+              "captured_at": "2026-07-16T15:19:11.983121+00:00",
+              "metadata": {}
+            }
+          },
+          {
+            "spec": {
+              "check_id": "failure_injection_suite",
+              "category": "failure_injection",
+              "subsystem": "runtime",
+              "description": "Network, broker, stale-data, malformed-payload, and lifecycle fault tests pass.",
+              "command": null,
+              "required_for": [
+                "paper_readiness",
+                "release_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 180
+            },
+            "evidence": {
+              "check_id": "failure_injection_suite",
+              "status": "missing",
+              "passed": false,
+              "artifact_path": null,
+              "elapsed_seconds": null,
+              "reason": "no_current_evidence",
+              "captured_at": "2026-07-16T15:19:11.983121+00:00",
+              "metadata": {}
+            }
+          },
+          {
+            "spec": {
+              "check_id": "data_quality_torture",
+              "category": "data_quality",
+              "subsystem": "data",
+              "description": "Adjusted/raw, missing/duplicate bar, calendar, gap, and zero-volume tests pass.",
+              "command": null,
+              "required_for": [
+                "paper_readiness",
+                "release_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 180
+            },
+            "evidence": {
+              "check_id": "data_quality_torture",
+              "status": "missing",
+              "passed": false,
+              "artifact_path": null,
+              "elapsed_seconds": null,
+              "reason": "no_current_evidence",
+              "captured_at": "2026-07-16T15:19:11.983121+00:00",
+              "metadata": {}
+            }
+          },
+          {
+            "spec": {
+              "check_id": "backtester_differential",
+              "category": "backtest_validation",
+              "subsystem": "backtesting",
+              "description": "Backtester output matches independent/reference calculations for simple scenarios.",
+              "command": null,
+              "required_for": [
+                "paper_readiness",
+                "release_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 180
+            },
+            "evidence": {
+              "check_id": "backtester_differential",
+              "status": "missing",
+              "passed": false,
+              "artifact_path": null,
+              "elapsed_seconds": null,
+              "reason": "no_current_evidence",
+              "captured_at": "2026-07-16T15:19:11.983121+00:00",
+              "metadata": {}
+            }
+          },
+          {
+            "spec": {
+              "check_id": "optimizer_validation",
+              "category": "optimizer_validation",
+              "subsystem": "backtesting",
+              "description": "Optimizer reproducibility, leakage, persistence, pruning, and metric tests pass.",
+              "command": null,
+              "required_for": [
+                "optimization_readiness",
+                "release_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 300
+            },
+            "evidence": {
+              "check_id": "optimizer_validation",
+              "status": "missing",
+              "passed": false,
+              "artifact_path": null,
+              "elapsed_seconds": null,
+              "reason": "no_current_evidence",
+              "captured_at": "2026-07-16T15:19:11.983121+00:00",
+              "metadata": {}
+            }
+          },
+          {
+            "spec": {
+              "check_id": "daily_ops_acceptance",
+              "category": "operator_reports",
+              "subsystem": "reporting",
+              "description": "Daily paper report scenarios produce correct decisions and recommendations.",
+              "command": null,
+              "required_for": [
+                "paper_readiness",
+                "release_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 120
+            },
+            "evidence": {
+              "check_id": "daily_ops_acceptance",
+              "status": "missing",
+              "passed": false,
+              "artifact_path": null,
+              "elapsed_seconds": null,
+              "reason": "no_current_evidence",
+              "captured_at": "2026-07-16T15:19:11.983121+00:00",
+              "metadata": {}
+            }
+          },
+          {
+            "spec": {
+              "check_id": "observability_acceptance",
+              "category": "observability",
+              "subsystem": "monitoring",
+              "description": "Logs, metrics, health checks, notifications, audit IDs, and halt reasons pass.",
+              "command": null,
+              "required_for": [
+                "paper_readiness",
+                "release_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 120
+            },
+            "evidence": {
+              "check_id": "observability_acceptance",
+              "status": "missing",
+              "passed": false,
+              "artifact_path": null,
+              "elapsed_seconds": null,
+              "reason": "no_current_evidence",
+              "captured_at": "2026-07-16T15:19:11.983121+00:00",
+              "metadata": {}
+            }
+          },
+          {
+            "spec": {
+              "check_id": "security_configuration",
+              "category": "security",
+              "subsystem": "config",
+              "description": "Secrets, paper/live URL, env, and deployment safety checks pass.",
+              "command": null,
+              "required_for": [
+                "paper_readiness",
+                "live_readiness",
+                "release_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 120
+            },
+            "evidence": {
+              "check_id": "security_configuration",
+              "status": "missing",
+              "passed": false,
+              "artifact_path": null,
+              "elapsed_seconds": null,
+              "reason": "no_current_evidence",
+              "captured_at": "2026-07-16T15:19:11.983121+00:00",
+              "metadata": {}
+            }
+          },
+          {
+            "spec": {
+              "check_id": "deployment_rehearsal",
+              "category": "deployment",
+              "subsystem": "deployment",
+              "description": "Windows, Docker, server, persistence, watchdog, and restart rehearsals pass.",
+              "command": null,
+              "required_for": [
+                "release_readiness",
+                "live_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 600
+            },
+            "evidence": {
+              "check_id": "deployment_rehearsal",
+              "status": "missing",
+              "passed": false,
+              "artifact_path": null,
+              "elapsed_seconds": null,
+              "reason": "no_current_evidence",
+              "captured_at": "2026-07-16T15:19:11.983121+00:00",
+              "metadata": {}
+            }
+          },
+          {
+            "spec": {
+              "check_id": "golden_artifacts",
+              "category": "golden_artifacts",
+              "subsystem": "storage",
+              "description": "Frozen input/output artifacts match for critical reports and decisions.",
+              "command": null,
+              "required_for": [
+                "release_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 120
+            },
+            "evidence": {
+              "check_id": "golden_artifacts",
+              "status": "missing",
+              "passed": false,
+              "artifact_path": null,
+              "elapsed_seconds": null,
+              "reason": "no_current_evidence",
+              "captured_at": "2026-07-16T15:19:11.983121+00:00",
+              "metadata": {}
+            }
+          },
+          {
+            "spec": {
+              "check_id": "paper_profile_validation",
+              "category": "paper_profiles",
+              "subsystem": "operations",
+              "description": "Alpaca paper profiles validate risk budgets and block unsafe combinations.",
+              "command": null,
+              "required_for": [
+                "paper_readiness",
+                "release_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 60
+            },
+            "evidence": {
+              "check_id": "paper_profile_validation",
+              "status": "passed",
+              "passed": true,
+              "artifact_path": null,
+              "elapsed_seconds": null,
+              "reason": "paper_profiles_validated",
+              "captured_at": "2026-07-16T15:19:11.967495+00:00",
+              "metadata": {
+                "passed": true,
+                "profile_results": {
+                  "dry-run": {
+                    "passed": true,
+                    "validation": {
+                      "passed": true,
+                      "profile": {
+                        "name": "dry-run",
+                        "submit_orders": false,
+                        "sessions": 3,
+                        "required_execution_mode": "dry-run",
+                        "require_alpaca_provider": true,
+                        "require_paper_trading": true,
+                        "require_paper_url": true,
+                        "recover_state": true,
+                        "comparison_provider": null,
+                        "description": "No broker orders; validates data, committee, planning, recovery, and artifacts.",
+                        "risk_budget": {
+                          "min_order_quantity": 0.0,
+                          "min_order_notional": 0.0,
+                          "max_session_notional": null,
+                          "max_new_exposure": null,
+                          "max_turnover": null,
+                          "cash_reserve": 0.0,
+                          "cooldown_symbols": [],
+                          "repeated_reject_symbols": []
+                        }
+                      },
+                      "errors": [],
+                      "warnings": []
+                    },
+                    "session_options": {
+                      "submit_orders": false,
+                      "artifact_root": "runs/paper-profile-validation/dry-run",
+                      "recover_state": true,
+                      "state_db_path": "runs/paper-profile-validation/dry-run.sqlite3",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": null,
+                        "max_new_exposure": null,
+                        "max_turnover": null,
+                        "cash_reserve": 0.0,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "soak_config": {
+                      "sessions": 3,
+                      "stop_on_failure": true
+                    }
+                  },
+                  "micro-notional": {
+                    "passed": true,
+                    "validation": {
+                      "passed": true,
+                      "profile": {
+                        "name": "micro-notional",
+                        "submit_orders": true,
+                        "sessions": 3,
+                        "required_execution_mode": "paper",
+                        "require_alpaca_provider": true,
+                        "require_paper_trading": true,
+                        "require_paper_url": true,
+                        "recover_state": true,
+                        "comparison_provider": null,
+                        "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                        "risk_budget": {
+                          "min_order_quantity": 0.0,
+                          "min_order_notional": 0.0,
+                          "max_session_notional": 25.0,
+                          "max_new_exposure": 0.0025,
+                          "max_turnover": 0.0025,
+                          "cash_reserve": 0.95,
+                          "cooldown_symbols": [],
+                          "repeated_reject_symbols": []
+                        }
+                      },
+                      "errors": [],
+                      "warnings": []
+                    },
+                    "session_options": {
+                      "submit_orders": true,
+                      "artifact_root": "runs/paper-profile-validation/micro-notional",
+                      "recover_state": true,
+                      "state_db_path": "runs/paper-profile-validation/micro-notional.sqlite3",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 25.0,
+                        "max_new_exposure": 0.0025,
+                        "max_turnover": 0.0025,
+                        "cash_reserve": 0.95,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "soak_config": {
+                      "sessions": 3,
+                      "stop_on_failure": true
+                    }
+                  },
+                  "full-paper-rehearsal": {
+                    "passed": true,
+                    "validation": {
+                      "passed": true,
+                      "profile": {
+                        "name": "full-paper-rehearsal",
+                        "submit_orders": true,
+                        "sessions": 5,
+                        "required_execution_mode": "paper",
+                        "require_alpaca_provider": true,
+                        "require_paper_trading": true,
+                        "require_paper_url": true,
+                        "recover_state": true,
+                        "comparison_provider": null,
+                        "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                        "risk_budget": {
+                          "min_order_quantity": 0.0,
+                          "min_order_notional": 0.0,
+                          "max_session_notional": 2500.0,
+                          "max_new_exposure": 0.1,
+                          "max_turnover": 0.2,
+                          "cash_reserve": 0.5,
+                          "cooldown_symbols": [],
+                          "repeated_reject_symbols": []
+                        }
+                      },
+                      "errors": [],
+                      "warnings": []
+                    },
+                    "session_options": {
+                      "submit_orders": true,
+                      "artifact_root": "runs/paper-profile-validation/full-paper-rehearsal",
+                      "recover_state": true,
+                      "state_db_path": "runs/paper-profile-validation/full-paper-rehearsal.sqlite3",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 2500.0,
+                        "max_new_exposure": 0.1,
+                        "max_turnover": 0.2,
+                        "cash_reserve": 0.5,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "soak_config": {
+                      "sessions": 5,
+                      "stop_on_failure": true
+                    }
+                  }
+                },
+                "unsafe_combination_results": {
+                  "micro_notional_live_url": {
+                    "blocked": true,
+                    "validation": {
+                      "passed": false,
+                      "profile": {
+                        "name": "micro-notional",
+                        "submit_orders": true,
+                        "sessions": 3,
+                        "required_execution_mode": "paper",
+                        "require_alpaca_provider": true,
+                        "require_paper_trading": true,
+                        "require_paper_url": true,
+                        "recover_state": true,
+                        "comparison_provider": null,
+                        "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                        "risk_budget": {
+                          "min_order_quantity": 0.0,
+                          "min_order_notional": 0.0,
+                          "max_session_notional": 25.0,
+                          "max_new_exposure": 0.0025,
+                          "max_turnover": 0.0025,
+                          "cash_reserve": 0.95,
+                          "cooldown_symbols": [],
+                          "repeated_reject_symbols": []
+                        }
+                      },
+                      "errors": [
+                        "ALPACA_BASE_URL must point to https://paper-api.alpaca.markets."
+                      ],
+                      "warnings": []
+                    }
+                  },
+                  "micro_notional_dry_run_mode": {
+                    "blocked": true,
+                    "validation": {
+                      "passed": false,
+                      "profile": {
+                        "name": "micro-notional",
+                        "submit_orders": true,
+                        "sessions": 3,
+                        "required_execution_mode": "paper",
+                        "require_alpaca_provider": true,
+                        "require_paper_trading": true,
+                        "require_paper_url": true,
+                        "recover_state": true,
+                        "comparison_provider": null,
+                        "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                        "risk_budget": {
+                          "min_order_quantity": 0.0,
+                          "min_order_notional": 0.0,
+                          "max_session_notional": 25.0,
+                          "max_new_exposure": 0.0025,
+                          "max_turnover": 0.0025,
+                          "cash_reserve": 0.95,
+                          "cooldown_symbols": [],
+                          "repeated_reject_symbols": []
+                        }
+                      },
+                      "errors": [
+                        "EXECUTION_MODE must be paper for micro-notional."
+                      ],
+                      "warnings": []
+                    }
+                  },
+                  "full_rehearsal_missing_keys": {
+                    "blocked": true,
+                    "validation": {
+                      "passed": false,
+                      "profile": {
+                        "name": "full-paper-rehearsal",
+                        "submit_orders": true,
+                        "sessions": 5,
+                        "required_execution_mode": "paper",
+                        "require_alpaca_provider": true,
+                        "require_paper_trading": true,
+                        "require_paper_url": true,
+                        "recover_state": true,
+                        "comparison_provider": null,
+                        "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                        "risk_budget": {
+                          "min_order_quantity": 0.0,
+                          "min_order_notional": 0.0,
+                          "max_session_notional": 2500.0,
+                          "max_new_exposure": 0.1,
+                          "max_turnover": 0.2,
+                          "cash_reserve": 0.5,
+                          "cooldown_symbols": [],
+                          "repeated_reject_symbols": []
+                        }
+                      },
+                      "errors": [
+                        "ALPACA_API_KEY is required for submitting paper orders.",
+                        "ALPACA_SECRET_KEY is required for submitting paper orders."
+                      ],
+                      "warnings": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "spec": {
+              "check_id": "release_checklist_bundle",
+              "category": "release",
+              "subsystem": "validation",
+              "description": "Release checklist bundle is generated with fast, full, paper, performance, and deployment gates.",
+              "command": null,
+              "required_for": [
+                "release_readiness"
+              ],
+              "threshold": {},
+              "expected_artifacts": [],
+              "timeout_seconds": 60
+            },
+            "evidence": {
+              "check_id": "release_checklist_bundle",
+              "status": "passed",
+              "passed": true,
+              "artifact_path": "reports\\release-validation-smoke.json",
+              "elapsed_seconds": null,
+              "reason": "release_checklist_generated",
+              "captured_at": "2026-07-16T15:19:11.967495+00:00",
+              "metadata": {}
+            }
+          }
+        ]
+      },
+      "live_readiness": {}
+    }
+  },
+  "not_live_ready": {
+    "live_ready": false,
+    "status": "not_live_ready",
+    "missing_checks": [
+      "unit_test_suite",
+      "failure_injection_suite",
+      "data_quality_torture",
+      "backtester_differential",
+      "optimizer_validation",
+      "daily_ops_acceptance",
+      "observability_acceptance",
+      "security_configuration",
+      "deployment_rehearsal",
+      "golden_artifacts"
+    ],
+    "failed_checks": [],
+    "next_commands": [
+      "trading_env\\Scripts\\python.exe -m pytest src\\tests"
+    ],
+    "readiness_index": {
+      "target": "release_readiness",
+      "passed": false,
+      "readiness_score": 0.16666666666666666,
+      "required_checks": 12,
+      "passed_required": 2,
+      "missing_required": [
+        "unit_test_suite",
+        "failure_injection_suite",
+        "data_quality_torture",
+        "backtester_differential",
+        "optimizer_validation",
+        "daily_ops_acceptance",
+        "observability_acceptance",
+        "security_configuration",
+        "deployment_rehearsal",
+        "golden_artifacts"
+      ],
+      "failed_required": [],
+      "checks": [
+        {
+          "spec": {
+            "check_id": "unit_test_suite",
+            "category": "code_tests",
+            "subsystem": "tests",
+            "description": "Full unit and integration suite passes.",
+            "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "unit_test_suite",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "failure_injection_suite",
+            "category": "failure_injection",
+            "subsystem": "runtime",
+            "description": "Network, broker, stale-data, malformed-payload, and lifecycle fault tests pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "failure_injection_suite",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "data_quality_torture",
+            "category": "data_quality",
+            "subsystem": "data",
+            "description": "Adjusted/raw, missing/duplicate bar, calendar, gap, and zero-volume tests pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "data_quality_torture",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "backtester_differential",
+            "category": "backtest_validation",
+            "subsystem": "backtesting",
+            "description": "Backtester output matches independent/reference calculations for simple scenarios.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 180
+          },
+          "evidence": {
+            "check_id": "backtester_differential",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "optimizer_validation",
+            "category": "optimizer_validation",
+            "subsystem": "backtesting",
+            "description": "Optimizer reproducibility, leakage, persistence, pruning, and metric tests pass.",
+            "command": null,
+            "required_for": [
+              "optimization_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 300
+          },
+          "evidence": {
+            "check_id": "optimizer_validation",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "daily_ops_acceptance",
+            "category": "operator_reports",
+            "subsystem": "reporting",
+            "description": "Daily paper report scenarios produce correct decisions and recommendations.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "daily_ops_acceptance",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "observability_acceptance",
+            "category": "observability",
+            "subsystem": "monitoring",
+            "description": "Logs, metrics, health checks, notifications, audit IDs, and halt reasons pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "observability_acceptance",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "security_configuration",
+            "category": "security",
+            "subsystem": "config",
+            "description": "Secrets, paper/live URL, env, and deployment safety checks pass.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "live_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "security_configuration",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "deployment_rehearsal",
+            "category": "deployment",
+            "subsystem": "deployment",
+            "description": "Windows, Docker, server, persistence, watchdog, and restart rehearsals pass.",
+            "command": null,
+            "required_for": [
+              "release_readiness",
+              "live_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 600
+          },
+          "evidence": {
+            "check_id": "deployment_rehearsal",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "golden_artifacts",
+            "category": "golden_artifacts",
+            "subsystem": "storage",
+            "description": "Frozen input/output artifacts match for critical reports and decisions.",
+            "command": null,
+            "required_for": [
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 120
+          },
+          "evidence": {
+            "check_id": "golden_artifacts",
+            "status": "missing",
+            "passed": false,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "no_current_evidence",
+            "captured_at": "2026-07-16T15:19:12.035272+00:00",
+            "metadata": {}
+          }
+        },
+        {
+          "spec": {
+            "check_id": "paper_profile_validation",
+            "category": "paper_profiles",
+            "subsystem": "operations",
+            "description": "Alpaca paper profiles validate risk budgets and block unsafe combinations.",
+            "command": null,
+            "required_for": [
+              "paper_readiness",
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 60
+          },
+          "evidence": {
+            "check_id": "paper_profile_validation",
+            "status": "passed",
+            "passed": true,
+            "artifact_path": null,
+            "elapsed_seconds": null,
+            "reason": "paper_profiles_validated",
+            "captured_at": "2026-07-16T15:19:11.967495+00:00",
+            "metadata": {
+              "passed": true,
+              "profile_results": {
+                "dry-run": {
+                  "passed": true,
+                  "validation": {
+                    "passed": true,
+                    "profile": {
+                      "name": "dry-run",
+                      "submit_orders": false,
+                      "sessions": 3,
+                      "required_execution_mode": "dry-run",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "No broker orders; validates data, committee, planning, recovery, and artifacts.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": null,
+                        "max_new_exposure": null,
+                        "max_turnover": null,
+                        "cash_reserve": 0.0,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [],
+                    "warnings": []
+                  },
+                  "session_options": {
+                    "submit_orders": false,
+                    "artifact_root": "runs/paper-profile-validation/dry-run",
+                    "recover_state": true,
+                    "state_db_path": "runs/paper-profile-validation/dry-run.sqlite3",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": null,
+                      "max_new_exposure": null,
+                      "max_turnover": null,
+                      "cash_reserve": 0.0,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "soak_config": {
+                    "sessions": 3,
+                    "stop_on_failure": true
+                  }
+                },
+                "micro-notional": {
+                  "passed": true,
+                  "validation": {
+                    "passed": true,
+                    "profile": {
+                      "name": "micro-notional",
+                      "submit_orders": true,
+                      "sessions": 3,
+                      "required_execution_mode": "paper",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 25.0,
+                        "max_new_exposure": 0.0025,
+                        "max_turnover": 0.0025,
+                        "cash_reserve": 0.95,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [],
+                    "warnings": []
+                  },
+                  "session_options": {
+                    "submit_orders": true,
+                    "artifact_root": "runs/paper-profile-validation/micro-notional",
+                    "recover_state": true,
+                    "state_db_path": "runs/paper-profile-validation/micro-notional.sqlite3",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": 25.0,
+                      "max_new_exposure": 0.0025,
+                      "max_turnover": 0.0025,
+                      "cash_reserve": 0.95,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "soak_config": {
+                    "sessions": 3,
+                    "stop_on_failure": true
+                  }
+                },
+                "full-paper-rehearsal": {
+                  "passed": true,
+                  "validation": {
+                    "passed": true,
+                    "profile": {
+                      "name": "full-paper-rehearsal",
+                      "submit_orders": true,
+                      "sessions": 5,
+                      "required_execution_mode": "paper",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 2500.0,
+                        "max_new_exposure": 0.1,
+                        "max_turnover": 0.2,
+                        "cash_reserve": 0.5,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [],
+                    "warnings": []
+                  },
+                  "session_options": {
+                    "submit_orders": true,
+                    "artifact_root": "runs/paper-profile-validation/full-paper-rehearsal",
+                    "recover_state": true,
+                    "state_db_path": "runs/paper-profile-validation/full-paper-rehearsal.sqlite3",
+                    "risk_budget": {
+                      "min_order_quantity": 0.0,
+                      "min_order_notional": 0.0,
+                      "max_session_notional": 2500.0,
+                      "max_new_exposure": 0.1,
+                      "max_turnover": 0.2,
+                      "cash_reserve": 0.5,
+                      "cooldown_symbols": [],
+                      "repeated_reject_symbols": []
+                    }
+                  },
+                  "soak_config": {
+                    "sessions": 5,
+                    "stop_on_failure": true
+                  }
+                }
+              },
+              "unsafe_combination_results": {
+                "micro_notional_live_url": {
+                  "blocked": true,
+                  "validation": {
+                    "passed": false,
+                    "profile": {
+                      "name": "micro-notional",
+                      "submit_orders": true,
+                      "sessions": 3,
+                      "required_execution_mode": "paper",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 25.0,
+                        "max_new_exposure": 0.0025,
+                        "max_turnover": 0.0025,
+                        "cash_reserve": 0.95,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [
+                      "ALPACA_BASE_URL must point to https://paper-api.alpaca.markets."
+                    ],
+                    "warnings": []
+                  }
+                },
+                "micro_notional_dry_run_mode": {
+                  "blocked": true,
+                  "validation": {
+                    "passed": false,
+                    "profile": {
+                      "name": "micro-notional",
+                      "submit_orders": true,
+                      "sessions": 3,
+                      "required_execution_mode": "paper",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 25.0,
+                        "max_new_exposure": 0.0025,
+                        "max_turnover": 0.0025,
+                        "cash_reserve": 0.95,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [
+                      "EXECUTION_MODE must be paper for micro-notional."
+                    ],
+                    "warnings": []
+                  }
+                },
+                "full_rehearsal_missing_keys": {
+                  "blocked": true,
+                  "validation": {
+                    "passed": false,
+                    "profile": {
+                      "name": "full-paper-rehearsal",
+                      "submit_orders": true,
+                      "sessions": 5,
+                      "required_execution_mode": "paper",
+                      "require_alpaca_provider": true,
+                      "require_paper_trading": true,
+                      "require_paper_url": true,
+                      "recover_state": true,
+                      "comparison_provider": null,
+                      "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                      "risk_budget": {
+                        "min_order_quantity": 0.0,
+                        "min_order_notional": 0.0,
+                        "max_session_notional": 2500.0,
+                        "max_new_exposure": 0.1,
+                        "max_turnover": 0.2,
+                        "cash_reserve": 0.5,
+                        "cooldown_symbols": [],
+                        "repeated_reject_symbols": []
+                      }
+                    },
+                    "errors": [
+                      "ALPACA_API_KEY is required for submitting paper orders.",
+                      "ALPACA_SECRET_KEY is required for submitting paper orders."
+                    ],
+                    "warnings": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "spec": {
+            "check_id": "release_checklist_bundle",
+            "category": "release",
+            "subsystem": "validation",
+            "description": "Release checklist bundle is generated with fast, full, paper, performance, and deployment gates.",
+            "command": null,
+            "required_for": [
+              "release_readiness"
+            ],
+            "threshold": {},
+            "expected_artifacts": [],
+            "timeout_seconds": 60
+          },
+          "evidence": {
+            "check_id": "release_checklist_bundle",
+            "status": "passed",
+            "passed": true,
+            "artifact_path": "reports\\release-validation-smoke.json",
+            "elapsed_seconds": null,
+            "reason": "release_checklist_generated",
+            "captured_at": "2026-07-16T15:19:11.967495+00:00",
+            "metadata": {}
+          }
+        }
+      ]
+    },
+    "live_readiness": {}
+  },
+  "readiness_html_path": "reports\\release-readiness-smoke.html",
+  "scheduled_paper_sessions": {
+    "passed": false,
+    "reason": "missing_scheduled_paper_session_evidence",
+    "required_evidence": [
+      "paper_session_schedule",
+      "scheduled_paper_sessions"
+    ]
+  },
+  "rehearsal_report": {
+    "passed": false,
+    "reason": "missing_rehearsal_evidence_bundle",
+    "release_candidate_bundle": "reports\\release-candidate-smoke.json",
+    "steps": [
+      {
+        "name": "evidence_bundle",
+        "passed": false,
+        "artifact_path": "",
+        "reason": "missing_rehearsal_evidence_bundle"
+      },
+      {
+        "name": "scheduled_paper_sessions",
+        "passed": false,
+        "artifact_path": "",
+        "reason": "scheduled_paper_sessions_failed"
+      },
+      {
+        "name": "release_decision",
+        "passed": false,
+        "artifact_path": "",
+        "reason": "release_decision_blocked"
+      },
+      {
+        "name": "operator_readiness_page",
+        "passed": true,
+        "artifact_path": "reports\\release-readiness-smoke.html",
+        "reason": "passed"
+      }
+    ]
+  }
+}

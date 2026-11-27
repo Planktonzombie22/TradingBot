@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "reason": "symbol_capabilities_passed",
+  "require_fractional": true,
+  "require_short": false,
+  "require_margin": false,
+  "gates": [
+    {
+      "symbol": "DIA",
+      "passed": true,
+      "tradable": true,
+      "fractional_allowed": true,
+      "short_allowed": false,
+      "margin_allowed": false,
+      "reason": "passed"
+    },
+    {
+      "symbol": "SPY",
+      "passed": true,
+      "tradable": true,
+      "fractional_allowed": true,
+      "short_allowed": false,
+      "margin_allowed": false,
+      "reason": "passed"
+    }
+  ],
+  "artifact_path": "reports\\paper-symbol-capability-data-reliability-smoke.json"
+}

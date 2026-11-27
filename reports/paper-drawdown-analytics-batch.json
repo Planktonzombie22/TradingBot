@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "reason": "paper_drawdown_tracked",
+  "broker_equity": 99999.87,
+  "mark_to_market_position_value": 25.083694,
+  "mark_to_market_equity": 99999.87,
+  "peak_equity": 99999.87,
+  "drawdown": 0.0,
+  "drawdown_pct": 0.0,
+  "artifact_path": "reports\\paper-drawdown-analytics-batch.json"
+}

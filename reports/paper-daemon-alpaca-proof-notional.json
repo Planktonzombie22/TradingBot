@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "current_notional": 25.0,
+  "recommended_notional": 25.0,
+  "action": "hold",
+  "reason": "failed_monitor_position_mismatch_cleanup_review_required",
+  "triggers": [
+    "failed_monitor",
+    "position_mismatch",
+    "cleanup_review_required"
+  ],
+  "clean_iterations": 0,
+  "submitted_iterations": 0,
+  "required_clean_iterations": 10,
+  "downshifted": false,
+  "escalated": false,
+  "evidence": {
+    "passed": true,
+    "report_date": "2026-07-30",
+    "daemon_status": "completed",
+    "latest_reason": "max_iterations_completed",
+    "total_iterations": 1,
+    "passed_iterations": 0,
+    "failed_iterations": 0,
+    "skipped_iterations": 1,
+    "submitted_iterations": 0,
+    "cleanup_planned_orders": 2,
+    "cleanup_submitted_orders": 0,
+    "monitor_failed_iterations": 1,
+    "monitor_stale_open_orders": 0,
+    "monitor_position_mismatches": 2,
+    "data_parity_failed_iterations": 0,
+    "data_parity_failed_checks": 0,
+    "active_windows": [],
+    "artifact_paths": [
+      "reports\\paper-daemon-alpaca-proof-report.json",
+      "reports\\paper-daemon-alpaca-proof-schedule-20260730T223938Z-0001.json",
+      "reports\\paper-daemon-alpaca-proof-cleanup-0001.json",
+      "reports\\paper-daemon-alpaca-proof-monitor-0001.json",
+      "reports\\paper-daemon-alpaca-proof-parity-0001.json"
+    ],
+    "warnings": [
+      "no_orders_submitted",
+      "cleanup_orders_planned",
+      "monitor_failures_present",
+      "position_mismatches_present"
+    ],
+    "recommended_action": "review_warnings_before_notional_changes"
+  }
+}

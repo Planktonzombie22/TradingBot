@@ -352,7 +352,7 @@ def _execution_report_payload(report: ExecutionReport) -> dict:
         "filled_quantity": report.filled_quantity,
         "average_fill_price": report.average_fill_price,
         "submitted_at": report.submitted_at.isoformat(),
-        "raw": dict(report.raw),
+        "raw": _redact_broker_payload(report.raw),
     }
 
 
@@ -385,6 +385,31 @@ def _payload_or_dict(item) -> dict:
     if isinstance(item, Mapping):
         return dict(item)
     return {"value": str(item)}
+
+
+_REDACTED_BROKER_KEYS = {
+    "account_id",
+    "account_number",
+    "asset_id",
+    "id",
+    "user_id",
+}
+
+
+def _redact_broker_payload(value: Any) -> Any:
+    if isinstance(value, Mapping):
+        redacted = {}
+        for key, item in value.items():
+            if str(key).lower() in _REDACTED_BROKER_KEYS:
+                redacted[key] = "<redacted>"
+            else:
+                redacted[key] = _redact_broker_payload(item)
+        return redacted
+    if isinstance(value, list):
+        return [_redact_broker_payload(item) for item in value]
+    if isinstance(value, tuple):
+        return tuple(_redact_broker_payload(item) for item in value)
+    return value
 
 
 def _as_str(path: Path) -> str:

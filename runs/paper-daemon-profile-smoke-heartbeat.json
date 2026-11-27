@@ -1,0 +1,13 @@
+{
+  "status": "running",
+  "iteration": 3,
+  "last_heartbeat_at": "2026-07-30T15:02:04.203394+00:00",
+  "kill_switch_path": "runs\\paper-daemon-profile-smoke.kill",
+  "state_path": "runs\\paper-daemon-profile-smoke-state.json",
+  "heartbeat_path": "runs\\paper-daemon-profile-smoke-heartbeat.json",
+  "lock_path": "runs\\paper-daemon-profile-smoke.lock",
+  "next_run_at": "2026-07-30T15:02:04.203394+00:00",
+  "last_reason": "passed",
+  "last_error": null,
+  "last_active_window": "intraday"
+}

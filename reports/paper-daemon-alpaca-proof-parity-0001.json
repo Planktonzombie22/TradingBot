@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "reason": "websocket_rest_parity_passed",
+  "max_close_drift_bps": 5.0,
+  "checks": [],
+  "artifact_path": "reports\\paper-daemon-alpaca-proof-parity-0001.json"
+}

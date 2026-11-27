@@ -1,11 +1,12 @@
 import argparse
 import json
+import time
 
-from main import build_config, load_json_options, load_symbol_list, run_optimize_app, run_replication_app, run_research_matrix_app, run_stream_app
+from main import RuntimeTimeoutPolicy, RuntimeWatchdog, _paper_daemon_options, build_config, default_timeout_seconds, load_json_options, load_symbol_list, run_optimize_app, run_paper_broker_schedule_app, run_paper_session_app, run_replication_app, run_research_matrix_app, run_stream_app
 from src.data import DataQualityValidator, sample_ohlcv
 from src.reporting import render_backtest_html
 from src.app import TradingApplication
-from src.config import MarketDataConfig, RuntimeConfig, StrategyConfig
+from src.config import ExecutionConfig, MarketDataConfig, RuntimeConfig, StrategyConfig
 
 
 def test_data_quality_detects_invalid_ohlc():
@@ -55,6 +56,41 @@ def test_cli_config_accepts_new_modes_indirectly():
     assert config.strategy.params == {"stop_percent": 0.03}
 
 
+def test_cli_timeout_defaults_are_shorter_for_runtime_than_research():
+    assert default_timeout_seconds("paper-session") == 300.0
+    assert default_timeout_seconds("paper-session-schedule") == 300.0
+    assert default_timeout_seconds("paper-monitor") == 300.0
+    assert default_timeout_seconds("paper-pilot") == 300.0
+    assert default_timeout_seconds("optimize") == 900.0
+    assert default_timeout_seconds("backtest") == 180.0
+
+
+def test_runtime_watchdog_interrupts_then_forces_exit_when_job_stalls():
+    events = []
+
+    def interrupt_main():
+        events.append("interrupt")
+
+    def hard_exit(code):
+        events.append(("exit", code))
+
+    watchdog = RuntimeWatchdog(
+        RuntimeTimeoutPolicy(seconds=0.01, grace_seconds=0.01),
+        interrupt_main=interrupt_main,
+        hard_exit=hard_exit,
+    )
+    watchdog.__enter__()
+    try:
+        deadline = time.time() + 0.50
+        while len(events) < 2 and time.time() < deadline:
+            time.sleep(0.005)
+    finally:
+        watchdog.cancel()
+
+    assert watchdog.triggered
+    assert events == ["interrupt", ("exit", 124)]
+
+
 def test_optimize_app_writes_ranked_artifacts(tmp_path):
     app = TradingApplication(
         RuntimeConfig(
@@ -91,6 +127,120 @@ def test_stream_app_can_flatten_on_stop(tmp_path):
     engine = run_stream_app(app, store_dir=str(tmp_path), label="Paper", flatten_on_stop=True)
 
     assert engine.account_state.quantity("SPY") == 0
+
+
+def test_paper_broker_schedule_app_can_score_existing_artifact_without_broker(tmp_path):
+    proof = tmp_path / "proof.json"
+    schedule = tmp_path / "schedule.json"
+    proof.write_text(
+        json.dumps(
+            {
+                "passed": True,
+                "generated_at": "2026-01-05T15:00:00+00:00",
+                "session": "REGULAR",
+                "submitted": True,
+                "reason": "passed",
+            }
+        ),
+        encoding="utf-8",
+    )
+    app = TradingApplication(RuntimeConfig(data=MarketDataConfig(provider="sample", symbol="SPY")))
+    args = argparse.Namespace(
+        paper_proof_existing_artifact=str(proof),
+        paper_proof_schedule_output=str(schedule),
+    )
+
+    run_paper_broker_schedule_app(
+        app,
+        args,
+        broker_factory=lambda: (_ for _ in ()).throw(AssertionError("broker should not be touched")),
+    )
+
+    payload = json.loads(schedule.read_text(encoding="utf-8"))
+    assert payload["passed"]
+    assert payload["records"][0]["window_name"] == "market_open"
+
+
+def test_paper_session_app_can_preview_micro_profile_without_broker_requirements(tmp_path, capsys):
+    app = TradingApplication(
+        RuntimeConfig(
+            data=MarketDataConfig(provider="sample", symbol="SPY"),
+            execution=ExecutionConfig(mode="paper"),
+            strategy=StrategyConfig(name="buyHold", params={"target_fraction": 1.0}),
+        )
+    )
+    args = argparse.Namespace(
+        paper_profile="micro-notional",
+        paper_profile_preview=True,
+        submit_orders=False,
+        store_dir=str(tmp_path),
+        comparison_provider=None,
+        recover_state=False,
+        state_db_path=None,
+        paper_proof_prior_dir=None,
+        paper_proof_symbol_allowlist=None,
+        max_daily_proof_submissions=None,
+        paper_proof_kill_switch=False,
+        repeated_reject_lockout_threshold=None,
+    )
+
+    run_paper_session_app(app, args)
+
+    output = capsys.readouterr().out
+    payload = json.loads(output[: output.rfind("}") + 1])
+    assert payload["submitted"] is False
+    assert payload["ready_for_submission"] is True
+    assert payload["risk_budget"]["passed"] is True
+    assert payload["risk_budget"]["session_notional"] <= 25.0
+    assert 0.0 < payload["planned_orders"][0]["quantity"] < 1.0
+
+
+def test_paper_daemon_profile_applies_bounded_monitoring_defaults(tmp_path):
+    base_args = argparse.Namespace(
+        paper_profile=None,
+        paper_daemon_profile="micro-notional",
+        paper_profile_preview=False,
+        submit_orders=False,
+        paper_daemon_interval_seconds=300.0,
+        paper_daemon_max_iterations=None,
+        paper_daemon_kill_switch=str(tmp_path / "daemon.kill"),
+        paper_daemon_state_output=str(tmp_path / "state.json"),
+        paper_daemon_heartbeat_output=str(tmp_path / "heartbeat.json"),
+        paper_daemon_lock_path=str(tmp_path / "daemon.lock"),
+        paper_daemon_lock_stale_seconds=1800.0,
+        paper_daemon_artifact_root=str(tmp_path / "daemon"),
+        paper_daemon_schedule_output=str(tmp_path / "schedule.json"),
+        paper_daemon_report_output=str(tmp_path / "report.json"),
+        paper_daemon_cleanup_each_iteration=False,
+        paper_daemon_cleanup_submit=False,
+        paper_daemon_cleanup_output=str(tmp_path / "cleanup.json"),
+        paper_daemon_monitor_each_iteration=False,
+        paper_daemon_monitor_output=str(tmp_path / "monitor.json"),
+        paper_daemon_monitor_open_order_timeout_minutes=15.0,
+        paper_daemon_data_parity_each_iteration=False,
+        paper_daemon_data_parity_output=str(tmp_path / "parity.json"),
+        paper_daemon_data_parity_max_close_drift_bps=5.0,
+    )
+
+    micro = _paper_daemon_options(base_args)
+    sample = _paper_daemon_options(
+        argparse.Namespace(
+            **{
+                **vars(base_args),
+                "paper_daemon_profile": "sample-data",
+                "paper_profile_preview": True,
+            }
+        )
+    )
+
+    assert micro.max_iterations == 3
+    assert micro.submit_orders
+    assert micro.cleanup_each_iteration
+    assert micro.monitor_each_iteration
+    assert micro.data_parity_each_iteration
+    assert sample.interval_seconds == 0.0
+    assert sample.max_iterations == 3
+    assert not sample.submit_orders
 
 
 def test_load_symbol_list_dedupes_and_limits(tmp_path):

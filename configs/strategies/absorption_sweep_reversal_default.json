@@ -1,0 +1,7 @@
+{
+  "sweep_lookback": 20,
+  "absorption_period": 20,
+  "min_absorption": 1.6,
+  "pressure_threshold": 0.15,
+  "atr_stop_multiple": 2.0
+}

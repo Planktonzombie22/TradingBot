@@ -1,0 +1,96 @@
+{
+  "passed": false,
+  "generated_at": "2026-07-18T12:49:43.688335+00:00",
+  "order_plan": {
+    "symbol": "SPY",
+    "side": "BUY",
+    "quantity": 1.0,
+    "order_type": "LIMIT",
+    "limit_price": 1.0,
+    "planned_notional": 1.0,
+    "max_notional": 25.0,
+    "client_order_id": null
+  },
+  "session": "CLOSED",
+  "submit_requested": false,
+  "submit_allowed": false,
+  "submitted": false,
+  "cancelled": false,
+  "reason": "market_session_not_tradable",
+  "probes": [
+    {
+      "name": "paper_environment",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "name": "alpaca_provider",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "provider": "alpaca"
+      }
+    },
+    {
+      "name": "paper_execution_mode",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "execution_mode": "paper",
+        "paper_trading": true
+      }
+    },
+    {
+      "name": "paper_endpoint",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "base_url": "https://paper-api.alpaca.markets"
+      }
+    },
+    {
+      "name": "market_session",
+      "passed": false,
+      "reason": "market_session_not_tradable",
+      "evidence": {
+        "timestamp": "2026-07-18T12:49:43.688335+00:00",
+        "session": "CLOSED",
+        "policy": {
+          "allow_pre_market": false,
+          "allow_regular": true,
+          "allow_after_hours": false
+        }
+      }
+    },
+    {
+      "name": "submit_flag",
+      "passed": false,
+      "reason": "submit_orders_flag_not_set",
+      "evidence": {
+        "submit_orders": false
+      }
+    },
+    {
+      "name": "tiny_notional",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "planned_notional": 1.0,
+        "max_notional": 25.0
+      }
+    }
+  ],
+  "orders": [],
+  "execution_reports": [],
+  "account_snapshot": null,
+  "post_account_snapshot": null,
+  "positions_before": [],
+  "positions_after": [],
+  "open_orders_before": [],
+  "open_orders_after": [],
+  "artifact_path": "runs\\paper-broker-proof\\20260718T124943Z-outside_window-paper-broker-proof.json"
+}

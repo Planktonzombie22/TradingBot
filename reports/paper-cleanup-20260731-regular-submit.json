@@ -1,0 +1,346 @@
+{
+  "submit_requested": true,
+  "attempted": true,
+  "submitted": true,
+  "positions_seen": [
+    {
+      "symbol": "DIA",
+      "quantity": 0.02420645,
+      "average_entry_price": 516.332,
+      "market_value": 12.63141,
+      "raw": {
+        "asset_id": "<redacted>",
+        "symbol": "DIA",
+        "exchange": "ARCA",
+        "asset_class": "us_equity",
+        "asset_marginable": true,
+        "qty": "0.02420645",
+        "qty_available": "0.02420645",
+        "avg_entry_price": "516.332",
+        "side": "long",
+        "market_value": "12.63141",
+        "cost_basis": "12.498565",
+        "unrealized_pl": "0.132845",
+        "unrealized_plpc": "0.01063",
+        "unrealized_intraday_pl": "0.007504",
+        "unrealized_intraday_plpc": "0.00059",
+        "current_price": "521.82",
+        "lastday_price": "521.51",
+        "change_today": "0.00059"
+      }
+    },
+    {
+      "symbol": "SPY",
+      "quantity": 0.01688732,
+      "average_entry_price": 739.886,
+      "market_value": 12.5016,
+      "raw": {
+        "asset_id": "<redacted>",
+        "symbol": "SPY",
+        "exchange": "ARCA",
+        "asset_class": "us_equity",
+        "asset_marginable": true,
+        "qty": "0.01688732",
+        "qty_available": "0.01688732",
+        "avg_entry_price": "739.886",
+        "side": "long",
+        "market_value": "12.5016",
+        "cost_basis": "12.494692",
+        "unrealized_pl": "0.006908",
+        "unrealized_plpc": "0.00055",
+        "unrealized_intraday_pl": "-0.023556",
+        "unrealized_intraday_plpc": "-0.00188",
+        "current_price": "740.2951",
+        "lastday_price": "741.69",
+        "change_today": "-0.00188"
+      }
+    }
+  ],
+  "planned_orders": [
+    {
+      "id": "6e6db6bc-ee7e-45bd-8f9a-107bf147a2c0",
+      "client_order_id": null,
+      "symbol": "DIA",
+      "side": "SELL",
+      "quantity": 0.02420645,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-31T15:30:29.463144+00:00"
+    },
+    {
+      "id": "2f8e00da-4df3-4a0a-b331-02b8e2afe562",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 0.01688732,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-31T15:30:29.463144+00:00"
+    }
+  ],
+  "submitted_orders": [
+    {
+      "id": "6e6db6bc-ee7e-45bd-8f9a-107bf147a2c0",
+      "client_order_id": "tradingbot-b998edcebe66892ba7d5c712",
+      "symbol": "DIA",
+      "side": "SELL",
+      "quantity": 0.02420645,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "FILLED",
+      "created_at": "2026-07-31T15:30:29.463144+00:00"
+    },
+    {
+      "id": "2f8e00da-4df3-4a0a-b331-02b8e2afe562",
+      "client_order_id": "tradingbot-ffe306db374a427435fa12dc",
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 0.01688732,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "FILLED",
+      "created_at": "2026-07-31T15:30:29.463144+00:00"
+    }
+  ],
+  "execution_reports": [
+    {
+      "order_id": "6e6db6bc-ee7e-45bd-8f9a-107bf147a2c0",
+      "status": "FILLED",
+      "broker_order_id": "8e37325b-635f-47e1-9c58-43b7b0a23cd8",
+      "fill_id": "e9a3dec4-e699-4ae0-8043-49db4b09b168",
+      "filled_quantity": 0.02420645,
+      "average_fill_price": 521.748,
+      "submitted_at": "2026-07-31T15:30:30.244461+00:00",
+      "raw": {
+        "id": "<redacted>",
+        "client_order_id": "tradingbot-b998edcebe66892ba7d5c712",
+        "created_at": "2026-07-31T15:30:29.771727249Z",
+        "updated_at": "2026-07-31T15:30:29.776283239Z",
+        "submitted_at": "2026-07-31T15:30:29.771727249Z",
+        "filled_at": "2026-07-31T15:30:29.775327941Z",
+        "expired_at": null,
+        "canceled_at": null,
+        "failed_at": null,
+        "replaced_at": null,
+        "replaced_by": null,
+        "replaces": null,
+        "asset_id": "<redacted>",
+        "symbol": "DIA",
+        "asset_class": "us_equity",
+        "notional": null,
+        "qty": "0.02420645",
+        "filled_qty": "0.02420645",
+        "filled_avg_price": "521.748",
+        "order_class": "",
+        "order_type": "market",
+        "type": "market",
+        "side": "sell",
+        "position_intent": "sell_to_close",
+        "time_in_force": "day",
+        "limit_price": null,
+        "stop_price": null,
+        "status": "filled",
+        "extended_hours": false,
+        "legs": null,
+        "trail_percent": null,
+        "trail_price": null,
+        "hwm": null,
+        "subtag": null,
+        "source": null,
+        "expires_at": "2026-07-31T20:00:00Z"
+      }
+    },
+    {
+      "order_id": "2f8e00da-4df3-4a0a-b331-02b8e2afe562",
+      "status": "FILLED",
+      "broker_order_id": "4cd32443-3cf0-4c36-b9ff-caa3ecf74655",
+      "fill_id": "cfc03e48-30ad-4a68-b84b-44e3f4201e5f",
+      "filled_quantity": 0.01688732,
+      "average_fill_price": 740.234,
+      "submitted_at": "2026-07-31T15:30:30.463227+00:00",
+      "raw": {
+        "id": "<redacted>",
+        "client_order_id": "tradingbot-ffe306db374a427435fa12dc",
+        "created_at": "2026-07-31T15:30:29.978895626Z",
+        "updated_at": "2026-07-31T15:30:30.059537775Z",
+        "submitted_at": "2026-07-31T15:30:29.978895626Z",
+        "filled_at": "2026-07-31T15:30:30.058311197Z",
+        "expired_at": null,
+        "canceled_at": null,
+        "failed_at": null,
+        "replaced_at": null,
+        "replaced_by": null,
+        "replaces": null,
+        "asset_id": "<redacted>",
+        "symbol": "SPY",
+        "asset_class": "us_equity",
+        "notional": null,
+        "qty": "0.01688732",
+        "filled_qty": "0.01688732",
+        "filled_avg_price": "740.234",
+        "order_class": "",
+        "order_type": "market",
+        "type": "market",
+        "side": "sell",
+        "position_intent": "sell_to_close",
+        "time_in_force": "day",
+        "limit_price": null,
+        "stop_price": null,
+        "status": "filled",
+        "extended_hours": false,
+        "legs": null,
+        "trail_percent": null,
+        "trail_price": null,
+        "hwm": null,
+        "subtag": null,
+        "source": null,
+        "expires_at": "2026-07-31T20:00:00Z"
+      }
+    }
+  ],
+  "submission_guard": {
+    "passed": true,
+    "reason": "submission_guard_passed",
+    "submit_requested": true,
+    "probes": [
+      {
+        "name": "submit_requested",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "submit_orders": true,
+          "orders": 2
+        }
+      },
+      {
+        "name": "market_session",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "timestamp": "2026-07-31T15:30:29.463144+00:00",
+          "session": "REGULAR",
+          "policy": {
+            "allow_pre_market": false,
+            "allow_regular": true,
+            "allow_after_hours": false
+          }
+        }
+      },
+      {
+        "name": "orders_present",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "orders": 2
+        }
+      },
+      {
+        "name": "approval_policy",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "configured": true,
+          "policy": {
+            "symbol_allowlist": [],
+            "max_daily_submissions": null,
+            "kill_switch_enabled": false,
+            "repeated_reject_lockout_threshold": null,
+            "require_cleanup": true
+          }
+        }
+      },
+      {
+        "name": "approval_kill_switch",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "kill_switch_enabled": false
+        }
+      },
+      {
+        "name": "approval_symbol_allowlist",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "symbols": [
+            "DIA",
+            "SPY"
+          ],
+          "symbol_allowlist": [],
+          "disallowed": []
+        }
+      },
+      {
+        "name": "approval_daily_submission_limit",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "submitted_today": 0,
+          "max_daily_submissions": null
+        }
+      },
+      {
+        "name": "approval_repeated_reject_lockout",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "rejected_symbols": {},
+          "threshold": null
+        }
+      }
+    ]
+  },
+  "reconciliation": {
+    "is_clean": true,
+    "unresolved": 0,
+    "orders": [
+      {
+        "order_id": "2f8e00da-4df3-4a0a-b331-02b8e2afe562",
+        "status": "MATCHED",
+        "local_status": "FILLED",
+        "broker_status": "FILLED",
+        "broker_order_id": "4cd32443-3cf0-4c36-b9ff-caa3ecf74655",
+        "message": ""
+      },
+      {
+        "order_id": "6e6db6bc-ee7e-45bd-8f9a-107bf147a2c0",
+        "status": "MATCHED",
+        "local_status": "FILLED",
+        "broker_status": "FILLED",
+        "broker_order_id": "8e37325b-635f-47e1-9c58-43b7b0a23cd8",
+        "message": ""
+      }
+    ]
+  },
+  "reconciliation_clean": true,
+  "fill_poll_attempts": 1,
+  "polled_execution_reports": 2,
+  "reason": "flatten_orders_submitted",
+  "artifact_path": "reports\\paper-cleanup-20260731-regular-submit.json"
+}

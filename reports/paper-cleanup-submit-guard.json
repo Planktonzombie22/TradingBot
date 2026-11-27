@@ -1,0 +1,155 @@
+{
+  "submit_requested": true,
+  "attempted": false,
+  "submitted": false,
+  "positions_seen": [
+    {
+      "symbol": "SPY",
+      "quantity": 0.033521,
+      "average_entry_price": 745.948,
+      "market_value": 25.061245,
+      "raw": {
+        "asset_id": "<redacted>",
+        "symbol": "SPY",
+        "exchange": "ARCA",
+        "asset_class": "us_equity",
+        "asset_marginable": true,
+        "qty": "0.033521",
+        "qty_available": "0.033521",
+        "avg_entry_price": "745.948",
+        "side": "long",
+        "market_value": "25.061245",
+        "cost_basis": "25.004923",
+        "unrealized_pl": "0.056322",
+        "unrealized_plpc": "0.00225",
+        "unrealized_intraday_pl": "-0.021849",
+        "unrealized_intraday_plpc": "-0.00087",
+        "current_price": "747.6282",
+        "lastday_price": "748.28",
+        "change_today": "-0.00087"
+      }
+    }
+  ],
+  "planned_orders": [
+    {
+      "id": "bc5d623f-d243-4721-8956-cb21640f832c",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 0.033521,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-22T21:13:27.141830+00:00"
+    }
+  ],
+  "submitted_orders": [],
+  "execution_reports": [],
+  "submission_guard": {
+    "passed": false,
+    "reason": "market_session_not_tradable",
+    "submit_requested": true,
+    "probes": [
+      {
+        "name": "submit_requested",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "submit_orders": true,
+          "orders": 1
+        }
+      },
+      {
+        "name": "market_session",
+        "passed": false,
+        "reason": "market_session_not_tradable",
+        "evidence": {
+          "timestamp": "2026-07-22T21:13:27.141830+00:00",
+          "session": "AFTER_HOURS",
+          "policy": {
+            "allow_pre_market": false,
+            "allow_regular": true,
+            "allow_after_hours": false
+          }
+        }
+      },
+      {
+        "name": "orders_present",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "orders": 1
+        }
+      },
+      {
+        "name": "approval_policy",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "configured": true,
+          "policy": {
+            "symbol_allowlist": [
+              "SPY"
+            ],
+            "max_daily_submissions": null,
+            "kill_switch_enabled": false,
+            "repeated_reject_lockout_threshold": null,
+            "require_cleanup": true
+          }
+        }
+      },
+      {
+        "name": "approval_kill_switch",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "kill_switch_enabled": false
+        }
+      },
+      {
+        "name": "approval_symbol_allowlist",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "symbols": [
+            "SPY"
+          ],
+          "symbol_allowlist": [
+            "SPY"
+          ],
+          "disallowed": []
+        }
+      },
+      {
+        "name": "approval_daily_submission_limit",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "submitted_today": 0,
+          "max_daily_submissions": null
+        }
+      },
+      {
+        "name": "approval_repeated_reject_lockout",
+        "passed": true,
+        "reason": "passed",
+        "evidence": {
+          "rejected_symbols": {},
+          "threshold": null
+        }
+      }
+    ]
+  },
+  "reconciliation": null,
+  "reconciliation_clean": null,
+  "fill_poll_attempts": 0,
+  "polled_execution_reports": 0,
+  "reason": "market_session_not_tradable",
+  "artifact_path": "reports\\paper-cleanup-submit-guard.json"
+}

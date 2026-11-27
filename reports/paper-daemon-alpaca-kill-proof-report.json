@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "stopped_by_kill_switch": true,
+  "options": {
+    "interval_seconds": 0.0,
+    "max_iterations": 1,
+    "kill_switch_path": "runs\\paper-daemon-alpaca-proof.kill",
+    "state_path": "runs\\paper-daemon-alpaca-kill-proof-state.json",
+    "heartbeat_path": "runs\\paper-daemon-alpaca-kill-proof-heartbeat.json",
+    "lock_path": "runs\\paper-daemon-alpaca-kill-proof.lock",
+    "lock_stale_after_seconds": 1800.0,
+    "artifact_root": "runs/paper-daemon",
+    "schedule_output_path": "reports\\paper-daemon-alpaca-kill-proof-schedule.json",
+    "report_path": "reports\\paper-daemon-alpaca-kill-proof-report.json",
+    "cleanup_each_iteration": true,
+    "cleanup_submit_orders": false,
+    "cleanup_output_path": "reports\\paper-daemon-alpaca-kill-proof-cleanup.json",
+    "monitor_each_iteration": true,
+    "monitor_output_path": "reports\\paper-daemon-alpaca-kill-proof-monitor.json",
+    "monitor_max_open_order_age_minutes": 15.0,
+    "data_parity_each_iteration": true,
+    "data_parity_output_path": "reports\\paper-daemon-alpaca-kill-proof-parity.json",
+    "data_parity_max_close_drift_bps": 5.0,
+    "submit_orders": true
+  },
+  "state": {
+    "status": "kill_switch_active",
+    "iteration": 0,
+    "last_heartbeat_at": "2026-07-30T22:40:30.109229+00:00",
+    "kill_switch_path": "runs\\paper-daemon-alpaca-proof.kill",
+    "state_path": "runs\\paper-daemon-alpaca-kill-proof-state.json",
+    "heartbeat_path": "runs\\paper-daemon-alpaca-kill-proof-heartbeat.json",
+    "lock_path": "runs\\paper-daemon-alpaca-kill-proof.lock",
+    "next_run_at": null,
+    "last_reason": "kill_switch_present_before_start",
+    "last_error": null,
+    "last_active_window": null
+  },
+  "iterations": [],
+  "artifact_path": "reports\\paper-daemon-alpaca-kill-proof-report.json"
+}

@@ -1,0 +1,174 @@
+{
+  "report_path": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+  "ready_for_submission": false,
+  "submitted": false,
+  "data_rows": 501,
+  "latest_prices": {
+    "DIA": 521.565
+  },
+  "regime": {
+    "symbol": "DIA",
+    "trend_state": "mixed",
+    "trend_direction": "up",
+    "volatility_state": "contraction",
+    "liquidity_state": "normal",
+    "macro_sensitivity": "normal",
+    "efficiency_ratio": 0.18366514122482258,
+    "period_return": 0.06428804636167018,
+    "volatility_ratio": 0.7029571554762065,
+    "liquidity_ratio": 1.0367811890838208,
+    "eligible_modes": [
+      "benchmark",
+      "mean_reversion",
+      "range_scalping",
+      "cash"
+    ]
+  },
+  "orders_planned": 1,
+  "orders_submitted": 0,
+  "planned_orders": [
+    {
+      "id": "537b4a01-acae-46ce-be9f-917ce0ab96cf",
+      "client_order_id": null,
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 0.047932,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-22T20:52:08.332063+00:00"
+    }
+  ],
+  "data_drift_reports": 0,
+  "reconciliation_clean": null,
+  "paper_scorecard_passed": null,
+  "recovery": {
+    "enabled": true,
+    "state_path": "runs/tradingbot.sqlite3",
+    "orders_loaded": 19,
+    "reports_loaded": 19,
+    "positions_loaded": 1,
+    "account_loaded": true,
+    "reconciliation_clean": true,
+    "unresolved_orders": 0,
+    "blocked": false,
+    "passed": true,
+    "reason": "recovery_clean"
+  },
+  "risk_budget": {
+    "passed": false,
+    "reason": "cash_reserve_below_budget",
+    "budget": {
+      "min_order_quantity": 0.0,
+      "min_order_notional": 0.0,
+      "max_session_notional": 25.0,
+      "max_new_exposure": 0.0025,
+      "max_turnover": 0.0025,
+      "cash_reserve": 0.95,
+      "cooldown_symbols": [],
+      "repeated_reject_symbols": []
+    },
+    "session_notional": 24.999653580000004,
+    "new_exposure": 0.0024999653580000006,
+    "turnover": 0.0024999653580000006,
+    "gates": [
+      {
+        "name": "DIA_min_quantity",
+        "passed": true,
+        "reason": "min_quantity_passed",
+        "value": 0.047932,
+        "threshold": 0.0
+      },
+      {
+        "name": "DIA_min_notional",
+        "passed": true,
+        "reason": "min_notional_passed",
+        "value": 24.999653580000004,
+        "threshold": 0.0
+      },
+      {
+        "name": "DIA_cooldown",
+        "passed": true,
+        "reason": "cooldown_passed",
+        "value": "DIA",
+        "threshold": "not_in_cooldown"
+      },
+      {
+        "name": "DIA_repeated_reject",
+        "passed": true,
+        "reason": "repeated_reject_passed",
+        "value": "DIA",
+        "threshold": "not_repeated_reject"
+      },
+      {
+        "name": "max_session_notional",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 24.999653580000004,
+        "threshold": 25.0
+      },
+      {
+        "name": "max_new_exposure",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 0.0024999653580000006,
+        "threshold": 0.0025
+      },
+      {
+        "name": "max_turnover",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 0.0024999653580000006,
+        "threshold": 0.0025
+      },
+      {
+        "name": "cash_reserve",
+        "passed": false,
+        "reason": "cash_reserve_below_budget",
+        "value": 0.7544432464264804,
+        "threshold": 0.95
+      }
+    ]
+  },
+  "submission_guard": {
+    "passed": true,
+    "reason": "submission_guard_passed",
+    "submit_requested": false,
+    "probes": [
+      {
+        "name": "submit_requested",
+        "passed": true,
+        "reason": "submit_not_requested",
+        "evidence": {
+          "submit_orders": false
+        }
+      }
+    ]
+  },
+  "fill_poll_attempts": 0,
+  "polled_execution_reports": 0,
+  "warnings": [
+    "Risk budget blocked submission: cash_reserve_below_budget"
+  ],
+  "artifact_paths": {
+    "manifest": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\manifest.json",
+    "committee_context": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\committee-context.json",
+    "committee_decision": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\committee-decision.json",
+    "execution_plan": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\execution-plan.json",
+    "session_report": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+    "submitted_orders": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\submitted-orders.json",
+    "execution_reports": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\execution-reports.json",
+    "reconciliation": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\reconciliation.json",
+    "paper_scorecard": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\paper-scorecard.json",
+    "post_session_account": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\post-session-account.json",
+    "recovery": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\recovery.json",
+    "risk_budget": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\risk-budget.json",
+    "submission_guard": "runs\\paper-portfolio-promoted-hurst-micro-submit\\symbols\\DIA\\20260722T205208Z-paper-session-dry-run-30918501f999b507\\submission-guard.json"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "reason": "pnl_attribution_created",
+  "total_market_value": 25.083694,
+  "total_unrealized_pnl": 0.090437,
+  "total_notional_drift": 0.08369442485,
+  "buckets": [
+    {
+      "key": "hurstCycleReversion|DIA|hurstCycleReversion|unknown|regular",
+      "strategy_name": "hurstCycleReversion",
+      "symbol": "DIA",
+      "signal_family": "hurstCycleReversion",
+      "regime": "unknown",
+      "execution_session": "regular",
+      "positions": 1,
+      "market_value": 12.566052,
+      "unrealized_pnl": 0.067487,
+      "notional_drift": 0.06596225225000119,
+      "slippage_bps": -1.2199963206457882
+    },
+    {
+      "key": "hurstCycleReversion|SPY|hurstCycleReversion|unknown|regular",
+      "strategy_name": "hurstCycleReversion",
+      "symbol": "SPY",
+      "signal_family": "hurstCycleReversion",
+      "regime": "unknown",
+      "execution_session": "regular",
+      "positions": 1,
+      "market_value": 12.517642,
+      "unrealized_pnl": 0.02295,
+      "notional_drift": 0.01773217259999882,
+      "slippage_bps": -4.174575618588112
+    }
+  ],
+  "artifact_path": "reports\\paper-pnl-attribution-analytics-batch.json"
+}

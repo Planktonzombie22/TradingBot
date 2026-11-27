@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "reason": "quote_spread_checks_passed",
+  "max_spread_bps": 25.0,
+  "max_effective_spread_bps": 35.0,
+  "analyses": [
+    {
+      "symbol": "DIA",
+      "side": "BUY",
+      "fill_price": 516.332,
+      "reference_mid_price": 519.1199866151377,
+      "spread_bps": 0.0,
+      "effective_spread_bps": 0.0,
+      "adverse_selection_bps": 53.99600673864292,
+      "passed": true,
+      "reason": "passed"
+    },
+    {
+      "symbol": "SPY",
+      "side": "BUY",
+      "fill_price": 739.886,
+      "reference_mid_price": 741.2450288145188,
+      "spread_bps": 0.0,
+      "effective_spread_bps": 0.0,
+      "adverse_selection_bps": 18.368083928049256,
+      "passed": true,
+      "reason": "passed"
+    }
+  ],
+  "artifact_path": "reports\\paper-quote-spread-data-reliability-smoke.json"
+}

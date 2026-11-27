@@ -1,0 +1,111 @@
+{
+  "passed": false,
+  "captured_windows": [
+    "intraday"
+  ],
+  "missing_windows": [
+    "market_open",
+    "market_close"
+  ],
+  "required_clean_activations": 3,
+  "required_active_windows": 2,
+  "clean_activations": 1,
+  "submitted_activations": 1,
+  "blockers": [
+    "insufficient_clean_daemon_activations",
+    "insufficient_submitted_daemon_activations",
+    "insufficient_active_window_coverage",
+    "pending_window_captures"
+  ],
+  "warnings": [],
+  "recommended_action": "run_guarded_daemon_during_market_open",
+  "targets": [
+    {
+      "name": "market_open",
+      "start_time": "08:30",
+      "end_time": "10:00",
+      "captured": false,
+      "clean": false,
+      "submitted": false,
+      "action": "capture_next",
+      "command": [
+        "trading_env\\Scripts\\python.exe",
+        "main.py",
+        "paper-daemon",
+        "--provider",
+        "alpaca",
+        "--execution-mode",
+        "paper",
+        "--symbol",
+        "SPY",
+        "--strategy",
+        "buyHold",
+        "--paper-daemon-profile",
+        "micro-notional",
+        "--submit-orders",
+        "--paper-daemon-max-iterations",
+        "1",
+        "--paper-daemon-interval-seconds",
+        "300.0"
+      ]
+    },
+    {
+      "name": "intraday",
+      "start_time": "10:00",
+      "end_time": "14:30",
+      "captured": true,
+      "clean": true,
+      "submitted": true,
+      "action": "retain_evidence",
+      "command": [
+        "trading_env\\Scripts\\python.exe",
+        "main.py",
+        "paper-daemon",
+        "--provider",
+        "alpaca",
+        "--execution-mode",
+        "paper",
+        "--symbol",
+        "SPY",
+        "--strategy",
+        "buyHold",
+        "--paper-daemon-profile",
+        "micro-notional",
+        "--submit-orders",
+        "--paper-daemon-max-iterations",
+        "1",
+        "--paper-daemon-interval-seconds",
+        "300.0"
+      ]
+    },
+    {
+      "name": "market_close",
+      "start_time": "14:30",
+      "end_time": "15:15",
+      "captured": false,
+      "clean": false,
+      "submitted": false,
+      "action": "capture_next",
+      "command": [
+        "trading_env\\Scripts\\python.exe",
+        "main.py",
+        "paper-daemon",
+        "--provider",
+        "alpaca",
+        "--execution-mode",
+        "paper",
+        "--symbol",
+        "SPY",
+        "--strategy",
+        "buyHold",
+        "--paper-daemon-profile",
+        "micro-notional",
+        "--submit-orders",
+        "--paper-daemon-max-iterations",
+        "1",
+        "--paper-daemon-interval-seconds",
+        "300.0"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "report_path": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+  "ready_for_submission": true,
+  "submitted": false,
+  "data_rows": 160,
+  "latest_prices": {
+    "SPY": 121.5283941077598
+  },
+  "regime": {
+    "symbol": "SPY",
+    "trend_state": "trending",
+    "trend_direction": "up",
+    "volatility_state": "contraction",
+    "liquidity_state": "normal",
+    "macro_sensitivity": "normal",
+    "efficiency_ratio": 0.6489804565386399,
+    "period_return": 0.10526697233522042,
+    "volatility_ratio": 0.5700170177193662,
+    "liquidity_ratio": 1.0044545062248575,
+    "eligible_modes": [
+      "benchmark",
+      "trend_following",
+      "range_scalping",
+      "cash"
+    ]
+  },
+  "orders_planned": 1,
+  "orders_submitted": 0,
+  "planned_orders": [
+    {
+      "id": "34f59686-8222-464e-9769-aeb975476765",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 0.205713,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-20T15:29:08.868623+00:00"
+    }
+  ],
+  "data_drift_reports": 0,
+  "reconciliation_clean": null,
+  "paper_scorecard_passed": null,
+  "recovery": {
+    "enabled": false,
+    "state_path": null,
+    "orders_loaded": 0,
+    "reports_loaded": 0,
+    "positions_loaded": 0,
+    "account_loaded": false,
+    "reconciliation_clean": null,
+    "unresolved_orders": 0,
+    "blocked": false,
+    "passed": true,
+    "reason": "not_enabled"
+  },
+  "risk_budget": {
+    "passed": true,
+    "reason": "risk_budget_passed",
+    "budget": {
+      "min_order_quantity": 0.0,
+      "min_order_notional": 0.0,
+      "max_session_notional": 25.0,
+      "max_new_exposure": 0.0025,
+      "max_turnover": 0.0025,
+      "cash_reserve": 0.95,
+      "cooldown_symbols": [],
+      "repeated_reject_symbols": []
+    },
+    "session_notional": 24.99997053708959,
+    "new_exposure": 0.002499997053708959,
+    "turnover": 0.002499997053708959,
+    "gates": [
+      {
+        "name": "SPY_min_quantity",
+        "passed": true,
+        "reason": "min_quantity_passed",
+        "value": 0.205713,
+        "threshold": 0.0
+      },
+      {
+        "name": "SPY_min_notional",
+        "passed": true,
+        "reason": "min_notional_passed",
+        "value": 24.99997053708959,
+        "threshold": 0.0
+      },
+      {
+        "name": "SPY_cooldown",
+        "passed": true,
+        "reason": "cooldown_passed",
+        "value": "SPY",
+        "threshold": "not_in_cooldown"
+      },
+      {
+        "name": "SPY_repeated_reject",
+        "passed": true,
+        "reason": "repeated_reject_passed",
+        "value": "SPY",
+        "threshold": "not_repeated_reject"
+      },
+      {
+        "name": "max_session_notional",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 24.99997053708959,
+        "threshold": 25.0
+      },
+      {
+        "name": "max_new_exposure",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 0.002499997053708959,
+        "threshold": 0.0025
+      },
+      {
+        "name": "max_turnover",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 0.002499997053708959,
+        "threshold": 0.0025
+      },
+      {
+        "name": "cash_reserve",
+        "passed": true,
+        "reason": "cash_reserve_passed",
+        "value": 0.997500002946291,
+        "threshold": 0.95
+      }
+    ]
+  },
+  "submission_guard": {
+    "passed": true,
+    "reason": "submission_guard_passed",
+    "submit_requested": false,
+    "probes": [
+      {
+        "name": "submit_requested",
+        "passed": true,
+        "reason": "submit_not_requested",
+        "evidence": {
+          "submit_orders": false
+        }
+      }
+    ]
+  },
+  "fill_poll_attempts": 0,
+  "polled_execution_reports": 0,
+  "warnings": [],
+  "artifact_paths": {
+    "manifest": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\manifest.json",
+    "committee_context": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-context.json",
+    "committee_decision": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-decision.json",
+    "execution_plan": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-plan.json",
+    "session_report": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+    "submitted_orders": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\submitted-orders.json",
+    "execution_reports": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-reports.json",
+    "reconciliation": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\reconciliation.json",
+    "paper_scorecard": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-scorecard.json",
+    "post_session_account": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\post-session-account.json",
+    "recovery": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\recovery.json",
+    "risk_budget": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\risk-budget.json",
+    "submission_guard": "runs\\micro-notional-profile-smoke\\20260720T152908Z-paper-session-dry-run-32bdf9385e58a4d4\\submission-guard.json"
+  }
+}

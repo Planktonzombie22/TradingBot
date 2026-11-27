@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TradingBot Readiness</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; color: #17202a; background: #f7f9fb; }
+    main { max-width: 1120px; margin: 0 auto; }
+    section { background: white; border: 1px solid #d8dee8; border-radius: 6px; padding: 16px; margin-bottom: 16px; }
+    h1, h2 { margin: 0 0 12px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    .metric { border: 1px solid #e2e7ef; border-radius: 4px; padding: 12px; background: #fbfcfe; }
+    .label { color: #5d6d7e; font-size: 12px; text-transform: uppercase; }
+    .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom: 1px solid #e6ebf2; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #f2f5f9; }
+    .pass { color: #127a36; font-weight: 700; }
+    .fail { color: #a12828; font-weight: 700; }
+    code { font-family: Consolas, monospace; font-size: 12px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>TradingBot Readiness</h1>
+  <section>
+    <div class="grid">
+      <div class="metric"><div class="label">Target</div><div class="value">release_readiness</div></div>
+      <div class="metric"><div class="label">Readiness</div><div class="value">100.0%</div></div>
+      <div class="metric"><div class="label">Release Decision</div><div class="value">release_ready</div></div>
+      <div class="metric"><div class="label">Live Status</div><div class="value">not_live_ready</div></div>
+      <div class="metric"><div class="label">Missing</div><div class="value">0</div></div>
+      <div class="metric"><div class="label">Failed</div><div class="value">0</div></div>
+      <div class="metric"><div class="label">Stale</div><div class="value">0</div></div>
+    </div>
+  </section>
+  <section>
+    <h2>Next Actions</h2>
+    <p class="pass">No blocking actions.</p>
+  </section>
+  <section>
+    <h2>Required Checks</h2>
+    <table><thead><tr><th>Check</th><th>Status</th><th>Category</th><th>Reason</th></tr></thead><tbody><tr><td><code>unit_test_suite</code></td><td class="pass">passed</td><td>code_tests</td><td>passed</td></tr><tr><td><code>failure_injection_suite</code></td><td class="pass">passed</td><td>failure_injection</td><td>passed</td></tr><tr><td><code>data_quality_torture</code></td><td class="pass">passed</td><td>data_quality</td><td>passed</td></tr><tr><td><code>backtester_differential</code></td><td class="pass">passed</td><td>backtest_validation</td><td>passed</td></tr><tr><td><code>optimizer_validation</code></td><td class="pass">passed</td><td>optimizer_validation</td><td>passed</td></tr><tr><td><code>daily_ops_acceptance</code></td><td class="pass">passed</td><td>operator_reports</td><td>passed</td></tr><tr><td><code>observability_acceptance</code></td><td class="pass">passed</td><td>observability</td><td>passed</td></tr><tr><td><code>security_configuration</code></td><td class="pass">passed</td><td>security</td><td>passed</td></tr><tr><td><code>deployment_rehearsal</code></td><td class="pass">passed</td><td>deployment</td><td>passed</td></tr><tr><td><code>golden_artifacts</code></td><td class="pass">passed</td><td>golden_artifacts</td><td>passed</td></tr><tr><td><code>paper_profile_validation</code></td><td class="pass">passed</td><td>paper_profiles</td><td>paper_profiles_validated</td></tr><tr><td><code>release_checklist_bundle</code></td><td class="pass">passed</td><td>release</td><td>release_checklist_generated</td></tr></tbody></table>
+  </section>
+  <section>
+    <h2>Freshness</h2>
+    <p>Evaluated at: <code>2026-07-17T16:34:58.171242+00:00</code></p>
+    <p>Max age hours: <code>24.0</code></p>
+  </section>
+</main>
+</body>
+</html>

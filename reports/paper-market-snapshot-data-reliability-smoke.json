@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "reason": "market_snapshots_captured",
+  "observed_at": "2026-07-24T18:22:44.264802+00:00",
+  "snapshots": [
+    {
+      "symbol": "DIA",
+      "provider": "sample",
+      "latest_trade_price": 519.1199866151377,
+      "latest_trade_timestamp": "2026-07-23T14:24:00.945922+00:00",
+      "bid_price": 519.1199866151377,
+      "ask_price": 519.1199866151377,
+      "quote_timestamp": "2026-07-23T14:24:00.945922+00:00",
+      "mid_price": 519.1199866151377,
+      "spread": 0.0,
+      "spread_bps": 0.0
+    },
+    {
+      "symbol": "SPY",
+      "provider": "sample",
+      "latest_trade_price": 741.2450288145188,
+      "latest_trade_timestamp": "2026-07-23T14:24:01.164686+00:00",
+      "bid_price": 741.2450288145188,
+      "ask_price": 741.2450288145188,
+      "quote_timestamp": "2026-07-23T14:24:01.164686+00:00",
+      "mid_price": 741.2450288145188,
+      "spread": 0.0,
+      "spread_bps": 0.0
+    }
+  ],
+  "artifact_path": "reports\\paper-market-snapshot-data-reliability-smoke.json"
+}

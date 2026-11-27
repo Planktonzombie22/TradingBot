@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "reason": "websocket_rest_parity_passed",
+  "max_close_drift_bps": 5.0,
+  "checks": [
+    {
+      "symbol": "SPY",
+      "timestamp": "2026-07-31T15:37:29.543310+00:00",
+      "streamed_close": 741.33,
+      "rest_close": 741.33,
+      "close_drift_bps": 0.0,
+      "passed": true,
+      "reason": "passed"
+    }
+  ],
+  "artifact_path": "reports\\paper-daemon-alpaca-active-proof-parity-0001.json"
+}

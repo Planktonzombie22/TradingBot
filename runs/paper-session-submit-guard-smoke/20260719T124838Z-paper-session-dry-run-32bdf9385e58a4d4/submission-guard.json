@@ -1,0 +1,95 @@
+{
+  "passed": false,
+  "reason": "market_session_not_tradable",
+  "submit_requested": true,
+  "probes": [
+    {
+      "name": "submit_requested",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "submit_orders": true,
+        "orders": 1
+      }
+    },
+    {
+      "name": "market_session",
+      "passed": false,
+      "reason": "market_session_not_tradable",
+      "evidence": {
+        "timestamp": "2026-07-19T12:48:38.600258+00:00",
+        "session": "CLOSED",
+        "policy": {
+          "allow_pre_market": false,
+          "allow_regular": true,
+          "allow_after_hours": false
+        }
+      }
+    },
+    {
+      "name": "orders_present",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "orders": 1
+      }
+    },
+    {
+      "name": "approval_policy",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "configured": true,
+        "policy": {
+          "symbol_allowlist": [
+            "SPY"
+          ],
+          "max_daily_submissions": 1,
+          "kill_switch_enabled": false,
+          "repeated_reject_lockout_threshold": null,
+          "require_cleanup": true
+        }
+      }
+    },
+    {
+      "name": "approval_kill_switch",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "kill_switch_enabled": false
+      }
+    },
+    {
+      "name": "approval_symbol_allowlist",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "symbols": [
+          "SPY"
+        ],
+        "symbol_allowlist": [
+          "SPY"
+        ],
+        "disallowed": []
+      }
+    },
+    {
+      "name": "approval_daily_submission_limit",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "submitted_today": 0,
+        "max_daily_submissions": 1
+      }
+    },
+    {
+      "name": "approval_repeated_reject_lockout",
+      "passed": true,
+      "reason": "passed",
+      "evidence": {
+        "rejected_symbols": {},
+        "threshold": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "is_clean": true,
+  "captured_at": "2026-07-31T15:37:28.747315+00:00",
+  "unresolved": [],
+  "orders": [
+    {
+      "order_id": "68224fcd-331d-40d4-8cba-12d6c526af06",
+      "status": "MATCHED",
+      "local_status": "FILLED",
+      "broker_status": "FILLED",
+      "broker_order_id": "7ac8062a-d9dc-4637-9569-83ad029699ac",
+      "message": ""
+    }
+  ]
+}

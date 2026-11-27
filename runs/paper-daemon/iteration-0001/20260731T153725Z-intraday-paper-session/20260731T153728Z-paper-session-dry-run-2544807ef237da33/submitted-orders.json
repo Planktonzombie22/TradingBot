@@ -1,0 +1,21 @@
+{
+  "orders": [
+    {
+      "id": "68224fcd-331d-40d4-8cba-12d6c526af06",
+      "client_order_id": "tradingbot-3963fcf6b0a0f55b296c5957",
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 0.033723,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "FILLED",
+      "created_at": "2026-07-31T15:37:28.184774+00:00"
+    }
+  ]
+}

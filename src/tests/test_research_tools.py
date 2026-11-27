@@ -42,6 +42,7 @@ from src.backtesting import (
     adjust_p_values,
     analyze_capacity,
     benchmark_relative_report,
+    build_benchmark_promotion_report,
     build_ensemble_allocation,
     build_dynamic_allocation,
     build_factor_trend_report,
@@ -518,6 +519,34 @@ def test_benchmark_relative_report_summarizes_excess_return_and_capture():
     assert summary.tail_risk == -0.18
     assert payload["strategy_summary"][0]["average_trade_efficiency"] > 0
     assert payload["selection"]["summary"]["comparisons"] == 3
+
+
+def test_benchmark_promotion_report_turns_selected_edges_into_paper_manifests():
+    records = [
+        _bulk_record("SPY", "buyHold", 0.10, -0.20, trades=1),
+        _bulk_record(
+            "SPY",
+            "hurstCycleReversion",
+            0.22,
+            -0.12,
+            trades=6,
+            params={"hurst_period": 60, "entry_zscore": 1.4},
+        ),
+        _bulk_record("QQQ", "buyHold", 0.30, -0.25, trades=1),
+        _bulk_record("QQQ", "hurstCycleReversion", 0.20, -0.10, trades=4),
+    ]
+    benchmark = benchmark_relative_report(records)
+
+    report = build_benchmark_promotion_report(records, benchmark.selection_report)
+    payload = report.to_dict()
+
+    assert report.candidate_count == 1
+    assert report.enabled_count == 1
+    assert report.enabled_candidates[0].symbol == "SPY"
+    assert report.enabled_manifests[0].strategy_name == "hurstCycleReversion"
+    assert report.enabled_manifests[0].params["hurst_period"] == 60
+    assert payload["enabled_manifests"][0]["execution_profile"] == "paper_default"
+    assert payload["candidates"][0]["promotion_report"]["passed"]
 
 
 def test_market_regime_classifier_identifies_trend_and_macro_sensitivity():
@@ -1134,11 +1163,18 @@ def _data_drift_report(passed: bool):
     )
 
 
-def _bulk_record(strategy_symbol: str, strategy: str, total_return: float, max_drawdown: float, trades: int) -> BulkBacktestRecord:
+def _bulk_record(
+    strategy_symbol: str,
+    strategy: str,
+    total_return: float,
+    max_drawdown: float,
+    trades: int,
+    params: dict | None = None,
+) -> BulkBacktestRecord:
     return BulkBacktestRecord(
         symbol=strategy_symbol,
         strategy=strategy,
-        params={},
+        params=params or {},
         total_pnl=total_return * 10000,
         total_pnl_pct=total_return,
         metrics={"total_return": total_return, "max_drawdown": max_drawdown},

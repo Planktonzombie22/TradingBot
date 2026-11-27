@@ -1,0 +1,1297 @@
+{
+  "run_metadata": {
+    "run_id": "release-smoke",
+    "code_version": "unknown",
+    "config_hash": "f5c1792c8c13866e99bfe09f2ac7c0dd5956a67960aef451b2223866075dd8ee",
+    "environment": {
+      "python": "3.11.9",
+      "platform": "Windows-10-10.0.19045-SP0",
+      "machine": "AMD64"
+    },
+    "dependency_versions": {},
+    "provider": "sample",
+    "broker_mode": "dry-run",
+    "artifact_digests": {},
+    "created_at": "2026-07-17T15:09:15.467420+00:00"
+  },
+  "evidence": [
+    {
+      "check_id": "unit_test_suite",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": 34.76413159980439,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.311160+00:00",
+      "metadata": {
+        "command_result": {
+          "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+          "exit_code": 0,
+          "elapsed_seconds": 34.76413159980439,
+          "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.11.9, pytest-9.0.3, pluggy-1.6.0\nrootdir: C:\\Users\\diamo\\Desktop\\TradingBot\nplugins: anyio-4.13.0\ncollected 257 items\n\nsrc\\tests\\test_acceleration.py ...                                       [  1%]\nsrc\\tests\\test_alpaca_integrations.py .....                              [  3%]\nsrc\\tests\\test_app_mvp.py .....                                          [  5%]\nsrc\\tests\\test_broker_reconciliation_storage.py .....                    [  7%]\nsrc\\tests\\test_broker_validation_checks.py .....                         [  8%]\nsrc\\tests\\test_committee_execution_planning.py ........                  [ 12%]\nsrc\\tests\\test_config_loader.py ..                                       [ 12%]\nsrc\\tests\\test_data_integrity.py ..............                          [ 18%]\nsrc\\tests\\test_data_streams.py ....                                      [ 19%]\nsrc\\tests\\test_dependency_profiles.py ...                                [ 21%]\nsrc\\tests\\test_execution_calibration_parity.py ......                    [ 23%]\nsrc\\tests\\test_execution_order_architecture.py ......                    [ 25%]\nsrc\\tests\\test_exits_execution_calendar_logging_retry.py ........        [ 28%]\nsrc\\tests\\test_final_roadmap_operations.py ....................          [ 36%]\nsrc\\tests\\test_indicators.py .......                                     [ 39%]\nsrc\\tests\\test_ops_validation_checks.py ....                             [ 40%]\nsrc\\tests\\test_portfolio_risk_and_costs.py ..................            [ 47%]\nsrc\\tests\\test_productization_validation_checks.py .......               [ 50%]\nsrc\\tests\\test_profiling.py ...                                          [ 51%]\nsrc\\tests\\test_quality_reporting_cli.py ...........                      [ 56%]\nsrc\\tests\\test_readiness_reporting.py .                                  [ 56%]\nsrc\\tests\\test_reporting.py ..                                           [ 57%]\nsrc\\tests\\test_research_tools.py ....................................... [ 72%]\n..                                                                       [ 73%]\nsrc\\tests\\test_research_validation_checks.py .....                       [ 75%]\nsrc\\tests\\test_risk.py ...                                               [ 76%]\nsrc\\tests\\test_roadmap.py .                                              [ 76%]\nsrc\\tests\\test_runtime_safety_controls.py ....                           [ 78%]\nsrc\\tests\\test_runtime_validation_checks.py ......                       [ 80%]\nsrc\\tests\\test_schedule_and_broker_evidence.py ...                       [ 81%]\nsrc\\tests\\test_storage.py .....                                          [ 83%]\nsrc\\tests\\test_strategies.py .............                               [ 88%]\nsrc\\tests\\test_strategy_universe_architecture.py ......                  [ 91%]\nsrc\\tests\\test_validation_evidence.py ..........                         [ 94%]\nsrc\\tests\\test_validation_manifest.py .............                      [100%]\n\n============================ 257 passed in 29.44s =============================\n",
+          "stderr": "",
+          "timed_out": false,
+          "expected_artifacts_present": true,
+          "missing_artifacts": []
+        }
+      }
+    },
+    {
+      "check_id": "failure_injection_suite",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.311160+00:00",
+      "metadata": {
+        "report": {
+          "passed": true,
+          "probes": [
+            {
+              "name": "rate_limit_response",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "exception": "RuntimeError",
+                "message": "429 rate limit",
+                "expected_message": "429"
+              }
+            },
+            {
+              "name": "broker_timeout",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "exception": "TimeoutError",
+                "message": "broker timeout",
+                "expected_message": "timeout"
+              }
+            },
+            {
+              "name": "malformed_payload",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "exception": "ValueError",
+                "message": "malformed payload",
+                "expected_message": "malformed"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "check_id": "data_quality_torture",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.467420+00:00",
+      "metadata": {
+        "torture_report": {
+          "passed": true,
+          "probes": [
+            {
+              "name": "duplicate_bars",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "description": "Duplicate timestamp bars must fail.",
+                "expected_passed": false,
+                "actual_passed": false,
+                "expected_codes": [
+                  "DUPLICATE_INDEX"
+                ],
+                "actual_codes": [
+                  "DUPLICATE_INDEX"
+                ],
+                "issues": [
+                  {
+                    "severity": "ERROR",
+                    "code": "DUPLICATE_INDEX",
+                    "message": "Data index contains duplicate timestamps."
+                  }
+                ]
+              }
+            },
+            {
+              "name": "missing_close",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "description": "Missing OHLC values must fail.",
+                "expected_passed": false,
+                "actual_passed": false,
+                "expected_codes": [
+                  "MISSING_BARS"
+                ],
+                "actual_codes": [
+                  "MISSING_BARS"
+                ],
+                "issues": [
+                  {
+                    "severity": "ERROR",
+                    "code": "MISSING_BARS",
+                    "message": "OHLC data contains null values: {'High': 0, 'Open': 0, 'Low': 0, 'Close': 1}"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "zero_volume_allowed",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "description": "Zero volume can occur in some assets and should not fail by itself.",
+                "expected_passed": true,
+                "actual_passed": true,
+                "expected_codes": [],
+                "actual_codes": [],
+                "issues": []
+              }
+            },
+            {
+              "name": "negative_volume",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "description": "Negative volume is invalid.",
+                "expected_passed": false,
+                "actual_passed": false,
+                "expected_codes": [
+                  "NEGATIVE_VOLUME"
+                ],
+                "actual_codes": [
+                  "NEGATIVE_VOLUME"
+                ],
+                "issues": [
+                  {
+                    "severity": "ERROR",
+                    "code": "NEGATIVE_VOLUME",
+                    "message": "Volume cannot be negative."
+                  }
+                ]
+              }
+            },
+            {
+              "name": "invalid_ohlc",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "description": "High/low bounds must contain open/close.",
+                "expected_passed": false,
+                "actual_passed": false,
+                "expected_codes": [
+                  "INVALID_OHLC"
+                ],
+                "actual_codes": [
+                  "INVALID_OHLC"
+                ],
+                "issues": [
+                  {
+                    "severity": "ERROR",
+                    "code": "INVALID_OHLC",
+                    "message": "High/low bounds are materially inconsistent with open/close."
+                  }
+                ]
+              }
+            },
+            {
+              "name": "split_like_spike",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "description": "Split-like jumps warn unless other checks fail.",
+                "expected_passed": true,
+                "actual_passed": true,
+                "expected_codes": [
+                  "SPLIT_SPIKE"
+                ],
+                "actual_codes": [
+                  "SPLIT_SPIKE"
+                ],
+                "issues": [
+                  {
+                    "severity": "WARNING",
+                    "code": "SPLIT_SPIKE",
+                    "message": "Detected 1 large close-to-close jumps."
+                  }
+                ]
+              }
+            },
+            {
+              "name": "calendar_gap",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "description": "Large calendar gaps warn for review.",
+                "expected_passed": true,
+                "actual_passed": true,
+                "expected_codes": [
+                  "TIME_GAPS"
+                ],
+                "actual_codes": [
+                  "TIME_GAPS"
+                ],
+                "issues": [
+                  {
+                    "severity": "WARNING",
+                    "code": "TIME_GAPS",
+                    "message": "Detected 1 unusually large timestamp gaps."
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "calendar_report": {
+          "passed": true,
+          "probes": [
+            {
+              "name": "holiday_closed",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "timestamp": "2024-01-01T10:00:00+00:00",
+                "expected_tradable": false,
+                "actual_tradable": false,
+                "session": "CLOSED"
+              }
+            },
+            {
+              "name": "regular_open",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "timestamp": "2024-01-02T15:00:00+00:00",
+                "expected_tradable": true,
+                "actual_tradable": true,
+                "session": "REGULAR"
+              }
+            },
+            {
+              "name": "early_close_after_regular",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "timestamp": "2024-07-03T18:00:00+00:00",
+                "expected_tradable": false,
+                "actual_tradable": false,
+                "session": "AFTER_HOURS"
+              }
+            },
+            {
+              "name": "premarket_not_tradable_default",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "timestamp": "2024-01-02T12:00:00+00:00",
+                "expected_tradable": false,
+                "actual_tradable": false,
+                "session": "PRE_MARKET"
+              }
+            },
+            {
+              "name": "premarket_allowed",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "timestamp": "2024-01-02T12:00:00+00:00",
+                "expected_tradable": true,
+                "actual_tradable": true,
+                "session": "PRE_MARKET"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "check_id": "backtester_differential",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.467420+00:00",
+      "metadata": {
+        "report": {
+          "passed": true,
+          "probes": [
+            {
+              "name": "buy_hold_reference_fixture",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "deltas": {
+                  "total_return": 0.0,
+                  "ending_equity": 0.0,
+                  "fills": 0.0
+                },
+                "failures": {},
+                "observed": {
+                  "total_return": 0.05,
+                  "ending_equity": 105000.0,
+                  "fills": 2
+                },
+                "reference": {
+                  "total_return": 0.05,
+                  "ending_equity": 105000.0,
+                  "fills": 2
+                },
+                "tolerances": {
+                  "total_return": 0.0001,
+                  "ending_equity": 0.01
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "check_id": "optimizer_validation",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.467420+00:00",
+      "metadata": {
+        "report": {
+          "passed": true,
+          "probes": [
+            {
+              "name": "seeded_walk_forward_fixture",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "checks": {
+                  "seeded_reproducible": true,
+                  "train_test_separated": true,
+                  "no_lookahead_detected": true,
+                  "persistence_reloaded": true,
+                  "failed_trials_handled": true,
+                  "objective_metric_correct": true
+                },
+                "optimizer_backend": "fixture",
+                "trial_count": 3
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "check_id": "daily_ops_acceptance",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.311160+00:00",
+      "metadata": {
+        "report": {
+          "passed": true,
+          "probes": [
+            {
+              "name": "summary_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "summary": {
+                  "promotion_enabled": 0,
+                  "sessions": 3,
+                  "submitted_orders": 0
+                }
+              }
+            },
+            {
+              "name": "recommendations_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "recommendations": [
+                  "Continue dry-run evidence collection before broker-backed submission."
+                ]
+              }
+            },
+            {
+              "name": "unresolved_order_summary_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "reconciliation": {
+                  "unresolved_sessions": 0
+                }
+              }
+            },
+            {
+              "name": "missed_fill_summary_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "fills": {
+                  "missed_or_unsubmitted_sessions": 0
+                }
+              }
+            },
+            {
+              "name": "scorecard_summary_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "scorecards": {
+                  "passed": 3,
+                  "failed": 0
+                }
+              }
+            },
+            {
+              "name": "promotion_queue_summary_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "promotion_queue": {},
+                "summary": {
+                  "promotion_enabled": 0,
+                  "sessions": 3,
+                  "submitted_orders": 0
+                }
+              }
+            },
+            {
+              "name": "warnings_serialized",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "warnings": []
+              }
+            }
+          ]
+        },
+        "fixture": {
+          "summary": {
+            "promotion_enabled": 0,
+            "sessions": 3,
+            "submitted_orders": 0
+          },
+          "recommendations": [
+            "Continue dry-run evidence collection before broker-backed submission."
+          ],
+          "reconciliation": {
+            "unresolved_sessions": 0
+          },
+          "fills": {
+            "missed_or_unsubmitted_sessions": 0
+          },
+          "scorecards": {
+            "passed": 3,
+            "failed": 0
+          },
+          "promotion_queue": {},
+          "warnings": []
+        }
+      }
+    },
+    {
+      "check_id": "observability_acceptance",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.311160+00:00",
+      "metadata": {
+        "report": {
+          "passed": true,
+          "probes": [
+            {
+              "name": "required_metrics_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "required": [
+                  "orders",
+                  "equity"
+                ],
+                "available": [
+                  "equity",
+                  "orders",
+                  "paper_session_seconds",
+                  "paper_sessions"
+                ]
+              }
+            },
+            {
+              "name": "health_checks_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "health": [
+                  {
+                    "name": "data",
+                    "healthy": true
+                  },
+                  {
+                    "name": "execution",
+                    "healthy": true
+                  }
+                ]
+              }
+            },
+            {
+              "name": "notification_topics_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "required": [
+                  "startup",
+                  "halt"
+                ],
+                "topics": [
+                  "halt",
+                  "startup"
+                ]
+              }
+            },
+            {
+              "name": "critical_severity_routed",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "severities": [
+                  "CRITICAL",
+                  "INFO"
+                ]
+              }
+            },
+            {
+              "name": "dashboard_account_present",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "dashboard_keys": [
+                  "account",
+                  "risk_halt"
+                ]
+              }
+            },
+            {
+              "name": "halt_reason_visible",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "risk_halt": {
+                  "halted": true,
+                  "reason": "operator validation fixture"
+                }
+              }
+            }
+          ]
+        },
+        "fixture": {
+          "metrics_snapshot": {
+            "counters": {
+              "orders": 0,
+              "paper_sessions": 3
+            },
+            "gauges": {
+              "equity": 100000.0
+            },
+            "timings": {
+              "paper_session_seconds": 1.0
+            }
+          },
+          "health_statuses": [
+            {
+              "name": "data",
+              "healthy": true
+            },
+            {
+              "name": "execution",
+              "healthy": true
+            }
+          ],
+          "notification_events": [
+            {
+              "topic": "startup",
+              "severity": "INFO"
+            },
+            {
+              "topic": "halt",
+              "severity": "CRITICAL"
+            }
+          ],
+          "dashboard_snapshot": {
+            "account": {
+              "equity": 100000.0
+            },
+            "risk_halt": {
+              "halted": true,
+              "reason": "operator validation fixture"
+            }
+          }
+        }
+      }
+    },
+    {
+      "check_id": "security_configuration",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.311160+00:00",
+      "metadata": {
+        "passed": true,
+        "probes": [
+          {
+            "name": "runtime_environment_valid",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "errors": [],
+              "warnings": []
+            }
+          },
+          {
+            "name": "paper_trading_flag_safe",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "paper_trading": true,
+              "execution_mode": "dry-run"
+            }
+          },
+          {
+            "name": "alpaca_paper_url_safe",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "base_url": "https://paper-api.alpaca.markets",
+              "execution_mode": "dry-run"
+            }
+          },
+          {
+            "name": "allow_live_trading_guarded",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "allow_live_trading": false
+            }
+          },
+          {
+            "name": "env_values_present_when_required",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "required": [],
+              "present": [
+                "ALPACA_API_KEY",
+                "ALPACA_SECRET_KEY"
+              ]
+            }
+          },
+          {
+            "name": "no_committed_secret_markers",
+            "passed": true,
+            "reason": "passed",
+            "evidence": {
+              "markers": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "check_id": "deployment_rehearsal",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.467420+00:00",
+      "metadata": {
+        "report": {
+          "passed": true,
+          "requirements": [
+            {
+              "name": "windows-task",
+              "required_checks": [
+                "startup",
+                "graceful_stop",
+                "watchdog_timeout",
+                "log_rotation",
+                "artifact_persistence",
+                "state_db_persistence",
+                "restart_recovery"
+              ]
+            },
+            {
+              "name": "docker",
+              "required_checks": [
+                "startup",
+                "graceful_stop",
+                "watchdog_timeout",
+                "log_rotation",
+                "artifact_persistence",
+                "state_db_persistence",
+                "restart_recovery"
+              ]
+            },
+            {
+              "name": "small-server",
+              "required_checks": [
+                "startup",
+                "graceful_stop",
+                "watchdog_timeout",
+                "log_rotation",
+                "artifact_persistence",
+                "state_db_persistence",
+                "restart_recovery"
+              ]
+            }
+          ],
+          "probes": [
+            {
+              "name": "windows-task",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "checks": {
+                  "startup": true,
+                  "graceful_stop": true,
+                  "watchdog_timeout": true,
+                  "log_rotation": true,
+                  "artifact_persistence": true,
+                  "state_db_persistence": true,
+                  "restart_recovery": true,
+                  "profile_command_present": true,
+                  "paper_mode_documented": true,
+                  "paper_trading_env_safe": true
+                },
+                "evidence": {
+                  "startup": true,
+                  "graceful_stop": true,
+                  "watchdog_timeout": true,
+                  "log_rotation": true,
+                  "artifact_persistence": true,
+                  "state_db_persistence": true,
+                  "restart_recovery": true
+                },
+                "profile": {
+                  "name": "windows-task",
+                  "command": "trading_env\\Scripts\\python.exe main.py paper --provider alpaca --execution-mode paper",
+                  "environment": {
+                    "PAPER_TRADING": "true",
+                    "EXECUTION_MODE": "paper"
+                  },
+                  "notes": [
+                    "Run only after the paper soak checklist passes.",
+                    "Use Task Scheduler with restart-on-failure disabled until soak is clean."
+                  ]
+                }
+              }
+            },
+            {
+              "name": "docker",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "checks": {
+                  "startup": true,
+                  "graceful_stop": true,
+                  "watchdog_timeout": true,
+                  "log_rotation": true,
+                  "artifact_persistence": true,
+                  "state_db_persistence": true,
+                  "restart_recovery": true,
+                  "profile_command_present": true,
+                  "paper_mode_documented": true,
+                  "paper_trading_env_safe": true
+                },
+                "evidence": {
+                  "startup": true,
+                  "graceful_stop": true,
+                  "watchdog_timeout": true,
+                  "log_rotation": true,
+                  "artifact_persistence": true,
+                  "state_db_persistence": true,
+                  "restart_recovery": true
+                },
+                "profile": {
+                  "name": "docker",
+                  "command": "python main.py paper --provider alpaca --execution-mode paper",
+                  "environment": {
+                    "PAPER_TRADING": "true",
+                    "EXECUTION_MODE": "paper"
+                  },
+                  "notes": [
+                    "Mount .env as a secret or env file.",
+                    "Persist runs/ as a volume."
+                  ]
+                }
+              }
+            },
+            {
+              "name": "small-server",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "checks": {
+                  "startup": true,
+                  "graceful_stop": true,
+                  "watchdog_timeout": true,
+                  "log_rotation": true,
+                  "artifact_persistence": true,
+                  "state_db_persistence": true,
+                  "restart_recovery": true,
+                  "profile_command_present": true,
+                  "paper_mode_documented": true,
+                  "paper_trading_env_safe": true
+                },
+                "evidence": {
+                  "startup": true,
+                  "graceful_stop": true,
+                  "watchdog_timeout": true,
+                  "log_rotation": true,
+                  "artifact_persistence": true,
+                  "state_db_persistence": true,
+                  "restart_recovery": true
+                },
+                "profile": {
+                  "name": "small-server",
+                  "command": "python main.py paper --provider alpaca --execution-mode paper",
+                  "environment": {
+                    "PAPER_TRADING": "true",
+                    "EXECUTION_MODE": "paper"
+                  },
+                  "notes": [
+                    "Use a process supervisor only after manual paper sessions are stable.",
+                    "Forward logs and alerts before unattended runs."
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "fixture": {
+          "evidence_by_profile": {
+            "windows-task": {
+              "startup": true,
+              "graceful_stop": true,
+              "watchdog_timeout": true,
+              "log_rotation": true,
+              "artifact_persistence": true,
+              "state_db_persistence": true,
+              "restart_recovery": true
+            },
+            "docker": {
+              "startup": true,
+              "graceful_stop": true,
+              "watchdog_timeout": true,
+              "log_rotation": true,
+              "artifact_persistence": true,
+              "state_db_persistence": true,
+              "restart_recovery": true
+            },
+            "small-server": {
+              "startup": true,
+              "graceful_stop": true,
+              "watchdog_timeout": true,
+              "log_rotation": true,
+              "artifact_persistence": true,
+              "state_db_persistence": true,
+              "restart_recovery": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "check_id": "golden_artifacts",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.467420+00:00",
+      "metadata": {
+        "report": {
+          "passed": true,
+          "probes": [
+            {
+              "name": "readiness_summary_fixture",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "mismatches": [],
+                "case": {
+                  "name": "readiness_summary_fixture",
+                  "observed": {
+                    "decision": "blocked_until_evidence_complete",
+                    "readiness_score": 0.25,
+                    "missing_checks": 9
+                  },
+                  "expected": {
+                    "decision": "blocked_until_evidence_complete",
+                    "readiness_score": 0.25,
+                    "missing_checks": 9
+                  },
+                  "tolerances": {}
+                }
+              }
+            },
+            {
+              "name": "paper_summary_fixture",
+              "passed": true,
+              "reason": "passed",
+              "evidence": {
+                "mismatches": [],
+                "case": {
+                  "name": "paper_summary_fixture",
+                  "observed": {
+                    "sessions": 3,
+                    "submitted_orders": 0,
+                    "warnings": []
+                  },
+                  "expected": {
+                    "sessions": 3,
+                    "submitted_orders": 0,
+                    "warnings": []
+                  },
+                  "tolerances": {}
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "check_id": "paper_profile_validation",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": null,
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.311160+00:00",
+      "metadata": {
+        "passed": true,
+        "profile_results": {
+          "dry-run": {
+            "passed": true,
+            "validation": {
+              "passed": true,
+              "profile": {
+                "name": "dry-run",
+                "submit_orders": false,
+                "sessions": 3,
+                "required_execution_mode": "dry-run",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "No broker orders; validates data, committee, planning, recovery, and artifacts.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": null,
+                  "max_new_exposure": null,
+                  "max_turnover": null,
+                  "cash_reserve": 0.0,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [],
+              "warnings": []
+            },
+            "session_options": {
+              "submit_orders": false,
+              "artifact_root": "runs/paper-profile-validation/dry-run",
+              "recover_state": true,
+              "state_db_path": "runs/paper-profile-validation/dry-run.sqlite3",
+              "risk_budget": {
+                "min_order_quantity": 0.0,
+                "min_order_notional": 0.0,
+                "max_session_notional": null,
+                "max_new_exposure": null,
+                "max_turnover": null,
+                "cash_reserve": 0.0,
+                "cooldown_symbols": [],
+                "repeated_reject_symbols": []
+              }
+            },
+            "soak_config": {
+              "sessions": 3,
+              "stop_on_failure": true
+            }
+          },
+          "micro-notional": {
+            "passed": true,
+            "validation": {
+              "passed": true,
+              "profile": {
+                "name": "micro-notional",
+                "submit_orders": true,
+                "sessions": 3,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 25.0,
+                  "max_new_exposure": 0.0025,
+                  "max_turnover": 0.0025,
+                  "cash_reserve": 0.95,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [],
+              "warnings": []
+            },
+            "session_options": {
+              "submit_orders": true,
+              "artifact_root": "runs/paper-profile-validation/micro-notional",
+              "recover_state": true,
+              "state_db_path": "runs/paper-profile-validation/micro-notional.sqlite3",
+              "risk_budget": {
+                "min_order_quantity": 0.0,
+                "min_order_notional": 0.0,
+                "max_session_notional": 25.0,
+                "max_new_exposure": 0.0025,
+                "max_turnover": 0.0025,
+                "cash_reserve": 0.95,
+                "cooldown_symbols": [],
+                "repeated_reject_symbols": []
+              }
+            },
+            "soak_config": {
+              "sessions": 3,
+              "stop_on_failure": true
+            }
+          },
+          "full-paper-rehearsal": {
+            "passed": true,
+            "validation": {
+              "passed": true,
+              "profile": {
+                "name": "full-paper-rehearsal",
+                "submit_orders": true,
+                "sessions": 5,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 2500.0,
+                  "max_new_exposure": 0.1,
+                  "max_turnover": 0.2,
+                  "cash_reserve": 0.5,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [],
+              "warnings": []
+            },
+            "session_options": {
+              "submit_orders": true,
+              "artifact_root": "runs/paper-profile-validation/full-paper-rehearsal",
+              "recover_state": true,
+              "state_db_path": "runs/paper-profile-validation/full-paper-rehearsal.sqlite3",
+              "risk_budget": {
+                "min_order_quantity": 0.0,
+                "min_order_notional": 0.0,
+                "max_session_notional": 2500.0,
+                "max_new_exposure": 0.1,
+                "max_turnover": 0.2,
+                "cash_reserve": 0.5,
+                "cooldown_symbols": [],
+                "repeated_reject_symbols": []
+              }
+            },
+            "soak_config": {
+              "sessions": 5,
+              "stop_on_failure": true
+            }
+          }
+        },
+        "unsafe_combination_results": {
+          "micro_notional_live_url": {
+            "blocked": true,
+            "validation": {
+              "passed": false,
+              "profile": {
+                "name": "micro-notional",
+                "submit_orders": true,
+                "sessions": 3,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 25.0,
+                  "max_new_exposure": 0.0025,
+                  "max_turnover": 0.0025,
+                  "cash_reserve": 0.95,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [
+                "ALPACA_BASE_URL must point to https://paper-api.alpaca.markets."
+              ],
+              "warnings": []
+            }
+          },
+          "micro_notional_dry_run_mode": {
+            "blocked": true,
+            "validation": {
+              "passed": false,
+              "profile": {
+                "name": "micro-notional",
+                "submit_orders": true,
+                "sessions": 3,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "Tiny paper submissions to prove broker lifecycle, reconciliation, and scorecards.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 25.0,
+                  "max_new_exposure": 0.0025,
+                  "max_turnover": 0.0025,
+                  "cash_reserve": 0.95,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [
+                "EXECUTION_MODE must be paper for micro-notional."
+              ],
+              "warnings": []
+            }
+          },
+          "full_rehearsal_missing_keys": {
+            "blocked": true,
+            "validation": {
+              "passed": false,
+              "profile": {
+                "name": "full-paper-rehearsal",
+                "submit_orders": true,
+                "sessions": 5,
+                "required_execution_mode": "paper",
+                "require_alpaca_provider": true,
+                "require_paper_trading": true,
+                "require_paper_url": true,
+                "recover_state": true,
+                "comparison_provider": null,
+                "description": "Guarded full paper rehearsal after dry-run and micro-notional profiles pass.",
+                "risk_budget": {
+                  "min_order_quantity": 0.0,
+                  "min_order_notional": 0.0,
+                  "max_session_notional": 2500.0,
+                  "max_new_exposure": 0.1,
+                  "max_turnover": 0.2,
+                  "cash_reserve": 0.5,
+                  "cooldown_symbols": [],
+                  "repeated_reject_symbols": []
+                }
+              },
+              "errors": [
+                "ALPACA_API_KEY is required for submitting paper orders.",
+                "ALPACA_SECRET_KEY is required for submitting paper orders."
+              ],
+              "warnings": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "check_id": "release_checklist_bundle",
+      "status": "passed",
+      "passed": true,
+      "artifact_path": "reports/release-validation-bundle.json",
+      "elapsed_seconds": null,
+      "reason": "passed",
+      "captured_at": "2026-07-17T15:09:15.467420+00:00",
+      "metadata": {
+        "release_checklist": {
+          "output_bundle": "reports/release-validation-bundle.json",
+          "steps": [
+            {
+              "name": "fast_unit_suite",
+              "command": "trading_env\\Scripts\\python.exe -m pytest src\\tests",
+              "required": true,
+              "description": "Run the full local automated suite."
+            },
+            {
+              "name": "validation_manifest",
+              "command": "trading_env\\Scripts\\python.exe main.py validate --validation-output reports/validation-readiness.json",
+              "required": true,
+              "description": "Write the current readiness index and not-live-ready report."
+            },
+            {
+              "name": "performance_profile",
+              "command": "trading_env\\Scripts\\python.exe main.py profile --profiling-output reports/profiling-report.json",
+              "required": true,
+              "description": "Run critical-path benchmark tasks and budget checks."
+            },
+            {
+              "name": "paper_dry_run",
+              "command": "trading_env\\Scripts\\python.exe main.py paper-session --provider sample --symbol SPY --store-dir runs/release-paper-dry-run --timeout-seconds 60",
+              "required": true,
+              "description": "Prove local paper-session artifact generation."
+            },
+            {
+              "name": "paper_profile_validation",
+              "command": null,
+              "required": true,
+              "description": "Review paper-profile validation evidence in the release bundle."
+            },
+            {
+              "name": "alpaca_micro_notional_submit",
+              "command": "trading_env\\Scripts\\python.exe main.py paper-session --provider alpaca --execution-mode paper --paper-profile micro-notional --symbol SPY --store-dir runs/release-alpaca-micro --timeout-seconds 180",
+              "required": false,
+              "description": "Optional broker-backed micro-notional paper proof when credentials and market conditions are available."
+            },
+            {
+              "name": "deployment_rehearsal",
+              "command": null,
+              "required": false,
+              "description": "Manual/deployment environment rehearsal until automated deployment runners exist."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

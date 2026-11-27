@@ -1,0 +1,250 @@
+{
+  "passed": true,
+  "active_window": "intraday",
+  "windows": [
+    {
+      "name": "pre_market",
+      "start_time": "08:00:00",
+      "end_time": "08:45:00",
+      "required": false,
+      "submit_orders_allowed": false,
+      "description": "Pre-market data and recovery check."
+    },
+    {
+      "name": "market_open",
+      "start_time": "08:30:00",
+      "end_time": "10:00:00",
+      "required": true,
+      "submit_orders_allowed": true,
+      "description": "Opening-session guarded paper decision."
+    },
+    {
+      "name": "intraday",
+      "start_time": "10:00:00",
+      "end_time": "14:30:00",
+      "required": true,
+      "submit_orders_allowed": true,
+      "description": "Intraday data/reconciliation check."
+    },
+    {
+      "name": "market_close",
+      "start_time": "14:30:00",
+      "end_time": "15:15:00",
+      "required": true,
+      "submit_orders_allowed": true,
+      "description": "Closing-session guarded paper decision."
+    },
+    {
+      "name": "end_of_day",
+      "start_time": "15:15:00",
+      "end_time": "17:00:00",
+      "required": true,
+      "submit_orders_allowed": false,
+      "description": "Daily report and no-new-orders evidence window."
+    }
+  ],
+  "records": [
+    {
+      "window_name": "intraday",
+      "ran_at": "2026-07-30T15:02:03.703358+00:00",
+      "passed": true,
+      "submitted": false,
+      "result": {
+        "report_path": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+        "ready_for_submission": true,
+        "submitted": false,
+        "data_rows": 160,
+        "latest_prices": {
+          "SPY": 121.5283941077598
+        },
+        "regime": {
+          "symbol": "SPY",
+          "trend_state": "trending",
+          "trend_direction": "up",
+          "volatility_state": "contraction",
+          "liquidity_state": "normal",
+          "macro_sensitivity": "normal",
+          "efficiency_ratio": 0.6489804565386399,
+          "period_return": 0.10526697233522042,
+          "volatility_ratio": 0.5700170177193662,
+          "liquidity_ratio": 1.0044545062248575,
+          "eligible_modes": [
+            "benchmark",
+            "trend_following",
+            "range_scalping",
+            "cash"
+          ]
+        },
+        "orders_planned": 1,
+        "orders_submitted": 0,
+        "planned_orders": [
+          {
+            "id": "7eb8e8f3-dbd7-4650-a153-39ee1546d5ba",
+            "client_order_id": null,
+            "symbol": "SPY",
+            "side": "BUY",
+            "quantity": 20.0,
+            "order_type": "MARKET",
+            "limit_price": null,
+            "stop_price": null,
+            "take_profit_price": null,
+            "trail_percent": null,
+            "time_in_force": "day",
+            "parent_order_id": null,
+            "order_group_id": null,
+            "status": "PENDING",
+            "created_at": "2026-07-30T15:02:03.703358+00:00"
+          }
+        ],
+        "data_drift_reports": 0,
+        "reconciliation_clean": null,
+        "paper_scorecard_passed": null,
+        "recovery": {
+          "enabled": false,
+          "state_path": null,
+          "orders_loaded": 0,
+          "reports_loaded": 0,
+          "positions_loaded": 0,
+          "account_loaded": false,
+          "reconciliation_clean": null,
+          "unresolved_orders": 0,
+          "blocked": false,
+          "passed": true,
+          "reason": "not_enabled"
+        },
+        "risk_budget": {
+          "passed": true,
+          "reason": "risk_budget_passed",
+          "budget": {
+            "min_order_quantity": 0.0,
+            "min_order_notional": 0.0,
+            "max_session_notional": null,
+            "max_new_exposure": null,
+            "max_turnover": null,
+            "cash_reserve": 0.0,
+            "cooldown_symbols": [],
+            "repeated_reject_symbols": []
+          },
+          "session_notional": 2430.567882155196,
+          "new_exposure": 0.2430567882155196,
+          "turnover": 0.2430567882155196,
+          "gates": [
+            {
+              "name": "SPY_min_quantity",
+              "passed": true,
+              "reason": "min_quantity_passed",
+              "value": 20.0,
+              "threshold": 0.0
+            },
+            {
+              "name": "SPY_min_notional",
+              "passed": true,
+              "reason": "min_notional_passed",
+              "value": 2430.567882155196,
+              "threshold": 0.0
+            },
+            {
+              "name": "SPY_cooldown",
+              "passed": true,
+              "reason": "cooldown_passed",
+              "value": "SPY",
+              "threshold": "not_in_cooldown"
+            },
+            {
+              "name": "SPY_repeated_reject",
+              "passed": true,
+              "reason": "repeated_reject_passed",
+              "value": "SPY",
+              "threshold": "not_repeated_reject"
+            },
+            {
+              "name": "max_session_notional",
+              "passed": true,
+              "reason": "not_required",
+              "value": 2430.567882155196,
+              "threshold": null
+            },
+            {
+              "name": "max_new_exposure",
+              "passed": true,
+              "reason": "not_required",
+              "value": 0.2430567882155196,
+              "threshold": null
+            },
+            {
+              "name": "max_turnover",
+              "passed": true,
+              "reason": "not_required",
+              "value": 0.2430567882155196,
+              "threshold": null
+            },
+            {
+              "name": "cash_reserve",
+              "passed": true,
+              "reason": "cash_reserve_passed",
+              "value": 0.7569432117844804,
+              "threshold": 0.0
+            }
+          ]
+        },
+        "submission_guard": {
+          "passed": true,
+          "reason": "submission_guard_passed",
+          "submit_requested": false,
+          "probes": [
+            {
+              "name": "submit_requested",
+              "passed": true,
+              "reason": "submit_not_requested",
+              "evidence": {
+                "submit_orders": false
+              }
+            }
+          ]
+        },
+        "fill_poll_attempts": 0,
+        "polled_execution_reports": 0,
+        "warnings": [],
+        "artifact_paths": {
+          "manifest": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\manifest.json",
+          "committee_context": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-context.json",
+          "committee_decision": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\committee-decision.json",
+          "execution_plan": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-plan.json",
+          "session_report": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\session-report.json",
+          "submitted_orders": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\submitted-orders.json",
+          "execution_reports": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\execution-reports.json",
+          "reconciliation": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\reconciliation.json",
+          "paper_scorecard": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-scorecard.json",
+          "post_session_account": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\post-session-account.json",
+          "recovery": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\recovery.json",
+          "risk_budget": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\risk-budget.json",
+          "submission_guard": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\submission-guard.json",
+          "paper_session_result": "runs\\paper-daemon\\iteration-0002\\20260730T150203Z-intraday-paper-session\\20260730T150203Z-paper-session-dry-run-32bdf9385e58a4d4\\paper-session-result.json"
+        }
+      }
+    }
+  ],
+  "checks": [
+    {
+      "name": "active_window",
+      "passed": true,
+      "reason": "passed",
+      "window": "intraday",
+      "records": 1
+    },
+    {
+      "name": "paper_session_result",
+      "passed": true,
+      "reason": "passed",
+      "window": "intraday",
+      "submit_orders_allowed": true
+    },
+    {
+      "name": "blocked_window_no_submit",
+      "passed": true,
+      "reason": "passed",
+      "window": "intraday"
+    }
+  ],
+  "artifact_path": "reports\\paper-daemon-profile-smoke-schedule-20260730T150203Z-0002.json"
+}

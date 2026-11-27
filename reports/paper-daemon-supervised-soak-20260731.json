@@ -1,0 +1,31 @@
+{
+  "passed": false,
+  "clean_activations": 1,
+  "submitted_activations": 1,
+  "active_windows": [
+    "intraday"
+  ],
+  "total_observed_notional": 24.995488,
+  "required_clean_activations": 3,
+  "required_active_windows": 2,
+  "require_submitted_iterations": true,
+  "max_total_observed_notional": 100.0,
+  "blockers": [
+    "insufficient_clean_daemon_activations",
+    "insufficient_submitted_daemon_activations",
+    "insufficient_active_window_coverage"
+  ],
+  "warnings": [],
+  "recommended_action": "run_daemon_across_additional_active_windows",
+  "activations": [
+    {
+      "path": "reports\\paper-daemon-alpaca-active-proof-activation-checklist.json",
+      "passed": true,
+      "active_window": "intraday",
+      "submitted_iterations": 1,
+      "observed_notional": 24.995488,
+      "blockers": [],
+      "warnings": []
+    }
+  ]
+}

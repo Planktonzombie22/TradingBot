@@ -1,0 +1,13 @@
+{
+  "status": "completed",
+  "iteration": 1,
+  "last_heartbeat_at": "2026-07-31T15:37:29.543310+00:00",
+  "kill_switch_path": "runs\\paper-daemon-alpaca-active-proof.kill",
+  "state_path": "runs\\paper-daemon-alpaca-active-proof-state.json",
+  "heartbeat_path": "runs\\paper-daemon-alpaca-active-proof-heartbeat.json",
+  "lock_path": "runs\\paper-daemon-alpaca-active-proof.lock",
+  "next_run_at": null,
+  "last_reason": "max_iterations_completed",
+  "last_error": null,
+  "last_active_window": "intraday"
+}

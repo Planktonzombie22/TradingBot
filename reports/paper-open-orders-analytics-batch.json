@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "reason": "passed",
+  "observed_at": "2026-07-24T17:24:59.007172+00:00",
+  "max_open_order_age_minutes": 15.0,
+  "unresolved_orders": 0,
+  "stale_orders": 0,
+  "stale_symbols": [],
+  "orders": [],
+  "artifact_path": "reports\\paper-open-orders-analytics-batch.json"
+}

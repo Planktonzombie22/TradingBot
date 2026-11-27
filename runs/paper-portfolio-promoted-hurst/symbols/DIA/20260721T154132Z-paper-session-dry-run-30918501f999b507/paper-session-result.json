@@ -1,0 +1,97 @@
+{
+  "report_path": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+  "ready_for_submission": true,
+  "submitted": false,
+  "data_rows": 501,
+  "latest_prices": {
+    "DIA": 521.185
+  },
+  "regime": {
+    "symbol": "DIA",
+    "trend_state": "mixed",
+    "trend_direction": "up",
+    "volatility_state": "contraction",
+    "liquidity_state": "normal",
+    "macro_sensitivity": "normal",
+    "efficiency_ratio": 0.1787594148951631,
+    "period_return": 0.0626669385258436,
+    "volatility_ratio": 0.6974682835391454,
+    "liquidity_ratio": 1.016527141204078,
+    "eligible_modes": [
+      "benchmark",
+      "mean_reversion",
+      "range_scalping",
+      "cash"
+    ]
+  },
+  "orders_planned": 1,
+  "orders_submitted": 0,
+  "planned_orders": [
+    {
+      "id": "19d0f0a4-66f0-4e53-948b-29b0c749c09e",
+      "client_order_id": null,
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 1.0,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-21T15:41:32.511513+00:00"
+    }
+  ],
+  "data_drift_reports": 0,
+  "reconciliation_clean": null,
+  "paper_scorecard_passed": null,
+  "recovery": {
+    "enabled": false,
+    "state_path": null,
+    "orders_loaded": 0,
+    "reports_loaded": 0,
+    "positions_loaded": 0,
+    "account_loaded": false,
+    "reconciliation_clean": null,
+    "unresolved_orders": 0,
+    "blocked": false,
+    "passed": true,
+    "reason": "not_enabled"
+  },
+  "risk_budget": null,
+  "submission_guard": {
+    "passed": true,
+    "reason": "submission_guard_passed",
+    "submit_requested": false,
+    "probes": [
+      {
+        "name": "submit_requested",
+        "passed": true,
+        "reason": "submit_not_requested",
+        "evidence": {
+          "submit_orders": false
+        }
+      }
+    ]
+  },
+  "fill_poll_attempts": 0,
+  "polled_execution_reports": 0,
+  "warnings": [],
+  "artifact_paths": {
+    "manifest": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\manifest.json",
+    "committee_context": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\committee-context.json",
+    "committee_decision": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\committee-decision.json",
+    "execution_plan": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\execution-plan.json",
+    "session_report": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+    "submitted_orders": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\submitted-orders.json",
+    "execution_reports": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\execution-reports.json",
+    "reconciliation": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\reconciliation.json",
+    "paper_scorecard": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\paper-scorecard.json",
+    "post_session_account": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\post-session-account.json",
+    "recovery": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\recovery.json",
+    "submission_guard": "runs\\paper-portfolio-promoted-hurst\\symbols\\DIA\\20260721T154132Z-paper-session-dry-run-30918501f999b507\\submission-guard.json"
+  }
+}

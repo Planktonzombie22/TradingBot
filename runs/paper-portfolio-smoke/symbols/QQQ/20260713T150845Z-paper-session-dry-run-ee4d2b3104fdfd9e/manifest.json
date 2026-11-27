@@ -1,0 +1,29 @@
+{
+  "run_id": "cf0859ed-0da4-4cc5-be53-24dc94736010",
+  "run_type": "paper-session-dry-run",
+  "strategy": "buyHold",
+  "symbols": [
+    "QQQ"
+  ],
+  "config": {
+    "mode": "dry-run",
+    "committee_reason": "committee_approved_strategy",
+    "committee_action": "trade_strategy",
+    "paper_manifest_status": "ready_for_paper_session"
+  },
+  "data_source": {
+    "provider": "sample",
+    "symbol": "QQQ",
+    "period": "2y",
+    "interval": "1d",
+    "start": null,
+    "end": null,
+    "rows": 160
+  },
+  "dependency_versions": {
+    "python": "3.11.9"
+  },
+  "code_version": "a909740",
+  "created_at": "2026-07-13T15:08:45.382352+00:00",
+  "stable_hash": "ee4d2b3104fdfd9e"
+}

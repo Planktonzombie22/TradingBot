@@ -1,0 +1,96 @@
+{
+  "report_path": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\session-report.json",
+  "ready_for_submission": true,
+  "submitted": false,
+  "data_rows": 501,
+  "latest_prices": {
+    "SPY": 747.54
+  },
+  "regime": {
+    "symbol": "SPY",
+    "trend_state": "range_bound",
+    "trend_direction": "up",
+    "volatility_state": "normal",
+    "liquidity_state": "normal",
+    "macro_sensitivity": "normal",
+    "efficiency_ratio": 0.12676812891674125,
+    "period_return": 0.04970932681776041,
+    "volatility_ratio": 0.8995853361409597,
+    "liquidity_ratio": 1.035044721485447,
+    "eligible_modes": [
+      "benchmark",
+      "mean_reversion",
+      "cash"
+    ]
+  },
+  "orders_planned": 1,
+  "orders_submitted": 0,
+  "planned_orders": [
+    {
+      "id": "64162f73-bab9-48c7-a376-61583057b0d7",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 1.0,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-21T15:39:38.964701+00:00"
+    }
+  ],
+  "data_drift_reports": 0,
+  "reconciliation_clean": null,
+  "paper_scorecard_passed": null,
+  "recovery": {
+    "enabled": false,
+    "state_path": null,
+    "orders_loaded": 0,
+    "reports_loaded": 0,
+    "positions_loaded": 0,
+    "account_loaded": false,
+    "reconciliation_clean": null,
+    "unresolved_orders": 0,
+    "blocked": false,
+    "passed": true,
+    "reason": "not_enabled"
+  },
+  "risk_budget": null,
+  "submission_guard": {
+    "passed": true,
+    "reason": "submission_guard_passed",
+    "submit_requested": false,
+    "probes": [
+      {
+        "name": "submit_requested",
+        "passed": true,
+        "reason": "submit_not_requested",
+        "evidence": {
+          "submit_orders": false
+        }
+      }
+    ]
+  },
+  "fill_poll_attempts": 0,
+  "polled_execution_reports": 0,
+  "warnings": [],
+  "artifact_paths": {
+    "manifest": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\manifest.json",
+    "committee_context": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\committee-context.json",
+    "committee_decision": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\committee-decision.json",
+    "execution_plan": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\execution-plan.json",
+    "session_report": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\session-report.json",
+    "submitted_orders": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\submitted-orders.json",
+    "execution_reports": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\execution-reports.json",
+    "reconciliation": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\reconciliation.json",
+    "paper_scorecard": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\paper-scorecard.json",
+    "post_session_account": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\post-session-account.json",
+    "recovery": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\recovery.json",
+    "submission_guard": "runs\\paper-portfolio-promoted-hurst\\symbols\\SPY\\20260721T153939Z-paper-session-dry-run-d685ee9499f41469\\submission-guard.json"
+  }
+}

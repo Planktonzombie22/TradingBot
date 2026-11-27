@@ -1,0 +1,61 @@
+{
+  "submit_requested": false,
+  "attempted": false,
+  "submitted": false,
+  "positions_seen": [
+    {
+      "symbol": "SPY",
+      "quantity": 0.033723,
+      "average_entry_price": 741.646,
+      "market_value": 25.139485,
+      "raw": {
+        "asset_id": "<redacted>",
+        "symbol": "SPY",
+        "exchange": "ARCA",
+        "asset_class": "us_equity",
+        "asset_marginable": true,
+        "qty": "0.033723",
+        "qty_available": "0.033723",
+        "avg_entry_price": "741.646",
+        "side": "long",
+        "market_value": "25.139485",
+        "cost_basis": "25.010528",
+        "unrealized_pl": "0.128957",
+        "unrealized_plpc": "0.00516",
+        "unrealized_intraday_pl": "0.128957",
+        "unrealized_intraday_plpc": "0.00516",
+        "current_price": "745.47",
+        "lastday_price": "741.69",
+        "change_today": "0.0051"
+      }
+    }
+  ],
+  "planned_orders": [
+    {
+      "id": "dbc0707f-7546-4251-a822-c4a15a1e76db",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 0.033723,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-31T17:20:09.415000+00:00"
+    }
+  ],
+  "submitted_orders": [],
+  "execution_reports": [],
+  "submission_guard": null,
+  "reconciliation": null,
+  "reconciliation_clean": null,
+  "fill_poll_attempts": 0,
+  "polled_execution_reports": 0,
+  "reason": "preview_only",
+  "artifact_path": "reports\\paper-cleanup-20260731-flatten-drill-precheck-snapshot.json"
+}

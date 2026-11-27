@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "reason": "websocket_rest_parity_passed",
+  "max_close_drift_bps": 5.0,
+  "checks": [
+    {
+      "symbol": "SPY",
+      "timestamp": "2026-07-30T15:02:04.203394+00:00",
+      "streamed_close": 121.5283941077598,
+      "rest_close": 121.5283941077598,
+      "close_drift_bps": 0.0,
+      "passed": true,
+      "reason": "passed"
+    }
+  ],
+  "artifact_path": "reports\\paper-daemon-profile-smoke-parity-0003.json"
+}

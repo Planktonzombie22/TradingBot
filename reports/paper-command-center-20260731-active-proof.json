@@ -1,0 +1,57 @@
+{
+  "passed": true,
+  "generated_at": "2026-07-31T15:42:04.389587+00:00",
+  "provider": "alpaca",
+  "symbol": "SPY",
+  "strategy": "buyHold",
+  "execution_mode": "paper",
+  "paper_profile": "micro-notional",
+  "daemon": {
+    "status": "completed",
+    "heartbeat_state": "fresh",
+    "kill_switch_active": false,
+    "iteration": 1,
+    "active_window": "intraday",
+    "last_reason": "max_iterations_completed",
+    "next_run_at": null
+  },
+  "paper": {
+    "monitor_status": "passed",
+    "monitor_reason": "passed",
+    "observed_positions": 1,
+    "observed_notional": 24.995488,
+    "open_orders": 0,
+    "stale_open_orders": 0,
+    "data_parity_status": "passed",
+    "data_parity_reason": "websocket_rest_parity_passed",
+    "data_parity_failed_checks": 0,
+    "total_unrealized_pnl": null,
+    "total_market_value": null,
+    "drawdown_pct": null,
+    "mark_to_market_equity": null,
+    "fills_seen": 0,
+    "latest_fill": null
+  },
+  "artifacts_present": [
+    "daemon_state",
+    "daemon_report",
+    "monitor"
+  ],
+  "artifacts_missing": [
+    "pnl",
+    "drawdown",
+    "fills"
+  ],
+  "last_artifacts": [
+    "reports\\paper-daemon-alpaca-active-proof-schedule-20260731T153725Z-0001.json",
+    "runs\\paper-daemon\\iteration-0001\\20260731T153725Z-intraday-paper-session\\20260731T153728Z-paper-session-dry-run-2544807ef237da33\\session-report.json",
+    "reports\\paper-daemon-alpaca-active-proof-cleanup-0001.json",
+    "reports\\paper-daemon-alpaca-active-proof-monitor-0001.json",
+    "reports\\paper-daemon-alpaca-active-proof-parity-0001.json",
+    "reports\\paper-daemon-alpaca-active-proof-report.json",
+    "reports\\paper-monitor-20260731-active-proof.json"
+  ],
+  "warnings": [],
+  "recommended_action": "resume_daemon_when_next_paper_window_is_ready",
+  "artifact_path": "reports\\paper-command-center-20260731-active-proof.json"
+}

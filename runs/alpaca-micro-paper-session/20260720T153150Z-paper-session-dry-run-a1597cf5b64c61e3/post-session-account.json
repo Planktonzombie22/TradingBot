@@ -1,0 +1,12 @@
+{
+  "cash": 99974.995077092,
+  "equity": 99999.995038892,
+  "realized_pnl": 0.0,
+  "positions": {
+    "SPY": {
+      "quantity": 0.033521,
+      "average_price": 745.948,
+      "market_value": 24.9999618
+    }
+  }
+}

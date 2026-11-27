@@ -1,0 +1,104 @@
+{
+  "passed": true,
+  "reason": "passed",
+  "expected_positions": {
+    "DIA": 0.02420645,
+    "SPY": 0.01688732
+  },
+  "observed_positions": {
+    "DIA": 0.02420645,
+    "SPY": 0.01688732
+  },
+  "matches": [
+    {
+      "symbol": "DIA",
+      "expected_quantity": 0.02420645,
+      "observed_quantity": 0.02420645,
+      "difference": 0.0,
+      "market_value": 12.480361,
+      "matched": true
+    },
+    {
+      "symbol": "SPY",
+      "expected_quantity": 0.01688732,
+      "observed_quantity": 0.01688732,
+      "difference": 0.0,
+      "market_value": 12.446293,
+      "matched": true
+    }
+  ],
+  "observed_notional": 24.926654,
+  "max_expected_notional": 25.0,
+  "exposure_within_budget": true,
+  "unexpected_symbols": [],
+  "missing_symbols": [],
+  "lifecycle": {
+    "passed": true,
+    "observed_at": "2026-07-23T15:06:52.117767+00:00",
+    "positions": [
+      {
+        "symbol": "DIA",
+        "strategy_name": "hurstCycleReversion",
+        "expected_quantity": 0.02420645,
+        "observed_quantity": 0.02420645,
+        "matched": true,
+        "target_notional": 12.50008974775,
+        "market_value": 12.480361,
+        "entry_rationale": "promoted_portfolio_paper_submit",
+        "expected_holding_window": "micro_pilot_max_3_days",
+        "risk_budget": {
+          "max_notional": 25.0,
+          "estimated_notional": 24.99999957515,
+          "budget_passed": true
+        },
+        "stop_policy": "monitor_only_until_strategy_exit_controls_exist",
+        "exit_policy": "manual_or_strategy_exit_required",
+        "source_report_path": "runs\\paper-pilot-promoted-submit\\symbols\\DIA\\20260723T142359Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+        "opened_at": "2026-07-23T14:23:59.220805+00:00",
+        "age_hours": 0.7146936005555555,
+        "status": "fresh",
+        "owner_type": "promoted_strategy",
+        "forced_exit_needed": false
+      },
+      {
+        "symbol": "SPY",
+        "strategy_name": "hurstCycleReversion",
+        "expected_quantity": 0.01688732,
+        "observed_quantity": 0.01688732,
+        "matched": true,
+        "target_notional": 12.499909827400002,
+        "market_value": 12.446293,
+        "entry_rationale": "promoted_portfolio_paper_submit",
+        "expected_holding_window": "micro_pilot_max_3_days",
+        "risk_budget": {
+          "max_notional": 25.0,
+          "estimated_notional": 24.99999957515,
+          "budget_passed": true
+        },
+        "stop_policy": "monitor_only_until_strategy_exit_controls_exist",
+        "exit_policy": "manual_or_strategy_exit_required",
+        "source_report_path": "runs\\paper-pilot-promoted-submit\\symbols\\SPY\\20260723T142400Z-paper-session-dry-run-d685ee9499f41469\\session-report.json",
+        "opened_at": "2026-07-23T14:24:00.086488+00:00",
+        "age_hours": 0.7144531330555555,
+        "status": "fresh",
+        "owner_type": "promoted_strategy",
+        "forced_exit_needed": false
+      }
+    ],
+    "active_positions": 2,
+    "exposure_registry": {
+      "active_expected_symbols": [
+        "DIA",
+        "SPY"
+      ],
+      "orphan_symbols": [],
+      "missing_expected_symbols": [],
+      "stale_symbols": [],
+      "expired_symbols": [],
+      "cleanup_debt_symbols": []
+    },
+    "artifact_path": null
+  },
+  "artifact_path": "reports\\paper-lifecycle-monitor.json",
+  "position_journal_path": "reports\\paper-position-journal.jsonl"
+}

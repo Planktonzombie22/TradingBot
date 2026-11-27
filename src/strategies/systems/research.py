@@ -4,6 +4,7 @@ import pandas as pd
 
 from src.indicators import (
     ADX,
+    AbsorptionRatio,
     ATR,
     Aroon,
     AnchoredVWAP,
@@ -16,6 +17,7 @@ from src.indicators import (
     EfficiencyRatio,
     ElderRayIndex,
     FairValueGap,
+    HurstExponent,
     IchimokuCloud,
     KeltnerChannel,
     LiquiditySweep,
@@ -30,6 +32,7 @@ from src.indicators import (
     RollingZScore,
     StochasticOscillator,
     SuperTrend,
+    VolumePressure,
     VortexIndicator,
 )
 from src.models import Signal
@@ -1897,6 +1900,235 @@ class AroonVortexTrendSystem(Strategy):
             short_entry = position == 0 and prev["AroonOscillator"] <= -self.aroon_threshold and prev["VIDiff"] <= -self.vortex_threshold and prev["BearPower"] < 0 and prev["Efficiency"] > 0.2
             long_exit = position == 1 and (prev["AroonOscillator"] < 0 or prev["VIDiff"] < 0)
             short_exit = position == -1 and (prev["AroonOscillator"] > 0 or prev["VIDiff"] > 0)
+            if long_exit or short_exit:
+                position = 0
+                signals.append(Signal("CLOSE", self.symbol, _timestamp(ts)))
+            elif long_entry:
+                position = 1
+                signals.append(Signal("BUY", self.symbol, _timestamp(ts), stop_loss=price - float(prev["ATR"]) * self.atr_stop_multiple))
+            elif short_entry:
+                position = -1
+                signals.append(Signal("SELL", self.symbol, _timestamp(ts), stop_loss=price + float(prev["ATR"]) * self.atr_stop_multiple))
+            else:
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+        return pd.Series(signals, index=df.index, dtype=object)
+
+
+class VolumePressureBreakoutSystem(Strategy):
+    """Breakout system that requires range expansion and volume-pressure agreement."""
+
+    def __init__(
+        self,
+        symbol: str,
+        channel_period: int = 40,
+        pressure_period: int = 20,
+        min_pressure: float = 0.45,
+        min_efficiency: float = 0.20,
+        atr_period: int = 14,
+        atr_stop_multiple: float = 2.8,
+    ):
+        super().__init__(symbol)
+        self.channel_period = channel_period
+        self.pressure_period = pressure_period
+        self.min_pressure = min_pressure
+        self.min_efficiency = min_efficiency
+        self.atr_period = atr_period
+        self.atr_stop_multiple = atr_stop_multiple
+        self._indicators: Optional[pd.DataFrame] = None
+
+    def _compute_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
+        if self._indicators is not None and len(self._indicators) == len(df):
+            return self._indicators
+
+        channel = DonchianChannel(df, self.channel_period).calculate_all()
+        self._indicators = pd.DataFrame(
+            {
+                "ChannelUpper": channel["DonchianUpper"].shift(1),
+                "ChannelLower": channel["DonchianLower"].shift(1),
+                "ChannelMiddle": channel["DonchianMiddle"],
+                "VolumePressure": VolumePressure(df, self.pressure_period).calculate(),
+                "Efficiency": EfficiencyRatio(df, self.pressure_period).calculate(),
+                "ATR": ATR(df, self.atr_period).calculate(),
+            },
+            index=df.index,
+        )
+        return self._indicators
+
+    @property
+    def indicators(self) -> pd.DataFrame:
+        return self._indicators if self._indicators is not None else pd.DataFrame()
+
+    def generate_signals(self, df: pd.DataFrame) -> pd.Series:
+        ind = self._compute_indicators(df)
+        signals = []
+        position = 0
+        for i, ts in enumerate(df.index):
+            if i < 2:
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+            prev = ind.iloc[i - 1]
+            price = float(df["Close"].iloc[i - 1])
+            if not _is_ready(prev["ChannelUpper"], prev["ChannelLower"], prev["ChannelMiddle"], prev["VolumePressure"], prev["Efficiency"], prev["ATR"]):
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+
+            long_entry = position == 0 and price > prev["ChannelUpper"] and prev["VolumePressure"] >= self.min_pressure and prev["Efficiency"] >= self.min_efficiency
+            short_entry = position == 0 and price < prev["ChannelLower"] and prev["VolumePressure"] <= -self.min_pressure and prev["Efficiency"] >= self.min_efficiency
+            long_exit = position == 1 and (price < prev["ChannelMiddle"] or prev["VolumePressure"] < 0)
+            short_exit = position == -1 and (price > prev["ChannelMiddle"] or prev["VolumePressure"] > 0)
+            if long_exit or short_exit:
+                position = 0
+                signals.append(Signal("CLOSE", self.symbol, _timestamp(ts)))
+            elif long_entry:
+                position = 1
+                signals.append(Signal("BUY", self.symbol, _timestamp(ts), stop_loss=price - float(prev["ATR"]) * self.atr_stop_multiple))
+            elif short_entry:
+                position = -1
+                signals.append(Signal("SELL", self.symbol, _timestamp(ts), stop_loss=price + float(prev["ATR"]) * self.atr_stop_multiple))
+            else:
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+        return pd.Series(signals, index=df.index, dtype=object)
+
+
+class AbsorptionSweepReversalSystem(Strategy):
+    """Reversal system looking for liquidity sweeps with high-volume absorption."""
+
+    def __init__(
+        self,
+        symbol: str,
+        sweep_lookback: int = 20,
+        absorption_period: int = 20,
+        min_absorption: float = 1.6,
+        pressure_threshold: float = 0.15,
+        atr_period: int = 14,
+        atr_stop_multiple: float = 2.0,
+    ):
+        super().__init__(symbol)
+        self.sweep_lookback = sweep_lookback
+        self.absorption_period = absorption_period
+        self.min_absorption = min_absorption
+        self.pressure_threshold = pressure_threshold
+        self.atr_period = atr_period
+        self.atr_stop_multiple = atr_stop_multiple
+        self._indicators: Optional[pd.DataFrame] = None
+
+    def _compute_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
+        if self._indicators is not None and len(self._indicators) == len(df):
+            return self._indicators
+
+        sweep = LiquiditySweep(df, self.sweep_lookback).calculate_all()
+        self._indicators = pd.DataFrame(
+            {
+                "BullishSweep": sweep["BullishLiquiditySweep"],
+                "BearishSweep": sweep["BearishLiquiditySweep"],
+                "Absorption": AbsorptionRatio(df, self.absorption_period).calculate(),
+                "VolumePressure": VolumePressure(df, self.absorption_period).calculate(),
+                "RSI": RSI(df).calculate(),
+                "ATR": ATR(df, self.atr_period).calculate(),
+            },
+            index=df.index,
+        )
+        return self._indicators
+
+    @property
+    def indicators(self) -> pd.DataFrame:
+        return self._indicators if self._indicators is not None else pd.DataFrame()
+
+    def generate_signals(self, df: pd.DataFrame) -> pd.Series:
+        ind = self._compute_indicators(df)
+        signals = []
+        position = 0
+        for i, ts in enumerate(df.index):
+            if i < 2:
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+            prev = ind.iloc[i - 1]
+            price = float(df["Close"].iloc[i - 1])
+            if not _is_ready(prev["Absorption"], prev["VolumePressure"], prev["RSI"], prev["ATR"]):
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+
+            absorption = prev["Absorption"] >= self.min_absorption
+            long_entry = position == 0 and bool(prev["BullishSweep"]) and absorption and prev["VolumePressure"] >= -self.pressure_threshold and prev["RSI"] < 55
+            short_entry = position == 0 and bool(prev["BearishSweep"]) and absorption and prev["VolumePressure"] <= self.pressure_threshold and prev["RSI"] > 45
+            long_exit = position == 1 and (prev["RSI"] >= 60 or prev["VolumePressure"] < -self.pressure_threshold)
+            short_exit = position == -1 and (prev["RSI"] <= 40 or prev["VolumePressure"] > self.pressure_threshold)
+            if long_exit or short_exit:
+                position = 0
+                signals.append(Signal("CLOSE", self.symbol, _timestamp(ts)))
+            elif long_entry:
+                position = 1
+                signals.append(Signal("BUY", self.symbol, _timestamp(ts), stop_loss=price - float(prev["ATR"]) * self.atr_stop_multiple))
+            elif short_entry:
+                position = -1
+                signals.append(Signal("SELL", self.symbol, _timestamp(ts), stop_loss=price + float(prev["ATR"]) * self.atr_stop_multiple))
+            else:
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+        return pd.Series(signals, index=df.index, dtype=object)
+
+
+class HurstCycleReversionSystem(Strategy):
+    """Mean-reversion strategy gated by low Hurst/persistence readings."""
+
+    def __init__(
+        self,
+        symbol: str,
+        hurst_period: int = 80,
+        max_hurst: float = 0.45,
+        zscore_period: int = 20,
+        entry_zscore: float = 1.4,
+        exit_zscore: float = 0.25,
+        atr_period: int = 14,
+        atr_stop_multiple: float = 1.8,
+    ):
+        super().__init__(symbol)
+        self.hurst_period = hurst_period
+        self.max_hurst = max_hurst
+        self.zscore_period = zscore_period
+        self.entry_zscore = entry_zscore
+        self.exit_zscore = exit_zscore
+        self.atr_period = atr_period
+        self.atr_stop_multiple = atr_stop_multiple
+        self._indicators: Optional[pd.DataFrame] = None
+
+    def _compute_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
+        if self._indicators is not None and len(self._indicators) == len(df):
+            return self._indicators
+
+        self._indicators = pd.DataFrame(
+            {
+                "Hurst": HurstExponent(df, self.hurst_period).calculate(),
+                "ZScore": RollingZScore(df, self.zscore_period).calculate(),
+                "MFI": MoneyFlowIndex(df).calculate(),
+                "ATR": ATR(df, self.atr_period).calculate(),
+            },
+            index=df.index,
+        )
+        return self._indicators
+
+    @property
+    def indicators(self) -> pd.DataFrame:
+        return self._indicators if self._indicators is not None else pd.DataFrame()
+
+    def generate_signals(self, df: pd.DataFrame) -> pd.Series:
+        ind = self._compute_indicators(df)
+        signals = []
+        position = 0
+        for i, ts in enumerate(df.index):
+            if i < 2:
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+            prev = ind.iloc[i - 1]
+            price = float(df["Close"].iloc[i - 1])
+            if not _is_ready(prev["Hurst"], prev["ZScore"], prev["MFI"], prev["ATR"]):
+                signals.append(Signal.hold(self.symbol, _timestamp(ts)))
+                continue
+
+            cycle_mode = prev["Hurst"] <= self.max_hurst
+            long_entry = position == 0 and cycle_mode and prev["ZScore"] <= -self.entry_zscore and prev["MFI"] <= 50
+            short_entry = position == 0 and cycle_mode and prev["ZScore"] >= self.entry_zscore and prev["MFI"] >= 50
+            long_exit = position == 1 and (prev["ZScore"] >= -self.exit_zscore or prev["Hurst"] > self.max_hurst + 0.08)
+            short_exit = position == -1 and (prev["ZScore"] <= self.exit_zscore or prev["Hurst"] > self.max_hurst + 0.08)
             if long_exit or short_exit:
                 position = 0
                 signals.append(Signal("CLOSE", self.symbol, _timestamp(ts)))

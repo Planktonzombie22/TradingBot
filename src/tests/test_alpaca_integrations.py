@@ -1,6 +1,7 @@
 import json
 from io import BytesIO
 from urllib.error import HTTPError
+from urllib.parse import parse_qs, urlparse
 
 import pandas as pd
 
@@ -97,6 +98,50 @@ def test_alpaca_historical_feed_follows_pagination():
     assert data.iloc[-1]["Close"] == 11.5
 
 
+def test_alpaca_historical_feed_translates_period_to_start_query():
+    calls = []
+
+    class FakeClient:
+        def request(self, method, url, payload=None):
+            calls.append(url)
+            return {
+                "bars": [
+                    {
+                        "t": "2024-01-01T14:30:00Z",
+                        "o": 10,
+                        "h": 11,
+                        "l": 9,
+                        "c": 10.5,
+                        "v": 1000,
+                    }
+                ]
+            }
+
+    feed = AlpacaHistoricalDataFeed(AlpacaConfig(api_key="key", secret_key="secret"))
+    feed.client = FakeClient()
+
+    data = feed.get_historical("SPY", interval="1d", period="2y")
+
+    query = parse_qs(urlparse(calls[0]).query)
+    assert "start" in query
+    assert query["timeframe"] == ["1Day"]
+    assert len(data) == 1
+
+
+def test_alpaca_historical_feed_handles_null_bars_payload():
+    class FakeClient:
+        def request(self, method, url, payload=None):
+            return {"bars": None}
+
+    feed = AlpacaHistoricalDataFeed(AlpacaConfig(api_key="key", secret_key="secret"))
+    feed.client = FakeClient()
+
+    data = feed.get_historical("SPY", interval="1d")
+
+    assert data.empty
+    assert list(data.columns) == ["Open", "High", "Low", "Close", "Volume"]
+
+
 def test_alpaca_historical_feed_reads_from_cache_without_client_call(tmp_path):
     cache = HistoricalDataCache(tmp_path)
     source = pd.DataFrame(
@@ -138,6 +183,37 @@ def test_alpaca_paper_broker_submits_order_and_records_report(monkeypatch):
 
     assert submitted.status == "PENDING"
     assert broker.reports[submitted.id].broker_order_id == "broker-1"
+
+
+def test_alpaca_paper_broker_polls_execution_reports_from_rest():
+    calls = []
+
+    class FakeClient:
+        def request(self, method, url, payload=None):
+            calls.append((method, url, payload))
+            if method == "POST":
+                return {"id": "broker-1", "status": "accepted"}
+            if method == "GET":
+                return {
+                    "id": "broker-1",
+                    "status": "filled",
+                    "filled_qty": "1",
+                    "filled_avg_price": "101.25",
+                }
+            return {}
+
+    broker = AlpacaPaperBroker(AlpacaConfig(api_key="key", secret_key="secret"))
+    broker.client = FakeClient()
+    submitted = broker.submit_order(Order(symbol="SPY", side="BUY", quantity=1))
+
+    reports = list(broker.poll_execution_reports([submitted]))
+
+    assert reports[0].status == "FILLED"
+    assert reports[0].broker_order_id == "broker-1"
+    assert reports[0].filled_quantity == 1
+    assert reports[0].average_fill_price == 101.25
+    assert broker.orders[submitted.id].status == "FILLED"
+    assert calls[-1][0] == "GET"
 
 
 def test_alpaca_rest_client_classifies_http_errors(monkeypatch):

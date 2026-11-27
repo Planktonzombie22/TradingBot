@@ -1,0 +1,13 @@
+{
+  "enabled": false,
+  "state_path": null,
+  "orders_loaded": 0,
+  "reports_loaded": 0,
+  "positions_loaded": 0,
+  "account_loaded": false,
+  "reconciliation_clean": null,
+  "unresolved_orders": 0,
+  "blocked": false,
+  "passed": true,
+  "reason": "not_enabled"
+}

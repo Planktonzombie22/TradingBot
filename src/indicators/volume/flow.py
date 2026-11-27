@@ -79,3 +79,46 @@ class RelativeVolume(Indicator):
     def calculate(self) -> pd.Series:
         average_volume = self.df["Volume"].rolling(self.period, min_periods=self.period).mean()
         return (self.df["Volume"] / average_volume.mask(average_volume == 0, np.nan)).rename("RelativeVolume")
+
+
+class CloseLocationValue(Indicator):
+    """Close location inside the high-low range, scaled from -1 to +1."""
+
+    required_columns = ("High", "Low", "Close")
+
+    def calculate(self) -> pd.Series:
+        spread = (self.df["High"] - self.df["Low"]).replace(0, np.nan)
+        clv = (((self.df["Close"] - self.df["Low"]) - (self.df["High"] - self.df["Close"])) / spread).clip(-1.0, 1.0)
+        return clv.rename("CloseLocationValue")
+
+
+class VolumePressure(Indicator):
+    """Relative-volume weighted close-location pressure."""
+
+    required_columns = ("High", "Low", "Close", "Volume")
+
+    def __init__(self, df: pd.DataFrame, period: int = 20):
+        super().__init__(df)
+        self.period = period
+
+    def calculate(self) -> pd.Series:
+        clv = CloseLocationValue(self.df).calculate()
+        relative_volume = RelativeVolume(self.df, self.period).calculate().clip(upper=5.0)
+        return (clv * relative_volume).rename("VolumePressure")
+
+
+class AbsorptionRatio(Indicator):
+    """High-volume, low-range proxy for potential absorption/position transfer."""
+
+    required_columns = ("High", "Low", "Close", "Volume")
+
+    def __init__(self, df: pd.DataFrame, period: int = 20):
+        super().__init__(df)
+        self.period = period
+
+    def calculate(self) -> pd.Series:
+        true_range = (self.df["High"] - self.df["Low"]).abs()
+        range_rank = true_range / true_range.rolling(self.period, min_periods=self.period).mean().replace(0, np.nan)
+        relative_volume = RelativeVolume(self.df, self.period).calculate()
+        absorption = relative_volume / range_rank.replace(0, np.nan)
+        return absorption.clip(lower=0.0, upper=10.0).rename("AbsorptionRatio")

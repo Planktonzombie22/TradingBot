@@ -1,0 +1,166 @@
+{
+  "passed": false,
+  "reason": "unexpected_paper_positions",
+  "expected_positions": {},
+  "observed_positions": {
+    "DIA": 0.02420645,
+    "SPY": 0.01688732
+  },
+  "matches": [
+    {
+      "symbol": "DIA",
+      "expected_quantity": 0.0,
+      "observed_quantity": 0.02420645,
+      "difference": 0.02420645,
+      "market_value": 12.640366,
+      "matched": false
+    },
+    {
+      "symbol": "SPY",
+      "expected_quantity": 0.0,
+      "observed_quantity": 0.01688732,
+      "difference": 0.01688732,
+      "market_value": 12.538328,
+      "matched": false
+    }
+  ],
+  "observed_notional": 25.178694,
+  "max_expected_notional": null,
+  "notional_tolerance": 0.0,
+  "exposure_within_budget": true,
+  "unexpected_symbols": [
+    "DIA",
+    "SPY"
+  ],
+  "missing_symbols": [],
+  "lifecycle": {
+    "passed": false,
+    "observed_at": "2026-07-30T22:39:39.537567+00:00",
+    "positions": [
+      {
+        "symbol": "DIA",
+        "strategy_name": "unknown",
+        "expected_quantity": 0.0,
+        "observed_quantity": 0.02420645,
+        "matched": false,
+        "target_notional": null,
+        "market_value": 12.640366,
+        "requested_quantity": null,
+        "filled_quantity": null,
+        "average_fill_price": 516.332,
+        "reference_price": null,
+        "slippage_per_share": null,
+        "slippage_bps": null,
+        "unrealized_pnl": 0.141801,
+        "notional_drift": null,
+        "broker_status": null,
+        "order_type": null,
+        "time_in_force": null,
+        "fill_timestamp": null,
+        "entry_rationale": "promoted_portfolio_paper_submit",
+        "expected_holding_window": "micro_pilot_max_3_days",
+        "risk_budget": {
+          "max_notional": null,
+          "estimated_notional": null,
+          "budget_passed": null
+        },
+        "stop_policy": "monitor_only_until_strategy_exit_controls_exist",
+        "exit_policy": "manual_or_strategy_exit_required",
+        "source_report_path": null,
+        "opened_at": null,
+        "age_hours": null,
+        "status": "orphan",
+        "owner_type": "unknown_broker_position",
+        "forced_exit_needed": true
+      },
+      {
+        "symbol": "SPY",
+        "strategy_name": "unknown",
+        "expected_quantity": 0.0,
+        "observed_quantity": 0.01688732,
+        "matched": false,
+        "target_notional": null,
+        "market_value": 12.538328,
+        "requested_quantity": null,
+        "filled_quantity": null,
+        "average_fill_price": 739.886,
+        "reference_price": null,
+        "slippage_per_share": null,
+        "slippage_bps": null,
+        "unrealized_pnl": 0.043636,
+        "notional_drift": null,
+        "broker_status": null,
+        "order_type": null,
+        "time_in_force": null,
+        "fill_timestamp": null,
+        "entry_rationale": "promoted_portfolio_paper_submit",
+        "expected_holding_window": "micro_pilot_max_3_days",
+        "risk_budget": {
+          "max_notional": null,
+          "estimated_notional": null,
+          "budget_passed": null
+        },
+        "stop_policy": "monitor_only_until_strategy_exit_controls_exist",
+        "exit_policy": "manual_or_strategy_exit_required",
+        "source_report_path": null,
+        "opened_at": null,
+        "age_hours": null,
+        "status": "orphan",
+        "owner_type": "unknown_broker_position",
+        "forced_exit_needed": true
+      }
+    ],
+    "scorecards": [
+      {
+        "symbol": "DIA",
+        "passed": false,
+        "reason": "paper_position_quantity_mismatch",
+        "quantity_matched": false,
+        "fill_price_present": true,
+        "market_value_present": true,
+        "notional_drift": null,
+        "slippage_bps": null,
+        "unrealized_pnl": 0.141801
+      },
+      {
+        "symbol": "SPY",
+        "passed": false,
+        "reason": "paper_position_quantity_mismatch",
+        "quantity_matched": false,
+        "fill_price_present": true,
+        "market_value_present": true,
+        "notional_drift": null,
+        "slippage_bps": null,
+        "unrealized_pnl": 0.043636
+      }
+    ],
+    "active_positions": 0,
+    "exposure_registry": {
+      "active_expected_symbols": [],
+      "orphan_symbols": [
+        "DIA",
+        "SPY"
+      ],
+      "missing_expected_symbols": [],
+      "stale_symbols": [],
+      "expired_symbols": [],
+      "cleanup_debt_symbols": [
+        "DIA",
+        "SPY"
+      ]
+    },
+    "artifact_path": null
+  },
+  "open_orders": {
+    "passed": true,
+    "reason": "passed",
+    "observed_at": "2026-07-30T22:39:39.537567+00:00",
+    "max_open_order_age_minutes": 15.0,
+    "unresolved_orders": 0,
+    "stale_orders": 0,
+    "stale_symbols": [],
+    "orders": [],
+    "artifact_path": null
+  },
+  "artifact_path": "reports\\paper-daemon-alpaca-proof-monitor-0001.json"
+}

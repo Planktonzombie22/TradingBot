@@ -1,0 +1,96 @@
+{
+  "passed": true,
+  "reason": "passed",
+  "expected_positions": {
+    "SPY": 0.033723
+  },
+  "observed_positions": {
+    "SPY": 0.033723
+  },
+  "matches": [
+    {
+      "symbol": "SPY",
+      "expected_quantity": 0.033723,
+      "observed_quantity": 0.033723,
+      "difference": 0.0,
+      "market_value": 25.139485,
+      "matched": true
+    }
+  ],
+  "observed_notional": 25.139485,
+  "max_expected_notional": 30.0,
+  "notional_tolerance": 0.6,
+  "exposure_within_budget": true,
+  "unexpected_symbols": [],
+  "missing_symbols": [],
+  "closed_symbols": [],
+  "lifecycle": {
+    "passed": true,
+    "observed_at": "2026-07-31T17:20:09.430626+00:00",
+    "positions": [
+      {
+        "symbol": "SPY",
+        "strategy_name": "unknown",
+        "expected_quantity": 0.033723,
+        "observed_quantity": 0.033723,
+        "matched": true,
+        "target_notional": null,
+        "market_value": 25.139485,
+        "requested_quantity": 0.033723,
+        "filled_quantity": 0.033723,
+        "average_fill_price": 741.646,
+        "reference_price": null,
+        "slippage_per_share": null,
+        "slippage_bps": null,
+        "unrealized_pnl": 0.128957,
+        "notional_drift": null,
+        "broker_status": "FILLED",
+        "order_type": "MARKET",
+        "time_in_force": "day",
+        "fill_timestamp": "2026-07-31T15:37:28.747315+00:00",
+        "entry_rationale": "promoted_portfolio_paper_submit",
+        "expected_holding_window": "micro_pilot_max_3_days",
+        "risk_budget": {
+          "max_notional": null,
+          "estimated_notional": null,
+          "budget_passed": null
+        },
+        "stop_policy": "monitor_only_until_strategy_exit_controls_exist",
+        "exit_policy": "manual_or_strategy_exit_required",
+        "source_report_path": null,
+        "opened_at": "2026-07-31T15:37:28.184774+00:00",
+        "age_hours": 1.7114571811111112,
+        "status": "fresh",
+        "owner_type": "promoted_strategy",
+        "forced_exit_needed": false
+      }
+    ],
+    "scorecards": [
+      {
+        "symbol": "SPY",
+        "passed": true,
+        "reason": "passed",
+        "quantity_matched": true,
+        "fill_price_present": true,
+        "market_value_present": true,
+        "notional_drift": null,
+        "slippage_bps": null,
+        "unrealized_pnl": 0.128957
+      }
+    ],
+    "active_positions": 1,
+    "exposure_registry": {
+      "active_expected_symbols": [
+        "SPY"
+      ],
+      "orphan_symbols": [],
+      "missing_expected_symbols": [],
+      "stale_symbols": [],
+      "expired_symbols": [],
+      "cleanup_debt_symbols": []
+    },
+    "artifact_path": null
+  },
+  "open_orders": null,
+  "artifact_path": "reports\\paper-monitor-20260731-flatten-drill-precheck.json"
+}

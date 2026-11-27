@@ -1,0 +1,75 @@
+{
+  "passed": true,
+  "reason": "risk_budget_passed",
+  "budget": {
+    "min_order_quantity": 0.0,
+    "min_order_notional": 0.0,
+    "max_session_notional": null,
+    "max_new_exposure": null,
+    "max_turnover": null,
+    "cash_reserve": 0.0,
+    "cooldown_symbols": [],
+    "repeated_reject_symbols": []
+  },
+  "session_notional": 2430.567882155196,
+  "new_exposure": 0.2430567882155196,
+  "turnover": 0.2430567882155196,
+  "gates": [
+    {
+      "name": "SPY_min_quantity",
+      "passed": true,
+      "reason": "min_quantity_passed",
+      "value": 20.0,
+      "threshold": 0.0
+    },
+    {
+      "name": "SPY_min_notional",
+      "passed": true,
+      "reason": "min_notional_passed",
+      "value": 2430.567882155196,
+      "threshold": 0.0
+    },
+    {
+      "name": "SPY_cooldown",
+      "passed": true,
+      "reason": "cooldown_passed",
+      "value": "SPY",
+      "threshold": "not_in_cooldown"
+    },
+    {
+      "name": "SPY_repeated_reject",
+      "passed": true,
+      "reason": "repeated_reject_passed",
+      "value": "SPY",
+      "threshold": "not_repeated_reject"
+    },
+    {
+      "name": "max_session_notional",
+      "passed": true,
+      "reason": "not_required",
+      "value": 2430.567882155196,
+      "threshold": null
+    },
+    {
+      "name": "max_new_exposure",
+      "passed": true,
+      "reason": "not_required",
+      "value": 0.2430567882155196,
+      "threshold": null
+    },
+    {
+      "name": "max_turnover",
+      "passed": true,
+      "reason": "not_required",
+      "value": 0.2430567882155196,
+      "threshold": null
+    },
+    {
+      "name": "cash_reserve",
+      "passed": true,
+      "reason": "cash_reserve_passed",
+      "value": 0.7569432117844804,
+      "threshold": 0.0
+    }
+  ]
+}

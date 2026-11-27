@@ -1,0 +1,172 @@
+{
+  "report_path": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+  "ready_for_submission": true,
+  "submitted": false,
+  "data_rows": 501,
+  "latest_prices": {
+    "DIA": 516.6
+  },
+  "regime": {
+    "symbol": "DIA",
+    "trend_state": "mixed",
+    "trend_direction": "up",
+    "volatility_state": "contraction",
+    "liquidity_state": "normal",
+    "macro_sensitivity": "normal",
+    "efficiency_ratio": 0.15291579126682137,
+    "period_return": 0.05499622194539189,
+    "volatility_ratio": 0.7447475143130767,
+    "liquidity_ratio": 0.9872287626962142,
+    "eligible_modes": [
+      "benchmark",
+      "mean_reversion",
+      "range_scalping",
+      "cash"
+    ]
+  },
+  "orders_planned": 1,
+  "orders_submitted": 0,
+  "planned_orders": [
+    {
+      "id": "f4339b3e-1614-43d1-b276-7d459fd47cac",
+      "client_order_id": null,
+      "symbol": "DIA",
+      "side": "BUY",
+      "quantity": 0.048393,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-23T14:17:45.707519+00:00"
+    }
+  ],
+  "data_drift_reports": 0,
+  "reconciliation_clean": null,
+  "paper_scorecard_passed": null,
+  "recovery": {
+    "enabled": false,
+    "state_path": null,
+    "orders_loaded": 0,
+    "reports_loaded": 0,
+    "positions_loaded": 0,
+    "account_loaded": false,
+    "reconciliation_clean": null,
+    "unresolved_orders": 0,
+    "blocked": false,
+    "passed": true,
+    "reason": "not_enabled"
+  },
+  "risk_budget": {
+    "passed": true,
+    "reason": "risk_budget_passed",
+    "budget": {
+      "min_order_quantity": 0.0,
+      "min_order_notional": 0.0,
+      "max_session_notional": 25.0,
+      "max_new_exposure": 0.0025,
+      "max_turnover": 0.0025,
+      "cash_reserve": 0.95,
+      "cooldown_symbols": [],
+      "repeated_reject_symbols": []
+    },
+    "session_notional": 24.9998238,
+    "new_exposure": 0.00249998238,
+    "turnover": 0.00249998238,
+    "gates": [
+      {
+        "name": "DIA_min_quantity",
+        "passed": true,
+        "reason": "min_quantity_passed",
+        "value": 0.048393,
+        "threshold": 0.0
+      },
+      {
+        "name": "DIA_min_notional",
+        "passed": true,
+        "reason": "min_notional_passed",
+        "value": 24.9998238,
+        "threshold": 0.0
+      },
+      {
+        "name": "DIA_cooldown",
+        "passed": true,
+        "reason": "cooldown_passed",
+        "value": "DIA",
+        "threshold": "not_in_cooldown"
+      },
+      {
+        "name": "DIA_repeated_reject",
+        "passed": true,
+        "reason": "repeated_reject_passed",
+        "value": "DIA",
+        "threshold": "not_repeated_reject"
+      },
+      {
+        "name": "max_session_notional",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 24.9998238,
+        "threshold": 25.0
+      },
+      {
+        "name": "max_new_exposure",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 0.00249998238,
+        "threshold": 0.0025
+      },
+      {
+        "name": "max_turnover",
+        "passed": true,
+        "reason": "budget_passed",
+        "value": 0.00249998238,
+        "threshold": 0.0025
+      },
+      {
+        "name": "cash_reserve",
+        "passed": true,
+        "reason": "cash_reserve_passed",
+        "value": 0.99750001762,
+        "threshold": 0.95
+      }
+    ]
+  },
+  "submission_guard": {
+    "passed": true,
+    "reason": "submission_guard_passed",
+    "submit_requested": false,
+    "probes": [
+      {
+        "name": "submit_requested",
+        "passed": true,
+        "reason": "submit_not_requested",
+        "evidence": {
+          "submit_orders": false
+        }
+      }
+    ]
+  },
+  "fill_poll_attempts": 0,
+  "polled_execution_reports": 0,
+  "warnings": [],
+  "artifact_paths": {
+    "manifest": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\manifest.json",
+    "committee_context": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\committee-context.json",
+    "committee_decision": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\committee-decision.json",
+    "execution_plan": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\execution-plan.json",
+    "session_report": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\session-report.json",
+    "submitted_orders": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\submitted-orders.json",
+    "execution_reports": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\execution-reports.json",
+    "reconciliation": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\reconciliation.json",
+    "paper_scorecard": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\paper-scorecard.json",
+    "post_session_account": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\post-session-account.json",
+    "recovery": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\recovery.json",
+    "risk_budget": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\risk-budget.json",
+    "submission_guard": "runs\\paper-pilot-promoted-preview\\symbols\\DIA\\20260723T141745Z-paper-session-dry-run-30918501f999b507\\submission-guard.json"
+  }
+}

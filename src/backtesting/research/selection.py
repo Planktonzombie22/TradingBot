@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from typing import Mapping, Sequence
 
 from ..runners.bulk import BulkBacktestRecord
+from ..runners.promotion import PromotionPipelinePolicy, PromotionPipelineReport, ResearchCandidateEvidence, evaluate_promotion_candidate
 
 
 @dataclass(frozen=True)
@@ -192,6 +193,66 @@ class BenchmarkRelativeReport:
         }
 
 
+@dataclass(frozen=True)
+class BenchmarkPromotionCandidate:
+    symbol: str
+    strategy: str
+    action: str
+    status: str
+    reason: str
+    score: float
+    promotion_report: PromotionPipelineReport
+    comparison: StrategyBenchmarkComparison
+
+    def to_dict(self) -> dict:
+        return {
+            "symbol": self.symbol,
+            "strategy": self.strategy,
+            "action": self.action,
+            "status": self.status,
+            "reason": self.reason,
+            "score": self.score,
+            "comparison": self.comparison.to_dict(),
+            "promotion_report": self.promotion_report.to_dict(),
+            "paper_manifest": self.promotion_report.manifest.to_dict() if self.promotion_report.manifest else None,
+        }
+
+
+@dataclass(frozen=True)
+class BenchmarkPromotionReport:
+    selection_summary: Mapping[str, object]
+    candidates: tuple[BenchmarkPromotionCandidate, ...]
+
+    @property
+    def candidate_count(self) -> int:
+        return len(self.candidates)
+
+    @property
+    def enabled_count(self) -> int:
+        return len(self.enabled_candidates)
+
+    @property
+    def enabled_candidates(self) -> tuple[BenchmarkPromotionCandidate, ...]:
+        return tuple(candidate for candidate in self.candidates if candidate.status == "paper_candidate")
+
+    @property
+    def enabled_manifests(self) -> tuple:
+        return tuple(
+            candidate.promotion_report.manifest
+            for candidate in self.enabled_candidates
+            if candidate.promotion_report.manifest is not None
+        )
+
+    def to_dict(self) -> dict:
+        return {
+            "selection_summary": dict(self.selection_summary),
+            "candidate_count": self.candidate_count,
+            "enabled_count": self.enabled_count,
+            "candidates": [candidate.to_dict() for candidate in self.candidates],
+            "enabled_manifests": [manifest.to_dict() for manifest in self.enabled_manifests],
+        }
+
+
 def select_strategies_against_benchmark(
     records: Sequence[BulkBacktestRecord],
     policy: StrategySelectionPolicy | None = None,
@@ -245,6 +306,49 @@ def benchmark_relative_report(
     policy: StrategySelectionPolicy | None = None,
 ) -> BenchmarkRelativeReport:
     return BenchmarkRelativeReport(select_strategies_against_benchmark(records, policy))
+
+
+def build_benchmark_promotion_report(
+    records: Sequence[BulkBacktestRecord],
+    selection_report: StrategySelectionReport,
+    promotion_policy: PromotionPipelinePolicy | None = None,
+) -> BenchmarkPromotionReport:
+    """Convert benchmark-relative winners into conservative paper-promotion candidates."""
+
+    promotion_policy = promotion_policy or PromotionPipelinePolicy(require_governance=False, require_capacity=False)
+    records_by_key = {(record.symbol, record.strategy): record for record in records}
+    candidates = []
+    for selection in selection_report.selections:
+        if selection.action != "trade_strategy" or selection.comparison is None:
+            continue
+        record = records_by_key.get((selection.symbol, selection.selected_strategy))
+        if record is None:
+            continue
+        evidence = ResearchCandidateEvidence(
+            strategy_name=selection.selected_strategy,
+            symbol=selection.symbol,
+            params=dict(record.params),
+            source_rules_captured=True,
+            data_validation_passed=True,
+            benchmark_passed=selection.comparison.decision == "select_strategy",
+            risk_gates_passed=selection.comparison.rejections == 0,
+            benchmark_summary=selection.comparison.to_dict(),
+            notes=("benchmark_relative_selection", "requires_paper_rehearsal_before_capital"),
+        )
+        promotion = evaluate_promotion_candidate(evidence, promotion_policy)
+        candidates.append(
+            BenchmarkPromotionCandidate(
+                symbol=selection.symbol,
+                strategy=selection.selected_strategy,
+                action="paper_rehearsal_candidate" if promotion.passed else "blocked",
+                status="paper_candidate" if promotion.passed else "blocked",
+                reason=promotion.reason,
+                score=selection.score,
+                promotion_report=promotion,
+                comparison=selection.comparison,
+            )
+        )
+    return BenchmarkPromotionReport(selection_report.summary(), tuple(candidates))
 
 
 def _records_by_symbol(records: Sequence[BulkBacktestRecord]) -> dict[str, dict[str, BulkBacktestRecord]]:

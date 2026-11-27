@@ -2,18 +2,21 @@ import pandas as pd
 
 from src.indicators import (
     ADX,
+    AbsorptionRatio,
     ATR,
     Aroon,
     AnchoredVWAP,
     BollingerBands,
     ChaikinMoneyFlow,
     ChoppinessIndex,
+    CloseLocationValue,
     DEMA,
     DonchianChannel,
     EMA,
     EfficiencyRatio,
     ElderRayIndex,
     FairValueGap,
+    HurstExponent,
     IchimokuCloud,
     KeltnerChannel,
     LiquiditySweep,
@@ -30,6 +33,7 @@ from src.indicators import (
     SwingPoints,
     SuperTrend,
     UlcerIndex,
+    VolumePressure,
     VWAP,
     VortexIndicator,
 )
@@ -146,6 +150,9 @@ def test_volume_flow_indicators_return_expected_outputs():
     assert MoneyFlowIndex(data, period=14).calculate().name == "MFI"
     assert ChaikinMoneyFlow(data, period=20).calculate().name == "CMF"
     assert RelativeVolume(data, period=20).calculate().name == "RelativeVolume"
+    assert CloseLocationValue(data).calculate().dropna().between(-1, 1).all()
+    assert VolumePressure(data, period=20).calculate().name == "VolumePressure"
+    assert AbsorptionRatio(data, period=20).calculate().name == "AbsorptionRatio"
 
 
 def test_regime_and_risk_shape_indicators_return_expected_outputs():
@@ -164,6 +171,7 @@ def test_regime_and_risk_shape_indicators_return_expected_outputs():
     assert {"VIPlus", "VIMinus", "VIDiff"}.issubset(VortexIndicator(data).calculate_all().columns)
     assert ChoppinessIndex(data).calculate().name == "ChoppinessIndex"
     assert EfficiencyRatio(data).calculate().dropna().between(0, 1).all()
+    assert HurstExponent(data, period=40, max_lag=10).calculate().dropna().between(0, 1).all()
     assert UlcerIndex(data).calculate().name == "UlcerIndex"
     assert {"BullPower", "BearPower", "ElderRay"}.issubset(ElderRayIndex(data).calculate_all().columns)
     assert {"TenkanSen", "KijunSen", "SenkouSpanA", "SenkouSpanB", "CloudBias"}.issubset(IchimokuCloud(data).calculate_all().columns)

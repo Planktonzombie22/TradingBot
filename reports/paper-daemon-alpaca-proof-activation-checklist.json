@@ -1,0 +1,60 @@
+{
+  "passed": false,
+  "checks": {
+    "daemon_completed_without_error": true,
+    "heartbeat_fresh_or_completed": true,
+    "kill_switch_clear_after_proof": true,
+    "kill_switch_proof_passed": true,
+    "broker_monitor_clean": false,
+    "cleanup_review_resolved": false,
+    "paper_exposure_acknowledged": false,
+    "data_parity_clean": true,
+    "active_submit_observed": false
+  },
+  "blockers": [
+    "broker_monitor_clean",
+    "cleanup_review_resolved",
+    "paper_exposure_acknowledged",
+    "active_submit_observed"
+  ],
+  "warnings": [
+    "no_orders_submitted",
+    "cleanup_orders_planned",
+    "monitor_failures_present",
+    "position_mismatches_present",
+    "paper_monitor_failed"
+  ],
+  "recommended_action": "run_guarded_cleanup_during_regular_session_or_provide_operator_acknowledgement",
+  "evidence": {
+    "daemon_status": "completed",
+    "latest_reason": "max_iterations_completed",
+    "total_iterations": 1,
+    "submitted_iterations": 0,
+    "monitor_failed_iterations": 1,
+    "monitor_position_mismatches": 2,
+    "monitor_stale_open_orders": 0,
+    "cleanup_planned_orders": 2,
+    "cleanup_submitted_orders": 0,
+    "latest_cleanup_reason": "market_session_not_tradable",
+    "latest_cleanup_submitted": false,
+    "latest_cleanup_attempted": false,
+    "latest_cleanup_planned_orders": 2,
+    "latest_cleanup_artifact": "reports\\paper-cleanup-20260731-submit-guard.json",
+    "observed_positions": 2,
+    "observed_notional": 25.178694,
+    "paper_exposure_acknowledged": false,
+    "paper_exposure_acknowledgement_reason": "paper_exposure_acknowledgement_missing",
+    "data_parity_failed_iterations": 0,
+    "data_parity_failed_checks": 0,
+    "command_center_passed": false,
+    "kill_switch_proof_passed": true,
+    "artifact_paths": [
+      "reports\\paper-daemon-alpaca-proof-report.json",
+      "reports\\paper-daemon-alpaca-proof-schedule-20260730T223938Z-0001.json",
+      "reports\\paper-daemon-alpaca-proof-cleanup-0001.json",
+      "reports\\paper-daemon-alpaca-proof-monitor-0001.json",
+      "reports\\paper-daemon-alpaca-proof-parity-0001.json",
+      "reports\\paper-daemon-alpaca-proof-report.json"
+    ]
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "passed": false,
+  "reason": "unexpected_paper_positions",
+  "expected_positions": {},
+  "observed_positions": {
+    "SPY": 0.033723
+  },
+  "matches": [
+    {
+      "symbol": "SPY",
+      "expected_quantity": 0.0,
+      "observed_quantity": 0.033723,
+      "difference": 0.033723,
+      "market_value": 25.009651,
+      "matched": false
+    }
+  ],
+  "observed_notional": 25.009651,
+  "max_expected_notional": 25.0,
+  "notional_tolerance": 0.5,
+  "exposure_within_budget": true,
+  "unexpected_symbols": [
+    "SPY"
+  ],
+  "missing_symbols": [],
+  "closed_symbols": [],
+  "lifecycle": {
+    "passed": false,
+    "observed_at": "2026-07-31T15:37:29.543310+00:00",
+    "positions": [
+      {
+        "symbol": "SPY",
+        "strategy_name": "unknown",
+        "expected_quantity": 0.0,
+        "observed_quantity": 0.033723,
+        "matched": false,
+        "target_notional": null,
+        "market_value": 25.009651,
+        "requested_quantity": null,
+        "filled_quantity": null,
+        "average_fill_price": 741.646,
+        "reference_price": null,
+        "slippage_per_share": null,
+        "slippage_bps": null,
+        "unrealized_pnl": -0.000877,
+        "notional_drift": null,
+        "broker_status": null,
+        "order_type": null,
+        "time_in_force": null,
+        "fill_timestamp": null,
+        "entry_rationale": "promoted_portfolio_paper_submit",
+        "expected_holding_window": "micro_pilot_max_3_days",
+        "risk_budget": {
+          "max_notional": 25.0,
+          "estimated_notional": null,
+          "budget_passed": null
+        },
+        "stop_policy": "monitor_only_until_strategy_exit_controls_exist",
+        "exit_policy": "manual_or_strategy_exit_required",
+        "source_report_path": null,
+        "opened_at": null,
+        "age_hours": null,
+        "status": "orphan",
+        "owner_type": "unknown_broker_position",
+        "forced_exit_needed": true
+      }
+    ],
+    "scorecards": [
+      {
+        "symbol": "SPY",
+        "passed": false,
+        "reason": "paper_position_quantity_mismatch",
+        "quantity_matched": false,
+        "fill_price_present": true,
+        "market_value_present": true,
+        "notional_drift": null,
+        "slippage_bps": null,
+        "unrealized_pnl": -0.000877
+      }
+    ],
+    "active_positions": 0,
+    "exposure_registry": {
+      "active_expected_symbols": [],
+      "orphan_symbols": [
+        "SPY"
+      ],
+      "missing_expected_symbols": [],
+      "stale_symbols": [],
+      "expired_symbols": [],
+      "cleanup_debt_symbols": [
+        "SPY"
+      ]
+    },
+    "artifact_path": null
+  },
+  "open_orders": {
+    "passed": true,
+    "reason": "open_paper_orders_within_timeout",
+    "observed_at": "2026-07-31T15:37:29.543310+00:00",
+    "max_open_order_age_minutes": 15.0,
+    "unresolved_orders": 1,
+    "stale_orders": 0,
+    "stale_symbols": [],
+    "orders": [
+      {
+        "symbol": "SPY",
+        "side": "BUY",
+        "quantity": 0.033723,
+        "status": "PENDING",
+        "order_type": "MARKET",
+        "time_in_force": "day",
+        "created_at": "2026-07-31T15:37:28.184774+00:00",
+        "age_minutes": 0.022642266666666667,
+        "expected_active": true,
+        "unresolved": true,
+        "stale": false,
+        "source": "portfolio_submission",
+        "cancel_reference_available": true,
+        "reason": "open_order_within_timeout"
+      }
+    ],
+    "artifact_path": null
+  },
+  "artifact_path": "reports\\paper-daemon-alpaca-active-proof-monitor-0001.json"
+}

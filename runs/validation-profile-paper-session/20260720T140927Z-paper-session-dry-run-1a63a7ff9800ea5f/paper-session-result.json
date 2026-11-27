@@ -1,0 +1,95 @@
+{
+  "report_path": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\session-report.json",
+  "ready_for_submission": true,
+  "submitted": false,
+  "data_rows": 160,
+  "latest_prices": {
+    "SPY": 121.5283941077598
+  },
+  "regime": {
+    "symbol": "SPY",
+    "trend_state": "trending",
+    "trend_direction": "up",
+    "volatility_state": "contraction",
+    "liquidity_state": "normal",
+    "macro_sensitivity": "normal",
+    "efficiency_ratio": 0.6489804565386399,
+    "period_return": 0.10526697233522042,
+    "volatility_ratio": 0.5700170177193662,
+    "liquidity_ratio": 1.0044545062248575,
+    "eligible_modes": [
+      "benchmark",
+      "trend_following",
+      "range_scalping",
+      "cash"
+    ]
+  },
+  "orders_planned": 1,
+  "orders_submitted": 0,
+  "planned_orders": [
+    {
+      "id": "9078314c-1e22-40e8-8749-c950ef4985f8",
+      "client_order_id": null,
+      "symbol": "SPY",
+      "side": "BUY",
+      "quantity": 20.0,
+      "order_type": "MARKET",
+      "limit_price": null,
+      "stop_price": null,
+      "take_profit_price": null,
+      "trail_percent": null,
+      "time_in_force": "day",
+      "parent_order_id": null,
+      "order_group_id": null,
+      "status": "PENDING",
+      "created_at": "2026-07-20T14:09:27.793442+00:00"
+    }
+  ],
+  "data_drift_reports": 0,
+  "reconciliation_clean": null,
+  "paper_scorecard_passed": null,
+  "recovery": {
+    "enabled": false,
+    "state_path": null,
+    "orders_loaded": 0,
+    "reports_loaded": 0,
+    "positions_loaded": 0,
+    "account_loaded": false,
+    "reconciliation_clean": null,
+    "unresolved_orders": 0,
+    "blocked": false,
+    "passed": true,
+    "reason": "not_enabled"
+  },
+  "risk_budget": null,
+  "submission_guard": {
+    "passed": true,
+    "reason": "submission_guard_passed",
+    "submit_requested": false,
+    "probes": [
+      {
+        "name": "submit_requested",
+        "passed": true,
+        "reason": "submit_not_requested",
+        "evidence": {
+          "submit_orders": false
+        }
+      }
+    ]
+  },
+  "warnings": [],
+  "artifact_paths": {
+    "manifest": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\manifest.json",
+    "committee_context": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\committee-context.json",
+    "committee_decision": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\committee-decision.json",
+    "execution_plan": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\execution-plan.json",
+    "session_report": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\session-report.json",
+    "submitted_orders": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\submitted-orders.json",
+    "execution_reports": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\execution-reports.json",
+    "reconciliation": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\reconciliation.json",
+    "paper_scorecard": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\paper-scorecard.json",
+    "post_session_account": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\post-session-account.json",
+    "recovery": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\recovery.json",
+    "submission_guard": "runs\\validation-profile-paper-session\\20260720T140927Z-paper-session-dry-run-1a63a7ff9800ea5f\\submission-guard.json"
+  }
+}

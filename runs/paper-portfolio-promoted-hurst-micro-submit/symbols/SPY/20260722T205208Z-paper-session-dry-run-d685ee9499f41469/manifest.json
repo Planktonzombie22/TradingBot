@@ -1,0 +1,29 @@
+{
+  "run_id": "d11da286-34e4-476d-bd50-d9842492bbf5",
+  "run_type": "paper-session-dry-run",
+  "strategy": "hurstCycleReversion",
+  "symbols": [
+    "SPY"
+  ],
+  "config": {
+    "mode": "dry-run",
+    "committee_reason": "committee_approved_strategy",
+    "committee_action": "trade_strategy",
+    "paper_manifest_status": "ready_for_paper_session"
+  },
+  "data_source": {
+    "provider": "alpaca",
+    "symbol": "SPY",
+    "period": "2y",
+    "interval": "1d",
+    "start": null,
+    "end": null,
+    "rows": 501
+  },
+  "dependency_versions": {
+    "python": "3.11.9"
+  },
+  "code_version": "a909740",
+  "created_at": "2026-07-22T20:52:08.856805+00:00",
+  "stable_hash": "d685ee9499f41469"
+}

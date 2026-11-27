@@ -104,6 +104,36 @@ class UlcerIndex(Indicator):
         return ulcer.rename("UlcerIndex")
 
 
+class HurstExponent(Indicator):
+    """Rolling Hurst exponent estimate for trend persistence vs. mean reversion."""
+
+    required_columns = ("Close",)
+
+    def __init__(self, df: pd.DataFrame, period: int = 80, max_lag: int = 20):
+        super().__init__(df)
+        self.period = period
+        self.max_lag = max_lag
+
+    def calculate(self) -> pd.Series:
+        lags = tuple(range(2, max(3, self.max_lag + 1)))
+
+        def estimate(values) -> float:
+            tau = []
+            valid_lags = []
+            for lag in lags:
+                diff = values[lag:] - values[:-lag]
+                std = float(np.std(diff))
+                if std > 0:
+                    tau.append(std)
+                    valid_lags.append(lag)
+            if len(tau) < 2:
+                return np.nan
+            slope = np.polyfit(np.log(valid_lags), np.log(tau), 1)[0]
+            return float(max(0.0, min(1.0, slope)))
+
+        return self.df["Close"].rolling(self.period, min_periods=self.period).apply(estimate, raw=True).rename("HurstExponent")
+
+
 class ElderRayIndex(Indicator):
     required_columns = ("High", "Low", "Close")
 

@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "reason": "exit_preview_created",
+  "requires_operator_action": false,
+  "include_active_positions": true,
+  "cleanup_debt_symbols": [],
+  "orders": [
+    {
+      "symbol": "SPY",
+      "side": "SELL",
+      "quantity": 0.033723,
+      "order_type": "MARKET",
+      "strategy_name": "unknown",
+      "owner_type": "promoted_strategy",
+      "estimated_notional": 25.139485,
+      "expected_realized_pnl": 0.128957,
+      "position_status": "fresh",
+      "reason": "operator_requested_active_flatten_preview"
+    }
+  ],
+  "artifact_path": "reports\\paper-exit-preview-20260731-active-spy.json"
+}

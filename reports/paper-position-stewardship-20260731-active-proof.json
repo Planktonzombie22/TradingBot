@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "monitor_passed": true,
+  "max_active_age_hours": 72.0,
+  "active_positions": 1,
+  "closed_symbols": [],
+  "blockers": [],
+  "warnings": [],
+  "recommended_action": "continue_monitoring_active_paper_positions",
+  "positions": [
+    {
+      "symbol": "SPY",
+      "passed": true,
+      "status": "fresh",
+      "owner_type": "promoted_strategy",
+      "expected_quantity": 0.033723,
+      "observed_quantity": 0.033723,
+      "market_value": 24.995488,
+      "age_hours": 0.06689880055555555,
+      "forced_exit_needed": false,
+      "closure_evidence_present": false,
+      "action": "continue_monitoring"
+    }
+  ]
+}
